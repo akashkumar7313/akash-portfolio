@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { FiMail, FiMapPin, FiLinkedin, FiCheck, FiCopy, FiPhone } from "react-icons/fi";
+import { FiMail, FiMapPin, FiLinkedin, FiCheck, FiCopy, FiPhone, FiSend, FiMessageCircle } from "react-icons/fi";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Toast from "@/components/ui/Toast";
 
@@ -29,6 +29,7 @@ export default function Contact() {
 
   const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" });
   const [sending, setSending] = useState(false);
+  const [focused, setFocused] = useState<string | null>(null);
   const [toast, setToast] = useState<{ show: boolean; type: "success" | "error"; title: string; message: string }>({
     show: false,
     type: "success",
@@ -77,9 +78,18 @@ export default function Contact() {
     }
   };
 
+  const contactItems = [
+    { icon: FiMail, label: "Email", value: email, color: "text-accent-blue", bg: "bg-accent-blue/10", action: copyEmail },
+    { icon: FiPhone, label: "Phone", value: "Available on request", color: "text-accent-purple", bg: "bg-accent-purple/10" },
+    { icon: FiMapPin, label: "Location", value: "Lucknow, Uttar Pradesh, India", color: "text-accent-cyan", bg: "bg-accent-cyan/10" },
+    { icon: FiLinkedin, label: "LinkedIn", value: "/in/akash-kumarprajapati", link: "https://www.linkedin.com/in/akash-kumarprajapati", color: "text-accent-blue", bg: "bg-accent-blue/10" },
+  ];
+
   return (
-    <section id="contact" className="section-padding">
-      <div className="max-width">
+    <section id="contact" className="section-padding relative overflow-hidden">
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent-blue/30 to-transparent pointer-events-none" />
+      <div className="max-width relative z-10">
+
         <SectionHeading
           title="Get In Touch"
           subtitle="Have a project in mind? Let's build something great together."
@@ -95,6 +105,7 @@ export default function Contact() {
         />
 
         <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          {/* Contact Info */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -103,165 +114,127 @@ export default function Contact() {
             className="space-y-5"
           >
             <div className="card">
-              <h3 className="text-white font-bold text-lg mb-4">
+              <h3 className="text-white font-bold text-lg mb-4 flex items-center gap-2">
+                <FiMessageCircle className="text-accent-blue" />
                 Contact Info
               </h3>
-
               <div className="space-y-4">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-accent-blue/10 flex items-center justify-center flex-shrink-0">
-                    <FiMail className="text-accent-blue" />
-                  </div>
-                  <div>
-                    <p className="text-dark-400 text-xs mb-1">Email</p>
-                    <button
-                      onClick={copyEmail}
-                      className="text-white text-sm hover:text-accent-blue transition-colors flex items-center gap-2"
+                {contactItems.map((item, i) => (
+                  <motion.div
+                    key={item.label}
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.3, delay: i * 0.08 }}
+                    className="flex items-center gap-4 group"
+                  >
+                    <motion.div
+                      className={`w-12 h-12 rounded-xl ${item.bg} flex items-center justify-center flex-shrink-0`}
+                      whileHover={{ scale: 1.1, rotate: [0, -5, 5, 0] }}
+                      transition={{ duration: 0.3 }}
                     >
-                      {email}
-                      {copied ? (
-                        <FiCheck className="text-green-500" />
+                      <item.icon className={`${item.color} text-xl`} />
+                    </motion.div>
+                    <div>
+                      <p className="text-dark-400 text-xs mb-0.5">{item.label}</p>
+                      {"action" in item ? (
+                        <button onClick={item.action} className="text-white text-sm hover:text-accent-blue transition-colors flex items-center gap-2">
+                          {item.value}
+                          {copied ? <FiCheck className="text-green-500" /> : <FiCopy className="text-dark-500 text-xs opacity-0 group-hover:opacity-100 transition-opacity" />}
+                        </button>
+                      ) : "link" in item ? (
+                        <a href={item.link} target="_blank" rel="noopener noreferrer" className="text-white text-sm hover:text-accent-blue transition-colors">
+                          {item.value}
+                        </a>
                       ) : (
-                        <FiCopy className="text-dark-500 text-xs" />
+                        <p className="text-white text-sm">{item.value}</p>
                       )}
-                    </button>
-                    {copied && (
-                      <span className="text-green-500 text-xs">
-                        Copied to clipboard!
-                      </span>
-                    )}
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-accent-purple/10 flex items-center justify-center flex-shrink-0">
-                    <FiPhone className="text-accent-purple" />
-                  </div>
-                  <div>
-                    <p className="text-dark-400 text-xs mb-1">Phone</p>
-                    <p className="text-white text-sm">
-                      Available on request
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-accent-cyan/10 flex items-center justify-center flex-shrink-0">
-                    <FiMapPin className="text-accent-cyan" />
-                  </div>
-                  <div>
-                    <p className="text-dark-400 text-xs mb-1">Location</p>
-                    <p className="text-white text-sm">
-                      Lucknow, Uttar Pradesh, India
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-accent-blue/10 flex items-center justify-center flex-shrink-0">
-                    <FiLinkedin className="text-accent-blue" />
-                  </div>
-                  <div>
-                    <p className="text-dark-400 text-xs mb-1">LinkedIn</p>
-                    <a
-                      href="https://www.linkedin.com/in/akash-kumarprajapati"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-white text-sm hover:text-accent-blue transition-colors"
-                    >
-                      /in/akash-kumarprajapati
-                    </a>
-                  </div>
-                </div>
+                    </div>
+                  </motion.div>
+                ))}
               </div>
             </div>
 
-            <div className="card bg-gradient-to-br from-accent-blue/5 via-accent-purple/5 to-accent-cyan/5">
-              <h4 className="text-white font-semibold mb-2">
+            <motion.div
+              className="card bg-gradient-to-br from-accent-blue/5 via-accent-purple/5 to-accent-cyan/5 relative overflow-hidden"
+              whileHover={{ scale: 1.01 }}
+            >
+              <div className="absolute -top-10 -right-10 w-24 h-24 bg-accent-blue/10 rounded-full blur-2xl" />
+              <h4 className="text-white font-semibold mb-2 relative z-10">
                 Let's Work Together
               </h4>
-              <p className="text-dark-300 text-sm leading-relaxed">
+              <p className="text-dark-300 text-sm leading-relaxed relative z-10">
                 I am currently open to freelance opportunities and full-time
                 roles. Whether you have a project idea or just want to connect,
                 feel free to reach out!
               </p>
-            </div>
+            </motion.div>
           </motion.div>
 
+          {/* Form */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <form onSubmit={handleSubmit} className="card space-y-4">
-              <div>
-                <label className="text-dark-400 text-sm mb-2 block">
-                  Your Name <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="text"
-                  value={form.name}
-                  onChange={(e) => setForm({ ...form, name: e.target.value })}
-                  required
-                  placeholder="John Doe"
-                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder:text-dark-500 focus:outline-none focus:border-accent-blue focus:ring-1 focus:ring-accent-blue/50 transition-all"
-                />
-              </div>
-              <div>
-                <label className="text-dark-400 text-sm mb-2 block">
-                  Your Email <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="email"
-                  value={form.email}
-                  onChange={(e) => setForm({ ...form, email: e.target.value })}
-                  required
-                  placeholder="john@example.com"
-                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder:text-dark-500 focus:outline-none focus:border-accent-blue focus:ring-1 focus:ring-accent-blue/50 transition-all"
-                />
-              </div>
-              <div>
-                <label className="text-dark-400 text-sm mb-2 block">
-                  Phone Number
-                </label>
-                <input
-                  type="tel"
-                  value={form.phone}
-                  onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                  placeholder="+91 98765 43210"
-                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder:text-dark-500 focus:outline-none focus:border-accent-blue focus:ring-1 focus:ring-accent-blue/50 transition-all"
-                />
-              </div>
-              <div>
-                <label className="text-dark-400 text-sm mb-2 block">
-                  Your Message <span className="text-red-500">*</span>
-                </label>
-                <textarea
-                  value={form.message}
-                  onChange={(e) =>
-                    setForm({ ...form, message: e.target.value })
-                  }
-                  required
-                  rows={4}
-                  placeholder="Tell me about your project..."
-                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder:text-dark-500 focus:outline-none focus:border-accent-blue focus:ring-1 focus:ring-accent-blue/50 transition-all resize-none"
-                />
-              </div>
-              <button
+            <form onSubmit={handleSubmit} className="card space-y-4 relative overflow-hidden">
+              <div className="absolute -top-20 -left-20 w-40 h-40 bg-accent-purple/5 rounded-full blur-3xl" />
+              {(["name", "email", "phone", "message"] as const).map((field) => (
+                <div key={field} className="relative z-10">
+                  <label className="text-dark-400 text-sm mb-2 block">
+                    {field === "name" ? "Your Name" : field === "email" ? "Your Email" : field === "phone" ? "Phone Number" : "Your Message"}
+                    {field !== "phone" && <span className="text-red-500"> *</span>}
+                  </label>
+                  {field === "message" ? (
+                    <textarea
+                      value={form.message}
+                      onChange={(e) => setForm({ ...form, message: e.target.value })}
+                      onFocus={() => setFocused(field)}
+                      onBlur={() => setFocused(null)}
+                      required
+                      rows={4}
+                      placeholder="Tell me about your project..."
+                      className={`w-full px-4 py-3 bg-white/5 border rounded-xl text-white placeholder:text-dark-500 focus:outline-none transition-all resize-none ${focused === field ? "border-accent-blue ring-1 ring-accent-blue/50 shadow-lg shadow-accent-blue/10" : "border-white/10"
+                        }`}
+                    />
+                  ) : (
+                    <input
+                      type={field === "email" ? "email" : field === "phone" ? "tel" : "text"}
+                      value={form[field]}
+                      onChange={(e) => setForm({ ...form, [field]: e.target.value })}
+                      onFocus={() => setFocused(field)}
+                      onBlur={() => setFocused(null)}
+                      required={field !== "phone"}
+                      placeholder={field === "name" ? "John Doe" : field === "email" ? "john@example.com" : "+91 98765 43210"}
+                      className={`w-full px-4 py-3 bg-white/5 border rounded-xl text-white placeholder:text-dark-500 focus:outline-none transition-all ${focused === field ? "border-accent-blue ring-1 ring-accent-blue/50 shadow-lg shadow-accent-blue/10" : "border-white/10"
+                        }`}
+                    />
+                  )}
+                </div>
+              ))}
+              <motion.button
                 type="submit"
                 disabled={sending}
-                className={`w-full py-3.5 rounded-xl font-semibold text-white transition-all duration-300 bg-gradient-to-r from-accent-blue to-accent-purple hover:shadow-lg hover:shadow-accent-blue/25 hover:scale-[1.02] active:scale-95 disabled:opacity-70`}
+                className="relative z-10 w-full py-3.5 rounded-xl font-semibold text-white transition-all duration-300 bg-gradient-to-r from-accent-blue to-accent-purple overflow-hidden group"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
               >
-                {sending ? (
-                  <span className="flex items-center justify-center gap-2">
-                    <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                    Sending...
-                  </span>
-                ) : (
-                  "Send Message"
-                )}
-              </button>
+                <div className="absolute inset-0 bg-gradient-to-r from-accent-purple to-accent-blue opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <span className="relative z-10 flex items-center justify-center gap-2">
+                  {sending ? (
+                    <>
+                      <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                      Sending...
+                    </>
+                  ) : (
+                    <>
+                      <FiSend />
+                      Send Message
+                    </>
+                  )}
+                </span>
+              </motion.button>
             </form>
           </motion.div>
         </div>

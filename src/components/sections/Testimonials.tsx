@@ -133,11 +133,10 @@ export default function Testimonials() {
                     setDirection(i > current ? 1 : -1);
                     setCurrent(i);
                   }}
-                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                    i === current
+                  className={`w-2 h-2 rounded-full transition-all duration-300 ${i === current
                       ? "bg-accent-blue w-6"
                       : "bg-white/20 hover:bg-white/40"
-                  }`}
+                    }`}
                   aria-label={`Go to testimonial ${i + 1}`}
                 />
               ))}

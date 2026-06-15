@@ -49,6 +49,7 @@ export default function Skills() {
   return (
     <section id="skills" className="section-padding bg-dark-900/50">
       <div className="max-width">
+
         <SectionHeading
           title="Skills & Expertise"
           subtitle="Technologies and tools I work with daily"
