@@ -1,10 +1,14 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { motion } from "framer-motion";
 import { FiArrowDown, FiDownload, FiEye, FiMail, FiStar, FiThumbsUp, FiClock } from "react-icons/fi";
 import { FaGooglePlay, FaApple } from "react-icons/fa";
 import { SiFlutter } from "react-icons/si";
+import Editor from "react-simple-code-editor";
+import Prism from "prismjs";
+import "prismjs/components/prism-dart";
+import "prismjs/components/prism-javascript";
 
 const roles = [
   "Software Engineer",
@@ -52,35 +56,110 @@ const reviews = [
   },
 ];
 
-const flutterCode = `class FlutterApp {
-  final String name = "Cross-Platform App";
-  final String framework = "Flutter + Firebase";
-
-  void build() {
-    var app = MobileApp(
-      platform: "Android & iOS",
-      stateMgmt: "BLoC + Riverpod",
-      payments: "Stripe & Razorpay",
-    );
-    app.deploy();
-    app.ship();
-  }
-}`;
-
-const rnCode = `class ReactNativeApp {
-  final name = "Cross-Platform App";
-  final framework = "React Native + Firebase";
-
-  void build() {
-    var app = MobileApp(
-      platform: "Android & iOS",
-      stateMgmt: "Redux + Context",
-      payments: "Stripe & Razorpay",
-    );
-    app.deploy();
-    app.ship();
-  }
-}`;
+const autocompleteKeywords = [
+  { label: "class", description: "Class declaration" },
+  { label: "final", description: "Final variable" },
+  { label: "const", description: "Const variable" },
+  { label: "void", description: "Void function" },
+  { label: "String", description: "String type" },
+  { label: "int", description: "Integer type" },
+  { label: "bool", description: "Boolean type" },
+  { label: "Widget", description: "Flutter Widget" },
+  { label: "return", description: "Return statement" },
+  { label: "import", description: "Import statement" },
+  { label: "if", description: "If condition" },
+  { label: "else", description: "Else condition" },
+  { label: "for", description: "For loop" },
+  { label: "while", description: "While loop" },
+  { label: "switch", description: "Switch statement" },
+  { label: "case", description: "Case clause" },
+  { label: "var", description: "Variable declaration" },
+  { label: "async", description: "Async function" },
+  { label: "await", description: "Await expression" },
+  { label: "function", description: "Function declaration" },
+  { label: "export", description: "Export statement" },
+  { label: "extends", description: "Extends class" },
+  { label: "implements", description: "Implements interface" },
+  { label: "mixin", description: "Mixin declaration" },
+  { label: "enum", description: "Enum declaration" },
+  { label: "typedef", description: "Type alias" },
+  { label: "dynamic", description: "Dynamic type" },
+  { label: "null", description: "Null value" },
+  { label: "true", description: "True boolean" },
+  { label: "false", description: "False boolean" },
+  { label: "this", description: "Current instance" },
+  { label: "super", description: "Parent class" },
+  { label: "static", description: "Static member" },
+  { label: "abstract", description: "Abstract class" },
+  { label: "override", description: "Override method" },
+  { label: "required", description: "Required parameter" },
+  { label: "late", description: "Late initialization" },
+  { label: "final class", description: "Final class" },
+  { label: "sealed class", description: "Sealed class" },
+  { label: "State", description: "Flutter State" },
+  { label: "StatelessWidget", description: "Flutter stateless" },
+  { label: "StatefulWidget", description: "Flutter stateful" },
+  { label: "BuildContext", description: "Build context" },
+  { label: "ThemeData", description: "Theme data" },
+  { label: "EdgeInsets", description: "Edge insets" },
+  { label: "Colors", description: "Color constants" },
+  { label: "TextStyle", description: "Text style" },
+  { label: "BoxDecoration", description: "Box decoration" },
+  { label: "BorderRadius", description: "Border radius" },
+  { label: "MainAxisAlignment", description: "Main axis" },
+  { label: "CrossAxisAlignment", description: "Cross axis" },
+  { label: "const", description: "Const constructor" },
+  { label: "Navigator", description: "Navigation" },
+  { label: "MediaQuery", description: "Media query" },
+  { label: "Scaffold", description: "Scaffold widget" },
+  { label: "AppBar", description: "App bar widget" },
+  { label: "Container", description: "Container widget" },
+  { label: "Row", description: "Row widget" },
+  { label: "Column", description: "Column widget" },
+  { label: "Stack", description: "Stack widget" },
+  { label: "Center", description: "Center widget" },
+  { label: "Padding", description: "Padding widget" },
+  { label: "SizedBox", description: "Sized box" },
+  { label: "Expanded", description: "Expanded widget" },
+  { label: "Flexible", description: "Flexible widget" },
+  { label: "Text", description: "Text widget" },
+  { label: "Icon", description: "Icon widget" },
+  { label: "Image", description: "Image widget" },
+  { label: "ListView", description: "List view" },
+  { label: "GridView", description: "Grid view" },
+  { label: "GestureDetector", description: "Gesture detector" },
+  { label: "InkWell", description: "Ink well" },
+  { label: "ElevatedButton", description: "Elevated button" },
+  { label: "TextButton", description: "Text button" },
+  { label: "IconButton", description: "Icon button" },
+  { label: "FloatingActionButton", description: "FAB" },
+  { label: "SingleChildScrollView", description: "Scroll view" },
+  { label: "Form", description: "Form widget" },
+  { label: "TextFormField", description: "Text form field" },
+  { label: "TextEditingController", description: "Text controller" },
+  { label: "FocusNode", description: "Focus node" },
+  { label: "AnimationController", description: "Animation" },
+  { label: "AnimatedBuilder", description: "Animated builder" },
+  { label: "FutureBuilder", description: "Future builder" },
+  { label: "StreamBuilder", description: "Stream builder" },
+  { label: "Provider", description: "Provider" },
+  { label: "Consumer", description: "Consumer widget" },
+  { label: "BlocProvider", description: "BLoC provider" },
+  { label: "BlocBuilder", description: "BLoC builder" },
+  { label: "BlocListener", description: "BLoC listener" },
+  { label: "Cubit", description: "Cubit" },
+  { label: "map", description: "Map method" },
+  { label: "filter", description: "Filter method" },
+  { label: "reduce", description: "Reduce method" },
+  { label: "forEach", description: "ForEach method" },
+  { label: "toList", description: "To list" },
+  { label: "toSet", description: "To set" },
+  { label: "where", description: "Where clause" },
+  { label: "any", description: "Any match" },
+  { label: "every", description: "Every match" },
+  { label: "firstWhere", description: "First where" },
+  { label: "singleWhere", description: "Single where" },
+];
 
 function useTypingAnimation(texts: string[]) {
   const [displayed, setDisplayed] = useState("");
@@ -121,6 +200,100 @@ export default function Hero() {
   const [codeVisible, setCodeVisible] = useState(false);
   const [codeTab, setCodeTab] = useState<"flutter" | "rn">("flutter");
   const [reviewIndex, setReviewIndex] = useState(0);
+  const [editorText, setEditorText] = useState(`class FlutterApp {
+  final String name = "Cross-Platform App";
+  final String framework = "Flutter + Firebase";
+
+  void build() {
+    var app = MobileApp(
+      platform: "Android & iOS",
+      stateMgmt: "BLoC + Riverpod",
+      payments: "Stripe & Razorpay",
+    );
+    app.deploy();
+    app.ship();
+  }
+}`);
+  const [windowState, setWindowState] = useState<"normal" | "minimized" | "maximized" | "closed">("normal");
+  const [suggestions, setSuggestions] = useState<{ label: string; description: string }[]>([]);
+  const [suggestionIndex, setSuggestionIndex] = useState(0);
+  const [cursorPos, setCursorPos] = useState(0);
+  const editorRef = useRef<HTMLDivElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+
+  const getCurrentWord = (text: string, pos: number) => {
+    const before = text.slice(0, pos);
+    const match = before.match(/[a-zA-Z_][a-zA-Z0-9_]*$/);
+    return match ? match[0].toLowerCase() : "";
+  };
+
+  const updateSuggestions = (code: string, pos: number) => {
+    const word = getCurrentWord(code, pos);
+    if (word.length >= 1) {
+      const matches = autocompleteKeywords.filter(k => k.label.toLowerCase().startsWith(word) && k.label.length > word.length);
+      setSuggestions(matches.slice(0, 8));
+      setSuggestionIndex(0);
+    } else {
+      setSuggestions([]);
+    }
+  };
+
+  const handleCodeChange = (code: string) => {
+    setEditorText(code);
+    updateSuggestions(code, cursorPos);
+  };
+
+  const selectSuggestion = (label: string) => {
+    const before = editorText.slice(0, cursorPos);
+    const word = before.match(/[a-zA-Z_][a-zA-Z0-9_]*$/);
+    if (word) {
+      const newText = editorText.slice(0, cursorPos - word[0].length) + label + editorText.slice(cursorPos);
+      setEditorText(newText);
+      const newPos = cursorPos - word[0].length + label.length;
+      setCursorPos(newPos);
+      setTimeout(() => {
+        if (textareaRef.current) {
+          textareaRef.current.focus();
+          textareaRef.current.setSelectionRange(newPos, newPos);
+        }
+      }, 0);
+    }
+    setSuggestions([]);
+  };
+
+  const handleEditorKeyUp = (e: React.KeyboardEvent) => {
+    const target = e.currentTarget as unknown as HTMLTextAreaElement;
+    textareaRef.current = target;
+    const pos = target.selectionStart;
+    setCursorPos(pos);
+    updateSuggestions(editorText, pos);
+  };
+
+  const handleEditorClick = (e: React.MouseEvent) => {
+    const target = e.currentTarget as unknown as HTMLTextAreaElement;
+    textareaRef.current = target;
+    setCursorPos(target.selectionStart);
+    setSuggestions([]);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (suggestions.length > 0) {
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+        setSuggestionIndex(i => Math.min(i + 1, suggestions.length - 1));
+      } else if (e.key === "ArrowUp") {
+        e.preventDefault();
+        setSuggestionIndex(i => Math.max(i - 1, 0));
+      } else if (e.key === "Enter" || e.key === "Tab") {
+        if (suggestionIndex >= 0 && suggestionIndex < suggestions.length) {
+          e.preventDefault();
+          selectSuggestion(suggestions[suggestionIndex].label);
+        }
+      } else if (e.key === "Escape") {
+        setSuggestions([]);
+      }
+    }
+  };
 
   useEffect(() => {
     const timer = setTimeout(() => setCodeVisible(true), 2000);
@@ -327,37 +500,99 @@ export default function Hero() {
           <div className="hidden lg:flex items-start justify-center gap-6">
 
 
-            {/* Code — side by side with phone */}
+            {/* Code — macOS style editable editor */}
             <motion.div
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: codeVisible ? 1 : 0, x: codeVisible ? 0 : 50 }}
               transition={{ duration: 0.8, delay: 1.6 }}
-              className="w-[350px] mt-16"
+              className={`${windowState === "maximized" ? "w-full" : "w-[350px]"} mt-16 ${windowState === "closed" ? "hidden" : ""}`}
             >
-              <div className="glass rounded-2xl overflow-hidden border border-white/5 shadow-2xl shadow-accent-blue/10">
+              <div className={`glass rounded-2xl overflow-hidden border border-white/5 shadow-2xl shadow-accent-blue/10 ${windowState === "minimized" ? "h-10 overflow-hidden" : ""}`}>
                 <div className="flex items-center gap-2 px-4 py-2 bg-white/5 border-b border-white/5">
                   <div className="flex gap-1.5">
-                    <div className="w-2.5 h-2.5 rounded-full bg-red-500/70" />
-                    <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/70" />
-                    <div className="w-2.5 h-2.5 rounded-full bg-green-500/70" />
+                    <button onClick={() => setWindowState("closed")} className="w-2.5 h-2.5 rounded-full bg-red-500/70 hover:bg-red-500 transition-colors" title="Close" />
+                    <button onClick={() => setWindowState(s => s === "minimized" ? "normal" : "minimized")} className="w-2.5 h-2.5 rounded-full bg-yellow-500/70 hover:bg-yellow-500 transition-colors" title="Minimize" />
+                    <button onClick={() => setWindowState(s => s === "maximized" ? "normal" : "maximized")} className="w-2.5 h-2.5 rounded-full bg-green-500/70 hover:bg-green-500 transition-colors" title="Maximize" />
                   </div>
                   <div className="flex ml-4 gap-1">
-                    <button onClick={() => setCodeTab("flutter")} className={`px-3 py-1 rounded-lg text-[10px] font-mono font-medium transition-all ${codeTab === "flutter" ? "bg-accent-blue/20 text-accent-blue" : "text-dark-400 hover:text-dark-200"}`}>Flutter</button>
-                    <button onClick={() => setCodeTab("rn")} className={`px-3 py-1 rounded-lg text-[10px] font-mono font-medium transition-all ${codeTab === "rn" ? "bg-accent-cyan/20 text-accent-cyan" : "text-dark-400 hover:text-dark-200"}`}>React Native</button>
+                    <button onClick={() => { setCodeTab("flutter"); setEditorText(`class FlutterApp {
+  final String name = "Cross-Platform App";
+  final String framework = "Flutter + Firebase";
+
+  void build() {
+    var app = MobileApp(
+      platform: "Android & iOS",
+      stateMgmt: "BLoC + Riverpod",
+      payments: "Stripe & Razorpay",
+    );
+    app.deploy();
+    app.ship();
+  }
+}`); }} className={`px-3 py-1 rounded-lg text-[10px] font-mono font-medium transition-all ${codeTab === "flutter" ? "bg-accent-blue/20 text-accent-blue" : "text-dark-400 hover:text-dark-200"}`}>Flutter</button>
+                    <button onClick={() => { setCodeTab("rn"); setEditorText(`class ReactNativeApp {
+  final name = "Cross-Platform App";
+  final framework = "React Native + Firebase";
+
+  void build() {
+    var app = MobileApp(
+      platform: "Android & iOS",
+      stateMgmt: "Redux + Context",
+      payments: "Stripe & Razorpay",
+    );
+    app.deploy();
+    app.ship();
+  }
+}`); }} className={`px-3 py-1 rounded-lg text-[10px] font-mono font-medium transition-all ${codeTab === "rn" ? "bg-accent-cyan/20 text-accent-cyan" : "text-dark-400 hover:text-dark-200"}`}>React Native</button>
                   </div>
                 </div>
-                <div className="p-4 font-mono text-[11px] leading-relaxed overflow-x-auto min-h-[200px]">
-                  {(codeTab === "flutter" ? flutterCode : rnCode).split("\n").map((line, i) => {
-                    const indent = line.search(/\S/);
-                    const trimmed = line.trim();
-                    let color = "text-dark-300";
-                    if (["import", "class", "Widget", "return", "const", "export", "React", "useRef"].some(w => trimmed.startsWith(w))) color = "text-accent-blue";
-                    else if (["final", "String", "int", "bool", "View", "Text", "MaterialApp", "Scaffold", "AppBar", "Center"].some(w => trimmed.startsWith(w))) color = "text-accent-purple";
-                    else if (trimmed.includes('"') || trimmed.includes("true") || trimmed.includes("false") || trimmed.includes("=>")) color = "text-green-400";
-                    else if (["@override", "}:", "};", "});"].some(w => trimmed.startsWith(w))) color = "text-dark-500";
-                    return (<motion.div key={i} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.8 + i * 0.05, duration: 0.25 }} className={color} style={{ paddingLeft: indent * 8 }}>{line.trim() || "\u00A0"}</motion.div>);
-                  })}
-                </div>
+                {windowState !== "minimized" && (
+                  <div className="relative" ref={editorRef}>
+                    <div className="w-full font-mono text-[11px] leading-[1.6] bg-transparent min-h-[280px] max-h-[400px] overflow-y-auto custom-scrollbar">
+                      <Editor
+                        value={editorText}
+                        onValueChange={handleCodeChange}
+                        highlight={(code) => {
+                          try {
+                            const html = Prism.highlight(code, Prism.languages.dart || Prism.languages.javascript, "dart");
+                            return html;
+                          } catch {
+                            return code;
+                          }
+                        }}
+                        onKeyDown={handleKeyDown}
+                        onKeyUp={handleEditorKeyUp}
+                        onClick={handleEditorClick}
+                        padding={16}
+                        textareaClassName="focus:outline-none"
+                        style={{
+                          fontFamily: "inherit",
+                          fontSize: "inherit",
+                          lineHeight: "inherit",
+                          backgroundColor: "transparent",
+                          color: "inherit",
+                          minHeight: "280px",
+                        }}
+                      />
+                    </div>
+                    {suggestions.length > 0 && (
+                      <div className="absolute left-4 bottom-full mb-1 w-56 bg-dark-800 border border-white/10 rounded-xl shadow-2xl z-50 overflow-hidden">
+                        {suggestions.map((s, i) => (
+                          <button
+                            key={s.label}
+                            onClick={() => selectSuggestion(s.label)}
+                            onMouseEnter={() => setSuggestionIndex(i)}
+                            className={`w-full text-left px-3 py-1.5 text-[11px] flex items-center justify-between transition-colors ${
+                              i === suggestionIndex ? "bg-accent-blue/20 text-accent-blue" : "text-dark-300 hover:bg-white/5"
+                            }`}
+                          >
+                            <span className="font-semibold">{s.label}</span>
+                            <span className="text-dark-500 text-[9px]">{s.description}</span>
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
 
               <motion.div
