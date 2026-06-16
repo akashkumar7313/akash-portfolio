@@ -75,13 +75,13 @@ export async function POST(req: NextRequest) {
 </table>
 </td>
 <td style="padding-left:14px;vertical-align:middle;">
-<p style="color:#fff;font-size:15px;font-weight:600;margin:0 0 2px;">${escName}</p>
+<p style="color:#94a3b8;font-size:10px;margin:0 0 1px;text-transform:uppercase;letter-spacing:0.5px;">Name</p>
+<p style="color:#fff;font-size:15px;font-weight:600;margin:0 0 6px;">${escName}</p>
+<p style="color:#94a3b8;font-size:10px;margin:0 0 1px;text-transform:uppercase;letter-spacing:0.5px;">Email</p>
 <p style="color:#60a5fa;font-size:13px;margin:0;">${escEmail}</p>
 </td>
-${escPhone ? `<td style="vertical-align:middle;text-align:right;">
-<p style="color:#94a3b8;font-size:11px;margin:0 0 2px;text-transform:uppercase;letter-spacing:0.5px;">Phone</p>
-<p style="color:#c084fc;font-size:13px;font-weight:500;margin:0;">${escPhone}</p>
-</td>` : ""}
+${escPhone ? `<p style="color:#94a3b8;font-size:10px;margin:6px 0 1px;text-transform:uppercase;letter-spacing:0.5px;">Phone</p>
+<p style="color:#c084fc;font-size:13px;font-weight:500;margin:0;">${escPhone}</p>` : ""}
 </tr>
 </table>
 </td></tr>
