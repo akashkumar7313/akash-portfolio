@@ -92,14 +92,14 @@ export default function Experience() {
                   <div className={`absolute top-0 left-0 w-1 h-full bg-gradient-to-b ${exp.gradient}`} />
                   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-3">
                     <div>
-                      <h3 className="text-white text-lg font-bold font-heading">
+                      <h3 className="text-dark-100 dark:text-white text-lg font-bold font-heading">
                         {exp.role}
                       </h3>
                       <p className={`text-sm font-medium bg-gradient-to-r ${exp.gradient} bg-clip-text text-transparent`}>
                         {exp.company}
                       </p>
                     </div>
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-dark-400 text-xs font-mono whitespace-nowrap">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[var(--glass-5)] border border-[var(--glass-10)] text-dark-400 text-xs font-mono whitespace-nowrap">
                       <FiCalendar className="text-accent-blue" size={10} />
                       {exp.period}
                     </span>

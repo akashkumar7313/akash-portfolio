@@ -80,7 +80,7 @@ export default function Projects() {
               whileTap={{ scale: 0.95 }}
               className={`px-5 py-2.5 rounded-xl text-sm font-medium transition-all duration-300 ${activeFilter === f.value
                   ? "bg-gradient-to-r from-accent-blue to-accent-purple text-white shadow-lg shadow-accent-blue/25"
-                  : "bg-white/5 border border-white/10 text-dark-300 hover:text-white hover:bg-white/10"
+                  : "bg-[var(--glass-5)] border border-[var(--glass-10)] text-dark-300 hover:text-dark-100 dark:text-white hover:bg-[var(--glass-10)]"
                 }`}
             >
               {f.icon} {f.label}
@@ -112,17 +112,17 @@ export default function Projects() {
                       <div className="w-full aspect-video rounded-xl mb-5 bg-gradient-to-br from-accent-blue/20 via-accent-purple/20 to-accent-cyan/20 flex items-center justify-center overflow-hidden relative">
                         <FiFolder className="text-4xl text-accent-blue/40 group-hover:scale-110 group-hover:text-accent-blue transition-all duration-500" />
                         <div className="absolute inset-0 bg-gradient-to-t from-dark-900/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-3">
-                          <span className="text-white text-xs font-medium px-3 py-1 rounded-full bg-white/10 backdrop-blur-sm">
+                          <span className="text-dark-100 dark:text-white text-xs font-medium px-3 py-1 rounded-full bg-[var(--glass-10)] backdrop-blur-sm">
                             Click to view details
                           </span>
                         </div>
                         {/* Project number badge */}
-                        <div className="absolute top-2 right-2 w-7 h-7 rounded-full bg-dark-900/80 backdrop-blur-sm border border-white/10 flex items-center justify-center text-[10px] text-dark-300 font-mono">
+                        <div className="absolute top-2 right-2 w-7 h-7 rounded-full bg-dark-900/80 backdrop-blur-sm border border-[var(--glass-10)] flex items-center justify-center text-[10px] text-dark-300 font-mono">
                           #{project.id}
                         </div>
                       </div>
 
-                      <h3 className="text-white font-bold text-lg mb-2 group-hover:text-accent-blue transition-colors font-heading">
+                      <h3 className="text-dark-100 dark:text-white font-bold text-lg mb-2 group-hover:text-accent-blue transition-colors font-heading">
                         {project.title}
                       </h3>
                       <p className="text-dark-400 text-sm leading-relaxed mb-4 flex-1">
@@ -144,7 +144,7 @@ export default function Projects() {
                         )}
                       </div>
 
-                      <div className="flex items-center gap-3 mt-auto pt-4 border-t border-white/5">
+                      <div className="flex items-center gap-3 mt-auto pt-4 border-t border-[var(--glass-5)]">
                         {project.androidLink && (
                           <span className="text-dark-500 text-xs flex items-center gap-1 group-hover:text-accent-blue transition-colors">
                             <FiExternalLink /> Android
@@ -156,7 +156,7 @@ export default function Projects() {
                           </span>
                         )}
                         {project.githubLink && (
-                          <span className="text-dark-500 text-xs flex items-center gap-1 group-hover:text-white transition-colors">
+                          <span className="text-dark-500 text-xs flex items-center gap-1 group-hover:text-dark-100 dark:text-white transition-colors">
                             <FiGithub /> Code
                           </span>
                         )}

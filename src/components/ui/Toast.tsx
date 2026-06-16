@@ -57,12 +57,12 @@ export default function Toast({
               )}
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-white font-semibold text-sm">{title}</p>
+              <p className="text-dark-100 dark:text-white font-semibold text-sm">{title}</p>
               <p className="text-dark-300 text-xs mt-0.5">{message}</p>
             </div>
             <button
               onClick={onClose}
-              className="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-lg bg-white/5 text-dark-400 hover:text-white hover:bg-white/10 transition-all"
+              className="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-lg bg-[var(--glass-5)] text-dark-400 hover:text-dark-100 dark:text-white hover:bg-[var(--glass-10)] transition-all"
             >
               <FiX />
             </button>

@@ -9,7 +9,7 @@ const socials = [
     icon: FiGithub,
     href: "https://github.com/akashkumarprajapati",
     label: "GitHub",
-    color: "hover:text-white",
+    color: "hover:text-dark-100 dark:text-white",
   },
   {
     icon: FiLinkedin,
@@ -46,7 +46,7 @@ export default function FloatingSocialSidebar() {
           href={href}
           target="_blank"
           rel="noopener noreferrer"
-          className={`w-10 h-10 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 text-dark-400 ${color} hover:bg-white/10 hover:border-white/20 transition-all duration-300`}
+          className={`w-10 h-10 flex items-center justify-center rounded-xl bg-[var(--glass-5)] border border-[var(--glass-10)] text-dark-400 ${color} hover:bg-[var(--glass-10)] hover:border-[var(--glass-20)] transition-all duration-300`}
           aria-label={label}
         >
           <Icon className="text-lg" />

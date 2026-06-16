@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { HiMenu, HiX } from "react-icons/hi";
+import ThemeToggle from "@/components/ui/ThemeToggle";
 
 const navLinks = [
   { label: "Home", href: "#hero" },
@@ -44,7 +45,7 @@ export default function Navbar() {
       transition={{ duration: 0.6, ease: "easeOut" }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled
-          ? "bg-dark-950/80 backdrop-blur-xl border-b border-white/5 shadow-lg shadow-black/10"
+          ? "bg-dark-950/80 backdrop-blur-xl border-b border-[var(--glass-5)] shadow-lg shadow-black/10"
           : "bg-transparent"
       }`}
     >
@@ -53,7 +54,7 @@ export default function Navbar() {
           href="#hero"
           className="text-xl md:text-2xl font-bold gradient-text"
         >
-          Akash<span className="text-white">.</span>
+          Akash<span className="text-dark-100 dark:text-white">.</span>
         </a>
 
         <div className="hidden md:flex items-center gap-1">
@@ -63,8 +64,8 @@ export default function Navbar() {
               href={link.href}
               className={`px-3 py-2 rounded-xl text-sm font-medium transition-all duration-300 ${
                 activeSection === link.href.slice(1)
-                  ? "text-white bg-white/10"
-                  : "text-dark-300 hover:text-white hover:bg-white/5"
+                  ? "text-dark-100 dark:text-white bg-[var(--glass-10)] dark:bg-[var(--glass-10)] bg-gray-900/10"
+                  : "text-dark-300 hover:text-dark-100 dark:text-white hover:bg-[var(--glass-5)] dark:hover:bg-[var(--glass-5)] hover:bg-gray-900/5"
               }`}
             >
               {link.label}
@@ -72,13 +73,17 @@ export default function Navbar() {
           ))}
         </div>
 
-        <button
-          onClick={() => setMobileOpen(!mobileOpen)}
-          className="md:hidden w-10 h-10 flex items-center justify-center rounded-xl bg-white/5 text-white text-xl"
-          aria-label="Toggle menu"
-        >
-          {mobileOpen ? <HiX /> : <HiMenu />}
-        </button>
+        <div className="flex items-center gap-2">
+          <ThemeToggle />
+          <button
+            onClick={() => setMobileOpen(!mobileOpen)}
+            className="md:hidden w-10 h-10 flex items-center justify-center rounded-xl text-dark-300 text-xl"
+            style={{ background: "var(--glass-bg)", border: "1px solid var(--glass-border)" }}
+            aria-label="Toggle menu"
+          >
+            {mobileOpen ? <HiX /> : <HiMenu />}
+          </button>
+        </div>
       </div>
 
       <AnimatePresence>
@@ -88,7 +93,8 @@ export default function Navbar() {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3 }}
-            className="md:hidden overflow-hidden border-t border-white/5 bg-dark-950/95 backdrop-blur-xl"
+            className="md:hidden overflow-hidden border-t backdrop-blur-xl"
+            style={{ borderColor: "var(--border-light)", backgroundColor: "var(--bg-body)" }}
           >
             <div className="flex flex-col px-4 py-4 gap-1">
               {navLinks.map((link) => (
@@ -98,8 +104,8 @@ export default function Navbar() {
                   onClick={() => setMobileOpen(false)}
                   className={`px-4 py-3 rounded-xl text-sm font-medium transition-all ${
                     activeSection === link.href.slice(1)
-                      ? "text-white bg-white/10"
-                      : "text-dark-300 hover:text-white hover:bg-white/5"
+                      ? "text-dark-100 dark:text-white bg-[var(--glass-10)]"
+                      : "text-dark-300 hover:text-dark-100 dark:text-white hover:bg-[var(--glass-5)]"
                   }`}
                 >
                   {link.label}

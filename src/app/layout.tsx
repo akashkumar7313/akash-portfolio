@@ -7,6 +7,7 @@ import WhatsAppButton from "@/components/layout/WhatsAppButton";
 import BackToTop from "@/components/layout/BackToTop";
 import FloatingSocialSidebar from "@/components/layout/FloatingSocialSidebar";
 import Chatbot from "@/components/sections/Chatbot";
+import { ThemeProvider } from "next-themes";
 
 export const metadata: Metadata = {
   title: "Akash Kumar Prajapati | Senior Mobile App Developer",
@@ -43,16 +44,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" suppressHydrationWarning>
       <body className="relative">
-        <ScrollProgress />
-        <Navbar />
-        <FloatingSocialSidebar />
-        <main>{children}</main>
-        <Footer />
-        <WhatsAppButton />
-        <BackToTop />
-        <Chatbot />
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
+          <ScrollProgress />
+          <Navbar />
+          <FloatingSocialSidebar />
+          <main>{children}</main>
+          <Footer />
+          <WhatsAppButton />
+          <BackToTop />
+          <Chatbot />
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -142,7 +142,7 @@ export default function Contact() {
               className="card relative overflow-hidden group"
             >
               <div className="absolute inset-0 bg-gradient-to-br from-accent-blue/[0.03] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <h3 className="text-white font-bold text-lg mb-6 flex items-center gap-2 relative z-10">
+              <h3 className="text-dark-100 dark:text-white font-bold text-lg mb-6 flex items-center gap-2 relative z-10">
                 <span className="w-8 h-8 rounded-lg bg-accent-blue/20 flex items-center justify-center">
                   <FiMessageCircle className="text-accent-blue" />
                 </span>
@@ -167,16 +167,16 @@ export default function Contact() {
                     <div className="flex-1 min-w-0">
                       <p className="text-dark-500 text-[11px] uppercase tracking-wider mb-0.5">{item.label}</p>
                       {"action" in item ? (
-                        <button onClick={item.action} className="text-white text-sm hover:text-accent-blue transition-colors flex items-center gap-2 w-full text-left truncate">
+                        <button onClick={item.action} className="text-dark-100 dark:text-white text-sm hover:text-accent-blue transition-colors flex items-center gap-2 w-full text-left truncate">
                           <span className="truncate">{item.value}</span>
                           {copied ? <FiCheck className="text-green-500 shrink-0" /> : <FiCopy className="text-dark-500 text-xs shrink-0 opacity-0 group-hover/item:opacity-100 transition-opacity" />}
                         </button>
                       ) : "link" in item ? (
-                        <a href={item.link} target="_blank" rel="noopener noreferrer" className="text-white text-sm hover:text-accent-blue transition-colors block truncate">
+                        <a href={item.link} target="_blank" rel="noopener noreferrer" className="text-dark-100 dark:text-white text-sm hover:text-accent-blue transition-colors block truncate">
                           {item.value}
                         </a>
                       ) : (
-                        <p className="text-white text-sm truncate">{item.value}</p>
+                        <p className="text-dark-100 dark:text-white text-sm truncate">{item.value}</p>
                       )}
                     </div>
                   </motion.div>
@@ -195,7 +195,7 @@ export default function Contact() {
               <div className="absolute -top-16 -right-16 w-32 h-32 bg-accent-blue/10 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700" />
               <div className="absolute -bottom-8 -left-8 w-20 h-20 bg-accent-purple/10 rounded-full blur-2xl" />
               <div className="relative z-10">
-                <h4 className="text-white font-semibold mb-2 flex items-center gap-2">
+                <h4 className="text-dark-100 dark:text-white font-semibold mb-2 flex items-center gap-2">
                   <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
                   Let&apos;s Work Together
                 </h4>
@@ -217,7 +217,7 @@ export default function Contact() {
               <div className="absolute -top-24 -right-24 w-48 h-48 bg-accent-purple/8 rounded-full blur-3xl pointer-events-none" />
               <div className="absolute -bottom-16 -left-16 w-32 h-32 bg-accent-blue/8 rounded-full blur-3xl pointer-events-none" />
 
-              <h3 className="text-white font-bold text-lg flex items-center gap-2 relative z-10">
+              <h3 className="text-dark-100 dark:text-white font-bold text-lg flex items-center gap-2 relative z-10">
                 <span className="w-8 h-8 rounded-lg bg-accent-purple/20 flex items-center justify-center">
                   <FiSend className="text-accent-purple" />
                 </span>
@@ -233,7 +233,7 @@ export default function Contact() {
 
                 return (
                   <div key={field} className="relative z-10">
-                    <div className={`relative flex items-start rounded-xl border transition-all duration-300 ${error ? "border-red-500/50 bg-red-500/5" : isFocused ? "border-accent-blue bg-accent-blue/5 shadow-lg shadow-accent-blue/10" : "border-white/10 bg-white/5 hover:border-white/20"}`}>
+                    <div className={`relative flex items-start rounded-xl border transition-all duration-300 ${error ? "border-red-500/50 bg-red-500/5" : isFocused ? "border-accent-blue bg-accent-blue/5 shadow-lg shadow-accent-blue/10" : "border-[var(--glass-10)] bg-[var(--glass-5)] hover:border-[var(--glass-20)]"}`}>
                       <div className={`flex items-center justify-center pl-4 pt-3.5 ${isFocused ? "text-accent-blue" : error ? "text-red-500" : "text-dark-500"}`}>
                         <Icon className="text-lg" />
                       </div>
@@ -247,7 +247,7 @@ export default function Contact() {
                             required={meta.required}
                             rows={4}
                             placeholder={meta.placeholder}
-                            className="w-full pl-3 pr-4 pt-3.5 pb-3 bg-transparent text-white placeholder:text-transparent focus:outline-none resize-none text-sm leading-relaxed"
+                            className="w-full pl-3 pr-4 pt-3.5 pb-3 bg-transparent text-dark-100 dark:text-white placeholder:text-transparent focus:outline-none resize-none text-sm leading-relaxed"
                           />
                         ) : (
                           <input
@@ -258,7 +258,7 @@ export default function Contact() {
                             onBlur={() => { setFocused(null); setTouched((prev) => new Set(prev).add(field)); }}
                             required={meta.required}
                             placeholder={meta.placeholder}
-                            className="w-full pl-3 pr-4 py-3.5 bg-transparent text-white placeholder:text-transparent focus:outline-none text-sm"
+                            className="w-full pl-3 pr-4 py-3.5 bg-transparent text-dark-100 dark:text-white placeholder:text-transparent focus:outline-none text-sm"
                           />
                         )}
                         <label className={`absolute left-3 transition-all duration-200 pointer-events-none ${isFocused || hasValue ? "text-[10px] -top-2 text-accent-blue" : "text-sm top-3.5 text-dark-500"}`}>
@@ -296,7 +296,7 @@ export default function Contact() {
                 <span className="relative z-10 flex items-center justify-center gap-2">
                   {sending ? (
                     <>
-                      <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                      <span className="w-4 h-4 border-2 border-[var(--glass-30)] border-t-white rounded-full animate-spin" />
                       <span>Sending...</span>
                     </>
                   ) : (

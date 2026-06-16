@@ -52,11 +52,11 @@ export default function ProjectModal({ project, onClose }: Props) {
           onClick={(e) => e.stopPropagation()}
           className="glass rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto"
         >
-          <div className="sticky top-0 z-10 flex items-center justify-between p-5 border-b border-white/10 bg-dark-950/90 backdrop-blur-xl">
-            <h3 className="text-white font-bold text-lg">{project.title}</h3>
+          <div className="sticky top-0 z-10 flex items-center justify-between p-5 border-b border-[var(--glass-10)] bg-dark-950/90 backdrop-blur-xl">
+            <h3 className="text-dark-100 dark:text-white font-bold text-lg">{project.title}</h3>
             <button
               onClick={onClose}
-              className="w-9 h-9 rounded-xl bg-white/5 flex items-center justify-center text-dark-300 hover:text-white hover:bg-white/10 transition-all"
+              className="w-9 h-9 rounded-xl bg-[var(--glass-5)] flex items-center justify-center text-dark-300 hover:text-dark-100 dark:text-white hover:bg-[var(--glass-10)] transition-all"
             >
               <HiX />
             </button>
@@ -78,7 +78,7 @@ export default function ProjectModal({ project, onClose }: Props) {
                           i === 0 ? project.screenshots.length - 1 : i - 1
                         )
                       }
-                      className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/50 flex items-center justify-center text-white hover:bg-black/70 transition-all"
+                      className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/50 flex items-center justify-center text-dark-100 dark:text-white hover:bg-black/70 transition-all"
                     >
                       <HiChevronLeft />
                     </button>
@@ -88,7 +88,7 @@ export default function ProjectModal({ project, onClose }: Props) {
                           i === project.screenshots.length - 1 ? 0 : i + 1
                         )
                       }
-                      className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/50 flex items-center justify-center text-white hover:bg-black/70 transition-all"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/50 flex items-center justify-center text-dark-100 dark:text-white hover:bg-black/70 transition-all"
                     >
                       <HiChevronRight />
                     </button>
@@ -100,7 +100,7 @@ export default function ProjectModal({ project, onClose }: Props) {
                           className={`w-2 h-2 rounded-full transition-all ${
                             i === imgIndex
                               ? "bg-white w-4"
-                              : "bg-white/40 hover:bg-white/60"
+                              : "bg-[var(--glass-20)] hover:bg-[var(--glass-60)]"
                           }`}
                         />
                       ))}
@@ -115,7 +115,7 @@ export default function ProjectModal({ project, onClose }: Props) {
             </p>
 
             <div>
-              <h4 className="text-white font-semibold mb-3">Tech Stack</h4>
+              <h4 className="text-dark-100 dark:text-white font-semibold mb-3">Tech Stack</h4>
               <div className="flex flex-wrap gap-2">
                 {project.techStack.map((t) => (
                   <span key={t} className="tech-badge">
@@ -126,7 +126,7 @@ export default function ProjectModal({ project, onClose }: Props) {
             </div>
 
             <div>
-              <h4 className="text-white font-semibold mb-3">Key Features</h4>
+              <h4 className="text-dark-100 dark:text-white font-semibold mb-3">Key Features</h4>
               <ul className="space-y-2">
                 {project.features.map((f, i) => (
                   <li
@@ -141,7 +141,7 @@ export default function ProjectModal({ project, onClose }: Props) {
             </div>
 
             <div className="glass rounded-xl p-4">
-              <h4 className="text-white font-semibold mb-2">My Role</h4>
+              <h4 className="text-dark-100 dark:text-white font-semibold mb-2">My Role</h4>
               <p className="text-dark-300 text-sm leading-relaxed">
                 {project.role}
               </p>
@@ -153,7 +153,7 @@ export default function ProjectModal({ project, onClose }: Props) {
                   href={project.androidLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-5 py-3 bg-white/5 border border-white/10 rounded-xl text-sm font-medium text-white hover:bg-white/10 hover:border-white/20 transition-all flex items-center gap-2"
+                  className="px-5 py-3 bg-[var(--glass-5)] border border-[var(--glass-10)] rounded-xl text-sm font-medium text-dark-100 dark:text-white hover:bg-[var(--glass-10)] hover:border-[var(--glass-20)] transition-all flex items-center gap-2"
                 >
                   <FiExternalLink /> Android App
                 </a>
@@ -163,7 +163,7 @@ export default function ProjectModal({ project, onClose }: Props) {
                   href={project.iosLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-5 py-3 bg-white/5 border border-white/10 rounded-xl text-sm font-medium text-white hover:bg-white/10 hover:border-white/20 transition-all flex items-center gap-2"
+                  className="px-5 py-3 bg-[var(--glass-5)] border border-[var(--glass-10)] rounded-xl text-sm font-medium text-dark-100 dark:text-white hover:bg-[var(--glass-10)] hover:border-[var(--glass-20)] transition-all flex items-center gap-2"
                 >
                   <FiExternalLink /> iOS App
                 </a>
@@ -173,7 +173,7 @@ export default function ProjectModal({ project, onClose }: Props) {
                   href={project.githubLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-5 py-3 bg-white/5 border border-white/10 rounded-xl text-sm font-medium text-white hover:bg-white/10 hover:border-white/20 transition-all flex items-center gap-2"
+                  className="px-5 py-3 bg-[var(--glass-5)] border border-[var(--glass-10)] rounded-xl text-sm font-medium text-dark-100 dark:text-white hover:bg-[var(--glass-10)] hover:border-[var(--glass-20)] transition-all flex items-center gap-2"
                 >
                   <FiGithub /> GitHub
                 </a>

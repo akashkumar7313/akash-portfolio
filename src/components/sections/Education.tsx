@@ -49,7 +49,7 @@ export default function Education() {
             transition={{ duration: 0.5 }}
             className="space-y-4"
           >
-            <h3 className="text-white font-bold text-lg flex items-center gap-3 mb-4">
+            <h3 className="text-dark-100 dark:text-white font-bold text-lg flex items-center gap-3 mb-4">
               <span className="w-8 h-8 rounded-lg bg-accent-blue/10 flex items-center justify-center">
                 <FiBookOpen className="text-accent-blue" />
               </span>
@@ -75,7 +75,7 @@ export default function Education() {
                     {edu.icon}
                   </motion.span>
                   <div>
-                    <h4 className="text-white font-semibold font-heading">{edu.degree}</h4>
+                    <h4 className="text-dark-100 dark:text-white font-semibold font-heading">{edu.degree}</h4>
                     <p className="text-dark-400 text-sm mt-1">{edu.school}</p>
                     <span className={`inline-block mt-2 px-3 py-1 rounded-full bg-${edu.accent}/10 text-${edu.accent} text-xs font-mono`}>
                       {edu.period}
@@ -94,7 +94,7 @@ export default function Education() {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="space-y-4"
           >
-            <h3 className="text-white font-bold text-lg flex items-center gap-3 mb-4">
+            <h3 className="text-dark-100 dark:text-white font-bold text-lg flex items-center gap-3 mb-4">
               <span className="w-8 h-8 rounded-lg bg-yellow-500/10 flex items-center justify-center">
                 <FiAward className="text-yellow-500" />
               </span>
@@ -120,7 +120,7 @@ export default function Education() {
                     {ach.icon}
                   </motion.span>
                   <div>
-                    <p className="text-white font-medium">{ach.text}</p>
+                    <p className="text-dark-100 dark:text-white font-medium">{ach.text}</p>
                     <p className="text-dark-500 text-xs mt-0.5 flex items-center gap-1">
                       <FiStar className={ach.accent} size={10} />
                       Recognized achievement

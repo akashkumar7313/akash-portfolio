@@ -66,7 +66,7 @@ export default function Skills() {
               transition={{ duration: 0.5, delay: idx * 0.1 }}
               className="card glass-hover group"
             >
-              <h3 className="text-white font-semibold mb-5 text-lg flex items-center gap-3">
+              <h3 className="text-dark-100 dark:text-white font-semibold mb-5 text-lg flex items-center gap-3">
                 <span className="w-9 h-9 rounded-lg bg-accent-blue/10 flex items-center justify-center text-base group-hover:bg-accent-blue/20 transition-all duration-300">
                   {cat.icon}
                 </span>

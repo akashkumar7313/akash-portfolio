@@ -141,11 +141,11 @@ export default function About() {
                   whileHover={{ scale: 1.02 }}
                 >
                   <div className={`absolute inset-0 bg-gradient-to-r ${item.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
-                  <div className={`w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center flex-shrink-0 relative z-10 group-hover:scale-110 transition-transform duration-300 ${item.iconColor}`}>
+                  <div className={`w-12 h-12 rounded-xl bg-[var(--glass-10)] flex items-center justify-center flex-shrink-0 relative z-10 group-hover:scale-110 transition-transform duration-300 ${item.iconColor}`}>
                     <item.icon className="text-xl" />
                   </div>
                   <div className="relative z-10">
-                    <h4 className="text-white font-semibold mb-1">
+                    <h4 className="text-dark-100 dark:text-white font-semibold mb-1">
                       {item.title}
                     </h4>
                     <p className="text-dark-400 text-sm">{item.desc}</p>
@@ -164,7 +164,7 @@ export default function About() {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="mt-12"
         >
-          <h3 className="text-white font-semibold text-lg mb-5 flex items-center gap-2">
+          <h3 className="text-dark-100 dark:text-white font-semibold text-lg mb-5 flex items-center gap-2">
             <FiAward className="text-accent-blue" />
             Key Achievements
           </h3>

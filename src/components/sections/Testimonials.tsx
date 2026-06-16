@@ -94,7 +94,7 @@ export default function Testimonials() {
                 transition={{ duration: 0.4, ease: "easeInOut" }}
                 className="card text-center"
               >
-                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-accent-blue to-accent-purple flex items-center justify-center text-white font-bold text-xl mx-auto mb-6">
+                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-accent-blue to-accent-purple flex items-center justify-center text-dark-100 dark:text-white font-bold text-xl mx-auto mb-6">
                   {t.avatar}
                 </div>
 
@@ -109,7 +109,7 @@ export default function Testimonials() {
                 </blockquote>
 
                 <div>
-                  <h4 className="text-white font-semibold text-lg">{t.name}</h4>
+                  <h4 className="text-dark-100 dark:text-white font-semibold text-lg">{t.name}</h4>
                   <p className="text-dark-400 text-sm">{t.role}</p>
                 </div>
               </motion.div>
@@ -119,7 +119,7 @@ export default function Testimonials() {
           <div className="flex items-center justify-center gap-4 mt-8">
             <button
               onClick={prev}
-              className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-dark-300 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all duration-300"
+              className="w-10 h-10 rounded-xl bg-[var(--glass-5)] border border-[var(--glass-10)] flex items-center justify-center text-dark-300 hover:text-dark-100 dark:text-white hover:bg-[var(--glass-10)] hover:border-[var(--glass-20)] transition-all duration-300"
               aria-label="Previous testimonial"
             >
               <FiChevronLeft />
@@ -135,7 +135,7 @@ export default function Testimonials() {
                   }}
                   className={`w-2 h-2 rounded-full transition-all duration-300 ${i === current
                       ? "bg-accent-blue w-6"
-                      : "bg-white/20 hover:bg-white/40"
+                      : "bg-[var(--glass-20)] hover:bg-[var(--glass-20)]"
                     }`}
                   aria-label={`Go to testimonial ${i + 1}`}
                 />
@@ -144,7 +144,7 @@ export default function Testimonials() {
 
             <button
               onClick={next}
-              className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-dark-300 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all duration-300"
+              className="w-10 h-10 rounded-xl bg-[var(--glass-5)] border border-[var(--glass-10)] flex items-center justify-center text-dark-300 hover:text-dark-100 dark:text-white hover:bg-[var(--glass-10)] hover:border-[var(--glass-20)] transition-all duration-300"
               aria-label="Next testimonial"
             >
               <FiChevronRight />

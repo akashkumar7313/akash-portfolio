@@ -4,14 +4,14 @@ import { FiGithub, FiLinkedin, FiMail, FiHeart } from "react-icons/fi";
 
 export default function Footer() {
   return (
-    <footer className="border-t border-white/5 py-8 mt-10">
+    <footer className="border-t border-[var(--glass-5)] py-8 mt-10">
       <div className="max-width px-4 sm:px-8">
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           <a
             href="#hero"
             className="text-lg font-bold gradient-text"
           >
-            Akash<span className="text-white">.</span>
+            Akash<span className="text-dark-100 dark:text-white">.</span>
           </a>
 
           <div className="flex items-center gap-4">
@@ -25,7 +25,7 @@ export default function Footer() {
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 text-dark-300 hover:text-accent-blue hover:border-accent-blue/50 hover:bg-accent-blue/10 transition-all duration-300"
+                className="w-10 h-10 flex items-center justify-center rounded-xl bg-[var(--glass-5)] border border-[var(--glass-10)] text-dark-300 hover:text-accent-blue hover:border-accent-blue/50 hover:bg-accent-blue/10 transition-all duration-300"
                 aria-label={label}
               >
                 <Icon className="text-lg" />

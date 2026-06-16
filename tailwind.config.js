@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: "class",
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -21,17 +22,17 @@ module.exports = {
           900: "#1e3a8a",
         },
         dark: {
-          50: "#f8fafc",
-          100: "#f1f5f9",
-          200: "#e2e8f0",
-          300: "#cbd5e1",
-          400: "#94a3b8",
-          500: "#64748b",
-          600: "#475569",
-          700: "#334155",
-          800: "#1e293b",
-          900: "#0f172a",
-          950: "#020617",
+          50: "var(--dark-50)",
+          100: "var(--dark-100)",
+          200: "var(--dark-200)",
+          300: "var(--dark-300)",
+          400: "var(--dark-400)",
+          500: "var(--dark-500)",
+          600: "var(--dark-600)",
+          700: "var(--dark-700)",
+          800: "var(--dark-800)",
+          900: "var(--dark-900)",
+          950: "var(--dark-950)",
         },
         accent: {
           blue: "#3b82f6",

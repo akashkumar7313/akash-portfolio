@@ -95,22 +95,22 @@ export default function Chatbot() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
-            className="fixed bottom-24 right-6 z-50 w-[92%] sm:w-96 h-[520px] max-h-[70vh] flex flex-col rounded-2xl border border-white/10 bg-dark-900/95 backdrop-blur-2xl shadow-2xl shadow-black/50 overflow-hidden"
+            className="fixed bottom-24 right-6 z-50 w-[92%] sm:w-96 h-[520px] max-h-[70vh] flex flex-col rounded-2xl border border-[var(--glass-10)] bg-dark-900/95 backdrop-blur-2xl shadow-2xl shadow-black/50 overflow-hidden"
           >
             {/* Header */}
-            <div className="flex items-center justify-between px-5 py-4 border-b border-white/5 bg-gradient-to-r from-accent-blue/10 to-accent-purple/10">
+            <div className="flex items-center justify-between px-5 py-4 border-b border-[var(--glass-5)] bg-gradient-to-r from-accent-blue/10 to-accent-purple/10">
               <div className="flex items-center gap-3">
                 <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-accent-blue to-accent-purple flex items-center justify-center">
-                  <FiCpu className="text-white text-sm" />
+                  <FiCpu className="text-dark-100 dark:text-white text-sm" />
                 </div>
                 <div>
-                  <h3 className="text-white font-semibold text-sm">AI Assistant</h3>
+                  <h3 className="text-dark-100 dark:text-white font-semibold text-sm">AI Assistant</h3>
                   <p className="text-dark-400 text-[10px]">Ask me anything!</p>
                 </div>
               </div>
               <button
                 onClick={() => setOpen(false)}
-                className="w-8 h-8 flex items-center justify-center rounded-lg bg-white/5 text-dark-400 hover:text-white hover:bg-white/10 transition-all"
+                className="w-8 h-8 flex items-center justify-center rounded-lg bg-[var(--glass-5)] text-dark-400 hover:text-dark-100 dark:text-white hover:bg-[var(--glass-10)] transition-all"
               >
                 <FiX />
               </button>
@@ -132,7 +132,7 @@ export default function Chatbot() {
                     </div>
                   ) : (
                     <div
-                      className="max-w-[85%] px-4 py-3 rounded-2xl text-sm leading-relaxed bg-white/5 border border-white/5 text-dark-200 rounded-bl-lg"
+                      className="max-w-[85%] px-4 py-3 rounded-2xl text-sm leading-relaxed bg-[var(--glass-5)] border border-[var(--glass-5)] text-dark-200 rounded-bl-lg"
                       dangerouslySetInnerHTML={{ __html: msg.text }}
                     />
                   )}
@@ -145,7 +145,7 @@ export default function Chatbot() {
                   animate={{ opacity: 1 }}
                   className="flex justify-start"
                 >
-                  <div className="bg-white/5 border border-white/5 rounded-2xl rounded-bl-lg px-4 py-3 flex items-center gap-2">
+                  <div className="bg-[var(--glass-5)] border border-[var(--glass-5)] rounded-2xl rounded-bl-lg px-4 py-3 flex items-center gap-2">
                     <span className="w-2 h-2 rounded-full bg-accent-blue animate-bounce" style={{ animationDelay: "0ms" }} />
                     <span className="w-2 h-2 rounded-full bg-accent-purple animate-bounce" style={{ animationDelay: "150ms" }} />
                     <span className="w-2 h-2 rounded-full bg-accent-cyan animate-bounce" style={{ animationDelay: "300ms" }} />
@@ -167,7 +167,7 @@ export default function Chatbot() {
                     <button
                       key={q}
                       onClick={() => sendMessage(q)}
-                      className="px-3 py-1.5 text-[11px] font-medium rounded-full bg-white/5 border border-white/10 text-dark-300 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all"
+                      className="px-3 py-1.5 text-[11px] font-medium rounded-full bg-[var(--glass-5)] border border-[var(--glass-10)] text-dark-300 hover:text-dark-100 dark:text-white hover:bg-[var(--glass-10)] hover:border-[var(--glass-20)] transition-all"
                     >
                       {q}
                     </button>
@@ -179,7 +179,7 @@ export default function Chatbot() {
             {/* Input */}
             <form
               onSubmit={handleSubmit}
-              className="flex items-center gap-2 p-3 border-t border-white/5 bg-dark-950/50"
+              className="flex items-center gap-2 p-3 border-t border-[var(--glass-5)] bg-dark-950/50"
             >
               <input
                 ref={inputRef}
@@ -187,7 +187,7 @@ export default function Chatbot() {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Type your message..."
-                className="flex-1 px-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-white text-sm placeholder:text-dark-500 focus:outline-none focus:border-accent-blue/50 focus:ring-1 focus:ring-accent-blue/25 transition-all"
+                className="flex-1 px-4 py-2.5 bg-[var(--glass-5)] border border-[var(--glass-10)] rounded-xl text-dark-100 dark:text-white text-sm placeholder:text-dark-500 focus:outline-none focus:border-accent-blue/50 focus:ring-1 focus:ring-accent-blue/25 transition-all"
               />
               <button
                 type="submit"

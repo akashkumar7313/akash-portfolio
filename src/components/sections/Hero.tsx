@@ -391,7 +391,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-dark-300 text-xs sm:text-sm mb-6"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[var(--glass-5)] border border-[var(--glass-10)] text-dark-300 text-xs sm:text-sm mb-6"
             >
               <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
               <span>Available for opportunities</span>
@@ -407,7 +407,7 @@ export default function Hero() {
                 Akash Kumar
               </span>
               <br />
-              <span className="text-white">Prajapati</span>
+              <span className="text-dark-100 dark:text-white">Prajapati</span>
             </motion.h1>
 
             <motion.div
@@ -416,7 +416,7 @@ export default function Hero() {
               transition={{ duration: 0.8, delay: 0.3 }}
               className="h-9 mb-3"
             >
-              <span className="text-base sm:text-lg md:text-xl text-white font-heading font-medium tracking-wide">
+              <span className="text-base sm:text-lg md:text-xl text-dark-100 dark:text-white font-heading font-medium tracking-wide">
                 {typedRole}
                 <span className="animate-pulse text-accent-blue ml-0.5">|</span>
               </span>
@@ -507,8 +507,8 @@ export default function Hero() {
               transition={{ duration: 0.8, delay: 1.6 }}
               className={`${windowState === "maximized" ? "w-full" : "w-[350px]"} mt-16 ${windowState === "closed" ? "hidden" : ""}`}
             >
-              <div className={`glass rounded-2xl overflow-hidden border border-white/5 shadow-2xl shadow-accent-blue/10 ${windowState === "minimized" ? "h-10 overflow-hidden" : ""}`}>
-                <div className="flex items-center gap-2 px-4 py-2 bg-white/5 border-b border-white/5">
+              <div className={`glass rounded-2xl overflow-hidden border border-[var(--glass-5)] shadow-2xl shadow-accent-blue/10 ${windowState === "minimized" ? "h-10 overflow-hidden" : ""}`}>
+                <div className="flex items-center gap-2 px-4 py-2 bg-[var(--glass-5)] border-b border-[var(--glass-5)]">
                   <div className="flex gap-1.5">
                     <button onClick={() => setWindowState("closed")} className="w-2.5 h-2.5 rounded-full bg-red-500/70 hover:bg-red-500 transition-colors" title="Close" />
                     <button onClick={() => setWindowState(s => s === "minimized" ? "normal" : "minimized")} className="w-2.5 h-2.5 rounded-full bg-yellow-500/70 hover:bg-yellow-500 transition-colors" title="Minimize" />
@@ -575,14 +575,14 @@ export default function Hero() {
                       />
                     </div>
                     {suggestions.length > 0 && (
-                      <div className="absolute left-4 bottom-full mb-1 w-56 bg-dark-800 border border-white/10 rounded-xl shadow-2xl z-50 overflow-hidden">
+                      <div className="absolute left-4 bottom-full mb-1 w-56 bg-dark-800 border border-[var(--glass-10)] rounded-xl shadow-2xl z-50 overflow-hidden">
                         {suggestions.map((s, i) => (
                           <button
                             key={s.label}
                             onClick={() => selectSuggestion(s.label)}
                             onMouseEnter={() => setSuggestionIndex(i)}
                             className={`w-full text-left px-3 py-1.5 text-[11px] flex items-center justify-between transition-colors ${
-                              i === suggestionIndex ? "bg-accent-blue/20 text-accent-blue" : "text-dark-300 hover:bg-white/5"
+                              i === suggestionIndex ? "bg-accent-blue/20 text-accent-blue" : "text-dark-300 hover:bg-[var(--glass-5)]"
                             }`}
                           >
                             <span className="font-semibold">{s.label}</span>
@@ -603,12 +603,12 @@ export default function Hero() {
               >
                 <span className="text-dark-500 text-sm font-semibold uppercase tracking-wider">Available on</span>
                 <div className="flex items-center gap-3">
-                  <a href="" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white text-xs font-medium hover:bg-white/10 hover:border-green-400/50 transition-all duration-300">
+                  <a href="" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-4 py-3 bg-[var(--glass-5)] border border-[var(--glass-10)] rounded-xl text-dark-100 dark:text-white text-xs font-medium hover:bg-[var(--glass-10)] hover:border-green-400/50 transition-all duration-300">
                     <FaGooglePlay className="text-green-400 text-sm" />
                     Google Play
                   </a>
-                  <a href="" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white text-xs font-medium hover:bg-white/10 hover:border-accent-blue/50 transition-all duration-300">
-                    <FaApple className="text-white text-sm" />
+                  <a href="" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-4 py-3 bg-[var(--glass-5)] border border-[var(--glass-10)] rounded-xl text-dark-100 dark:text-white text-xs font-medium hover:bg-[var(--glass-10)] hover:border-accent-blue/50 transition-all duration-300">
+                    <FaApple className="text-dark-100 dark:text-white text-sm" />
                     App Store
                   </a>
                 </div>
@@ -633,22 +633,22 @@ export default function Hero() {
                     </div>
                     <div className="w-full h-full pt-8 pb-4 px-4 flex flex-col">
                       <div className="flex justify-between items-center px-1 mb-2 flex-shrink-0">
-                        <span className="text-white text-[10px] font-semibold">9:41</span>
+                        <span className="text-dark-100 dark:text-white text-[10px] font-semibold">9:41</span>
                         <div className="flex items-center gap-1">
-                          <div className="w-3 h-2 rounded-sm bg-white/60" />
+                          <div className="w-3 h-2 rounded-sm bg-[var(--glass-60)]" />
                           <div className="flex gap-px">
                             {[1, 2, 3].map(i => (
-                              <div key={i} className={`w-[2px] rounded-sm ${i <= 2 ? "bg-white/80" : "bg-white/30"}`} style={{ height: `${4 + i * 2}px` }} />
+                              <div key={i} className={`w-[2px] rounded-sm ${i <= 2 ? "bg-[var(--glass-80)]" : "bg-[var(--glass-30)]"}`} style={{ height: `${4 + i * 2}px` }} />
                             ))}
                           </div>
                         </div>
                       </div>
                       <div className="flex items-center gap-3 mb-3 flex-shrink-0">
                         <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-accent-blue to-accent-purple flex items-center justify-center shadow-lg shadow-accent-blue/20">
-                          <SiFlutter className="text-white text-xl" />
+                          <SiFlutter className="text-dark-100 dark:text-white text-xl" />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <h3 className="text-white text-sm font-bold truncate">Akash Portfolio</h3>
+                          <h3 className="text-dark-100 dark:text-white text-sm font-bold truncate">Akash Portfolio</h3>
                           <p className="text-dark-400 text-[10px]">Mobile App Developer</p>
                           <div className="flex items-center gap-1 mt-0.5">
                             <div className="flex gap-0.5">
@@ -661,7 +661,7 @@ export default function Hero() {
                         </div>
                       </div>
                       <div className="flex items-center gap-2 mb-4 flex-shrink-0">
-                        <div className="flex-1 py-2 rounded-full bg-accent-blue text-center text-white text-[11px] font-bold shadow-lg shadow-accent-blue/20">Install</div>
+                        <div className="flex-1 py-2 rounded-full bg-accent-blue text-center text-dark-100 dark:text-white text-[11px] font-bold shadow-lg shadow-accent-blue/20">Install</div>
                         <div className="text-dark-500 text-[8px] text-center leading-tight">
                           <div>4.2 MB</div>
                           <div>Everyone</div>
@@ -669,25 +669,25 @@ export default function Hero() {
                       </div>
                       <div className="flex gap-2 mb-4 flex-shrink-0 overflow-x-auto pb-1">
                         {["#1a1a2e", "#16213e", "#0f3460", "#1a1a2e"].map((color, i) => (
-                          <div key={i} className="w-16 h-28 rounded-xl flex-shrink-0 border border-white/5 overflow-hidden" style={{ background: `linear-gradient(135deg,${color},${color}88)` }}>
+                          <div key={i} className="w-16 h-28 rounded-xl flex-shrink-0 border border-[var(--glass-5)] overflow-hidden" style={{ background: `linear-gradient(135deg,${color},${color}88)` }}>
                             <div className="p-2">
-                              <div className="w-4 h-1 rounded bg-white/10 mb-1" />
-                              <div className="w-3 h-3 rounded bg-white/5 mx-auto mt-4" />
+                              <div className="w-4 h-1 rounded bg-[var(--glass-10)] mb-1" />
+                              <div className="w-3 h-3 rounded bg-[var(--glass-5)] mx-auto mt-4" />
                               <div className="space-y-1 mt-2">
-                                <div className="h-1 w-full rounded bg-white/5" />
-                                <div className="h-1 w-3/4 rounded bg-white/5" />
+                                <div className="h-1 w-full rounded bg-[var(--glass-5)]" />
+                                <div className="h-1 w-3/4 rounded bg-[var(--glass-5)]" />
                               </div>
                             </div>
                           </div>
                         ))}
                       </div>
                       <div className="flex items-center justify-between mb-2 flex-shrink-0">
-                        <h4 className="text-white text-[10px] font-bold uppercase tracking-wider">Ratings & Reviews</h4>
+                        <h4 className="text-dark-100 dark:text-white text-[10px] font-bold uppercase tracking-wider">Ratings & Reviews</h4>
                         <span className="text-accent-blue text-[8px]">See all</span>
                       </div>
-                      <div className="flex items-center gap-2 mb-3 bg-white/5 rounded-xl p-3 flex-shrink-0">
+                      <div className="flex items-center gap-2 mb-3 bg-[var(--glass-5)] rounded-xl p-3 flex-shrink-0">
                         <div className="text-center flex-shrink-0">
-                          <div className="text-xl font-bold text-white">4.9</div>
+                          <div className="text-xl font-bold text-dark-100 dark:text-white">4.9</div>
                           <div className="flex gap-0.5 justify-center">
                             {[1, 2, 3, 4, 5].map(i => (<FiStar key={i} className="text-yellow-400 fill-yellow-400" size={8} />))}
                           </div>
@@ -696,7 +696,7 @@ export default function Hero() {
                           {[5, 4, 3, 2, 1].map(star => (
                             <div key={star} className="flex items-center gap-1.5">
                               <span className="text-dark-500 text-[8px] w-2">{star}</span>
-                              <div className="flex-1 h-1 bg-white/5 rounded-full overflow-hidden">
+                              <div className="flex-1 h-1 bg-[var(--glass-5)] rounded-full overflow-hidden">
                                 <div className="h-full rounded-full bg-yellow-400" style={{ width: `${star === 5 ? 100 : star === 4 ? 40 : star === 3 ? 10 : 0}%` }} />
                               </div>
                             </div>
@@ -704,14 +704,14 @@ export default function Hero() {
                         </div>
                       </div>
                       <div className="flex-1 min-h-0">
-                        <motion.div key={reviewIndex} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.3 }} className="bg-white/5 rounded-xl p-3 h-full">
+                        <motion.div key={reviewIndex} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.3 }} className="bg-[var(--glass-5)] rounded-xl p-3 h-full">
                           <div className="flex items-center gap-2 mb-2">
-                            <div className="w-6 h-6 rounded-full bg-gradient-to-br from-accent-blue to-accent-purple flex items-center justify-center text-white font-bold text-[8px]">
+                            <div className="w-6 h-6 rounded-full bg-gradient-to-br from-accent-blue to-accent-purple flex items-center justify-center text-dark-100 dark:text-white font-bold text-[8px]">
                               {review.name.split(" ").map(n => n[0]).join("")}
                             </div>
                             <div className="flex-1 min-w-0">
                               <div className="flex items-center justify-between">
-                                <span className="text-white text-[9px] font-semibold truncate">{review.name}</span>
+                                <span className="text-dark-100 dark:text-white text-[9px] font-semibold truncate">{review.name}</span>
                                 <span className="text-dark-500 text-[7px] flex items-center gap-1 flex-shrink-0"><FiClock size={6} />{review.date}</span>
                               </div>
                               <div className="flex items-center gap-0.5">
@@ -720,7 +720,7 @@ export default function Hero() {
                             </div>
                           </div>
                           <p className="text-dark-300 text-[9px] leading-relaxed">&ldquo;{review.text}&rdquo;</p>
-                          <div className="flex items-center gap-2 mt-2 pt-2 border-t border-white/5">
+                          <div className="flex items-center gap-2 mt-2 pt-2 border-t border-[var(--glass-5)]">
                             <FiThumbsUp size={7} className="text-dark-500" />
                             <span className="text-dark-500 text-[7px]">{review.likes}</span>
                             <span className="text-dark-600 text-[7px]">•</span>
@@ -728,11 +728,11 @@ export default function Hero() {
                           </div>
                         </motion.div>
                       </div>
-                      <div className="flex justify-around pt-2 border-t border-white/5 mt-2 flex-shrink-0">
+                      <div className="flex justify-around pt-2 border-t border-[var(--glass-5)] mt-2 flex-shrink-0">
                         {["Apps", "Search", "Updates"].map(label => (
                           <div key={label} className="flex flex-col items-center gap-0.5">
-                            <div className={`w-3 h-3 rounded-sm ${label === "Apps" ? "bg-accent-blue" : "bg-white/20"}`} />
-                            <span className={`text-[7px] ${label === "Apps" ? "text-accent-blue" : "text-white/40"}`}>{label}</span>
+                            <div className={`w-3 h-3 rounded-sm ${label === "Apps" ? "bg-accent-blue" : "bg-[var(--glass-20)]"}`} />
+                            <span className={`text-[7px] ${label === "Apps" ? "text-accent-blue" : "text-dark-100 dark:text-white/40"}`}>{label}</span>
                           </div>
                         ))}
                       </div>
@@ -747,7 +747,7 @@ export default function Hero() {
                       opacity: { delay: 2.5 + delays[i], duration: 0.5 }, scale: { delay: 2.5 + delays[i], duration: 0.5 },
                       y: { repeat: Infinity, duration: 3 + (i % 3) * 0.5, ease: "easeInOut", delay: (i % 4) * 0.3 },
                       x: { repeat: Infinity, duration: 4 + (i % 2) * 0.7, ease: "easeInOut", delay: (i % 3) * 0.4 },
-                    }} className="absolute z-20 px-3 py-1.5 text-[10px] font-semibold rounded-full bg-dark-800/90 backdrop-blur-md border border-white/10 text-dark-200 whitespace-nowrap shadow-lg" style={positions[i] as React.CSSProperties} whileHover={{ scale: 1.15, borderColor: "rgba(59,130,246,0.6)", backgroundColor: "rgba(59,130,246,0.15)" }}>{tech}</motion.span>
+                    }} className="absolute z-20 px-3 py-1.5 text-[10px] font-semibold rounded-full bg-dark-800/90 backdrop-blur-md border border-[var(--glass-10)] text-dark-200 whitespace-nowrap shadow-lg" style={positions[i] as React.CSSProperties} whileHover={{ scale: 1.15, borderColor: "rgba(59,130,246,0.6)", backgroundColor: "rgba(59,130,246,0.15)" }}>{tech}</motion.span>
                   );
                 })}
               </motion.div>
@@ -779,7 +779,7 @@ export default function Hero() {
                     delay: (i % 4) * 0.15,
                   },
                 }}
-                className="px-3 py-1.5 text-[11px] font-medium rounded-full bg-white/5 border border-white/10 text-dark-300"
+                className="px-3 py-1.5 text-[11px] font-medium rounded-full bg-[var(--glass-5)] border border-[var(--glass-10)] text-dark-300"
               >
                 {tech}
               </motion.span>
