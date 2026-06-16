@@ -36,6 +36,9 @@ export const metadata: Metadata = {
       "Software Engineer | Flutter & React Native Developer",
   },
   robots: "index, follow",
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({

@@ -43,18 +43,22 @@ export default function Navbar() {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled
           ? "bg-dark-950/80 backdrop-blur-xl border-b border-[var(--glass-5)] shadow-lg shadow-black/10"
           : "bg-transparent"
-      }`}
+        }`}
     >
       <div className="max-width flex items-center justify-between px-4 sm:px-8 h-16 md:h-20">
         <a
           href="#hero"
-          className="text-xl md:text-2xl font-bold gradient-text"
+          className="flex items-center gap-2.5 group"
         >
-          Akash<span className="text-dark-100 dark:text-white">.</span>
+          <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-accent-blue to-accent-purple flex items-center justify-center shadow-lg shadow-accent-blue/20 group-hover:shadow-accent-blue/40 group-hover:scale-110 transition-all duration-300">
+            <span className="text-white font-bold text-sm font-heading">A</span>
+          </div>
+          <span className="text-xl md:text-2xl font-bold gradient-text">
+            Akash<span className="text-dark-100 dark:text-white">.</span>
+          </span>
         </a>
 
         <div className="hidden md:flex items-center gap-1">
@@ -62,11 +66,10 @@ export default function Navbar() {
             <a
               key={link.href}
               href={link.href}
-              className={`px-3 py-2 rounded-xl text-sm font-medium transition-all duration-300 ${
-                activeSection === link.href.slice(1)
+              className={`px-3 py-2 rounded-xl text-sm font-medium transition-all duration-300 ${activeSection === link.href.slice(1)
                   ? "text-dark-100 dark:text-white bg-[var(--glass-10)] dark:bg-[var(--glass-10)] bg-gray-900/10"
                   : "text-dark-300 hover:text-dark-100 dark:text-white hover:bg-[var(--glass-5)] dark:hover:bg-[var(--glass-5)] hover:bg-gray-900/5"
-              }`}
+                }`}
             >
               {link.label}
             </a>
@@ -86,7 +89,7 @@ export default function Navbar() {
         </div>
       </div>
 
-      <AnimatePresence>
+      {/* <AnimatePresence>
         {mobileOpen && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
@@ -114,7 +117,7 @@ export default function Navbar() {
             </div>
           </motion.div>
         )}
-      </AnimatePresence>
+      </AnimatePresence> */}
     </motion.nav>
   );
 }

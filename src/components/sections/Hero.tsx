@@ -1,14 +1,11 @@
 "use client";
 
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { FiArrowDown, FiDownload, FiEye, FiMail, FiStar, FiThumbsUp, FiClock } from "react-icons/fi";
 import { FaGooglePlay, FaApple } from "react-icons/fa";
 import { SiFlutter } from "react-icons/si";
-import Editor from "react-simple-code-editor";
-import Prism from "prismjs";
-import "prismjs/components/prism-dart";
-import "prismjs/components/prism-javascript";
+import Stats from "./Stats";
 
 const roles = [
   "Software Engineer",
@@ -18,12 +15,6 @@ const roles = [
   "Mobile App Architect",
 ];
 
-const statsData = [
-  { value: "4+", label: "Years Exp" },
-  { value: "20+", label: "Projects" },
-  { value: "15+", label: "Apps Deployed" },
-  { value: "12+", label: "Technologies" },
-];
 
 const techStack = [
   "Flutter", "Dart", "React Native", "Firebase",
@@ -56,110 +47,35 @@ const reviews = [
   },
 ];
 
-const autocompleteKeywords = [
-  { label: "class", description: "Class declaration" },
-  { label: "final", description: "Final variable" },
-  { label: "const", description: "Const variable" },
-  { label: "void", description: "Void function" },
-  { label: "String", description: "String type" },
-  { label: "int", description: "Integer type" },
-  { label: "bool", description: "Boolean type" },
-  { label: "Widget", description: "Flutter Widget" },
-  { label: "return", description: "Return statement" },
-  { label: "import", description: "Import statement" },
-  { label: "if", description: "If condition" },
-  { label: "else", description: "Else condition" },
-  { label: "for", description: "For loop" },
-  { label: "while", description: "While loop" },
-  { label: "switch", description: "Switch statement" },
-  { label: "case", description: "Case clause" },
-  { label: "var", description: "Variable declaration" },
-  { label: "async", description: "Async function" },
-  { label: "await", description: "Await expression" },
-  { label: "function", description: "Function declaration" },
-  { label: "export", description: "Export statement" },
-  { label: "extends", description: "Extends class" },
-  { label: "implements", description: "Implements interface" },
-  { label: "mixin", description: "Mixin declaration" },
-  { label: "enum", description: "Enum declaration" },
-  { label: "typedef", description: "Type alias" },
-  { label: "dynamic", description: "Dynamic type" },
-  { label: "null", description: "Null value" },
-  { label: "true", description: "True boolean" },
-  { label: "false", description: "False boolean" },
-  { label: "this", description: "Current instance" },
-  { label: "super", description: "Parent class" },
-  { label: "static", description: "Static member" },
-  { label: "abstract", description: "Abstract class" },
-  { label: "override", description: "Override method" },
-  { label: "required", description: "Required parameter" },
-  { label: "late", description: "Late initialization" },
-  { label: "final class", description: "Final class" },
-  { label: "sealed class", description: "Sealed class" },
-  { label: "State", description: "Flutter State" },
-  { label: "StatelessWidget", description: "Flutter stateless" },
-  { label: "StatefulWidget", description: "Flutter stateful" },
-  { label: "BuildContext", description: "Build context" },
-  { label: "ThemeData", description: "Theme data" },
-  { label: "EdgeInsets", description: "Edge insets" },
-  { label: "Colors", description: "Color constants" },
-  { label: "TextStyle", description: "Text style" },
-  { label: "BoxDecoration", description: "Box decoration" },
-  { label: "BorderRadius", description: "Border radius" },
-  { label: "MainAxisAlignment", description: "Main axis" },
-  { label: "CrossAxisAlignment", description: "Cross axis" },
-  { label: "const", description: "Const constructor" },
-  { label: "Navigator", description: "Navigation" },
-  { label: "MediaQuery", description: "Media query" },
-  { label: "Scaffold", description: "Scaffold widget" },
-  { label: "AppBar", description: "App bar widget" },
-  { label: "Container", description: "Container widget" },
-  { label: "Row", description: "Row widget" },
-  { label: "Column", description: "Column widget" },
-  { label: "Stack", description: "Stack widget" },
-  { label: "Center", description: "Center widget" },
-  { label: "Padding", description: "Padding widget" },
-  { label: "SizedBox", description: "Sized box" },
-  { label: "Expanded", description: "Expanded widget" },
-  { label: "Flexible", description: "Flexible widget" },
-  { label: "Text", description: "Text widget" },
-  { label: "Icon", description: "Icon widget" },
-  { label: "Image", description: "Image widget" },
-  { label: "ListView", description: "List view" },
-  { label: "GridView", description: "Grid view" },
-  { label: "GestureDetector", description: "Gesture detector" },
-  { label: "InkWell", description: "Ink well" },
-  { label: "ElevatedButton", description: "Elevated button" },
-  { label: "TextButton", description: "Text button" },
-  { label: "IconButton", description: "Icon button" },
-  { label: "FloatingActionButton", description: "FAB" },
-  { label: "SingleChildScrollView", description: "Scroll view" },
-  { label: "Form", description: "Form widget" },
-  { label: "TextFormField", description: "Text form field" },
-  { label: "TextEditingController", description: "Text controller" },
-  { label: "FocusNode", description: "Focus node" },
-  { label: "AnimationController", description: "Animation" },
-  { label: "AnimatedBuilder", description: "Animated builder" },
-  { label: "FutureBuilder", description: "Future builder" },
-  { label: "StreamBuilder", description: "Stream builder" },
-  { label: "Provider", description: "Provider" },
-  { label: "Consumer", description: "Consumer widget" },
-  { label: "BlocProvider", description: "BLoC provider" },
-  { label: "BlocBuilder", description: "BLoC builder" },
-  { label: "BlocListener", description: "BLoC listener" },
-  { label: "Cubit", description: "Cubit" },
-  { label: "map", description: "Map method" },
-  { label: "filter", description: "Filter method" },
-  { label: "reduce", description: "Reduce method" },
-  { label: "forEach", description: "ForEach method" },
-  { label: "toList", description: "To list" },
-  { label: "toSet", description: "To set" },
-  { label: "where", description: "Where clause" },
-  { label: "any", description: "Any match" },
-  { label: "every", description: "Every match" },
-  { label: "firstWhere", description: "First where" },
-  { label: "singleWhere", description: "Single where" },
-];
+const flutterCode = `class FlutterApp {
+  final String name = "Cross-Platform App";
+  final String framework = "Flutter + Firebase";
+
+  void build() {
+    var app = MobileApp(
+      platform: "Android & iOS",
+      stateMgmt: "BLoC + Riverpod",
+      payments: "Stripe & Razorpay",
+    );
+    app.deploy();
+    app.ship();
+  }
+}`;
+
+const rnCode = `class ReactNativeApp {
+  final name = "Cross-Platform App";
+  final framework = "React Native + Firebase";
+
+  void build() {
+    var app = MobileApp(
+      platform: "Android & iOS",
+      stateMgmt: "Redux + Context",
+      payments: "Stripe & Razorpay",
+    );
+    app.deploy();
+    app.ship();
+  }
+}`;
 
 function useTypingAnimation(texts: string[]) {
   const [displayed, setDisplayed] = useState("");
@@ -200,100 +116,6 @@ export default function Hero() {
   const [codeVisible, setCodeVisible] = useState(false);
   const [codeTab, setCodeTab] = useState<"flutter" | "rn">("flutter");
   const [reviewIndex, setReviewIndex] = useState(0);
-  const [editorText, setEditorText] = useState(`class FlutterApp {
-  final String name = "Cross-Platform App";
-  final String framework = "Flutter + Firebase";
-
-  void build() {
-    var app = MobileApp(
-      platform: "Android & iOS",
-      stateMgmt: "BLoC + Riverpod",
-      payments: "Stripe & Razorpay",
-    );
-    app.deploy();
-    app.ship();
-  }
-}`);
-  const [windowState, setWindowState] = useState<"normal" | "minimized" | "maximized" | "closed">("normal");
-  const [suggestions, setSuggestions] = useState<{ label: string; description: string }[]>([]);
-  const [suggestionIndex, setSuggestionIndex] = useState(0);
-  const [cursorPos, setCursorPos] = useState(0);
-  const editorRef = useRef<HTMLDivElement>(null);
-  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
-
-  const getCurrentWord = (text: string, pos: number) => {
-    const before = text.slice(0, pos);
-    const match = before.match(/[a-zA-Z_][a-zA-Z0-9_]*$/);
-    return match ? match[0].toLowerCase() : "";
-  };
-
-  const updateSuggestions = (code: string, pos: number) => {
-    const word = getCurrentWord(code, pos);
-    if (word.length >= 1) {
-      const matches = autocompleteKeywords.filter(k => k.label.toLowerCase().startsWith(word) && k.label.length > word.length);
-      setSuggestions(matches.slice(0, 8));
-      setSuggestionIndex(0);
-    } else {
-      setSuggestions([]);
-    }
-  };
-
-  const handleCodeChange = (code: string) => {
-    setEditorText(code);
-    updateSuggestions(code, cursorPos);
-  };
-
-  const selectSuggestion = (label: string) => {
-    const before = editorText.slice(0, cursorPos);
-    const word = before.match(/[a-zA-Z_][a-zA-Z0-9_]*$/);
-    if (word) {
-      const newText = editorText.slice(0, cursorPos - word[0].length) + label + editorText.slice(cursorPos);
-      setEditorText(newText);
-      const newPos = cursorPos - word[0].length + label.length;
-      setCursorPos(newPos);
-      setTimeout(() => {
-        if (textareaRef.current) {
-          textareaRef.current.focus();
-          textareaRef.current.setSelectionRange(newPos, newPos);
-        }
-      }, 0);
-    }
-    setSuggestions([]);
-  };
-
-  const handleEditorKeyUp = (e: React.KeyboardEvent) => {
-    const target = e.currentTarget as unknown as HTMLTextAreaElement;
-    textareaRef.current = target;
-    const pos = target.selectionStart;
-    setCursorPos(pos);
-    updateSuggestions(editorText, pos);
-  };
-
-  const handleEditorClick = (e: React.MouseEvent) => {
-    const target = e.currentTarget as unknown as HTMLTextAreaElement;
-    textareaRef.current = target;
-    setCursorPos(target.selectionStart);
-    setSuggestions([]);
-  };
-
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (suggestions.length > 0) {
-      if (e.key === "ArrowDown") {
-        e.preventDefault();
-        setSuggestionIndex(i => Math.min(i + 1, suggestions.length - 1));
-      } else if (e.key === "ArrowUp") {
-        e.preventDefault();
-        setSuggestionIndex(i => Math.max(i - 1, 0));
-      } else if (e.key === "Enter" || e.key === "Tab") {
-        if (suggestionIndex >= 0 && suggestionIndex < suggestions.length) {
-          e.preventDefault();
-          selectSuggestion(suggestions[suggestionIndex].label);
-        }
-      } else if (e.key === "Escape") {
-        setSuggestions([]);
-      }
-    }
-  };
 
   useEffect(() => {
     const timer = setTimeout(() => setCodeVisible(true), 2000);
@@ -377,7 +199,7 @@ export default function Hero() {
         className="absolute inset-0 pointer-events-none"
       />
 
-      <div className="absolute inset-0 bg-gradient-to-b from-accent-blue/5 via-dark-950/80 to-dark-950 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-b from-accent-blue/5 via-white to-white dark:via-slate-900/80 dark:to-slate-950 pointer-events-none" />
 
       <div className="absolute top-1/3 left-1/4 w-[400px] h-[400px] bg-accent-blue/8 rounded-full blur-[140px] pointer-events-none" />
       <div className="absolute top-1/2 right-1/4 w-[300px] h-[300px] bg-accent-purple/8 rounded-full blur-[120px] pointer-events-none" />
@@ -391,7 +213,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[var(--glass-5)] border border-[var(--glass-10)] text-dark-300 text-xs sm:text-sm mb-6"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-dark-300 text-xs sm:text-sm mb-6"
             >
               <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
               <span>Available for opportunities</span>
@@ -401,7 +223,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.15 }}
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold leading-tight mb-4"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold leading-tight mb-6"
             >
               <span className="gradient-text animate-gradient-x bg-[length:200%_200%]">
                 Akash Kumar
@@ -414,7 +236,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
-              className="h-9 mb-3"
+              className="h-9 mb-6"
             >
               <span className="text-base sm:text-lg md:text-xl text-dark-100 dark:text-white font-heading font-medium tracking-wide">
                 {typedRole}
@@ -426,7 +248,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.45 }}
-              className="text-sm sm:text-base text-dark-300 font-sans max-w-xl mb-4 leading-relaxed"
+              className="text-sm sm:text-base text-dark-300 font-sans max-w-xl mb-8 leading-relaxed"
             >
               <span className="text-accent-blue font-semibold">$</span> building production-grade apps for <span className="text-accent-purple font-semibold">Android</span> &amp; <span className="text-accent-cyan font-semibold">iOS</span> — shipped worldwide
             </motion.p>
@@ -435,12 +257,12 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.55 }}
-              className="flex flex-wrap gap-2 mb-4"
+              className="flex flex-wrap gap-2 mb-8"
             >
               <span className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[11px] font-semibold rounded-full bg-gradient-to-r from-yellow-500/20 to-yellow-500/5 border border-yellow-500/20 text-yellow-400">
                 🏆 Best Developer of the Year
               </span>
-              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[11px] font-semibold rounded-full bg-gradient-to-r from-accent-blue/20 to-accent-blue/5 border border-accent-blue/20 text-accent-blue">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[11px] font-semibold rounded-full bg-gradient-to-r from-accent-blue/20 to-accent-blue/5 border border-accent-blue/20 text-accent-blue dark:text-white">
                 ⭐ Employee of the Month (Multiple Times)
               </span>
             </motion.div>
@@ -449,150 +271,63 @@ export default function Hero() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.65 }}
-              className="flex flex-wrap items-center gap-3 mb-4"
+              className="flex flex-wrap items-center gap-4 mb-8"
             >
               <a href="#projects" className="btn-primary flex items-center gap-2 text-sm">
                 <FiEye />
                 View Projects
               </a>
-              <a href="/resume.pdf" download className="btn-outline flex items-center gap-2 text-sm">
+              <a href="/resume.pdf" download className="btn-primary flex items-center gap-2 text-sm">
                 <FiDownload />
                 Resume
               </a>
-              <a href="#contact" className="btn-outline flex items-center gap-2 text-sm">
+              <a href="#contact" className="btn-primary flex items-center gap-2 text-sm">
                 <FiMail />
                 Contact
               </a>
             </motion.div>
 
             {/* Stats */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.9 }}
-              className="grid grid-cols-2 sm:grid-cols-4 gap-2 max-w-md"
-            >
-              {statsData.map((stat, i) => (
-                <motion.div
-                  key={stat.label}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.4, delay: 1 + i * 0.1 }}
-                  className="card text-center py-5 px-3 glass-hover group relative overflow-hidden"
-                >
-                  <div className={`absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r ${i === 0 ? "from-accent-blue to-accent-purple" :
-                    i === 1 ? "from-accent-purple to-accent-cyan" :
-                      i === 2 ? "from-accent-cyan to-green-400" :
-                        "from-green-400 to-accent-blue"
-                    }`} />
-                  <div className="text-2xl sm:text-3xl font-bold gradient-text mb-1">
-                    {stat.value}
-                  </div>
-                  <div className="text-dark-400 text-[10px] uppercase tracking-wider">
-                    {stat.label}
-                  </div>
-                </motion.div>
-              ))}
-            </motion.div>
+            <div className="mt-8">
+              <Stats />
+            </div>
           </div>
 
           {/* Right - Phone + Code side by side */}
           <div className="hidden lg:flex items-start justify-center gap-6">
 
 
-            {/* Code — macOS style editable editor */}
+            {/* Code — side by side with phone */}
             <motion.div
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: codeVisible ? 1 : 0, x: codeVisible ? 0 : 50 }}
               transition={{ duration: 0.8, delay: 1.6 }}
-              className={`${windowState === "maximized" ? "w-full" : "w-[350px]"} mt-16 ${windowState === "closed" ? "hidden" : ""}`}
+              className="w-[350px] mt-16"
             >
-              <div className={`glass rounded-2xl overflow-hidden border border-[var(--glass-5)] shadow-2xl shadow-accent-blue/10 ${windowState === "minimized" ? "h-10 overflow-hidden" : ""}`}>
-                <div className="flex items-center gap-2 px-4 py-2 bg-[var(--glass-5)] border-b border-[var(--glass-5)]">
+              <div className="glass rounded-2xl overflow-hidden border border-white/5 shadow-2xl shadow-accent-blue/10">
+                <div className="flex items-center gap-2 px-4 py-2 bg-white/5 border-b border-white/5">
                   <div className="flex gap-1.5">
-                    <button onClick={() => setWindowState("closed")} className="w-2.5 h-2.5 rounded-full bg-red-500/70 hover:bg-red-500 transition-colors" title="Close" />
-                    <button onClick={() => setWindowState(s => s === "minimized" ? "normal" : "minimized")} className="w-2.5 h-2.5 rounded-full bg-yellow-500/70 hover:bg-yellow-500 transition-colors" title="Minimize" />
-                    <button onClick={() => setWindowState(s => s === "maximized" ? "normal" : "maximized")} className="w-2.5 h-2.5 rounded-full bg-green-500/70 hover:bg-green-500 transition-colors" title="Maximize" />
+                    <div className="w-2.5 h-2.5 rounded-full bg-red-500/70" />
+                    <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/70" />
+                    <div className="w-2.5 h-2.5 rounded-full bg-green-500/70" />
                   </div>
                   <div className="flex ml-4 gap-1">
-                    <button onClick={() => { setCodeTab("flutter"); setEditorText(`class FlutterApp {
-  final String name = "Cross-Platform App";
-  final String framework = "Flutter + Firebase";
-
-  void build() {
-    var app = MobileApp(
-      platform: "Android & iOS",
-      stateMgmt: "BLoC + Riverpod",
-      payments: "Stripe & Razorpay",
-    );
-    app.deploy();
-    app.ship();
-  }
-}`); }} className={`px-3 py-1 rounded-lg text-[10px] font-mono font-medium transition-all ${codeTab === "flutter" ? "bg-accent-blue/20 text-accent-blue" : "text-dark-400 hover:text-dark-200"}`}>Flutter</button>
-                    <button onClick={() => { setCodeTab("rn"); setEditorText(`class ReactNativeApp {
-  final name = "Cross-Platform App";
-  final framework = "React Native + Firebase";
-
-  void build() {
-    var app = MobileApp(
-      platform: "Android & iOS",
-      stateMgmt: "Redux + Context",
-      payments: "Stripe & Razorpay",
-    );
-    app.deploy();
-    app.ship();
-  }
-}`); }} className={`px-3 py-1 rounded-lg text-[10px] font-mono font-medium transition-all ${codeTab === "rn" ? "bg-accent-cyan/20 text-accent-cyan" : "text-dark-400 hover:text-dark-200"}`}>React Native</button>
+                    <button onClick={() => setCodeTab("flutter")} className={`px-3 py-1 rounded-lg text-[10px] font-mono font-medium transition-all ${codeTab === "flutter" ? "bg-accent-blue/20 text-accent-blue" : "text-dark-400 hover:text-dark-200"}`}>Flutter</button>
+                    <button onClick={() => setCodeTab("rn")} className={`px-3 py-1 rounded-lg text-[10px] font-mono font-medium transition-all ${codeTab === "rn" ? "bg-accent-cyan/20 text-accent-cyan" : "text-dark-400 hover:text-dark-200"}`}>React Native</button>
                   </div>
                 </div>
-                {windowState !== "minimized" && (
-                  <div className="relative" ref={editorRef}>
-                    <div className="w-full font-mono text-[11px] leading-[1.6] bg-transparent min-h-[280px] max-h-[400px] overflow-y-auto custom-scrollbar">
-                      <Editor
-                        value={editorText}
-                        onValueChange={handleCodeChange}
-                        highlight={(code) => {
-                          try {
-                            const html = Prism.highlight(code, Prism.languages.dart || Prism.languages.javascript, "dart");
-                            return html;
-                          } catch {
-                            return code;
-                          }
-                        }}
-                        onKeyDown={handleKeyDown}
-                        onKeyUp={handleEditorKeyUp}
-                        onClick={handleEditorClick}
-                        padding={16}
-                        textareaClassName="focus:outline-none"
-                        style={{
-                          fontFamily: "inherit",
-                          fontSize: "inherit",
-                          lineHeight: "inherit",
-                          backgroundColor: "transparent",
-                          color: "inherit",
-                          minHeight: "280px",
-                        }}
-                      />
-                    </div>
-                    {suggestions.length > 0 && (
-                      <div className="absolute left-4 bottom-full mb-1 w-56 bg-dark-800 border border-[var(--glass-10)] rounded-xl shadow-2xl z-50 overflow-hidden">
-                        {suggestions.map((s, i) => (
-                          <button
-                            key={s.label}
-                            onClick={() => selectSuggestion(s.label)}
-                            onMouseEnter={() => setSuggestionIndex(i)}
-                            className={`w-full text-left px-3 py-1.5 text-[11px] flex items-center justify-between transition-colors ${
-                              i === suggestionIndex ? "bg-accent-blue/20 text-accent-blue" : "text-dark-300 hover:bg-[var(--glass-5)]"
-                            }`}
-                          >
-                            <span className="font-semibold">{s.label}</span>
-                            <span className="text-dark-500 text-[9px]">{s.description}</span>
-                          </button>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                )}
+                <div className="p-4 font-mono text-[11px] leading-relaxed overflow-x-auto min-h-[200px]">
+                  {(codeTab === "flutter" ? flutterCode : rnCode).split("\n").map((line, i) => {
+                    const indent = line.search(/\S/);
+                    const trimmed = line.trim();
+                    let color = "text-dark-300";
+                    if (["import", "class", "Widget", "return", "const", "export", "React", "useRef"].some(w => trimmed.startsWith(w))) color = "text-accent-blue";
+                    else if (["final", "String", "int", "bool", "View", "Text", "MaterialApp", "Scaffold", "AppBar", "Center"].some(w => trimmed.startsWith(w))) color = "text-accent-purple";
+                    else if (trimmed.includes('"') || trimmed.includes("true") || trimmed.includes("false") || trimmed.includes("=>")) color = "text-green-400";
+                    else if (["@override", "}:", "};", "});"].some(w => trimmed.startsWith(w))) color = "text-dark-500";
+                    return (<motion.div key={i} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.8 + i * 0.05, duration: 0.25 }} className={color} style={{ paddingLeft: indent * 8 }}>{line.trim() || "\u00A0"}</motion.div>);
+                  })}
+                </div>
               </div>
 
               <motion.div
@@ -603,12 +338,12 @@ export default function Hero() {
               >
                 <span className="text-dark-500 text-sm font-semibold uppercase tracking-wider">Available on</span>
                 <div className="flex items-center gap-3">
-                  <a href="" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-4 py-3 bg-[var(--glass-5)] border border-[var(--glass-10)] rounded-xl text-dark-100 dark:text-white text-xs font-medium hover:bg-[var(--glass-10)] hover:border-green-400/50 transition-all duration-300">
+                  <a href="" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white text-xs font-medium hover:bg-white/10 hover:border-green-400/50 transition-all duration-300">
                     <FaGooglePlay className="text-green-400 text-sm" />
                     Google Play
                   </a>
-                  <a href="" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-4 py-3 bg-[var(--glass-5)] border border-[var(--glass-10)] rounded-xl text-dark-100 dark:text-white text-xs font-medium hover:bg-[var(--glass-10)] hover:border-accent-blue/50 transition-all duration-300">
-                    <FaApple className="text-dark-100 dark:text-white text-sm" />
+                  <a href="" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white text-xs font-medium hover:bg-white/10 hover:border-accent-blue/50 transition-all duration-300">
+                    <FaApple className="text-white text-sm" />
                     App Store
                   </a>
                 </div>
@@ -633,22 +368,22 @@ export default function Hero() {
                     </div>
                     <div className="w-full h-full pt-8 pb-4 px-4 flex flex-col">
                       <div className="flex justify-between items-center px-1 mb-2 flex-shrink-0">
-                        <span className="text-dark-100 dark:text-white text-[10px] font-semibold">9:41</span>
+                        <span className="text-white text-[10px] font-semibold">9:41</span>
                         <div className="flex items-center gap-1">
-                          <div className="w-3 h-2 rounded-sm bg-[var(--glass-60)]" />
+                          <div className="w-3 h-2 rounded-sm bg-white/60" />
                           <div className="flex gap-px">
                             {[1, 2, 3].map(i => (
-                              <div key={i} className={`w-[2px] rounded-sm ${i <= 2 ? "bg-[var(--glass-80)]" : "bg-[var(--glass-30)]"}`} style={{ height: `${4 + i * 2}px` }} />
+                              <div key={i} className={`w-[2px] rounded-sm ${i <= 2 ? "bg-white/80" : "bg-white/30"}`} style={{ height: `${4 + i * 2}px` }} />
                             ))}
                           </div>
                         </div>
                       </div>
                       <div className="flex items-center gap-3 mb-3 flex-shrink-0">
                         <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-accent-blue to-accent-purple flex items-center justify-center shadow-lg shadow-accent-blue/20">
-                          <SiFlutter className="text-dark-100 dark:text-white text-xl" />
+                          <SiFlutter className="text-white text-xl" />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <h3 className="text-dark-100 dark:text-white text-sm font-bold truncate">Akash Portfolio</h3>
+                          <h3 className="text-white text-sm font-bold truncate">Akash Portfolio</h3>
                           <p className="text-dark-400 text-[10px]">Mobile App Developer</p>
                           <div className="flex items-center gap-1 mt-0.5">
                             <div className="flex gap-0.5">
@@ -661,7 +396,7 @@ export default function Hero() {
                         </div>
                       </div>
                       <div className="flex items-center gap-2 mb-4 flex-shrink-0">
-                        <div className="flex-1 py-2 rounded-full bg-accent-blue text-center text-dark-100 dark:text-white text-[11px] font-bold shadow-lg shadow-accent-blue/20">Install</div>
+                        <div className="flex-1 py-2 rounded-full bg-accent-blue text-center text-white text-[11px] font-bold shadow-lg shadow-accent-blue/20">Install</div>
                         <div className="text-dark-500 text-[8px] text-center leading-tight">
                           <div>4.2 MB</div>
                           <div>Everyone</div>
@@ -669,25 +404,25 @@ export default function Hero() {
                       </div>
                       <div className="flex gap-2 mb-4 flex-shrink-0 overflow-x-auto pb-1">
                         {["#1a1a2e", "#16213e", "#0f3460", "#1a1a2e"].map((color, i) => (
-                          <div key={i} className="w-16 h-28 rounded-xl flex-shrink-0 border border-[var(--glass-5)] overflow-hidden" style={{ background: `linear-gradient(135deg,${color},${color}88)` }}>
+                          <div key={i} className="w-16 h-28 rounded-xl flex-shrink-0 border border-white/5 overflow-hidden" style={{ background: `linear-gradient(135deg,${color},${color}88)` }}>
                             <div className="p-2">
-                              <div className="w-4 h-1 rounded bg-[var(--glass-10)] mb-1" />
-                              <div className="w-3 h-3 rounded bg-[var(--glass-5)] mx-auto mt-4" />
+                              <div className="w-4 h-1 rounded bg-white/10 mb-1" />
+                              <div className="w-3 h-3 rounded bg-white/5 mx-auto mt-4" />
                               <div className="space-y-1 mt-2">
-                                <div className="h-1 w-full rounded bg-[var(--glass-5)]" />
-                                <div className="h-1 w-3/4 rounded bg-[var(--glass-5)]" />
+                                <div className="h-1 w-full rounded bg-white/5" />
+                                <div className="h-1 w-3/4 rounded bg-white/5" />
                               </div>
                             </div>
                           </div>
                         ))}
                       </div>
                       <div className="flex items-center justify-between mb-2 flex-shrink-0">
-                        <h4 className="text-dark-100 dark:text-white text-[10px] font-bold uppercase tracking-wider">Ratings & Reviews</h4>
+                        <h4 className="text-white text-[10px] font-bold uppercase tracking-wider">Ratings & Reviews</h4>
                         <span className="text-accent-blue text-[8px]">See all</span>
                       </div>
-                      <div className="flex items-center gap-2 mb-3 bg-[var(--glass-5)] rounded-xl p-3 flex-shrink-0">
+                      <div className="flex items-center gap-2 mb-3 bg-white/5 rounded-xl p-3 flex-shrink-0">
                         <div className="text-center flex-shrink-0">
-                          <div className="text-xl font-bold text-dark-100 dark:text-white">4.9</div>
+                          <div className="text-xl font-bold text-white">4.9</div>
                           <div className="flex gap-0.5 justify-center">
                             {[1, 2, 3, 4, 5].map(i => (<FiStar key={i} className="text-yellow-400 fill-yellow-400" size={8} />))}
                           </div>
@@ -696,7 +431,7 @@ export default function Hero() {
                           {[5, 4, 3, 2, 1].map(star => (
                             <div key={star} className="flex items-center gap-1.5">
                               <span className="text-dark-500 text-[8px] w-2">{star}</span>
-                              <div className="flex-1 h-1 bg-[var(--glass-5)] rounded-full overflow-hidden">
+                              <div className="flex-1 h-1 bg-white/5 rounded-full overflow-hidden">
                                 <div className="h-full rounded-full bg-yellow-400" style={{ width: `${star === 5 ? 100 : star === 4 ? 40 : star === 3 ? 10 : 0}%` }} />
                               </div>
                             </div>
@@ -704,14 +439,14 @@ export default function Hero() {
                         </div>
                       </div>
                       <div className="flex-1 min-h-0">
-                        <motion.div key={reviewIndex} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.3 }} className="bg-[var(--glass-5)] rounded-xl p-3 h-full">
+                        <motion.div key={reviewIndex} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.3 }} className="bg-white/5 rounded-xl p-3 h-full">
                           <div className="flex items-center gap-2 mb-2">
-                            <div className="w-6 h-6 rounded-full bg-gradient-to-br from-accent-blue to-accent-purple flex items-center justify-center text-dark-100 dark:text-white font-bold text-[8px]">
+                            <div className="w-6 h-6 rounded-full bg-gradient-to-br from-accent-blue to-accent-purple flex items-center justify-center text-white font-bold text-[8px]">
                               {review.name.split(" ").map(n => n[0]).join("")}
                             </div>
                             <div className="flex-1 min-w-0">
                               <div className="flex items-center justify-between">
-                                <span className="text-dark-100 dark:text-white text-[9px] font-semibold truncate">{review.name}</span>
+                                <span className="text-white text-[9px] font-semibold truncate">{review.name}</span>
                                 <span className="text-dark-500 text-[7px] flex items-center gap-1 flex-shrink-0"><FiClock size={6} />{review.date}</span>
                               </div>
                               <div className="flex items-center gap-0.5">
@@ -720,7 +455,7 @@ export default function Hero() {
                             </div>
                           </div>
                           <p className="text-dark-300 text-[9px] leading-relaxed">&ldquo;{review.text}&rdquo;</p>
-                          <div className="flex items-center gap-2 mt-2 pt-2 border-t border-[var(--glass-5)]">
+                          <div className="flex items-center gap-2 mt-2 pt-2 border-t border-white/5">
                             <FiThumbsUp size={7} className="text-dark-500" />
                             <span className="text-dark-500 text-[7px]">{review.likes}</span>
                             <span className="text-dark-600 text-[7px]">•</span>
@@ -728,11 +463,11 @@ export default function Hero() {
                           </div>
                         </motion.div>
                       </div>
-                      <div className="flex justify-around pt-2 border-t border-[var(--glass-5)] mt-2 flex-shrink-0">
+                      <div className="flex justify-around pt-2 border-t border-white/5 mt-2 flex-shrink-0">
                         {["Apps", "Search", "Updates"].map(label => (
                           <div key={label} className="flex flex-col items-center gap-0.5">
-                            <div className={`w-3 h-3 rounded-sm ${label === "Apps" ? "bg-accent-blue" : "bg-[var(--glass-20)]"}`} />
-                            <span className={`text-[7px] ${label === "Apps" ? "text-accent-blue" : "text-dark-100 dark:text-white/40"}`}>{label}</span>
+                            <div className={`w-3 h-3 rounded-sm ${label === "Apps" ? "bg-accent-blue" : "bg-white/20"}`} />
+                            <span className={`text-[7px] ${label === "Apps" ? "text-accent-blue" : "text-white/40"}`}>{label}</span>
                           </div>
                         ))}
                       </div>
@@ -747,7 +482,7 @@ export default function Hero() {
                       opacity: { delay: 2.5 + delays[i], duration: 0.5 }, scale: { delay: 2.5 + delays[i], duration: 0.5 },
                       y: { repeat: Infinity, duration: 3 + (i % 3) * 0.5, ease: "easeInOut", delay: (i % 4) * 0.3 },
                       x: { repeat: Infinity, duration: 4 + (i % 2) * 0.7, ease: "easeInOut", delay: (i % 3) * 0.4 },
-                    }} className="absolute z-20 px-3 py-1.5 text-[10px] font-semibold rounded-full bg-dark-800/90 backdrop-blur-md border border-[var(--glass-10)] text-dark-200 whitespace-nowrap shadow-lg" style={positions[i] as React.CSSProperties} whileHover={{ scale: 1.15, borderColor: "rgba(59,130,246,0.6)", backgroundColor: "rgba(59,130,246,0.15)" }}>{tech}</motion.span>
+                    }} className="absolute z-20 px-3 py-1.5 text-[10px] font-semibold rounded-full bg-dark-800/90 backdrop-blur-md border border-white/10 text-dark-200 whitespace-nowrap shadow-lg" style={positions[i] as React.CSSProperties} whileHover={{ scale: 1.15, borderColor: "rgba(59,130,246,0.6)", backgroundColor: "rgba(59,130,246,0.15)" }}>{tech}</motion.span>
                   );
                 })}
               </motion.div>
@@ -779,7 +514,7 @@ export default function Hero() {
                     delay: (i % 4) * 0.15,
                   },
                 }}
-                className="px-3 py-1.5 text-[11px] font-medium rounded-full bg-[var(--glass-5)] border border-[var(--glass-10)] text-dark-300"
+                className="px-3 py-1.5 text-[11px] font-medium rounded-full bg-white/5 border border-white/10 text-dark-300"
               >
                 {tech}
               </motion.span>

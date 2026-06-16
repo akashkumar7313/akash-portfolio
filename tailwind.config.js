@@ -35,7 +35,7 @@ module.exports = {
           950: "var(--dark-950)",
         },
         accent: {
-          blue: "#3b82f6",
+          blue: "#6366f1",
           purple: "#8b5cf6",
           cyan: "#06b6d4",
         },
