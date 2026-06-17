@@ -219,6 +219,17 @@
   }
 }
 
+/* LinkedIn badge fix */
+.badge-base {
+  background: transparent !important;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.badge-base div,
+.badge-base .LI-profile-badge {
+  background: transparent !important;
+}
+
 /* Prism syntax highlighting - dark theme */
 .token.comment,
 .token.prolog,

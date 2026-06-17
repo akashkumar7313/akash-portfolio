@@ -6,6 +6,7 @@ import { FiArrowDown, FiDownload, FiEye, FiMail, FiStar, FiThumbsUp, FiClock } f
 import { FaGooglePlay, FaApple } from "react-icons/fa";
 import { SiFlutter } from "react-icons/si";
 import Stats from "./Stats";
+import Link from "next/link";
 
 const roles = [
   "Software Engineer",
@@ -273,18 +274,18 @@ export default function Hero() {
               transition={{ duration: 0.8, delay: 0.65 }}
               className="flex flex-wrap items-center gap-4 mb-8"
             >
-              <a href="#projects" className="btn-primary flex items-center gap-2 text-sm">
+              <Link href="/projects" className="btn-primary flex items-center gap-2 text-sm">
                 <FiEye />
                 View Projects
-              </a>
+              </Link>
               <a href="/resume.pdf" download className="btn-primary flex items-center gap-2 text-sm">
                 <FiDownload />
                 Resume
               </a>
-              <a href="#contact" className="btn-primary flex items-center gap-2 text-sm">
+              <Link href="/contact" className="btn-primary flex items-center gap-2 text-sm">
                 <FiMail />
                 Contact
-              </a>
+              </Link>
             </motion.div>
 
             {/* Stats */}
