@@ -24,8 +24,8 @@ export default function BackToTop() {
           exit={{ opacity: 0, y: 20, scale: 0.8 }}
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="fixed bottom-6 right-6 z-40 w-12 h-12 rounded-xl bg-gradient-to-r from-accent-blue to-accent-purple flex items-center justify-center text-white shadow-lg shadow-accent-blue/25 hover:shadow-accent-blue/40 transition-shadow duration-300"
+          onClick={() => window.scrollTo({ top: 0, behavior: "auto" })}
+          className="fixed bottom-6 right-6 z-40 w-14 h-14 rounded-full bg-gradient-to-r from-accent-blue to-accent-purple flex items-center justify-center text-white shadow-lg shadow-accent-blue/25 hover:shadow-accent-blue/40 transition-shadow duration-300"
           aria-label="Back to top"
         >
           <FiArrowUp className="text-lg" />

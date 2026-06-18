@@ -35,7 +35,7 @@ export default function Stats() {
   return (
     <section className="overflow-hidden py-8 md:py-12">
       <div className="max-width" ref={ref}>
-        <div className="flex flex-col md:flex-row md:items-center justify-center gap-4 md:gap-0 md:divide-x md:divide-[var(--glass-10)]">
+        <div className="grid grid-cols-2 md:flex md:flex-row md:items-center justify-center gap-4 md:gap-0 md:divide-x md:divide-[var(--glass-10)]">
           {stats.map((stat, idx) => (
             <motion.div
               key={stat.label}

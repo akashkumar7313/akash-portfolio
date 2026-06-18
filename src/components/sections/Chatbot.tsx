@@ -74,6 +74,28 @@ export default function Chatbot() {
     sendMessage(input);
   };
 
+  const askSuggestion = async (text: string) => {
+    if (!text.trim() || loading) return;
+    setLoading(true);
+    try {
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: text.trim() }),
+      });
+      const data = await res.json();
+      const botMsg: Message = { role: "bot", text: data.reply || "Sorry, I didn't understand that." };
+      setMessages((prev) => [...prev, botMsg]);
+    } catch {
+      setMessages((prev) => [
+        ...prev,
+        { role: "bot", text: "Sorry, I'm having trouble connecting right now. Please try again." },
+      ]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <>
       <motion.button
@@ -82,7 +104,7 @@ export default function Chatbot() {
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
         onClick={() => setOpen(true)}
-        className="fixed bottom-6 right-6 z-40 w-14 h-14 rounded-full bg-gradient-to-r from-accent-blue to-accent-purple flex items-center justify-center text-white text-2xl shadow-lg shadow-accent-blue/30 hover:shadow-accent-blue/50 transition-shadow duration-300"
+        className="fixed bottom-24 lg:bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-gradient-to-r from-accent-blue to-accent-purple flex items-center justify-center text-white text-2xl shadow-lg shadow-accent-blue/30 hover:shadow-accent-blue/50 hover:shadow-xl transition-shadow duration-300"
         aria-label="Open chatbot"
       >
         <HiSparkles />
@@ -166,7 +188,7 @@ export default function Chatbot() {
                   {quickQuestions.map((q) => (
                     <button
                       key={q}
-                      onClick={() => sendMessage(q)}
+                      onClick={() => askSuggestion(q)}
                       className="px-3 py-1.5 text-[11px] font-medium rounded-full bg-[var(--glass-5)] border border-[var(--glass-10)] text-dark-300 hover:text-dark-100 dark:text-white hover:bg-[var(--glass-10)] hover:border-[var(--glass-20)] transition-all"
                     >
                       {q}

@@ -65,13 +65,13 @@ export default function Footer() {
         className="h-px bg-gradient-to-r from-transparent via-accent-blue to-transparent origin-left"
       />
 
-      <div className="max-width  sm:px-8 md:py-12">
+      <div className="max-width px-4 py-8 sm:px-8 md:py-12">
         <motion.div
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-8 md:gap-12"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-6 md:gap-12"
         >
           <motion.div variants={itemVariants} className="sm:col-span-2 lg:col-span-4">
             <Link href="/" className="inline-flex items-center gap-2.5 group mb-4">
@@ -120,7 +120,7 @@ export default function Footer() {
             </h4>
 
             {/* Fixed wrapper */}
-            <div className="w-[350px] mx-auto min-h-[300px]">
+            <div className="w-full max-w-[350px] mx-auto min-h-[200px] sm:min-h-[300px]">
 
               {/* Light + Dark handled by LinkedIn itself */}
               <div

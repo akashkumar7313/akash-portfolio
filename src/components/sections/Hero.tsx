@@ -166,13 +166,13 @@ export default function Hero() {
       let att = 0;
       do {
         const r = Math.random();
-        if (r < 0.10) { side = "tl"; y = Math.floor(Math.random() * 18 - 5); p = { top: `${y}%`, left: `${-Math.floor(Math.random() * 12 + 3)}%` }; }
-        else if (r < 0.20) { side = "tr"; y = Math.floor(Math.random() * 18 - 5); p = { top: `${y}%`, right: `${-Math.floor(Math.random() * 12 + 3)}%` }; }
+        if (r < 0.10) { side = "tl"; y = Math.floor(Math.random() * 18 - 5); p = { top: `${y}%`, left: `${-Math.floor(Math.random() * 6 + 3)}%` }; }
+        else if (r < 0.20) { side = "tr"; y = Math.floor(Math.random() * 18 - 5); p = { top: `${y}%`, right: `${-Math.floor(Math.random() * 6 + 3)}%` }; }
         else if (r < 0.40) { side = "t"; y = Math.floor(Math.random() * 12 - 20); p = { top: `${y}%`, left: `${Math.floor(Math.random() * 55 + 10)}%` }; }
-        else if (r < 0.50) { side = "bl"; y = 100 - Math.floor(Math.random() * 12 + 3); p = { top: `${y}%`, left: `${-Math.floor(Math.random() * 12 + 3)}%` }; }
-        else if (r < 0.62) { side = "br"; y = 100 - Math.floor(Math.random() * 12 + 3); p = { top: `${y}%`, right: `${-Math.floor(Math.random() * 12 + 3)}%` }; }
-        else if (r < 0.81) { side = "l"; y = Math.floor(Math.random() * 90 - 5); p = { top: `${y}%`, left: `${-Math.floor(Math.random() * 12 + 14)}%` }; }
-        else { side = "r"; y = Math.floor(Math.random() * 90 - 5); p = { top: `${y}%`, right: `${-Math.floor(Math.random() * 12 + 14)}%` }; }
+        else if (r < 0.50) { side = "bl"; y = 100 - Math.floor(Math.random() * 12 + 3); p = { top: `${y}%`, left: `${-Math.floor(Math.random() * 6 + 3)}%` }; }
+        else if (r < 0.60) { side = "br"; y = 100 - Math.floor(Math.random() * 12 + 3); p = { top: `${y}%`, right: `${-Math.floor(Math.random() * 6 + 3)}%` }; }
+        else if (r < 0.80) { side = "l"; y = Math.floor(Math.random() * 90 - 5); p = { top: `${y}%`, left: `${-Math.floor(Math.random() * 8 + 8)}%` }; }
+        else { side = "r"; y = Math.floor(Math.random() * 90 - 5); p = { top: `${y}%`, right: `${-Math.floor(Math.random() * 8 + 8)}%` }; }
         att++;
       } while (used.some(u => u.side[0] === side[0] && Math.abs(u.y - y) < 5) && att < 50);
       used.push({ side, y });
@@ -329,7 +329,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.55 }}
-              className="flex flex-wrap gap-2 mb-8"
+              className="flex flex-wrap items-center justify-center lg:justify-start gap-2 mb-8"
             >
               <span className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[11px] font-semibold rounded-full bg-gradient-to-r from-yellow-500/20 to-yellow-500/5 border border-yellow-500/20 text-yellow-400">
                 🏆 Best Developer of the Year
@@ -343,7 +343,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.65 }}
-              className="flex flex-wrap items-center gap-4 mb-8"
+              className="flex flex-wrap items-center justify-center lg:justify-start gap-3 mb-8"
             >
               <Link href="/projects" className="btn-primary flex items-center gap-2 text-sm">
                 <FiEye />
@@ -366,7 +366,7 @@ export default function Hero() {
           </div>
 
           {/* Right - Phone + Code side by side */}
-          <div className="hidden lg:flex items-start justify-center gap-6">
+          <div className="flex flex-col lg:flex-row items-center lg:items-start justify-center gap-6">
 
 
             {/* Code — side by side with phone */}
@@ -374,10 +374,10 @@ export default function Hero() {
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: codeVisible ? 1 : 0, x: codeVisible ? 0 : 50 }}
               transition={{ duration: 0.8, delay: 1.6 }}
-              className="w-[350px] mt-16"
+              className="w-full max-w-[350px] mt-16"
             >
-              <div className="glass rounded-2xl overflow-hidden border border-white/5 shadow-2xl shadow-accent-blue/10">
-                <div className="flex items-center gap-2 px-4 py-2 bg-white/5 border-b border-white/5">
+              <div className="rounded-2xl overflow-hidden border border-dark-300 dark:border-white/20 bg-dark-900 dark:bg-black/40 shadow-2xl shadow-black/10 dark:shadow-black/30">
+                <div className="flex items-center gap-2 px-4 py-2 bg-dark-100 dark:bg-white/10 border-b border-dark-300 dark:border-white/20">
                   <div className="flex gap-1.5">
                     <div className="w-2.5 h-2.5 rounded-full bg-red-500/70" />
                     <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/70" />
@@ -409,16 +409,16 @@ export default function Hero() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 1.3 }}
-                className="flex flex-col items-center gap-2 mt-24"
+                className="flex-col items-center gap-2 mt-24 hidden md:flex"
               >
                 <span className="text-dark-500 text-sm font-semibold uppercase tracking-wider">Available on</span>
                 <div className="flex items-center gap-3">
-                  <a href="" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white text-xs font-medium hover:bg-white/10 hover:border-green-400/50 transition-all duration-300">
+                  <a href="" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-4 py-3 bg-dark-200 dark:bg-white/10 border border-dark-300 dark:border-white/20 rounded-xl text-dark-800 dark:text-white text-xs font-medium hover:bg-dark-300 dark:hover:bg-white/20 hover:border-green-400/50 transition-all duration-300">
                     <FaGooglePlay className="text-green-400 text-sm" />
                     Google Play
                   </a>
-                  <a href="" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white text-xs font-medium hover:bg-white/10 hover:border-accent-blue/50 transition-all duration-300">
-                    <FaApple className="text-white text-sm" />
+                  <a href="" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-4 py-3 bg-dark-200 dark:bg-white/10 border border-dark-300 dark:border-white/20 rounded-xl text-dark-800 dark:text-white text-xs font-medium hover:bg-dark-300 dark:hover:bg-white/20 hover:border-accent-blue/50 transition-all duration-300">
+                    <FaApple className="text-dark-800 dark:text-white text-sm" />
                     App Store
                   </a>
                 </div>
@@ -431,7 +431,7 @@ export default function Hero() {
                 initial={{ opacity: 0, y: 40 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 1.2 }}
-                className="relative"
+                className="dark relative"
                 style={{ width: "300px", height: "620px" }}
               >
                 <div className="absolute inset-0 rounded-[3rem] bg-gradient-to-b from-dark-600 to-dark-800 p-[3px] shadow-2xl shadow-accent-blue/20">
@@ -552,20 +552,20 @@ export default function Hero() {
                 const p = {...badgePositions[i]};
                 if (!p.top && !p.bottom) return null;
                 const techColors: Record<string, { icon: string; from: string; to: string; border: string; text: string; shadow: string }> = {
-                  Flutter: { icon: "💙", from: "from-blue-500/30", to: "to-cyan-500/10", border: "border-blue-500/30", text: "text-blue-300", shadow: "shadow-blue-500/20" },
-                  Dart: { icon: "🎯", from: "from-teal-500/30", to: "to-cyan-500/10", border: "border-teal-500/30", text: "text-teal-300", shadow: "shadow-teal-500/20" },
-                  "React Native": { icon: "⚛️", from: "from-sky-500/30", to: "to-blue-500/10", border: "border-sky-500/30", text: "text-sky-300", shadow: "shadow-sky-500/20" },
-                  Firebase: { icon: "🔥", from: "from-yellow-500/30", to: "to-orange-500/10", border: "border-yellow-500/30", text: "text-yellow-300", shadow: "shadow-yellow-500/20" },
-                  Stripe: { icon: "💳", from: "from-purple-500/30", to: "to-indigo-500/10", border: "border-purple-500/30", text: "text-purple-300", shadow: "shadow-purple-500/20" },
-                  Razorpay: { icon: "💰", from: "from-emerald-500/30", to: "to-green-500/10", border: "border-emerald-500/30", text: "text-emerald-300", shadow: "shadow-emerald-500/20" },
-                  BLoC: { icon: "🧩", from: "from-pink-500/30", to: "to-rose-500/10", border: "border-pink-500/30", text: "text-pink-300", shadow: "shadow-pink-500/20" },
-                  Riverpod: { icon: "📦", from: "from-indigo-500/30", to: "to-violet-500/10", border: "border-indigo-500/30", text: "text-indigo-300", shadow: "shadow-indigo-500/20" },
-                  Redux: { icon: "🔄", from: "from-violet-500/30", to: "to-purple-500/10", border: "border-violet-500/30", text: "text-violet-300", shadow: "shadow-violet-500/20" },
-                  GraphQL: { icon: "◈", from: "from-rose-500/30", to: "to-pink-500/10", border: "border-rose-500/30", text: "text-rose-300", shadow: "shadow-rose-500/20" },
-                  FCM: { icon: "🔔", from: "from-orange-500/30", to: "to-amber-500/10", border: "border-orange-500/30", text: "text-orange-300", shadow: "shadow-orange-500/20" },
-                  Git: { icon: "🔀", from: "from-red-500/30", to: "to-orange-500/10", border: "border-red-500/30", text: "text-red-300", shadow: "shadow-red-500/20" },
-                  WebRTC: { icon: "📹", from: "from-cyan-500/30", to: "to-sky-500/10", border: "border-cyan-500/30", text: "text-cyan-300", shadow: "shadow-cyan-500/20" },
-                  HealthKit: { icon: "❤️", from: "from-red-500/30", to: "to-rose-500/10", border: "border-red-500/30", text: "text-red-300", shadow: "shadow-red-500/20" },
+                  Flutter: { icon: "💙", from: "from-blue-500/80", to: "to-cyan-500/50", border: "border-blue-500/60", text: "text-white", shadow: "shadow-blue-500/30" },
+                  Dart: { icon: "🎯", from: "from-teal-500/80", to: "to-cyan-500/50", border: "border-teal-500/60", text: "text-white", shadow: "shadow-teal-500/30" },
+                  "React Native": { icon: "⚛️", from: "from-sky-500/80", to: "to-blue-500/50", border: "border-sky-500/60", text: "text-white", shadow: "shadow-sky-500/30" },
+                  Firebase: { icon: "🔥", from: "from-yellow-500/80", to: "to-orange-500/50", border: "border-yellow-500/60", text: "text-white", shadow: "shadow-yellow-500/30" },
+                  Stripe: { icon: "💳", from: "from-purple-500/80", to: "to-indigo-500/50", border: "border-purple-500/60", text: "text-white", shadow: "shadow-purple-500/30" },
+                  Razorpay: { icon: "💰", from: "from-emerald-500/80", to: "to-green-500/50", border: "border-emerald-500/60", text: "text-white", shadow: "shadow-emerald-500/30" },
+                  BLoC: { icon: "🧩", from: "from-pink-500/80", to: "to-rose-500/50", border: "border-pink-500/60", text: "text-white", shadow: "shadow-pink-500/30" },
+                  Riverpod: { icon: "📦", from: "from-indigo-500/80", to: "to-violet-500/50", border: "border-indigo-500/60", text: "text-white", shadow: "shadow-indigo-500/30" },
+                  Redux: { icon: "🔄", from: "from-violet-500/80", to: "to-purple-500/50", border: "border-violet-500/60", text: "text-white", shadow: "shadow-violet-500/30" },
+                  GraphQL: { icon: "◈", from: "from-rose-500/80", to: "to-pink-500/50", border: "border-rose-500/60", text: "text-white", shadow: "shadow-rose-500/30" },
+                  FCM: { icon: "🔔", from: "from-orange-500/80", to: "to-amber-500/50", border: "border-orange-500/60", text: "text-white", shadow: "shadow-orange-500/30" },
+                  Git: { icon: "🔀", from: "from-red-500/80", to: "to-orange-500/50", border: "border-red-500/60", text: "text-white", shadow: "shadow-red-500/30" },
+                  WebRTC: { icon: "📹", from: "from-cyan-500/80", to: "to-sky-500/50", border: "border-cyan-500/60", text: "text-white", shadow: "shadow-cyan-500/30" },
+                  HealthKit: { icon: "❤️", from: "from-red-500/80", to: "to-rose-500/50", border: "border-red-500/60", text: "text-white", shadow: "shadow-red-500/30" },
                 };
                 const key = Object.keys(techColors).find(k => tech.toLowerCase().includes(k.toLowerCase())) || "";
                 const c = techColors[key] || { icon: "⚡", from: "from-slate-500/30", to: "to-slate-500/10", border: "border-slate-500/30", text: "text-slate-300", shadow: "shadow-slate-500/20" };
@@ -574,7 +574,7 @@ export default function Hero() {
                     opacity: { delay: 2.5 + i * 0.3, duration: 0.5 }, scale: { delay: 2.5 + i * 0.3, duration: 0.5 },
                     y: { repeat: Infinity, duration: 3 + (i % 3) * 0.5, ease: "easeInOut", delay: (i % 4) * 0.3 },
                     x: { repeat: Infinity, duration: 4 + (i % 2) * 0.7, ease: "easeInOut", delay: (i % 3) * 0.4 },
-                  }} className={`absolute z-20 px-3 py-1.5 text-[11px] font-bold rounded-full bg-gradient-to-br ${c.from} ${c.to} backdrop-blur-md border ${c.border} ${c.text} whitespace-nowrap shadow-lg ${c.shadow} hidden lg:flex items-center gap-1.5 w-fit`} style={p as React.CSSProperties} whileHover={{ scale: 1.2, y: -8 }}>
+                  }} className={`absolute z-20 px-3 py-1.5 text-[11px] font-bold rounded-full bg-gradient-to-br ${c.from} ${c.to} backdrop-blur-md border ${c.border} ${c.text} whitespace-nowrap shadow-lg ${c.shadow} flex items-center gap-1.5 w-fit`} style={p as React.CSSProperties} whileHover={{ scale: 1.2, y: -8 }}>
                     <span className="text-[13px]">{c.icon}</span>
                     {tech}
                   </motion.span>
@@ -584,49 +584,6 @@ export default function Hero() {
             </div>
           </div>
         </div>
-
-        {/* Mobile: Tech cloud */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.8, duration: 1 }}
-          className="lg:hidden max-w-xl mx-auto mt-8"
-        >
-          <div className="flex flex-wrap justify-center gap-2">
-            {liveStack.map((tech, i) => {
-              const mobileColors: Record<string, { icon: string; bg: string; border: string; text: string }> = {
-                Flutter: { icon: "💙", bg: "bg-blue-500/10", border: "border-blue-500/20", text: "text-blue-300" },
-                Dart: { icon: "🎯", bg: "bg-teal-500/10", border: "border-teal-500/20", text: "text-teal-300" },
-                "React Native": { icon: "⚛️", bg: "bg-sky-500/10", border: "border-sky-500/20", text: "text-sky-300" },
-                Firebase: { icon: "🔥", bg: "bg-yellow-500/10", border: "border-yellow-500/20", text: "text-yellow-300" },
-                Stripe: { icon: "💳", bg: "bg-purple-500/10", border: "border-purple-500/20", text: "text-purple-300" },
-                Razorpay: { icon: "💰", bg: "bg-emerald-500/10", border: "border-emerald-500/20", text: "text-emerald-300" },
-                BLoC: { icon: "🧩", bg: "bg-pink-500/10", border: "border-pink-500/20", text: "text-pink-300" },
-                Riverpod: { icon: "📦", bg: "bg-indigo-500/10", border: "border-indigo-500/20", text: "text-indigo-300" },
-                Redux: { icon: "🔄", bg: "bg-violet-500/10", border: "border-violet-500/20", text: "text-violet-300" },
-                GraphQL: { icon: "◈", bg: "bg-rose-500/10", border: "border-rose-500/20", text: "text-rose-300" },
-                FCM: { icon: "🔔", bg: "bg-orange-500/10", border: "border-orange-500/20", text: "text-orange-300" },
-                Git: { icon: "🔀", bg: "bg-red-500/10", border: "border-red-500/20", text: "text-red-300" },
-                WebRTC: { icon: "📹", bg: "bg-cyan-500/10", border: "border-cyan-500/20", text: "text-cyan-300" },
-                HealthKit: { icon: "❤️", bg: "bg-red-500/10", border: "border-red-500/20", text: "text-red-300" },
-              };
-              const key = Object.keys(mobileColors).find(k => tech.toLowerCase().includes(k.toLowerCase())) || "";
-              const m = mobileColors[key] || { icon: "⚡", bg: "bg-slate-500/10", border: "border-slate-500/20", text: "text-slate-300" };
-              return (
-                <motion.span
-                  key={tech}
-                  initial={{ opacity: 0, y: 15 }}
-                  animate={{ opacity: 1, y: [0, -3, 0] }}
-                  transition={{ y: { repeat: Infinity, duration: 2.5 + (i % 3) * 0.5, ease: "easeInOut", delay: (i % 4) * 0.15 } }}
-                  className={`px-3 py-1.5 text-[11px] font-medium rounded-full ${m.bg} border ${m.border} ${m.text} flex items-center gap-1.5`}
-                >
-                  <span>{m.icon}</span>
-                  {tech}
-                </motion.span>
-              );
-            })}
-          </div>
-        </motion.div>
 
         <motion.div
           initial={{ opacity: 0 }}
