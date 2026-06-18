@@ -409,7 +409,7 @@ export default function Hero() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 1.3 }}
-                className="flex-col items-center gap-2 mt-24 hidden md:flex"
+                className="flex-col items-center gap-2 mt-24 hidden lg:flex"
               >
                 <span className="text-dark-500 text-sm font-semibold uppercase tracking-wider">Available on</span>
                 <div className="flex items-center gap-3">

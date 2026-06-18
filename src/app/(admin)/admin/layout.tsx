@@ -14,6 +14,16 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       setChecking(false);
       return;
     }
+
+    // Session per tab: if no sessionStorage flag → logout + redirect to login
+    const sessionId = sessionStorage.getItem("admin_session");
+    if (!sessionId) {
+      fetch("/api/admin/logout", { method: "POST" }).finally(() => {
+        router.replace("/admin/login");
+      });
+      return;
+    }
+
     fetch("/api/admin/check")
       .then((r) => r.json())
       .then((data) => {

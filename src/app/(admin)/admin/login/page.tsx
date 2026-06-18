@@ -20,6 +20,7 @@ export default function AdminLogin() {
         body: JSON.stringify({ password }),
       });
       if (res.ok) {
+        sessionStorage.setItem("admin_session", Date.now().toString());
         router.push("/admin");
       } else {
         setError("Invalid password");
