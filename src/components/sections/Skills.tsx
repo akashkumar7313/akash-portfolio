@@ -1,39 +1,15 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { FiCpu } from "react-icons/fi";
 import SectionHeading from "@/components/ui/SectionHeading";
 
-const skillCategories = [
-  {
-    title: "Mobile Development",
-    icon: "📱",
-    skills: ["Flutter", "Dart", "React Native", "Android", "iOS"],
-  },
-  {
-    title: "State Management",
-    icon: "⚙️",
-    skills: ["BLoC", "Riverpod", "Redux", "Provider"],
-  },
-  {
-    title: "Backend & Cloud",
-    icon: "☁️",
-    skills: ["Firebase", "Firestore", "FCM", "REST APIs", "GraphQL"],
-  },
-  {
-    title: "Payments",
-    icon: "💳",
-    skills: ["Stripe", "Razorpay", "In-App Purchases"],
-  },
-  {
-    title: "Tools & Platforms",
-    icon: "🛠️",
-    skills: [
-      "Git", "GitHub", "Xcode", "Android Studio",
-      "VS Code", "Jira", "Codemagic",
-    ],
-  },
-];
+interface SkillCategory {
+  title: string;
+  icon: string;
+  skills: string[];
+}
 
 const badgeColors = [
   "from-accent-blue/20 to-accent-blue/5 border-accent-blue/20 hover:border-accent-blue/50 hover:text-accent-blue",
@@ -46,18 +22,24 @@ const badgeColors = [
 ];
 
 export default function Skills() {
+  const [categories, setCategories] = useState<SkillCategory[]>([]);
+
+  useEffect(() => {
+    fetch("/api/skills")
+      .then((r) => r.json())
+      .then((data) => setCategories(data.categories || []))
+      .catch(() => {});
+  }, []);
+
+  if (categories.length === 0) return null;
+
   return (
     <section id="skills" className="section-padding bg-dark-900/50">
       <div className="max-width">
-
-        <SectionHeading
-          title="Skills & Expertise"
-          subtitle="Technologies and tools I work with daily"
-          icon={<FiCpu />}
-        />
+        <SectionHeading title="Skills & Expertise" subtitle="Technologies and tools I work with daily" icon={<FiCpu />} />
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {skillCategories.map((cat, idx) => (
+          {categories.map((cat, idx) => (
             <motion.div
               key={cat.title}
               initial={{ opacity: 0, y: 30 }}
@@ -79,10 +61,7 @@ export default function Skills() {
                     initial={{ opacity: 0, scale: 0.8 }}
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
-                    transition={{
-                      duration: 0.3,
-                      delay: idx * 0.1 + sIdx * 0.03,
-                    }}
+                    transition={{ duration: 0.3, delay: idx * 0.1 + sIdx * 0.03 }}
                     className={`px-3.5 py-1.5 rounded-lg text-sm font-medium border bg-gradient-to-br transition-all duration-300 cursor-default text-dark-200 ${badgeColors[sIdx % badgeColors.length]}`}
                   >
                     {skill}

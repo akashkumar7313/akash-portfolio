@@ -1,62 +1,32 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiBriefcase, FiCalendar, FiChevronDown, FiMapPin } from "react-icons/fi";
 import { FaApple, FaGooglePlay } from "react-icons/fa";
 import SectionHeading from "@/components/ui/SectionHeading";
 
-const experiences = [
-  {
-    role: "Software Engineer",
-    company: "Singsys Pte Ltd",
-    period: "Apr 2024 – Present",
-    type: "Full-time · On-site",
-    location: "Lucknow, Uttar Pradesh, India",
-    color: "#3b82f6",
-    skills: ["Android", "Firebase", "Flutter", "React Native", "Dart", "BLoC", "Riverpod", "Redux", "Stripe"],
-    description: [
-      "Developed and deployed high-performing, cross-platform mobile applications using Flutter and React Native.",
-      "Collaborated with product managers and UX/UI designers to translate requirements into technical specifications.",
-      "Integrated APIs for real-time data sync, secure payment gateways, and advanced functionalities.",
-      "Employed state management (Provider, Bloc, Redux) for scalable and maintainable architectures.",
-      "Published apps on Google Play Store and Apple App Store following platform guidelines.",
-    ],
-  },
-  {
-    role: "React Native Developer",
-    company: "Vibrant IT Solutions Private Limited",
-    period: "Aug 2023 – Apr 2024",
-    type: "Full-time · On-site",
-    location: "Lucknow, Uttar Pradesh, India",
-    color: "#8b5cf6",
-    skills: ["React Native", "JavaScript", "React", "Firebase", "API Integration", "Git"],
-    description: [
-      "Built cutting-edge React Native apps, leveraging React and JavaScript for optimal performance.",
-      "Guided cross-functional teams through complex React Native projects meeting tight deadlines.",
-      "Integrated third-party APIs including payment gateways and social media platforms.",
-      "Led code reviews and proactively addressed bugs and performance bottlenecks.",
-    ],
-  },
-  {
-    role: "Jr. Web Developer",
-    company: "Softpro India Computer Technologies",
-    period: "Jul 2022 – Aug 2023",
-    type: "Full-time · On-site",
-    location: "Lucknow, Uttar Pradesh, India",
-    color: "#10b981",
-    skills: ["HTML", "CSS", "JavaScript", "React.js", "Node.js", "Express.js", "MongoDB", "Git"],
-    description: [
-      "Built web applications using HTML, CSS, JavaScript, and React.js.",
-      "Developed backend services with Node.js and Express.js.",
-      "Managed NoSQL databases with MongoDB.",
-      "Used Git and GitHub for version control and collaboration.",
-    ],
-  },
-];
+interface ExperienceItem {
+  role: string;
+  company: string;
+  period: string;
+  type: string;
+  location: string;
+  color: string;
+  skills: string[];
+  description: string[];
+}
 
 export default function Experience() {
+  const [experiences, setExperiences] = useState<ExperienceItem[]>([]);
   const [expanded, setExpanded] = useState<Set<number>>(new Set());
+
+  useEffect(() => {
+    fetch("/api/experience")
+      .then((r) => r.json())
+      .then((data) => setExperiences(data.experiences || []))
+      .catch(() => {});
+  }, []);
 
   const toggleExpanded = (idx: number) => {
     setExpanded((prev) => {
@@ -67,17 +37,14 @@ export default function Experience() {
     });
   };
 
+  if (experiences.length === 0) return null;
+
   return (
     <section id="experience" className="section-padding relative overflow-hidden">
       <div className="absolute top-20 right-10 w-32 h-32 bg-accent-blue/5 rounded-full blur-3xl animate-float pointer-events-none" />
       <div className="absolute bottom-20 left-10 w-40 h-40 bg-accent-purple/5 rounded-full blur-3xl animate-float pointer-events-none" style={{ animationDelay: "2s" }} />
       <div className="max-width relative z-10">
-
-        <SectionHeading
-          title="Work Experience"
-          subtitle="My professional journey in software development"
-          icon={<FiBriefcase />}
-        />
+        <SectionHeading title="Work Experience" subtitle="My professional journey in software development" icon={<FiBriefcase />} />
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {experiences.map((exp, idx) => {
@@ -85,7 +52,7 @@ export default function Experience() {
             const c = exp.color;
             return (
               <motion.div
-                key={exp.role}
+                key={`${exp.role}-${idx}`}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -113,15 +80,13 @@ export default function Experience() {
                       </div>
                       <div className="flex items-center gap-1.5 shrink-0 ml-2">
                         <div className="flex items-center gap-1 px-2 py-1 rounded-full text-xs font-mono" style={{ background: `${c}15`, color: c }}>
-                          <FiCalendar size={10} />
-                          {exp.period}
+                          <FiCalendar size={10} /> {exp.period}
                         </div>
                       </div>
                     </div>
 
                     <div className="flex items-center gap-1 text-xs text-dark-500 mb-3">
-                      <FiMapPin size={10} />
-                      <span className="truncate">{exp.location}</span>
+                      <FiMapPin size={10} /> <span className="truncate">{exp.location}</span>
                     </div>
 
                     <div className="flex flex-wrap gap-1 mb-3">

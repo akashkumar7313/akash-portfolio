@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useMemo } from "react";
 import { motion } from "framer-motion";
 import { FiArrowDown, FiDownload, FiEye, FiMail, FiStar, FiThumbsUp, FiClock } from "react-icons/fi";
 import { FaGooglePlay, FaApple } from "react-icons/fa";
@@ -111,12 +111,80 @@ function useTypingAnimation(texts: string[]) {
   return displayed;
 }
 
+function useCodeTyper(code: string, speed: number = 25) {
+  const [displayed, setDisplayed] = useState("");
+  const [done, setDone] = useState(false);
+
+  useEffect(() => {
+    setDisplayed("");
+    setDone(false);
+    let i = 0;
+    const t = setInterval(() => {
+      if (i < code.length) {
+        setDisplayed(code.slice(0, i + 1));
+        i++;
+      } else {
+        setDone(true);
+        clearInterval(t);
+      }
+    }, speed);
+    return () => clearInterval(t);
+  }, [code, speed]);
+
+  return { displayed, done };
+}
+
 export default function Hero() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const typedRole = useTypingAnimation(roles);
   const [codeVisible, setCodeVisible] = useState(false);
   const [codeTab, setCodeTab] = useState<"flutter" | "rn">("flutter");
   const [reviewIndex, setReviewIndex] = useState(0);
+  const [apiStack, setApiStack] = useState<string[] | null>(null);
+  const [resumeUrl, setResumeUrl] = useState("/resume.pdf");
+  const [particles, setParticles] = useState(true);
+
+  useEffect(() => {
+    fetch("/api/hero").then(r => r.json()).then(d => {
+      const arr = d?.techStack as { text: string }[] | undefined;
+      if (arr && arr.length > 0) setApiStack(arr.map(t => t.text));
+      if (d?.resumeUrl) setResumeUrl(d.resumeUrl);
+    }).catch(() => {});
+    fetch("/api/settings").then(r => r.json()).then(s => {
+      if (s?.particles === false) setParticles(false);
+    }).catch(() => {});
+  }, []);
+
+  const liveStack = apiStack && apiStack.length > 0 ? apiStack : techStack;
+
+  const badgePositions = useMemo(() => {
+    const count = Math.min(liveStack.length, 15);
+    const pos: Record<string, string>[] = [];
+    const used: { side: string; y: number }[] = [];
+    for (let i = 0; i < count; i++) {
+      let side: string, y: number, p: Record<string, string>;
+      let att = 0;
+      do {
+        const r = Math.random();
+        if (r < 0.10) { side = "tl"; y = Math.floor(Math.random() * 18 - 5); p = { top: `${y}%`, left: `${-Math.floor(Math.random() * 12 + 3)}%` }; }
+        else if (r < 0.20) { side = "tr"; y = Math.floor(Math.random() * 18 - 5); p = { top: `${y}%`, right: `${-Math.floor(Math.random() * 12 + 3)}%` }; }
+        else if (r < 0.40) { side = "t"; y = Math.floor(Math.random() * 12 - 20); p = { top: `${y}%`, left: `${Math.floor(Math.random() * 55 + 10)}%` }; }
+        else if (r < 0.50) { side = "bl"; y = 100 - Math.floor(Math.random() * 12 + 3); p = { top: `${y}%`, left: `${-Math.floor(Math.random() * 12 + 3)}%` }; }
+        else if (r < 0.62) { side = "br"; y = 100 - Math.floor(Math.random() * 12 + 3); p = { top: `${y}%`, right: `${-Math.floor(Math.random() * 12 + 3)}%` }; }
+        else if (r < 0.81) { side = "l"; y = Math.floor(Math.random() * 90 - 5); p = { top: `${y}%`, left: `${-Math.floor(Math.random() * 12 + 14)}%` }; }
+        else { side = "r"; y = Math.floor(Math.random() * 90 - 5); p = { top: `${y}%`, right: `${-Math.floor(Math.random() * 12 + 14)}%` }; }
+        att++;
+      } while (used.some(u => u.side[0] === side[0] && Math.abs(u.y - y) < 5) && att < 50);
+      used.push({ side, y });
+      pos.push(p);
+    }
+    return pos;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [liveStack.join(",")]);
+
+  const { displayed: typedFlutter } = useCodeTyper(codeVisible ? flutterCode : "", 25);
+  const { displayed: typedRn } = useCodeTyper(codeVisible ? rnCode : "", 25);
+  const typedCode = codeTab === "flutter" ? typedFlutter : typedRn;
 
   useEffect(() => {
     const timer = setTimeout(() => setCodeVisible(true), 2000);
@@ -131,13 +199,14 @@ export default function Hero() {
   }, []);
 
   useEffect(() => {
+    if (!particles) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
     let animationId: number;
-    const particles: { x: number; y: number; vx: number; vy: number; size: number; alpha: number }[] = [];
+    const pts: { x: number; y: number; vx: number; vy: number; size: number; alpha: number }[] = [];
 
     const resize = () => {
       canvas.width = window.innerWidth;
@@ -147,7 +216,7 @@ export default function Hero() {
     window.addEventListener("resize", resize);
 
     for (let i = 0; i < 100; i++) {
-      particles.push({
+      pts.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
         vx: (Math.random() - 0.5) * 0.6,
@@ -160,7 +229,7 @@ export default function Hero() {
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      particles.forEach((p) => {
+      pts.forEach((p) => {
         p.x += p.vx;
         p.y += p.vy;
 
@@ -195,10 +264,12 @@ export default function Hero() {
       id="hero"
       className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20"
     >
+      {particles && (
       <canvas
         ref={canvasRef}
         className="absolute inset-0 pointer-events-none"
       />
+      )}
 
       <div className="absolute inset-0 bg-gradient-to-b from-accent-blue/5 via-white to-white dark:via-slate-900/80 dark:to-slate-950 pointer-events-none" />
 
@@ -278,7 +349,7 @@ export default function Hero() {
                 <FiEye />
                 View Projects
               </Link>
-              <a href="/resume.pdf" download className="btn-primary flex items-center gap-2 text-sm">
+              <a href={resumeUrl} target="_blank" rel="noopener noreferrer" className="btn-primary flex items-center gap-2 text-sm">
                 <FiDownload />
                 Resume
               </a>
@@ -318,7 +389,7 @@ export default function Hero() {
                   </div>
                 </div>
                 <div className="p-4 font-mono text-[11px] leading-relaxed overflow-x-auto min-h-[200px]">
-                  {(codeTab === "flutter" ? flutterCode : rnCode).split("\n").map((line, i) => {
+                  {typedCode.split("\n").map((line, i) => {
                     const indent = line.search(/\S/);
                     const trimmed = line.trim();
                     let color = "text-dark-300";
@@ -326,8 +397,11 @@ export default function Hero() {
                     else if (["final", "String", "int", "bool", "View", "Text", "MaterialApp", "Scaffold", "AppBar", "Center"].some(w => trimmed.startsWith(w))) color = "text-accent-purple";
                     else if (trimmed.includes('"') || trimmed.includes("true") || trimmed.includes("false") || trimmed.includes("=>")) color = "text-green-400";
                     else if (["@override", "}:", "};", "});"].some(w => trimmed.startsWith(w))) color = "text-dark-500";
-                    return (<motion.div key={i} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.8 + i * 0.05, duration: 0.25 }} className={color} style={{ paddingLeft: indent * 8 }}>{line.trim() || "\u00A0"}</motion.div>);
+                    return (<div key={i} className={color} style={{ paddingLeft: indent * 8 }}>{trimmed || "\u00A0"}</div>);
                   })}
+                  {typedCode.length < (codeTab === "flutter" ? flutterCode : rnCode).length && (
+                    <span className="animate-pulse text-accent-blue">|</span>
+                  )}
                 </div>
               </div>
 
@@ -353,13 +427,12 @@ export default function Hero() {
 
             {/* Store badges + Phone column */}
             <div className="flex flex-col items-center gap-3">
-
-
               <motion.div
                 initial={{ opacity: 0, y: 40 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 1.2 }}
-                className="w-[300px] h-[620px] relative flex-shrink-0"
+                className="relative"
+                style={{ width: "300px", height: "620px" }}
               >
                 <div className="absolute inset-0 rounded-[3rem] bg-gradient-to-b from-dark-600 to-dark-800 p-[3px] shadow-2xl shadow-accent-blue/20">
                   <div className="w-full h-full rounded-[2.85rem] bg-dark-950 overflow-hidden relative">
@@ -475,17 +548,38 @@ export default function Hero() {
                     </div>
                   </div>
                 </div>
-                {techStack.slice(0, 8).map((tech, i) => {
-                  const positions = [{ top: "-6%", left: "-22%" }, { top: "12%", right: "-26%" }, { top: "35%", left: "-20%" }, { top: "50%", right: "-24%" }, { bottom: "18%", left: "-18%" }, { bottom: "32%", right: "-28%" }, { bottom: "5%", left: "-15%" }, { top: "70%", right: "-22%" }];
-                  const delays = [0, 0.3, 0.6, 0.9, 1.2, 1.5, 1.8, 2.1];
-                  return (
-                    <motion.span key={tech} initial={{ opacity: 0, scale: 0 }} animate={{ opacity: 1, scale: 1, y: [0, -5, 0, 3, 0], x: [0, 2, -2, 2, 0] }} transition={{
-                      opacity: { delay: 2.5 + delays[i], duration: 0.5 }, scale: { delay: 2.5 + delays[i], duration: 0.5 },
-                      y: { repeat: Infinity, duration: 3 + (i % 3) * 0.5, ease: "easeInOut", delay: (i % 4) * 0.3 },
-                      x: { repeat: Infinity, duration: 4 + (i % 2) * 0.7, ease: "easeInOut", delay: (i % 3) * 0.4 },
-                    }} className="absolute z-20 px-3 py-1.5 text-[10px] font-semibold rounded-full bg-dark-800/90 backdrop-blur-md border border-white/10 text-dark-200 whitespace-nowrap shadow-lg" style={positions[i] as React.CSSProperties} whileHover={{ scale: 1.15, borderColor: "rgba(59,130,246,0.6)", backgroundColor: "rgba(59,130,246,0.15)" }}>{tech}</motion.span>
-                  );
-                })}
+              {liveStack.slice(0, 14).map((tech, i) => {
+                const p = {...badgePositions[i]};
+                if (!p.top && !p.bottom) return null;
+                const techColors: Record<string, { icon: string; from: string; to: string; border: string; text: string; shadow: string }> = {
+                  Flutter: { icon: "💙", from: "from-blue-500/30", to: "to-cyan-500/10", border: "border-blue-500/30", text: "text-blue-300", shadow: "shadow-blue-500/20" },
+                  Dart: { icon: "🎯", from: "from-teal-500/30", to: "to-cyan-500/10", border: "border-teal-500/30", text: "text-teal-300", shadow: "shadow-teal-500/20" },
+                  "React Native": { icon: "⚛️", from: "from-sky-500/30", to: "to-blue-500/10", border: "border-sky-500/30", text: "text-sky-300", shadow: "shadow-sky-500/20" },
+                  Firebase: { icon: "🔥", from: "from-yellow-500/30", to: "to-orange-500/10", border: "border-yellow-500/30", text: "text-yellow-300", shadow: "shadow-yellow-500/20" },
+                  Stripe: { icon: "💳", from: "from-purple-500/30", to: "to-indigo-500/10", border: "border-purple-500/30", text: "text-purple-300", shadow: "shadow-purple-500/20" },
+                  Razorpay: { icon: "💰", from: "from-emerald-500/30", to: "to-green-500/10", border: "border-emerald-500/30", text: "text-emerald-300", shadow: "shadow-emerald-500/20" },
+                  BLoC: { icon: "🧩", from: "from-pink-500/30", to: "to-rose-500/10", border: "border-pink-500/30", text: "text-pink-300", shadow: "shadow-pink-500/20" },
+                  Riverpod: { icon: "📦", from: "from-indigo-500/30", to: "to-violet-500/10", border: "border-indigo-500/30", text: "text-indigo-300", shadow: "shadow-indigo-500/20" },
+                  Redux: { icon: "🔄", from: "from-violet-500/30", to: "to-purple-500/10", border: "border-violet-500/30", text: "text-violet-300", shadow: "shadow-violet-500/20" },
+                  GraphQL: { icon: "◈", from: "from-rose-500/30", to: "to-pink-500/10", border: "border-rose-500/30", text: "text-rose-300", shadow: "shadow-rose-500/20" },
+                  FCM: { icon: "🔔", from: "from-orange-500/30", to: "to-amber-500/10", border: "border-orange-500/30", text: "text-orange-300", shadow: "shadow-orange-500/20" },
+                  Git: { icon: "🔀", from: "from-red-500/30", to: "to-orange-500/10", border: "border-red-500/30", text: "text-red-300", shadow: "shadow-red-500/20" },
+                  WebRTC: { icon: "📹", from: "from-cyan-500/30", to: "to-sky-500/10", border: "border-cyan-500/30", text: "text-cyan-300", shadow: "shadow-cyan-500/20" },
+                  HealthKit: { icon: "❤️", from: "from-red-500/30", to: "to-rose-500/10", border: "border-red-500/30", text: "text-red-300", shadow: "shadow-red-500/20" },
+                };
+                const key = Object.keys(techColors).find(k => tech.toLowerCase().includes(k.toLowerCase())) || "";
+                const c = techColors[key] || { icon: "⚡", from: "from-slate-500/30", to: "to-slate-500/10", border: "border-slate-500/30", text: "text-slate-300", shadow: "shadow-slate-500/20" };
+                return (
+                  <motion.span key={tech} initial={{ opacity: 0, scale: 0 }} animate={{ opacity: 1, scale: 1, y: [0, -5, 0, 3, 0], x: [0, 2, -2, 2, 0] }} transition={{
+                    opacity: { delay: 2.5 + i * 0.3, duration: 0.5 }, scale: { delay: 2.5 + i * 0.3, duration: 0.5 },
+                    y: { repeat: Infinity, duration: 3 + (i % 3) * 0.5, ease: "easeInOut", delay: (i % 4) * 0.3 },
+                    x: { repeat: Infinity, duration: 4 + (i % 2) * 0.7, ease: "easeInOut", delay: (i % 3) * 0.4 },
+                  }} className={`absolute z-20 px-3 py-1.5 text-[11px] font-bold rounded-full bg-gradient-to-br ${c.from} ${c.to} backdrop-blur-md border ${c.border} ${c.text} whitespace-nowrap shadow-lg ${c.shadow} hidden lg:flex items-center gap-1.5 w-fit`} style={p as React.CSSProperties} whileHover={{ scale: 1.2, y: -8 }}>
+                    <span className="text-[13px]">{c.icon}</span>
+                    {tech}
+                  </motion.span>
+                );
+              })}
               </motion.div>
             </div>
           </div>
@@ -499,27 +593,38 @@ export default function Hero() {
           className="lg:hidden max-w-xl mx-auto mt-8"
         >
           <div className="flex flex-wrap justify-center gap-2">
-            {techStack.map((tech, i) => (
-              <motion.span
-                key={tech}
-                initial={{ opacity: 0, y: 15 }}
-                animate={{
-                  opacity: 1,
-                  y: [0, -3, 0],
-                }}
-                transition={{
-                  y: {
-                    repeat: Infinity,
-                    duration: 2.5 + (i % 3) * 0.5,
-                    ease: "easeInOut",
-                    delay: (i % 4) * 0.15,
-                  },
-                }}
-                className="px-3 py-1.5 text-[11px] font-medium rounded-full bg-white/5 border border-white/10 text-dark-300"
-              >
-                {tech}
-              </motion.span>
-            ))}
+            {liveStack.map((tech, i) => {
+              const mobileColors: Record<string, { icon: string; bg: string; border: string; text: string }> = {
+                Flutter: { icon: "💙", bg: "bg-blue-500/10", border: "border-blue-500/20", text: "text-blue-300" },
+                Dart: { icon: "🎯", bg: "bg-teal-500/10", border: "border-teal-500/20", text: "text-teal-300" },
+                "React Native": { icon: "⚛️", bg: "bg-sky-500/10", border: "border-sky-500/20", text: "text-sky-300" },
+                Firebase: { icon: "🔥", bg: "bg-yellow-500/10", border: "border-yellow-500/20", text: "text-yellow-300" },
+                Stripe: { icon: "💳", bg: "bg-purple-500/10", border: "border-purple-500/20", text: "text-purple-300" },
+                Razorpay: { icon: "💰", bg: "bg-emerald-500/10", border: "border-emerald-500/20", text: "text-emerald-300" },
+                BLoC: { icon: "🧩", bg: "bg-pink-500/10", border: "border-pink-500/20", text: "text-pink-300" },
+                Riverpod: { icon: "📦", bg: "bg-indigo-500/10", border: "border-indigo-500/20", text: "text-indigo-300" },
+                Redux: { icon: "🔄", bg: "bg-violet-500/10", border: "border-violet-500/20", text: "text-violet-300" },
+                GraphQL: { icon: "◈", bg: "bg-rose-500/10", border: "border-rose-500/20", text: "text-rose-300" },
+                FCM: { icon: "🔔", bg: "bg-orange-500/10", border: "border-orange-500/20", text: "text-orange-300" },
+                Git: { icon: "🔀", bg: "bg-red-500/10", border: "border-red-500/20", text: "text-red-300" },
+                WebRTC: { icon: "📹", bg: "bg-cyan-500/10", border: "border-cyan-500/20", text: "text-cyan-300" },
+                HealthKit: { icon: "❤️", bg: "bg-red-500/10", border: "border-red-500/20", text: "text-red-300" },
+              };
+              const key = Object.keys(mobileColors).find(k => tech.toLowerCase().includes(k.toLowerCase())) || "";
+              const m = mobileColors[key] || { icon: "⚡", bg: "bg-slate-500/10", border: "border-slate-500/20", text: "text-slate-300" };
+              return (
+                <motion.span
+                  key={tech}
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: [0, -3, 0] }}
+                  transition={{ y: { repeat: Infinity, duration: 2.5 + (i % 3) * 0.5, ease: "easeInOut", delay: (i % 4) * 0.15 } }}
+                  className={`px-3 py-1.5 text-[11px] font-medium rounded-full ${m.bg} border ${m.border} ${m.text} flex items-center gap-1.5`}
+                >
+                  <span>{m.icon}</span>
+                  {tech}
+                </motion.span>
+              );
+            })}
           </div>
         </motion.div>
 

@@ -1,14 +1,30 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { FiMail, FiMapPin, FiLinkedin, FiCheck, FiCopy, FiPhone, FiSend, FiMessageCircle, FiUser, FiEdit3, FiSmartphone, FiArrowRight } from "react-icons/fi";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Toast from "@/components/ui/Toast";
 
+interface ContactInfo {
+  email: string;
+  phone: string;
+  location: string;
+  linkedin: string;
+}
+
 export default function Contact() {
+  const [contactInfo, setContactInfo] = useState<ContactInfo | null>(null);
   const [copied, setCopied] = useState(false);
-  const email = "akashkumarprajapati2003@gmail.com";
+
+  useEffect(() => {
+    fetch("/api/contact")
+      .then((r) => r.json())
+      .then(setContactInfo)
+      .catch(() => {});
+  }, []);
+
+  const email = contactInfo?.email || "akashkumarprajapati2003@gmail.com";
 
   const copyEmail = async () => {
     try {
@@ -32,18 +48,15 @@ export default function Contact() {
   const [focused, setFocused] = useState<string | null>(null);
   const [touched, setTouched] = useState<Set<string>>(new Set());
   const [toast, setToast] = useState<{ show: boolean; type: "success" | "error"; title: string; message: string }>({
-    show: false,
-    type: "success",
-    title: "",
-    message: "",
+    show: false, type: "success", title: "", message: "",
   });
 
   const fieldMeta = {
-    name: { label: "Your Name", icon: FiUser, required: true, type: "text", placeholder: "John Doe" },
-    email: { label: "Your Email", icon: FiMail, required: true, type: "email", placeholder: "john@example.com" },
-    phone: { label: "Phone Number", icon: FiSmartphone, required: false, type: "tel", placeholder: "+91 98765 43210" },
-    message: { label: "Your Message", icon: FiEdit3, required: true, type: "textarea", placeholder: "Tell me about your project..." },
-  } as const;
+    name: { label: "Your Name", icon: FiUser, required: true, type: "text" as const, placeholder: "John Doe" },
+    email: { label: "Your Email", icon: FiMail, required: true, type: "email" as const, placeholder: "john@example.com" },
+    phone: { label: "Phone Number", icon: FiSmartphone, required: false, type: "tel" as const, placeholder: "+91 98765 43210" },
+    message: { label: "Your Message", icon: FiEdit3, required: true, type: "textarea" as const, placeholder: "Tell me about your project..." },
+  };
 
   const getError = (field: string) => {
     if (!touched.has(field)) return "";
@@ -59,39 +72,22 @@ export default function Contact() {
     setTouched(allTouched);
     if (!form.name.trim() || !form.email.trim() || !form.message.trim() || (form.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email))) return;
     setSending(true);
-
     try {
       const res = await fetch("/api/send-email", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
-
       if (res.ok) {
-        setToast({
-          show: true,
-          type: "success",
-          title: "Message Sent!",
-          message: "Thank you! I'll get back to you within 24 hours.",
-        });
+        setToast({ show: true, type: "success", title: "Message Sent!", message: "Thank you! I'll get back to you within 24 hours." });
         setForm({ name: "", email: "", phone: "", message: "" });
         setTouched(new Set());
       } else {
         const data = await res.json();
-        setToast({
-          show: true,
-          type: "error",
-          title: "Failed to Send",
-          message: data.error || "Something went wrong. Please try again or email me directly.",
-        });
+        setToast({ show: true, type: "error", title: "Failed to Send", message: data.error || "Something went wrong." });
       }
     } catch {
-      setToast({
-        show: true,
-        type: "error",
-        title: "Network Error",
-        message: "Could not connect to the server. Please check your connection or email me directly.",
-      });
+      setToast({ show: true, type: "error", title: "Network Error", message: "Could not connect to the server." });
     } finally {
       setSending(false);
     }
@@ -99,9 +95,9 @@ export default function Contact() {
 
   const contactItems = [
     { icon: FiMail, label: "Email", value: email, color: "text-accent-blue", bg: "bg-accent-blue/10", action: copyEmail },
-    { icon: FiPhone, label: "Phone", value: "Available on request", color: "text-accent-purple", bg: "bg-accent-purple/10" },
-    { icon: FiMapPin, label: "Location", value: "Lucknow, Uttar Pradesh, India", color: "text-accent-cyan", bg: "bg-accent-cyan/10" },
-    { icon: FiLinkedin, label: "LinkedIn", value: "/in/akash-kumarprajapati", link: "https://www.linkedin.com/in/akash-kumarprajapati", color: "text-accent-blue", bg: "bg-accent-blue/10" },
+    { icon: FiPhone, label: "Phone", value: contactInfo?.phone || "+91 63933 42727", color: "text-accent-purple", bg: "bg-accent-purple/10" },
+    { icon: FiMapPin, label: "Location", value: contactInfo?.location || "Lucknow, Uttar Pradesh, India", color: "text-accent-cyan", bg: "bg-accent-cyan/10" },
+    { icon: FiLinkedin, label: "LinkedIn", value: "/in/akash-kumar-prajapati", link: contactInfo?.linkedin || "https://www.linkedin.com/in/akash-kumar-prajapati/", color: "text-accent-blue", bg: "bg-accent-blue/10" },
   ];
 
   return (
@@ -110,23 +106,11 @@ export default function Contact() {
       <div className="absolute top-1/4 right-1/4 w-72 h-72 bg-accent-purple/5 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute bottom-1/4 left-1/4 w-96 h-96 bg-accent-blue/5 rounded-full blur-[120px] pointer-events-none" />
       <div className="max-width relative z-10">
+        <SectionHeading title="Get In Touch" subtitle="Have a project in mind? Let's build something great together." icon={<FiMail />} />
 
-        <SectionHeading
-          title="Get In Touch"
-          subtitle="Have a project in mind? Let's build something great together."
-          icon={<FiMail />}
-        />
-
-        <Toast
-          show={toast.show}
-          type={toast.type}
-          title={toast.title}
-          message={toast.message}
-          onClose={() => setToast((prev) => ({ ...prev, show: false }))}
-        />
+        <Toast show={toast.show} type={toast.type} title={toast.title} message={toast.message} onClose={() => setToast((prev) => ({ ...prev, show: false }))} />
 
         <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-          {/* Contact Info */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -158,10 +142,7 @@ export default function Contact() {
                     transition={{ duration: 0.3, delay: i * 0.08 }}
                     className="flex items-center gap-4 group/item"
                   >
-                    <motion.div
-                      className={`w-11 h-11 rounded-xl ${item.bg} flex items-center justify-center flex-shrink-0 ring-1 ring-white/5 group-hover/item:ring-white/20 transition-all duration-300`}
-                      whileHover={{ scale: 1.1 }}
-                    >
+                    <motion.div className={`w-11 h-11 rounded-xl ${item.bg} flex items-center justify-center flex-shrink-0 ring-1 ring-white/5 group-hover/item:ring-white/20 transition-all duration-300`} whileHover={{ scale: 1.1 }}>
                       <item.icon className={`${item.color} text-lg`} />
                     </motion.div>
                     <div className="flex-1 min-w-0">
@@ -196,8 +177,7 @@ export default function Contact() {
               <div className="absolute -bottom-8 -left-8 w-20 h-20 bg-accent-purple/10 rounded-full blur-2xl" />
               <div className="relative z-10">
                 <h4 className="text-dark-100 dark:text-white font-semibold mb-2 flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-                  Let&apos;s Work Together
+                  <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" /> Let&apos;s Work Together
                 </h4>
                 <p className="text-dark-300 text-sm leading-relaxed">
                   I&apos;m currently open to freelance opportunities and full-time roles. Whether you have a project idea or just want to connect, feel free to reach out!
@@ -239,72 +219,38 @@ export default function Contact() {
                       </div>
                       <div className="flex-1 relative">
                         {meta.type === "textarea" ? (
-                          <textarea
-                            value={form.message}
-                            onChange={(e) => setForm({ ...form, message: e.target.value })}
-                            onFocus={() => setFocused("message")}
-                            onBlur={() => { setFocused(null); setTouched((prev) => new Set(prev).add("message")); }}
-                            required={meta.required}
-                            rows={4}
-                            placeholder={meta.placeholder}
-                            className="w-full pl-3 pr-4 pt-3.5 pb-3 bg-transparent text-dark-100 dark:text-white placeholder:text-transparent focus:outline-none resize-none text-sm leading-relaxed"
-                          />
+                          <textarea value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} onFocus={() => setFocused("message")} onBlur={() => { setFocused(null); setTouched((prev) => new Set(prev).add("message")); }} required={meta.required} rows={4} placeholder={meta.placeholder}
+                            className="w-full pl-3 pr-4 pt-3.5 pb-3 bg-transparent text-dark-100 dark:text-white placeholder:text-transparent focus:outline-none resize-none text-sm leading-relaxed" />
                         ) : (
-                          <input
-                            type={meta.type}
-                            value={form[field]}
-                            onChange={(e) => setForm({ ...form, [field]: e.target.value })}
-                            onFocus={() => setFocused(field)}
-                            onBlur={() => { setFocused(null); setTouched((prev) => new Set(prev).add(field)); }}
-                            required={meta.required}
-                            placeholder={meta.placeholder}
-                            className="w-full pl-3 pr-4 py-3.5 bg-transparent text-dark-100 dark:text-white placeholder:text-transparent focus:outline-none text-sm"
-                          />
+                          <input type={meta.type} value={form[field]} onChange={(e) => setForm({ ...form, [field]: e.target.value })} onFocus={() => setFocused(field)} onBlur={() => { setFocused(null); setTouched((prev) => new Set(prev).add(field)); }} required={meta.required} placeholder={meta.placeholder}
+                            className="w-full pl-3 pr-4 py-3.5 bg-transparent text-dark-100 dark:text-white placeholder:text-transparent focus:outline-none text-sm" />
                         )}
                         <label className={`absolute left-3 transition-all duration-200 pointer-events-none ${isFocused || hasValue ? "text-[10px] -top-2 text-accent-blue" : "text-sm top-3.5 text-dark-500"}`}>
-                          {meta.label}
-                          {meta.required && <span className="text-red-500 ml-0.5">*</span>}
+                          {meta.label} {meta.required && <span className="text-red-500 ml-0.5">*</span>}
                         </label>
                       </div>
                       {(isFocused || hasValue) && !error && (
-                        <div className="pr-4 pt-3.5">
-                          <FiCheck className="text-green-500 text-sm" />
-                        </div>
+                        <div className="pr-4 pt-3.5"><FiCheck className="text-green-500 text-sm" /></div>
                       )}
                       {error && (
-                        <div className="pr-4 pt-3.5">
-                          <span className="text-red-500 text-[10px] font-medium">{error}</span>
-                        </div>
+                        <div className="pr-4 pt-3.5"><span className="text-red-500 text-[10px] font-medium">{error}</span></div>
                       )}
                     </div>
                   </div>
                 );
               })}
 
-              <motion.button
-                type="submit"
-                disabled={sending}
+              <motion.button type="submit" disabled={sending}
                 className="relative z-10 w-full py-3.5 rounded-xl font-semibold text-white transition-all duration-300 bg-gradient-to-r from-accent-blue to-accent-purple overflow-hidden group"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+                whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
               >
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-accent-purple via-accent-blue to-accent-cyan bg-[length:200%_100%]"
-                  animate={{ backgroundPosition: ["0% 0%", "100% 0%"] }}
-                  transition={{ repeat: Infinity, duration: 3, ease: "linear" }}
-                />
+                <motion.div className="absolute inset-0 bg-gradient-to-r from-accent-purple via-accent-blue to-accent-cyan bg-[length:200%_100%]"
+                  animate={{ backgroundPosition: ["0% 0%", "100% 0%"] }} transition={{ repeat: Infinity, duration: 3, ease: "linear" }} />
                 <span className="relative z-10 flex items-center justify-center gap-2">
                   {sending ? (
-                    <>
-                      <span className="w-4 h-4 border-2 border-[var(--glass-30)] border-t-white rounded-full animate-spin" />
-                      <span>Sending...</span>
-                    </>
+                    <><span className="w-4 h-4 border-2 border-[var(--glass-30)] border-t-white rounded-full animate-spin" /><span>Sending...</span></>
                   ) : (
-                    <>
-                      <FiSend className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
-                      Send Message
-                      <FiArrowRight className="group-hover:translate-x-1 transition-transform duration-300" />
-                    </>
+                    <><FiSend className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" /> Send Message <FiArrowRight className="group-hover:translate-x-1 transition-transform duration-300" /></>
                   )}
                 </span>
               </motion.button>

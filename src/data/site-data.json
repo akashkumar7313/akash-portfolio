@@ -1,0 +1,686 @@
+{
+  "settings": {
+    "title": "Akash Kumar Prajapati | Senior Mobile App Developer",
+    "description": "Portfolio of Akash Kumar Prajapati — Software Engineer specializing in Flutter & React Native. Builds scalable, high-performance mobile apps for Android & iOS.",
+    "keywords": [
+      "Flutter Developer",
+      "React Native Developer",
+      "Mobile App Developer",
+      "Software Engineer",
+      "Akash Kumar Prajapati",
+      "Cross-platform Apps"
+    ],
+    "particles": true
+  },
+  "hero": {
+    "name": "Akash Kumar",
+    "surname": "Prajapati",
+    "roles": [
+      "Software Engineer",
+      "Flutter Developer",
+      "React Native Developer",
+      "Cross-Platform Expert",
+      "Mobile App Architect"
+    ],
+    "tagline": "building production-grade apps for Android & iOS — shipped worldwide",
+    "availableText": "Available for opportunities",
+    "playStoreUrl": "",
+    "appStoreUrl": "",
+    "resumeUrl": "/resume.pdf",
+    "badges": [
+      {
+        "icon": "🏆",
+        "text": "Best Developer of the Year",
+        "color": "yellow"
+      },
+      {
+        "icon": "⭐",
+        "text": "Employee of the Month (Multiple Times)",
+        "color": "blue"
+      }
+    ],
+    "reviews": [
+      {
+        "name": "Rahul Sharma",
+        "date": "2 months ago",
+        "text": "Akash delivered an exceptional e-commerce app. His Flutter expertise is outstanding!",
+        "rating": 5,
+        "likes": 24
+      },
+      {
+        "name": "Priya Patel",
+        "date": "1 month ago",
+        "text": "Built our healthcare booking app with WebRTC — works flawlessly.",
+        "rating": 5,
+        "likes": 18
+      },
+      {
+        "name": "Vikram Singh",
+        "date": "3 weeks ago",
+        "text": "Architected our food delivery platform. Real-time tracking is incredibly smooth.",
+        "rating": 5,
+        "likes": 31
+      }
+    ],
+    "flutterCode": "class FlutterApp {\n  final String name = \"Cross-Platform App\";\n  final String framework = \"Flutter + Firebase\";\n\n  void build() {\n    var app = MobileApp(\n      platform: \"Android & iOS\",\n      stateMgmt: \"BLoC + Riverpod\",\n      payments: \"Stripe & Razorpay\",\n    );\n    app.deploy();\n    app.ship();\n  }\n}",
+    "rnCode": "class ReactNativeApp {\n  final name = \"Cross-Platform App\";\n  final framework = \"React Native + Firebase\";\n\n  void build() {\n    var app = MobileApp(\n      platform: \"Android & iOS\",\n      stateMgmt: \"Redux + Context\",\n      payments: \"Stripe & Razorpay\",\n    );\n    app.deploy();\n    app.ship();\n  }\n}",
+    "phoneAppName": "Akash Portfolio",
+    "phoneDeveloper": "Mobile App Developer",
+    "phoneRating": 4.9,
+    "phoneReviewCount": 5,
+    "phoneSize": "4.2 MB",
+    "techStack": [
+      {
+        "text": "Flutter",
+        "top": 21,
+        "side": "l",
+        "offset": 5,
+        "icon": "💙",
+        "bg": "bg-blue-500/30",
+        "border": "border-blue-500/30",
+        "textColor": "text-blue-300"
+      },
+      {
+        "text": "React Native",
+        "top": 30,
+        "side": "r",
+        "offset": 11,
+        "icon": "⚛️",
+        "bg": "bg-sky-500/30",
+        "border": "border-sky-500/30",
+        "textColor": "text-sky-300"
+      },
+      {
+        "text": "Firebase",
+        "top": 75,
+        "side": "l",
+        "offset": 1,
+        "icon": "🔥",
+        "bg": "bg-yellow-500/30",
+        "border": "border-yellow-500/30",
+        "textColor": "text-yellow-300"
+      },
+      {
+        "text": "Razorpay",
+        "top": 57,
+        "side": "l",
+        "offset": 8,
+        "icon": "💰",
+        "bg": "bg-emerald-500/30",
+        "border": "border-emerald-500/30",
+        "textColor": "text-emerald-300"
+      },
+      {
+        "text": "BLoC",
+        "top": 85,
+        "side": "l",
+        "offset": 1,
+        "icon": "🧩",
+        "bg": "bg-pink-500/30",
+        "border": "border-pink-500/30",
+        "textColor": "text-pink-300"
+      },
+      {
+        "text": "Riverpod",
+        "top": 75,
+        "side": "r",
+        "offset": 8,
+        "icon": "📦",
+        "bg": "bg-indigo-500/30",
+        "border": "border-indigo-500/30",
+        "textColor": "text-indigo-300"
+      },
+      {
+        "text": "Redux",
+        "top": 4,
+        "side": "tr",
+        "offset": 1,
+        "icon": "🔄",
+        "bg": "bg-violet-500/30",
+        "border": "border-violet-500/30",
+        "textColor": "text-violet-300"
+      },
+      {
+        "text": "GraphQL",
+        "top": 19,
+        "side": "r",
+        "offset": 3,
+        "icon": "◈",
+        "bg": "bg-rose-500/30",
+        "border": "border-rose-500/30",
+        "textColor": "text-rose-300"
+      },
+      {
+        "text": "FCM",
+        "top": 38,
+        "side": "l",
+        "offset": 9,
+        "icon": "🔔",
+        "bg": "bg-orange-500/30",
+        "border": "border-orange-500/30",
+        "textColor": "text-orange-300"
+      },
+      {
+        "text": "Stripe",
+        "top": 47,
+        "side": "r",
+        "offset": 9,
+        "icon": "💳",
+        "bg": "bg-purple-500/30",
+        "border": "border-purple-500/30",
+        "textColor": "text-purple-300"
+      },
+      {
+        "text": "Dart",
+        "top": 2,
+        "side": "tl",
+        "offset": 1,
+        "icon": "🎯",
+        "bg": "bg-teal-500/30",
+        "border": "border-teal-500/30",
+        "textColor": "text-teal-300"
+      }
+    ]
+  },
+  "about": {
+    "paragraphs": [
+      "I am a detail-oriented Software Engineer with 4+ years of experience building scalable mobile applications using Flutter and React Native.",
+      "I specialize in cross-platform mobile apps, Firebase backend systems, REST API integration, payment gateways (Stripe, Razorpay), App Store & Play Store deployment, and performance optimization.",
+      "I believe in writing clean, scalable, and production-ready code that delivers real business value. Every project I take on is an opportunity to solve meaningful problems through technology."
+    ],
+    "highlights": [
+      {
+        "icon": "FiSmartphone",
+        "title": "Cross-platform Apps",
+        "desc": "Flutter & React Native expert — one codebase, two platforms.",
+        "iconColor": "text-accent-blue"
+      },
+      {
+        "icon": "FiServer",
+        "title": "Firebase Backend",
+        "desc": "Real-time databases, authentication, cloud functions, and push notifications.",
+        "iconColor": "text-accent-purple"
+      },
+      {
+        "icon": "FiCode",
+        "title": "Clean Architecture",
+        "desc": "Production-ready scalable code with BLoC, Riverpod & Redux.",
+        "iconColor": "text-accent-cyan"
+      }
+    ],
+    "achievements": [
+      {
+        "icon": "🏆",
+        "text": "Published 15+ apps on Play Store & App Store"
+      },
+      {
+        "icon": "⭐",
+        "text": "4.8+ average app rating from users"
+      },
+      {
+        "icon": "🎯",
+        "text": "Delivered all projects on time & within budget"
+      }
+    ]
+  },
+  "skills": {
+    "categories": [
+      {
+        "title": "Mobile Development",
+        "icon": "📱",
+        "skills": [
+          "Flutter",
+          "Dart",
+          "React Native",
+          "Android",
+          "iOS"
+        ]
+      },
+      {
+        "title": "State Management",
+        "icon": "⚙️",
+        "skills": [
+          "BLoC",
+          "Riverpod",
+          "Redux",
+          "Provider"
+        ]
+      },
+      {
+        "title": "Backend & Cloud",
+        "icon": "☁️",
+        "skills": [
+          "Firebase",
+          "Firestore",
+          "FCM",
+          "REST APIs",
+          "GraphQL"
+        ]
+      },
+      {
+        "title": "Payments",
+        "icon": "💳",
+        "skills": [
+          "Stripe",
+          "Razorpay",
+          "In-App Purchases"
+        ]
+      },
+      {
+        "title": "Tools & Platforms",
+        "icon": "🛠️",
+        "skills": [
+          "Git",
+          "GitHub",
+          "Xcode",
+          "Android Studio",
+          "VS Code",
+          "Jira",
+          "Codemagic"
+        ]
+      }
+    ]
+  },
+  "experience": {
+    "experiences": [
+      {
+        "role": "Software Engineer",
+        "company": "Singsys Pte Ltd",
+        "period": "Apr 2024 – Present",
+        "type": "Full-time · On-site",
+        "location": "Lucknow, Uttar Pradesh, India",
+        "color": "#3b82f6",
+        "skills": [
+          "Android",
+          "Firebase",
+          "Flutter",
+          "React Native",
+          "Dart",
+          "BLoC",
+          "Riverpod",
+          "Redux",
+          "Stripe"
+        ],
+        "description": [
+          "Developed and deployed high-performing, cross-platform mobile applications using Flutter and React Native.",
+          "Collaborated with product managers and UX/UI designers to translate requirements into technical specifications.",
+          "Integrated APIs for real-time data sync, secure payment gateways, and advanced functionalities.",
+          "Employed state management (Provider, Bloc, Redux) for scalable and maintainable architectures.",
+          "Published apps on Google Play Store and Apple App Store following platform guidelines."
+        ]
+      },
+      {
+        "role": "React Native Developer",
+        "company": "Vibrant IT Solutions Private Limited",
+        "period": "Aug 2023 – Apr 2024",
+        "type": "Full-time · On-site",
+        "location": "Lucknow, Uttar Pradesh, India",
+        "color": "#8b5cf6",
+        "skills": [
+          "React Native",
+          "JavaScript",
+          "React",
+          "Firebase",
+          "API Integration",
+          "Git"
+        ],
+        "description": [
+          "Built cutting-edge React Native apps, leveraging React and JavaScript for optimal performance.",
+          "Guided cross-functional teams through complex React Native projects meeting tight deadlines.",
+          "Integrated third-party APIs including payment gateways and social media platforms.",
+          "Led code reviews and proactively addressed bugs and performance bottlenecks."
+        ]
+      },
+      {
+        "role": "Jr. Web Developer",
+        "company": "Softpro India Computer Technologies",
+        "period": "Jul 2022 – Aug 2023",
+        "type": "Full-time · On-site",
+        "location": "Lucknow, Uttar Pradesh, India",
+        "color": "#10b981",
+        "skills": [
+          "HTML",
+          "CSS",
+          "JavaScript",
+          "React.js",
+          "Node.js",
+          "Express.js",
+          "MongoDB",
+          "Git"
+        ],
+        "description": [
+          "Built web applications using HTML, CSS, JavaScript, and React.js.",
+          "Developed backend services with Node.js and Express.js.",
+          "Managed NoSQL databases with MongoDB.",
+          "Used Git and GitHub for version control and collaboration."
+        ]
+      }
+    ]
+  },
+  "education": {
+    "education": [
+      {
+        "degree": "Bachelor of Technology (CSE)",
+        "school": "Computer Science & Engineering",
+        "period": "Graduated",
+        "icon": "🎓"
+      },
+      {
+        "degree": "Diploma in Computer Science & Engineering",
+        "school": "Polytechnic",
+        "period": "Completed",
+        "icon": "📘"
+      }
+    ],
+    "achievements": [
+      {
+        "icon": "🏆",
+        "text": "Best Developer of the Year",
+        "gradient": "from-yellow-500/20 to-yellow-500/5",
+        "accent": "text-yellow-400"
+      },
+      {
+        "icon": "⭐",
+        "text": "Employee of the Month (Multiple Times)",
+        "gradient": "from-accent-blue/20 to-accent-blue/5",
+        "accent": "text-accent-blue"
+      }
+    ]
+  },
+  "projects": {
+    "projects": [
+      {
+        "id": 1,
+        "title": "E-Commerce Mobile App",
+        "description": "A full-featured e-commerce platform with real-time inventory management, secure payment processing, and an intuitive shopping experience.",
+        "techStack": [
+          "Flutter",
+          "Firebase",
+          "Stripe",
+          "REST API"
+        ],
+        "androidLink": "https://play.google.com",
+        "iosLink": "https://apps.apple.com",
+        "githubLink": "https://github.com/akashkumarprajapati",
+        "bannerImage": "/images/project-1.jpg",
+        "screenshots": [
+          "/images/screen-1.jpg",
+          "/images/screen-2.jpg",
+          "/images/screen-3.jpg"
+        ],
+        "features": [
+          "Real-time inventory management",
+          "Secure Stripe & Razorpay payments",
+          "Push notifications via FCM",
+          "Multi-vendor architecture",
+          "Order tracking with live updates"
+        ],
+        "role": "Led end-to-end mobile development, designed the architecture, integrated payment gateways.",
+        "category": "mobile"
+      },
+      {
+        "id": 2,
+        "title": "Healthcare Booking App",
+        "description": "A comprehensive healthcare platform connecting patients with doctors. Features appointment scheduling, video consultations.",
+        "techStack": [
+          "React Native",
+          "Firebase",
+          "WebRTC",
+          "GraphQL"
+        ],
+        "androidLink": "https://play.google.com",
+        "iosLink": "https://apps.apple.com",
+        "githubLink": "https://github.com/akashkumarprajapati",
+        "bannerImage": "/images/project-2.jpg",
+        "screenshots": [
+          "/images/screen-4.jpg",
+          "/images/screen-5.jpg",
+          "/images/screen-6.jpg"
+        ],
+        "features": [
+          "Video consultations using WebRTC",
+          "AI-powered doctor recommendation",
+          "Secure health record vault",
+          "Real-time appointment scheduling",
+          "Medicine reminder system"
+        ],
+        "role": "Built the cross-platform app from scratch, implemented video calling, integrated GraphQL APIs.",
+        "category": "mobile"
+      },
+      {
+        "id": 3,
+        "title": "Food Delivery Platform",
+        "description": "A scalable food delivery application with real-time order tracking, smart routing, and an analytics dashboard.",
+        "techStack": [
+          "Flutter",
+          "Firebase",
+          "Google Maps API",
+          "Node.js"
+        ],
+        "androidLink": "https://play.google.com",
+        "iosLink": "",
+        "githubLink": "https://github.com/akashkumarprajapati",
+        "bannerImage": "/images/project-3.jpg",
+        "screenshots": [
+          "/images/screen-7.jpg",
+          "/images/screen-8.jpg",
+          "/images/screen-9.jpg"
+        ],
+        "features": [
+          "Real-time GPS order tracking",
+          "Smart delivery routing algorithm",
+          "Partner analytics dashboard",
+          "Multi-language support",
+          "Rating & review system"
+        ],
+        "role": "Architected the entire mobile app, implemented real-time tracking with WebSockets.",
+        "category": "mobile"
+      },
+      {
+        "id": 4,
+        "title": "Task Management SaaS",
+        "description": "A productivity SaaS platform with Kanban boards, team collaboration, time tracking, and automated workflow management.",
+        "techStack": [
+          "React Native",
+          "Firebase",
+          "Redux",
+          "FCM"
+        ],
+        "androidLink": "https://play.google.com",
+        "iosLink": "https://apps.apple.com",
+        "githubLink": "https://github.com/akashkumarprajapati",
+        "bannerImage": "/images/project-4.jpg",
+        "screenshots": [
+          "/images/screen-10.jpg",
+          "/images/screen-11.jpg",
+          "/images/screen-12.jpg"
+        ],
+        "features": [
+          "Drag-and-drop Kanban boards",
+          "Real-time team collaboration",
+          "Integrated time tracking",
+          "Automated workflow triggers",
+          "Cross-platform sync"
+        ],
+        "role": "Developed the mobile client, implemented real-time sync with Firestore.",
+        "category": "mobile"
+      },
+      {
+        "id": 5,
+        "title": "Fintech Budget App",
+        "description": "A personal finance management app with AI-powered budgeting, expense tracking, and investment portfolio monitoring.",
+        "techStack": [
+          "Flutter",
+          "Firebase",
+          "REST API",
+          "Charts"
+        ],
+        "androidLink": "https://play.google.com",
+        "iosLink": "https://apps.apple.com",
+        "githubLink": "https://github.com/akashkumarprajapati",
+        "bannerImage": "/images/project-5.jpg",
+        "screenshots": [
+          "/images/screen-13.jpg",
+          "/images/screen-14.jpg",
+          "/images/screen-15.jpg"
+        ],
+        "features": [
+          "AI-powered spending insights",
+          "Investment portfolio tracker",
+          "Custom budget categories",
+          "Bank-grade security",
+          "Export to CSV/PDF"
+        ],
+        "role": "Designed the app architecture, implemented charts for financial data visualization.",
+        "category": "mobile"
+      },
+      {
+        "id": 6,
+        "title": "Social Fitness App",
+        "description": "A community-driven fitness app with workout tracking, social challenges, trainer booking.",
+        "techStack": [
+          "React Native",
+          "Firebase",
+          "WebRTC",
+          "HealthKit"
+        ],
+        "androidLink": "https://play.google.com",
+        "iosLink": "https://apps.apple.com",
+        "githubLink": "https://github.com/akashkumarprajapati",
+        "bannerImage": "/images/project-6.jpg",
+        "screenshots": [
+          "/images/screen-16.jpg",
+          "/images/screen-17.jpg",
+          "/images/screen-18.jpg"
+        ],
+        "features": [
+          "AI-generated workout plans",
+          "Live workout challenges",
+          "Integrated HealthKit/Google Fit",
+          "One-on-one trainer booking",
+          "Social feed with achievements"
+        ],
+        "role": "Led the mobile development team, integrated HealthKit and Google Fit APIs.",
+        "category": "mobile"
+      }
+    ],
+    "filters": [
+      {
+        "label": "All",
+        "value": "all",
+        "icon": "🔍"
+      },
+      {
+        "label": "Mobile",
+        "value": "mobile",
+        "icon": "📱"
+      },
+      {
+        "label": "Web",
+        "value": "web",
+        "icon": "🌐"
+      },
+      {
+        "label": "Backend",
+        "value": "backend",
+        "icon": "⚙️"
+      }
+    ]
+  },
+  "testimonials": {
+    "testimonials": [
+      {
+        "name": "Rahul Sharma",
+        "role": "CTO, TechVentures",
+        "avatar": "RS",
+        "quote": "Akash delivered an exceptional e-commerce app for our platform. His expertise in Flutter and Firebase is outstanding.",
+        "rating": 5
+      },
+      {
+        "name": "Priya Patel",
+        "role": "Product Manager, HealthFirst",
+        "avatar": "PP",
+        "quote": "Working with Akash was a fantastic experience. He built our healthcare booking app with complex WebRTC integration.",
+        "rating": 5
+      },
+      {
+        "name": "Vikram Singh",
+        "role": "Founder, QuickBites",
+        "avatar": "VS",
+        "quote": "Akash has incredible technical depth. He architected our entire food delivery platform.",
+        "rating": 5
+      },
+      {
+        "name": "Ananya Gupta",
+        "role": "Lead Developer, FinFlow",
+        "avatar": "AG",
+        "quote": "Akash's work on our fintech app was phenomenal. The charts and data visualization are beautiful.",
+        "rating": 5
+      },
+      {
+        "name": "Sneha Reddy",
+        "role": "Engineering Manager, FitLife",
+        "avatar": "SR",
+        "quote": "Akash led the mobile development for our fitness app with great skill. The HealthKit integration is seamless.",
+        "rating": 5
+      }
+    ]
+  },
+  "stats": {
+    "stats": [
+      {
+        "value": 4,
+        "suffix": "+",
+        "label": "Years Exp",
+        "desc": "Cross-platform development"
+      },
+      {
+        "value": 20,
+        "suffix": "+",
+        "label": "Projects",
+        "desc": "Flutter & React Native"
+      },
+      {
+        "value": 15,
+        "suffix": "+",
+        "label": "Apps Deployed",
+        "desc": "Production-ready apps"
+      },
+      {
+        "value": 12,
+        "suffix": "+",
+        "label": "Technologies",
+        "desc": "Mastered & counting"
+      }
+    ]
+  },
+  "contact": {
+    "email": "akashkumarprajapati2003@gmail.com",
+    "phone": " +91 63933 42727",
+    "location": "Lucknow, Uttar Pradesh, India",
+    "linkedin": "https://www.linkedin.com/in/akash-kumar-prajapati/"
+  },
+  "socialLinks": [
+    {
+      "platform": "GitHub",
+      "url": "https://github.com/akashkumar7313",
+      "icon": "FiGithub"
+    },
+    {
+      "platform": "LinkedIn",
+      "url": "https://www.linkedin.com/in/akash-kumar-prajapati/",
+      "icon": "FiLinkedin"
+    },
+    {
+      "platform": "WhatsApp",
+      "url": "https://wa.me/916393342727?text=Hi%20Akash!%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20connect.",
+      "icon": "FaWhatsapp"
+    },
+    {
+      "platform": "Email",
+      "url": "mailto:akashkumarprajapati2003@gmail.com",
+      "icon": "FiMail"
+    }
+  ],
+  "adminPassword": "admin@123"
+}

@@ -10,7 +10,7 @@ export interface Project {
   screenshots: string[];
   features: string[];
   role: string;
-  category: "mobile" | "web" | "backend";
+  category: string;
 }
 
 export const projects: Project[] = [

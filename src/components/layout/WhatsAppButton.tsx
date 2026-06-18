@@ -6,7 +6,7 @@ import { FaWhatsapp } from "react-icons/fa";
 
 export default function WhatsAppButton() {
   const [visible, setVisible] = useState(false);
-  const number = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "9189XXXXXXXX";
+  const number = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "916393342727";
   const href = `https://wa.me/${number}?text=Hi%20Akash!%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20connect.`;
 
   useEffect(() => {

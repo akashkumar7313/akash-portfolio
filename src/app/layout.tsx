@@ -1,13 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
-import ScrollProgress from "@/components/ui/ScrollProgress";
-import WhatsAppButton from "@/components/layout/WhatsAppButton";
-import BackToTop from "@/components/layout/BackToTop";
-import FloatingSocialSidebar from "@/components/layout/FloatingSocialSidebar";
-import Chatbot from "@/components/sections/Chatbot";
-import { ThemeProvider } from "next-themes";
 
 export const metadata: Metadata = {
   title: "Akash Kumar Prajapati | Senior Mobile App Developer",
@@ -32,34 +24,16 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Akash Kumar Prajapati",
-    description:
-      "Software Engineer | Flutter & React Native Developer",
+    description: "Software Engineer | Flutter & React Native Developer",
   },
   robots: "index, follow",
-  icons: {
-    icon: "/favicon.svg",
-  },
+  icons: { icon: "/favicon.svg" },
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="relative">
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
-          <ScrollProgress />
-          <Navbar />
-          <FloatingSocialSidebar />
-          <main>{children}</main>
-          <Footer />
-          <WhatsAppButton />
-          <BackToTop />
-          <Chatbot />
-        </ThemeProvider>
-      </body>
+      <body className="relative">{children}</body>
     </html>
   );
 }
