@@ -122,40 +122,6 @@ export default function AdminDashboard() {
     }
   }, [data, showToast]);
 
-  const addArrayItem = (section: SectionKey, path: string[], template: Record<string, unknown>) => {
-    setData((prev) => {
-      if (!prev) return prev;
-      const next = JSON.parse(JSON.stringify(prev));
-      let obj = next[section];
-      for (let i = 0; i < path.length; i++) obj = obj[path[i]];
-      obj.push(template);
-      return next;
-    });
-  };
-
-  const updateArrayItem = (section: SectionKey, path: string[], index: number, value: Record<string, unknown>) => {
-    setData((prev) => {
-      if (!prev) return prev;
-      const next = JSON.parse(JSON.stringify(prev));
-      let obj = next[section];
-      for (let i = 0; i < path.length; i++) obj = obj[path[i]];
-      obj[index] = value;
-      return next;
-    });
-  };
-
-  const removeArrayItem = (section: SectionKey, path: string[], index: number) => {
-    setData((prev) => {
-      if (!prev) return prev;
-      const next = JSON.parse(JSON.stringify(prev));
-      let obj = next[section];
-      for (let i = 0; i < path.length; i++) obj = obj[path[i]];
-      obj.splice(index, 1);
-      return next;
-    });
-    showToast("Item removed", "success");
-  };
-
   const handleLogout = async () => {
     await fetch("/api/admin/logout", { method: "POST" });
     sessionStorage.removeItem("admin_session");
@@ -276,7 +242,7 @@ export default function AdminDashboard() {
                 <div className="hidden sm:flex items-center gap-2 text-[10px] text-slate-500 bg-slate-800/50 px-3 py-1.5 rounded-lg border border-slate-700/30"><span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />{countFor(activeTab)} items</div>
               </div>
             </div>
-            <EditorShell data={data} section={activeTab} updateField={updateField} saving={saving} addArrayItem={addArrayItem} updateArrayItem={updateArrayItem} removeArrayItem={removeArrayItem} showToast={showToast} />
+            <EditorShell data={data} setData={setData} section={activeTab} updateField={updateField} saving={saving} showToast={showToast} />
           </div>
         </div>
 
@@ -310,12 +276,9 @@ export default function AdminDashboard() {
 /* ========== EDITOR SHELL ========== */
 
 function EditorShell({
-  data, section, updateField, saving, addArrayItem, updateArrayItem, removeArrayItem, showToast,
+  data, setData, section, updateField, saving, showToast,
 }: {
-  data: SiteData; section: string; updateField: (s: string, p: string[], v: unknown) => void; saving: string | null;
-  addArrayItem: (s: string, p: string[], t: Record<string, unknown>) => void;
-  updateArrayItem: (s: string, p: string[], i: number, v: Record<string, unknown>) => void;
-  removeArrayItem: (s: string, p: string[], i: number) => void; showToast: (msg: string, type: "success" | "error") => void;
+  data: SiteData; setData: React.Dispatch<React.SetStateAction<SiteData | null>>; section: string; updateField: (s: string, p: string[], v: unknown) => void; saving: string | null; showToast: (msg: string, type: "success" | "error") => void;
 }) {
   const content = data[section] as Record<string, unknown>;
   const [modal, setModal] = useState<{ type: "add" | "edit"; path: string[]; index?: number; data?: Record<string, unknown>; template?: Record<string, unknown> } | null>(null);
@@ -323,6 +286,7 @@ function EditorShell({
   const [formData, setFormData] = useState<Record<string, unknown>>({});
   const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
 
+  // Map of required fields for different array items
   const requiredFieldsMap: Record<string, string[]> = {
     techStack: ["text"],
     badges: ["icon", "text", "color"],
@@ -339,6 +303,7 @@ function EditorShell({
     socialLinks: ["platform"],
   };
 
+  // Helper to get required fields for validation
   const getRequiredFields = (path: string[], section: string): string[] => {
     const key = path.length > 0 ? path[path.length - 1] : `${section}-root`;
     if (key === "categories" && path.includes("skills")) return requiredFieldsMap["categories"];
@@ -350,6 +315,7 @@ function EditorShell({
     return requiredFieldsMap[key] || [];
   };
 
+  // Validate form data based on required fields
   const validateForm = (path: string[], section: string): boolean => {
     const req = getRequiredFields(path, section);
     const errs: Record<string, string> = {};
@@ -361,6 +327,7 @@ function EditorShell({
     return Object.keys(errs).length === 0;
   };
 
+  // Modal handlers
   const openAddModal = (path: string[], template: Record<string, unknown>) => {
     setFormData(JSON.parse(JSON.stringify(template)));
     setModal({ type: "add", path, template });
@@ -371,11 +338,30 @@ function EditorShell({
     setModal({ type: "edit", path, index, data: itemData });
   };
 
-  const saveModal = () => {
+  // API call to sync data after an update
+  const syncSectionData = async () => {
+    try {
+      const res = await fetch(`/api/admin/data/${section}`);
+      if (res.ok) {
+        const sectionData = await res.json();
+        setData(prev => prev ? { ...prev, [section]: sectionData } : null);
+      }
+    } catch (error) {
+      console.error("Failed to sync section data:", error);
+      showToast("Failed to sync data after update", "error");
+    }
+  };
+
+  // Save modal data (add/edit)
+  const saveModal = async () => {
     if (!modal) return;
     if (!validateForm(modal.path, section)) return;
     setValidationErrors({});
+
     let dataToSave = { ...formData };
+    const arrayName = modal.path[modal.path.length - 1];
+
+    // Special handling for WhatsApp link
     if (modal.path.length === 0 && (formData.platform as string || "").toLowerCase().includes("whats")) {
       const phone = (formData.phone as string || "").replace(/[^0-9]/g, "");
       const msg = formData.message as string || "";
@@ -383,18 +369,72 @@ function EditorShell({
       delete dataToSave.phone;
       delete dataToSave.message;
     }
-    if (modal.type === "add") {
-      addArrayItem(section, modal.path, dataToSave);
-      showToast("Item added", "success");
-    } else if (modal.type === "edit" && modal.index !== undefined) {
-      updateArrayItem(section, modal.path, modal.index, dataToSave);
-      showToast("Item updated", "success");
+
+    try {
+      let res;
+      if (modal.type === "add") {
+        res = await fetch(`/api/admin/${section}/item`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ arrayName, item: dataToSave }),
+        });
+      } else if (modal.type === "edit" && modal.data?.id !== undefined) {
+        res = await fetch(`/api/admin/${section}/item`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ arrayName, itemId: modal.data.id, updatedItem: dataToSave }),
+        });
+      } else {
+        throw new Error("Invalid operation");
+      }
+
+      if (res.ok) {
+        showToast(`Item ${modal.type === 'add' ? 'added' : 'updated'} successfully`, "success");
+        await syncSectionData();
+        setModal(null);
+      } else {
+        const errorData = await res.json();
+        showToast(errorData.error || "Failed to save item", "error");
+      }
+    } catch (error) {
+      showToast("Network error while saving item", "error");
     }
-    setModal(null);
   };
 
+  // Delete handlers
   const confirmDelete = (path: string[], index: number, title?: string) => setDeleteConfirm({ path, index, title });
-  const executeDelete = () => { if (deleteConfirm) { removeArrayItem(section, deleteConfirm.path, deleteConfirm.index); setDeleteConfirm(null); } };
+  const executeDelete = async () => {
+    if (!deleteConfirm) return;
+    const { path, index } = deleteConfirm;
+    const arrayName = path[path.length - 1];
+    const itemToDelete = (content[arrayName] as any[])?.[index];
+
+    if (!itemToDelete || itemToDelete.id === undefined) {
+      showToast("Cannot delete item: missing ID", "error");
+      setDeleteConfirm(null);
+      return;
+    }
+
+    try {
+      const res = await fetch(`/api/admin/${section}/item`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ arrayName, itemId: itemToDelete.id }),
+      });
+
+      if (res.ok) {
+        showToast("Item deleted successfully", "success");
+        await syncSectionData();
+      } else {
+        const errorData = await res.json();
+        showToast(errorData.error || "Failed to delete item", "error");
+      }
+    } catch (error) {
+      showToast("Network error while deleting item", "error");
+    } finally {
+      setDeleteConfirm(null);
+    }
+  };
 
   const Field = ({ label, name: fk, type = "text", hint, required }: { label: string; name: string; type?: string; hint?: string; required?: boolean }) => {
     const hasError = !!validationErrors[fk];
@@ -690,7 +730,6 @@ function EditorShell({
   /* ===== PROJECTS ===== */
   if (section === "projects") {
     const p = content;
-    const sectionKey = "projects";
     const projItems = p.projects as Record<string, unknown>[];
     return (<div className="space-y-4">
       <AddButtonB onClick={() => openAddModal(["projects"], { id: (projItems.length + 1), title: "New Project", description: "Description", techStack: ["Tech 1"], androidLink: "", iosLink: "", githubLink: "", bannerImage: "", screenshots: [], features: ["Feature 1"], role: "Role description", category: "mobile", appIcon: "" })} label="Add Project" />
@@ -712,7 +751,8 @@ function EditorShell({
                   if (data.iconUrl) setFormData(p => ({ ...p, appIcon: data.iconUrl }));
                   else alert("Could not fetch icon from store link");
                 } catch { alert("Network error"); }
-              }} className="px-3 py-2.5 rounded-lg bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-medium hover:bg-blue-500/20 transition-all flex items-center gap-1 flex-shrink-0">Fetch Icon</button>
+              }} className="px-3 py-2.5 rounded-lg bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-medium hover:bg-blue-500/20 transition-all flex items-center gap-1 flex-shrink-0">
+                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>Fetch Icon</button>
             )}
           </div>
         </div>
@@ -726,7 +766,6 @@ function EditorShell({
   /* ===== TESTIMONIALS ===== */
   if (section === "testimonials") {
     const t = content;
-    const sectionKey = "testimonials";
     const items = t.testimonials as Record<string, unknown>[];
     return (<div className="space-y-4">
       <AddButtonB onClick={() => openAddModal(["testimonials"], { name: "New Person", role: "Role", avatar: "NP", quote: "Great work!", rating: 5 })} label="Add Testimonial" />
@@ -744,7 +783,6 @@ function EditorShell({
   /* ===== STATS ===== */
   if (section === "stats") {
     const st = content;
-    const sectionKey = "stats";
     const items = st.stats as Record<string, unknown>[];
     return (<div className="space-y-4">
       <AddButtonB onClick={() => openAddModal(["stats"], { value: 10, suffix: "+", label: "New Stat", desc: "Description" })} label="Add Stat" />
@@ -775,7 +813,6 @@ function EditorShell({
   /* ===== SOCIAL LINKS ===== */
   if (section === "socialLinks") {
     const items = content as unknown as Record<string, unknown>[];
-    const sectionKey = "socialLinks";
     const guessIcon = (platform: string) => {
       const p = platform.toLowerCase();
       if (p.includes("git")) return "FiGithub"; if (p.includes("linked")) return "FiLinkedin"; if (p.includes("whats")) return "FaWhatsapp";

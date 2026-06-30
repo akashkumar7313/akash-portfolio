@@ -83,14 +83,14 @@ export default function ProjectModal({ project, onClose }: Props) {
         onClick={onClose}
       >
         <motion.div
-          initial={{ opacity: 0, scale: 0.9, y: 20 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.9, y: 20 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 20 }}
           transition={{ duration: 0.3, type: "spring", damping: 25 }}
           onClick={(e) => e.stopPropagation()}
           className="glass rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto"
         >
-          <div className="sticky top-0 z-10 flex items-center justify-between p-5 border-b border-[var(--glass-10)] bg-dark-950/90 backdrop-blur-xl">
+          <div className="sticky top-0 z-20 flex items-center justify-between p-5 border-b border-[var(--glass-10)] bg-dark-950 backdrop-blur-xl">
             <h3 className="text-dark-100 dark:text-white font-bold text-lg">{project.title}</h3>
             <button
               onClick={onClose}

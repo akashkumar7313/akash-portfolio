@@ -662,6 +662,25 @@
         "role": "Built the reporting app for cane crushing data management for UK Cane Society.",
         "category": "mobile",
         "appIcon": "https://play-lh.googleusercontent.com/EclmHdu9rAJHx1fFOFCbsVvS0f259OQf3yjjKluZOZPOb8l7A3N3iMzhRK2RqVvhlByybqepEx1n_gE7DR9cGw=s512"
+      },
+      {
+        "id": 12,
+        "title": "Google Pay: Secure UPI payment",
+        "description": "a",
+        "techStack": [
+          "Tech 1"
+        ],
+        "androidLink": "https://play.google.com/store/apps/details?id=com.google.android.apps.nbu.paisa.user&hl=en_IN",
+        "iosLink": "",
+        "githubLink": "",
+        "bannerImage": "",
+        "screenshots": [],
+        "features": [
+          "Feature 1"
+        ],
+        "role": "https://play.google.com/store/apps/details?id=com.google.android.apps.nbu.paisa.user&hl=en_IN",
+        "category": "mobile",
+        "appIcon": "https://play-lh.googleusercontent.com/Wbik2RoUSGgWEg8ybAhFaMJO2fE7x9gqCXfwbmW0YPjh6TKcjKzecth8GaYkbUBYtLZXhyfVMpqkIuJgTM8p=s512"
       }
     ],
     "filters": [
