@@ -217,7 +217,8 @@ export function addItemToArray<K extends keyof SiteData>(
   const current = readData();
   const sectionData = current[section] as Record<string, any>;
   if (sectionData && Array.isArray(sectionData[arrayName])) {
-    (sectionData[arrayName] as any[]).push(item);
+    const newItem = { id: Date.now(), ...item };
+    (sectionData[arrayName] as any[]).push(newItem);
     writeData(current);
   }
   return JSON.parse(JSON.stringify(current));
@@ -233,7 +234,10 @@ export function updateItemInArray<K extends keyof SiteData>(
   const sectionData = current[section] as Record<string, any>;
   if (sectionData && Array.isArray(sectionData[arrayName])) {
     const array = sectionData[arrayName] as any[];
-    const index = array.findIndex((item: any) => item.id === itemId);
+    let index = array.findIndex((item: any) => item.id === itemId);
+    if (index === -1 && typeof itemId === "number") {
+      index = itemId < array.length ? itemId : -1;
+    }
     if (index !== -1) {
       array[index] = { ...array[index], ...updatedItem };
       writeData(current);
@@ -250,8 +254,15 @@ export function deleteItemFromArray<K extends keyof SiteData>(
   const current = readData();
   const sectionData = current[section] as Record<string, any>;
   if (sectionData && Array.isArray(sectionData[arrayName])) {
-    sectionData[arrayName] = (sectionData[arrayName] as any[]).filter((item: any) => item.id !== itemId);
-    writeData(current);
+    const arr = sectionData[arrayName] as any[];
+    let index = arr.findIndex((item: any) => item.id === itemId);
+    if (index === -1 && typeof itemId === "number") {
+      index = itemId < arr.length ? itemId : -1;
+    }
+    if (index !== -1) {
+      sectionData[arrayName] = arr.filter((_: any, i: number) => i !== index);
+      writeData(current);
+    }
   }
   return JSON.parse(JSON.stringify(current));
 }

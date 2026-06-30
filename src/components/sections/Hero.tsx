@@ -141,7 +141,7 @@ export default function Hero() {
   const [codeTab, setCodeTab] = useState<"flutter" | "rn">("flutter");
   const [reviewIndex, setReviewIndex] = useState(0);
   const [apiStack, setApiStack] = useState<string[] | null>(null);
-  const [resumeUrl, setResumeUrl] = useState("/resume.pdf");
+  const [resumeUrl, setResumeUrl] = useState("");
   const [particles, setParticles] = useState(true);
 
   useEffect(() => {
@@ -349,10 +349,12 @@ export default function Hero() {
                 <FiEye />
                 View Projects
               </Link>
-              <a href={resumeUrl} target="_blank" rel="noopener noreferrer" className="btn-primary flex items-center gap-2 text-sm">
-                <FiDownload />
-                Resume
-              </a>
+              {resumeUrl && !resumeUrl.startsWith("data:") && (
+                <a href={resumeUrl} target="_blank" rel="noopener noreferrer" className="btn-primary flex items-center gap-2 text-sm">
+                  <FiDownload />
+                  Resume
+                </a>
+              )}
               <Link href="/contact" className="btn-primary flex items-center gap-2 text-sm">
                 <FiMail />
                 Contact
