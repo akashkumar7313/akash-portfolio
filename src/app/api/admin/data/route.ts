@@ -9,7 +9,7 @@ export async function GET(req: NextRequest) {
   return NextResponse.json(getData());
 }
 
-export async function PUT(req: NextRequest) {
+export async function PATCH(req: NextRequest) {
   const token = req.cookies.get("admin_token")?.value;
   if (token !== "authenticated") {
     return NextResponse.json({ success: false }, { status: 401 });
@@ -21,7 +21,8 @@ export async function PUT(req: NextRequest) {
     }
     const updated = updateSection(section as keyof SiteData, data);
     return NextResponse.json({ success: true, data: updated[section as keyof SiteData] });
-  } catch {
-    return NextResponse.json({ success: false }, { status: 500 });
+  } catch (error) {
+    console.error("Error updating section:", error);
+    return NextResponse.json({ success: false, error: "Failed to update section" }, { status: 500 });
   }
 }

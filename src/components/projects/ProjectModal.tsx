@@ -2,8 +2,8 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { HiX, HiChevronLeft, HiChevronRight } from "react-icons/hi";
-import { FiExternalLink, FiGithub } from "react-icons/fi";
+import { HiX } from "react-icons/hi";
+import { FaAndroid, FaApple } from "react-icons/fa";
 import type { Project } from "@/data/projects";
 
 interface Props {
@@ -11,18 +11,38 @@ interface Props {
   onClose: () => void;
 }
 
+const domainColors: Record<string, { gradient: string; accent: string }> = {
+  healthcare: { gradient: "from-emerald-500/20 via-teal-500/20 to-cyan-500/20", accent: "text-emerald-400" },
+  enterprise: { gradient: "from-blue-500/20 via-indigo-500/20 to-violet-500/20", accent: "text-blue-400" },
+  "f&b": { gradient: "from-orange-500/20 via-amber-500/20 to-yellow-500/20", accent: "text-orange-400" },
+  marketplace: { gradient: "from-purple-500/20 via-pink-500/20 to-rose-500/20", accent: "text-purple-400" },
+  ecommerce: { gradient: "from-rose-500/20 via-red-500/20 to-orange-500/20", accent: "text-rose-400" },
+  sales: { gradient: "from-cyan-500/20 via-sky-500/20 to-blue-500/20", accent: "text-cyan-400" },
+  agri: { gradient: "from-green-500/20 via-emerald-500/20 to-teal-500/20", accent: "text-green-400" },
+};
+
+function getDomain(title: string): string {
+  const t = title.toLowerCase();
+  if (t.includes("pearlies")) return "healthcare";
+  if (t.includes("boskalis")) return "enterprise";
+  if (t.includes("kimi")) return "f&b";
+  if (t.includes("atesplore merchant")) return "marketplace";
+  if (t.includes("atesplore")) return "marketplace";
+  if (t.includes("dreamshop")) return "ecommerce";
+  if (t.includes("salespulse")) return "sales";
+  if (t.includes("bajaj") || t.includes("dalmia") || t.includes("wave") || t.includes("uk cane") || t.includes("mis")) return "agri";
+  return "enterprise";
+}
+
 export default function ProjectModal({ project, onClose }: Props) {
-  const [imgIndex, setImgIndex] = useState(0);
+  const domain = getDomain(project.title);
+  const colors = domainColors[domain] || domainColors.enterprise;
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
-      if (e.key === "ArrowLeft")
-        setImgIndex((i) => (i === 0 ? project.screenshots.length - 1 : i - 1));
-      if (e.key === "ArrowRight")
-        setImgIndex((i) => (i === project.screenshots.length - 1 ? 0 : i + 1));
     },
-    [onClose, project.screenshots.length]
+    [onClose]
   );
 
   useEffect(() => {
@@ -33,6 +53,24 @@ export default function ProjectModal({ project, onClose }: Props) {
       document.body.style.overflow = "";
     };
   }, [handleKeyDown]);
+
+  const platforms: { label: string; url: string; icon: React.ReactNode; color: string }[] = [];
+  if (project.androidLink) {
+    platforms.push({
+      label: "Google Play",
+      url: project.androidLink,
+      icon: <FaAndroid />,
+      color: "hover:bg-green-500/20 hover:text-green-400 hover:border-green-500/30",
+    });
+  }
+  if (project.iosLink) {
+    platforms.push({
+      label: "App Store",
+      url: project.iosLink,
+      icon: <FaApple />,
+      color: "hover:bg-white/10 hover:text-white hover:border-white/30",
+    });
+  }
 
   return (
     <AnimatePresence>
@@ -63,50 +101,12 @@ export default function ProjectModal({ project, onClose }: Props) {
           </div>
 
           <div className="p-5 md:p-6 space-y-6">
-            {project.screenshots.length > 0 && (
+            {project.appIcon && (
               <div className="relative rounded-xl overflow-hidden bg-dark-900 aspect-video flex items-center justify-center">
-                <div className="w-full h-full bg-gradient-to-br from-accent-blue/20 via-accent-purple/20 to-accent-cyan/20 flex items-center justify-center">
-                  <p className="text-dark-400 text-sm font-mono">
-                    {project.screenshots[imgIndex]}
-                  </p>
+                <div className="absolute inset-0 w-full h-full overflow-hidden">
+                  <img src={project.appIcon} alt="" className="w-full h-full object-cover blur-3xl scale-110 opacity-60" />
                 </div>
-                {project.screenshots.length > 1 && (
-                  <>
-                    <button
-                      onClick={() =>
-                        setImgIndex((i) =>
-                          i === 0 ? project.screenshots.length - 1 : i - 1
-                        )
-                      }
-                      className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/50 flex items-center justify-center text-dark-100 dark:text-white hover:bg-black/70 transition-all"
-                    >
-                      <HiChevronLeft />
-                    </button>
-                    <button
-                      onClick={() =>
-                        setImgIndex((i) =>
-                          i === project.screenshots.length - 1 ? 0 : i + 1
-                        )
-                      }
-                      className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/50 flex items-center justify-center text-dark-100 dark:text-white hover:bg-black/70 transition-all"
-                    >
-                      <HiChevronRight />
-                    </button>
-                    <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-2">
-                      {project.screenshots.map((_, i) => (
-                        <button
-                          key={i}
-                          onClick={() => setImgIndex(i)}
-                          className={`w-2 h-2 rounded-full transition-all ${
-                            i === imgIndex
-                              ? "bg-white w-4"
-                              : "bg-[var(--glass-20)] hover:bg-[var(--glass-60)]"
-                          }`}
-                        />
-                      ))}
-                    </div>
-                  </>
-                )}
+                <img src={project.appIcon} alt={project.title} className="relative z-10 w-4/5 h-4/5 object-contain drop-shadow-2xl" />
               </div>
             )}
 
@@ -147,38 +147,31 @@ export default function ProjectModal({ project, onClose }: Props) {
               </p>
             </div>
 
-            <div className="flex flex-wrap gap-3">
-              {project.androidLink && (
-                <a
-                  href={project.androidLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-5 py-3 bg-[var(--glass-5)] border border-[var(--glass-10)] rounded-xl text-sm font-medium text-dark-100 dark:text-white hover:bg-[var(--glass-10)] hover:border-[var(--glass-20)] transition-all flex items-center gap-2"
-                >
-                  <FiExternalLink /> Android App
-                </a>
-              )}
-              {project.iosLink && (
-                <a
-                  href={project.iosLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-5 py-3 bg-[var(--glass-5)] border border-[var(--glass-10)] rounded-xl text-sm font-medium text-dark-100 dark:text-white hover:bg-[var(--glass-10)] hover:border-[var(--glass-20)] transition-all flex items-center gap-2"
-                >
-                  <FiExternalLink /> iOS App
-                </a>
-              )}
-              {project.githubLink && (
-                <a
-                  href={project.githubLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-5 py-3 bg-[var(--glass-5)] border border-[var(--glass-10)] rounded-xl text-sm font-medium text-dark-100 dark:text-white hover:bg-[var(--glass-10)] hover:border-[var(--glass-20)] transition-all flex items-center gap-2"
-                >
-                  <FiGithub /> GitHub
-                </a>
-              )}
-            </div>
+            {platforms.length > 0 && (
+              <div className="flex flex-wrap gap-3">
+                {platforms.map((p) => (
+                  <a
+                    key={p.label}
+                    href={p.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`px-5 py-3 bg-[var(--glass-5)] border border-[var(--glass-10)] rounded-xl text-sm font-medium text-dark-100 dark:text-white transition-all flex items-center gap-2 ${p.color}`}
+                  >
+                    {p.icon} {p.label}
+                  </a>
+                ))}
+                {project.githubLink && (
+                  <a
+                    href={project.githubLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-5 py-3 bg-[var(--glass-5)] border border-[var(--glass-10)] rounded-xl text-sm font-medium text-dark-100 dark:text-white hover:bg-[var(--glass-10)] hover:border-[var(--glass-20)] transition-all flex items-center gap-2"
+                  >
+                    <FaAndroid /> GitHub
+                  </a>
+                )}
+              </div>
+            )}
           </div>
         </motion.div>
       </motion.div>

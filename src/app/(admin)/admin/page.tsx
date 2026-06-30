@@ -109,7 +109,7 @@ export default function AdminDashboard() {
     setSaving(section);
     try {
       const res = await fetch("/api/admin/data", {
-        method: "PUT",
+        method: "PATCH", // Changed to PATCH
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ section, data: data[section] }),
       });
@@ -400,30 +400,30 @@ function EditorShell({
     const hasError = !!validationErrors[fk];
     const inputClass = `w-full px-3.5 py-2.5 rounded-lg bg-slate-800/50 border text-white placeholder:text-slate-600 focus:outline-none focus:ring-2 transition-all text-sm ${hasError ? "border-red-500/60 focus:border-red-500 focus:ring-red-500/20" : "border-slate-700/50 focus:border-blue-500/60 focus:ring-blue-500/10"}`;
     return (
-    <div>
-      <label className="block text-slate-400 text-xs font-medium mb-1.5 tracking-wide">{label}{required ? <span className="text-red-400 ml-1">*</span> : <span className="text-slate-600 ml-1.5 text-[10px] font-normal">(optional)</span>}</label>
-      {type === "textarea" ? (
-        <textarea value={formData[fk] as string || ""} onChange={(e) => { setFormData(p => ({ ...p, [fk]: e.target.value })); if (hasError) setValidationErrors(p => { const n = {...p}; delete n[fk]; return n; }); }}
-          className={inputClass} rows={3} />
-      ) : type === "color" ? (
-        <div className="flex gap-2">
-          <input type="color" value={formData[fk] as string || "#6366f1"} onChange={(e) => { setFormData(p => ({ ...p, [fk]: e.target.value })); if (hasError) setValidationErrors(p => { const n = {...p}; delete n[fk]; return n; }); }} className="w-10 h-10 rounded-lg bg-slate-800 border border-slate-700 cursor-pointer flex-shrink-0 p-0.5" />
-          <input type="text" value={formData[fk] as string || ""} onChange={(e) => { setFormData(p => ({ ...p, [fk]: e.target.value })); if (hasError) setValidationErrors(p => { const n = {...p}; delete n[fk]; return n; }); }} className={`flex-1 px-3.5 py-2 rounded-lg bg-slate-800/50 border text-white font-mono text-sm focus:outline-none focus:ring-2 transition-all ${hasError ? "border-red-500/60 focus:border-red-500 focus:ring-red-500/20" : "border-slate-700/50 focus:border-blue-500/60 focus:ring-blue-500/10"}`} />
-        </div>
-      ) : type === "file" ? (
-        <input type="file" accept=".pdf" onChange={(e) => {
-          const file = e.target.files?.[0]; if (!file) return;
-          const reader = new FileReader();
-          reader.onload = () => { setFormData(p => ({ ...p, [fk]: reader.result as string })); if (hasError) setValidationErrors(p => { const n = {...p}; delete n[fk]; return n; }); };
-          reader.readAsDataURL(file);
-        }} className="w-full text-xs text-slate-400 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-medium file:bg-blue-500/10 file:text-blue-400 hover:file:bg-blue-500/20 cursor-pointer" />
-      ) : (
-        <input type={type} value={formData[fk] as string || ""} onChange={(e) => { setFormData(p => ({ ...p, [fk]: type === "number" ? (parseFloat(e.target.value) || 0) : e.target.value })); if (hasError) setValidationErrors(p => { const n = {...p}; delete n[fk]; return n; }); }}
-          className={inputClass} />
-      )}
-      {hint && <p className="text-slate-600 text-[10px] mt-1.5">{hint}</p>}
-      {hasError && <p className="text-red-400 text-[10px] mt-1">This field is required</p>}
-    </div>
+      <div>
+        <label className="block text-slate-400 text-xs font-medium mb-1.5 tracking-wide">{label}{required ? <span className="text-red-400 ml-1">*</span> : <span className="text-slate-600 ml-1.5 text-[10px] font-normal">(optional)</span>}</label>
+        {type === "textarea" ? (
+          <textarea value={formData[fk] as string || ""} onChange={(e) => { setFormData(p => ({ ...p, [fk]: e.target.value })); if (hasError) setValidationErrors(p => { const n = { ...p }; delete n[fk]; return n; }); }}
+            className={inputClass} rows={3} />
+        ) : type === "color" ? (
+          <div className="flex gap-2">
+            <input type="color" value={formData[fk] as string || "#6366f1"} onChange={(e) => { setFormData(p => ({ ...p, [fk]: e.target.value })); if (hasError) setValidationErrors(p => { const n = { ...p }; delete n[fk]; return n; }); }} className="w-10 h-10 rounded-lg bg-slate-800 border border-slate-700 cursor-pointer flex-shrink-0 p-0.5" />
+            <input type="text" value={formData[fk] as string || ""} onChange={(e) => { setFormData(p => ({ ...p, [fk]: e.target.value })); if (hasError) setValidationErrors(p => { const n = { ...p }; delete n[fk]; return n; }); }} className={`flex-1 px-3.5 py-2 rounded-lg bg-slate-800/50 border text-white font-mono text-sm focus:outline-none focus:ring-2 transition-all ${hasError ? "border-red-500/60 focus:border-red-500 focus:ring-red-500/20" : "border-slate-700/50 focus:border-blue-500/60 focus:ring-blue-500/10"}`} />
+          </div>
+        ) : type === "file" ? (
+          <input type="file" accept=".pdf" onChange={(e) => {
+            const file = e.target.files?.[0]; if (!file) return;
+            const reader = new FileReader();
+            reader.onload = () => { setFormData(p => ({ ...p, [fk]: reader.result as string })); if (hasError) setValidationErrors(p => { const n = { ...p }; delete n[fk]; return n; }); };
+            reader.readAsDataURL(file);
+          }} className="w-full text-xs text-slate-400 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-medium file:bg-blue-500/10 file:text-blue-400 hover:file:bg-blue-500/20 cursor-pointer" />
+        ) : (
+          <input type={type} value={formData[fk] as string || ""} onChange={(e) => { setFormData(p => ({ ...p, [fk]: type === "number" ? (parseFloat(e.target.value) || 0) : e.target.value })); if (hasError) setValidationErrors(p => { const n = { ...p }; delete n[fk]; return n; }); }}
+            className={inputClass} />
+        )}
+        {hint && <p className="text-slate-600 text-[10px] mt-1.5">{hint}</p>}
+        {hasError && <p className="text-red-400 text-[10px] mt-1">This field is required</p>}
+      </div>
     );
   };
 
@@ -496,12 +496,14 @@ function EditorShell({
             reader.readAsDataURL(file);
           }} className="w-full text-xs text-slate-400 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-medium file:bg-blue-500/10 file:text-blue-400 hover:file:bg-blue-500/20 cursor-pointer" />
           {(() => { const r = h.resumeUrl; if (typeof r === 'string' && r.startsWith('data:')) return <p className="text-[10px] text-emerald-400">✅ PDF loaded ({Math.round((r.length * 3) / 4 / 1024)} KB base64)</p>; if (typeof r === 'string') return <p className="text-[10px] text-slate-500">🔗 URL: {r}</p>; return null; })()}
-          {(() => { const r = h.resumeUrl; if (typeof r === 'string' && r.startsWith('data:')) return (
-            <a href={r} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[11px] font-medium hover:bg-emerald-500/20 hover:text-emerald-300 transition-all">
-              <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
-              View Resume
-            </a>
-          ); return null; })()}
+          {(() => {
+            const r = h.resumeUrl; if (typeof r === 'string' && r.startsWith('data:')) return (
+              <a href={r} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[11px] font-medium hover:bg-emerald-500/20 hover:text-emerald-300 transition-all">
+                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
+                View Resume
+              </a>
+            ); return null;
+          })()}
         </div>
         <InputB label="Phone App Name" value={h.phoneAppName as string} onChange={v => updateField(sectionKey, ["phoneAppName"], v)} />
         <InputB label="Phone Developer" value={h.phoneDeveloper as string} onChange={v => updateField(sectionKey, ["phoneDeveloper"], v)} />
@@ -691,12 +693,29 @@ function EditorShell({
     const sectionKey = "projects";
     const projItems = p.projects as Record<string, unknown>[];
     return (<div className="space-y-4">
-      <AddButtonB onClick={() => openAddModal(["projects"], { id: (projItems.length + 1), title: "New Project", description: "Description", techStack: ["Tech 1"], androidLink: "", iosLink: "", githubLink: "", bannerImage: "", screenshots: [], features: ["Feature 1"], role: "Role description", category: "mobile" })} label="Add Project" />
+      <AddButtonB onClick={() => openAddModal(["projects"], { id: (projItems.length + 1), title: "New Project", description: "Description", techStack: ["Tech 1"], androidLink: "", iosLink: "", githubLink: "", bannerImage: "", screenshots: [], features: ["Feature 1"], role: "Role description", category: "mobile", appIcon: "" })} label="Add Project" />
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3">
         {projItems.map((proj, pi) => (<ItemCard key={pi} title={`#${proj.id as number} ${proj.title as string}`} onEdit={() => openEditModal(["projects"], pi, proj)} onDelete={() => confirmDelete(["projects"], pi, proj.title as string)} />))}
       </div>
       <Modal open={!!modal} onClose={() => setModal(null)} title={modal?.type === "add" ? "Add Project" : "Edit Project"}>
         <div className="grid grid-cols-2 gap-3"><Field label="Title" name="title" required /><Field label="Category" name="category" hint="mobile, web, backend, ai, iot..." /><Field label="Android Link" name="androidLink" /><Field label="iOS Link" name="iosLink" /><Field label="GitHub Link" name="githubLink" /><Field label="ID" type="number" name="id" /></div>
+        <div><label className="block text-slate-400 text-xs font-medium mb-1.5 tracking-wide">App Icon URL <span className="text-slate-600 ml-1.5 text-[10px] font-normal">(auto-fetched from store links)</span></label>
+          <div className="flex gap-2">
+            <input value={formData.appIcon as string || ""} onChange={(e) => setFormData(p => ({ ...p, appIcon: e.target.value }))} className="flex-1 px-3.5 py-2.5 rounded-lg bg-slate-800/50 border border-slate-700/50 text-white text-sm focus:outline-none focus:border-blue-500/60 focus:ring-2 focus:ring-blue-500/10" placeholder="Auto-filled from Play Store / App Store" />
+            {(formData.androidLink as string || formData.iosLink as string) && (
+              <button onClick={async () => {
+                const link = (formData.androidLink as string) || (formData.iosLink as string);
+                if (!link) return;
+                try {
+                  const res = await fetch("/api/fetch-app-icon", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ url: link }) });
+                  const data = await res.json();
+                  if (data.iconUrl) setFormData(p => ({ ...p, appIcon: data.iconUrl }));
+                  else alert("Could not fetch icon from store link");
+                } catch { alert("Network error"); }
+              }} className="px-3 py-2.5 rounded-lg bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-medium hover:bg-blue-500/20 transition-all flex items-center gap-1 flex-shrink-0">Fetch Icon</button>
+            )}
+          </div>
+        </div>
         <Field label="Description" type="textarea" name="description" required /><Field label="Role" type="textarea" name="role" />
         <FieldArray label="Tech Stack" name="techStack" /><FieldArray label="Features" name="features" />
         <div className="flex gap-3 pt-2"><button onClick={saveModal} className="flex-1 py-2.5 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 text-white text-sm font-semibold hover:from-blue-500 hover:to-purple-500 transition-all shadow-lg">{modal?.type === "add" ? "Add" : "Save Changes"}</button><button onClick={() => setModal(null)} className="px-5 py-2.5 rounded-lg bg-slate-800 border border-slate-700/50 text-slate-300 text-sm hover:bg-slate-700 transition-all">Cancel</button></div>
@@ -764,7 +783,7 @@ function EditorShell({
       if (p.includes("yout")) return "FiYoutube"; if (p.includes("insta")) return "FiInstagram"; if (p.includes("face")) return "FiFacebook";
       return "FiGlobe";
     };
-    const icons = ["FiGithub","FiLinkedin","FaWhatsapp","FiMail","FiTwitter","FiYoutube","FiLink","FiGlobe","FiInstagram","FiFacebook"];
+    const icons = ["FiGithub", "FiLinkedin", "FaWhatsapp", "FiMail", "FiTwitter", "FiYoutube", "FiLink", "FiGlobe", "FiInstagram", "FiFacebook"];
 
     return (<div className="space-y-4">
       <AddButtonB onClick={() => openAddModal([], { platform: "GitHub", url: "https://", icon: "FiGithub" })} label="Add Link" />

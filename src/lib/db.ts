@@ -86,12 +86,13 @@ export interface ProjectItem {
   techStack: string[];
   androidLink: string;
   iosLink: string;
-  githubLink: string;
-  bannerImage: string;
-  screenshots: string[];
+  githubLink?: string;
+  bannerImage?: string;
+  screenshots?: string[];
   features: string[];
   role: string;
   category: string;
+  appIcon?: string;
 }
 
 export interface ProjectsData {
@@ -205,6 +206,53 @@ export function updateData(section: string, data: unknown): SiteData {
   const current = readData();
   (current as unknown as Record<string, unknown>)[section] = data;
   writeData(current);
+  return JSON.parse(JSON.stringify(current));
+}
+
+export function addItemToArray<K extends keyof SiteData>(
+  section: K,
+  arrayName: string,
+  item: any
+): SiteData {
+  const current = readData();
+  const sectionData = current[section] as Record<string, any>;
+  if (sectionData && Array.isArray(sectionData[arrayName])) {
+    (sectionData[arrayName] as any[]).push(item);
+    writeData(current);
+  }
+  return JSON.parse(JSON.stringify(current));
+}
+
+export function updateItemInArray<K extends keyof SiteData>(
+  section: K,
+  arrayName: string,
+  itemId: number,
+  updatedItem: any
+): SiteData {
+  const current = readData();
+  const sectionData = current[section] as Record<string, any>;
+  if (sectionData && Array.isArray(sectionData[arrayName])) {
+    const array = sectionData[arrayName] as any[];
+    const index = array.findIndex((item: any) => item.id === itemId);
+    if (index !== -1) {
+      array[index] = { ...array[index], ...updatedItem };
+      writeData(current);
+    }
+  }
+  return JSON.parse(JSON.stringify(current));
+}
+
+export function deleteItemFromArray<K extends keyof SiteData>(
+  section: K,
+  arrayName: string,
+  itemId: number
+): SiteData {
+  const current = readData();
+  const sectionData = current[section] as Record<string, any>;
+  if (sectionData && Array.isArray(sectionData[arrayName])) {
+    sectionData[arrayName] = (sectionData[arrayName] as any[]).filter((item: any) => item.id !== itemId);
+    writeData(current);
+  }
   return JSON.parse(JSON.stringify(current));
 }
 

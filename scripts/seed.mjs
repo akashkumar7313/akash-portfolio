@@ -1,28 +1,23 @@
-export interface Project {
-  id: number;
-  title: string;
-  description: string;
-  techStack: string[];
-  androidLink: string;
-  iosLink: string;
-  githubLink?: string;
-  bannerImage?: string;
-  screenshots?: string[];
-  features: string[];
-  role: string;
-  category: string;
-  appIcon?: string;
-}
+import { readFileSync, writeFileSync } from "fs";
+import { join, dirname } from "path";
+import { fileURLToPath } from "url";
 
-export const projects: Project[] = [
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const dataPath = join(__dirname, "..", "src", "data", "site-data.json");
+
+const projects = [
   {
     id: 1,
     title: "Pearlies",
     description:
       "Healthcare research app developed for NUS Dentistry faculty, focused on early childhood dental care intervention for parents. Features educational content, appointment reminders, and dental health tracking for children.",
     techStack: ["Flutter", "Firebase", "REST API"],
-    androidLink: "https://play.google.com/store/apps/details?id=com.singsys.dentistry.nus&hl=en_IN",
+    androidLink:
+      "https://play.google.com/store/apps/details?id=com.singsys.dentistry.nus&hl=en_IN",
     iosLink: "https://apps.apple.com/in/app/pearlies/id6739769682",
+    githubLink: "",
+    bannerImage: "",
+    screenshots: [],
     features: [
       "Child dental health tracking",
       "Educational content & videos",
@@ -40,8 +35,12 @@ export const projects: Project[] = [
     description:
       "Enterprise mobile solution built for Boskalis, a Netherlands-based dredging and logistics company. Streamlines operations with real-time project tracking, fleet management, and crew coordination tools.",
     techStack: ["Flutter", "REST API", "Firebase"],
-    androidLink: "https://play.google.com/store/apps/details?id=com.boskalis.boss&hl=en_IN",
+    androidLink:
+      "https://play.google.com/store/apps/details?id=com.boskalis.boss&hl=en_IN",
     iosLink: "https://apps.apple.com/us/app/boskalis-boss/id6737225022",
+    githubLink: "",
+    bannerImage: "",
+    screenshots: [],
     features: [
       "Real-time project tracking",
       "Fleet management dashboard",
@@ -59,8 +58,12 @@ export const projects: Project[] = [
     description:
       "Food ordering app built for the UAE market, designed for a cafe and restaurant ordering experience. Features menu browsing, cart management, order tracking, table reservations, and loyalty rewards.",
     techStack: ["Flutter", "Firebase", "REST API"],
-    androidLink: "https://play.google.com/store/apps/details?id=com.kimi.cafe&hl=en_IN",
+    androidLink:
+      "https://play.google.com/store/apps/details?id=com.kimi.cafe&hl=en_IN",
     iosLink: "https://apps.apple.com/us/app/kimi-uae/id6747967998",
+    githubLink: "",
+    bannerImage: "",
+    screenshots: [],
     features: [
       "Menu browsing & search",
       "Cart management & checkout",
@@ -78,8 +81,12 @@ export const projects: Project[] = [
     description:
       "Customer-facing marketplace app for the Atesplore ecosystem. Offers seamless product discovery, real-time order tracking, secure payments, and personalized recommendations for shoppers.",
     techStack: ["Flutter", "Firebase", "REST API", "Stripe"],
-    androidLink: "https://play.google.com/store/apps/details?id=com.user.atesplore&hl=en_IN",
+    androidLink:
+      "https://play.google.com/store/apps/details?id=com.user.atesplore&hl=en_IN",
     iosLink: "https://apps.apple.com/us/app/atesplore/id6740129647",
+    githubLink: "",
+    bannerImage: "",
+    screenshots: [],
     features: [
       "Product discovery & search",
       "Secure checkout with Stripe",
@@ -97,8 +104,12 @@ export const projects: Project[] = [
     description:
       "Merchant-facing companion app for the Atesplore marketplace ecosystem. Enables merchants to manage inventory, process orders, track sales analytics, and communicate with customers.",
     techStack: ["Flutter", "Firebase", "REST API"],
-    androidLink: "https://play.google.com/store/apps/details?id=com.merchant.atesplore&hl=en_IN",
+    androidLink:
+      "https://play.google.com/store/apps/details?id=com.merchant.atesplore&hl=en_IN",
     iosLink: "https://apps.apple.com/us/app/atesplore-merchant/id6740053552",
+    githubLink: "",
+    bannerImage: "",
+    screenshots: [],
     features: [
       "Inventory management",
       "Order processing dashboard",
@@ -116,8 +127,12 @@ export const projects: Project[] = [
     description:
       "Feature-packed e-marketplace offering rewards, surprise discount coupons, and an engaging shopping experience for Indian consumers with seamless payments and order tracking.",
     techStack: ["Flutter", "Firebase", "REST API", "Razorpay"],
-    androidLink: "https://play.google.com/store/apps/details?id=com.singsys.dreamshop&hl=en",
+    androidLink:
+      "https://play.google.com/store/apps/details?id=com.singsys.dreamshop&hl=en",
     iosLink: "",
+    githubLink: "",
+    bannerImage: "",
+    screenshots: [],
     features: [
       "Reward points system",
       "Surprise discount coupons",
@@ -135,8 +150,12 @@ export const projects: Project[] = [
     description:
       "Sales operations app to streamline placing new orders, tracking order status, and managing payments in real time. Empowers sales teams with instant data access and customer management.",
     techStack: ["React Native", "Firebase", "REST API"],
-    androidLink: "https://play.google.com/store/apps/details?id=com.vibrant.cachetindia&hl=en",
+    androidLink:
+      "https://play.google.com/store/apps/details?id=com.vibrant.cachetindia&hl=en",
     iosLink: "",
+    githubLink: "",
+    bannerImage: "",
+    screenshots: [],
     features: [
       "New order placement",
       "Real-time order status tracking",
@@ -154,8 +173,12 @@ export const projects: Project[] = [
     description:
       "Reporting app for cane crushing data at Bajaj Hindustan Ltd sugar mills. Provides real-time insights into production metrics, inventory levels, and operational efficiency across mills.",
     techStack: ["React Native", "Firebase", "REST API"],
-    androidLink: "https://play.google.com/store/apps/details?id=in.co.vibrant.bajajmis&hl=en",
+    androidLink:
+      "https://play.google.com/store/apps/details?id=in.co.vibrant.bajajmis&hl=en",
     iosLink: "https://apps.apple.com/in/app/bajaj-mis/id1615612853",
+    githubLink: "",
+    bannerImage: "",
+    screenshots: [],
     features: [
       "Cane crushing production reports",
       "Real-time metrics dashboard",
@@ -175,6 +198,9 @@ export const projects: Project[] = [
     techStack: ["React Native", "Firebase"],
     androidLink: "",
     iosLink: "https://apps.apple.com/in/app/dalmia-mis/id6474722177",
+    githubLink: "",
+    bannerImage: "",
+    screenshots: [],
     features: [
       "Cane position tracking",
       "Factory queue management",
@@ -194,6 +220,9 @@ export const projects: Project[] = [
     techStack: ["React Native", "Firebase"],
     androidLink: "",
     iosLink: "https://apps.apple.com/in/app/wave-mis/id6473242854",
+    githubLink: "",
+    bannerImage: "",
+    screenshots: [],
     features: [
       "Cane position & queue tracking",
       "Factory processing status",
@@ -211,8 +240,12 @@ export const projects: Project[] = [
     description:
       "Reporting app for cane crushing data at UK Cane Society. Enables efficient tracking of cane procurement, crushing statistics, payment management, and operational reporting.",
     techStack: ["React Native", "Firebase"],
-    androidLink: "https://play.google.com/store/apps/details?id=in.co.vibrant.ukmis&hl=en",
+    androidLink:
+      "https://play.google.com/store/apps/details?id=in.co.vibrant.ukmis&hl=en",
     iosLink: "",
+    githubLink: "",
+    bannerImage: "",
+    screenshots: [],
     features: [
       "Cane crushing data reports",
       "Procurement tracking system",
@@ -225,3 +258,21 @@ export const projects: Project[] = [
     appIcon: "https://play-lh.googleusercontent.com/EclmHdu9rAJHx1fFOFCbsVvS0f259OQf3yjjKluZOZPOb8l7A3N3iMzhRK2RqVvhlByybqepEx1n_gE7DR9cGw=s512",
   },
 ];
+
+const filters = [
+  { label: "All", value: "all", icon: "🔍" },
+  { label: "Mobile", value: "mobile", icon: "📱" },
+  { label: "Web", value: "web", icon: "🌐" },
+  { label: "Backend", value: "backend", icon: "⚙️" },
+];
+
+try {
+  const raw = readFileSync(dataPath, "utf-8");
+  const data = JSON.parse(raw);
+  data.projects = { projects, filters };
+  writeFileSync(dataPath, JSON.stringify(data, null, 2), "utf-8");
+  console.log(`✓ Seeded ${projects.length} projects to site-data.json`);
+} catch (err) {
+  console.error("Failed to seed data:", err);
+  process.exit(1);
+}
