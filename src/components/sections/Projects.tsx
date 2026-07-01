@@ -116,10 +116,13 @@ export default function Projects() {
                         {project.appIcon && (
                           <>
                             <div className="absolute inset-0 w-full h-full overflow-hidden">
-                              <img src={project.appIcon} alt="" className="w-full h-full object-cover blur-2xl scale-110 opacity-50" />
+                              <img src={project.appIcon} alt="" className="w-full h-full object-cover blur-2xl scale-110 opacity-50" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
                             </div>
-                            <img src={project.appIcon} alt="" className="relative z-10 w-4/5 h-4/5 object-contain drop-shadow-2xl" />
+                            <img src={project.appIcon} alt="" className="relative z-10 w-4/5 h-4/5 object-contain drop-shadow-2xl" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
                           </>
+                        )}
+                        {!project.appIcon && (
+                          <span className="text-dark-500 text-4xl font-bold opacity-20">{project.title[0]}</span>
                         )}
                         <div className="absolute top-2 right-2 px-2 py-0.5 rounded-full bg-dark-900/80 backdrop-blur-sm border border-[var(--glass-10)] flex items-center text-[10px] text-dark-300 font-mono">
                           #{project.id}

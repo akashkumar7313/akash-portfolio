@@ -349,12 +349,21 @@ export default function Hero() {
                 <FiEye />
                 View Projects
               </Link>
-              {resumeUrl && !resumeUrl.startsWith("data:") && (
-                <a href={resumeUrl} target="_blank" rel="noopener noreferrer" className="btn-primary flex items-center gap-2 text-sm">
-                  <FiDownload />
-                  Resume
-                </a>
-              )}
+              <a
+                href={resumeUrl || "#"}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => {
+                  if (!resumeUrl || resumeUrl.startsWith("data:")) {
+                    e.preventDefault();
+                    window.open("/api/resume", "_blank");
+                  }
+                }}
+                className="btn-primary flex items-center gap-2 text-sm"
+              >
+                <FiDownload />
+                Resume
+              </a>
               <Link href="/contact" className="btn-primary flex items-center gap-2 text-sm">
                 <FiMail />
                 Contact

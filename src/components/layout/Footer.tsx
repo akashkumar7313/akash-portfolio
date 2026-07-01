@@ -11,6 +11,7 @@ import {
   FiArrowUpRight,
   FiSend,
 } from "react-icons/fi";
+import { FaWhatsapp } from "react-icons/fa";
 import Link from "next/link";
 
 const quickLinks = [
@@ -22,8 +23,9 @@ const quickLinks = [
 ];
 
 const socialLinks = [
-  { icon: FiGithub, href: "https://github.com/akashkumarprajapati", label: "GitHub" },
-  { icon: FiLinkedin, href: "https://www.linkedin.com/in/akash-kumarprajapati", label: "LinkedIn" },
+  { icon: FiGithub, href: "https://github.com/akashkumar7313", label: "GitHub" },
+  { icon: FiLinkedin, href: "https://www.linkedin.com/in/akash-kumar-prajapati/", label: "LinkedIn" },
+  { icon: FaWhatsapp, href: "https://wa.me/916393342727?text=Hi%20Akash!%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20connect.", label: "WhatsApp" },
   { icon: FiMail, href: "mailto:akashkumarprajapati2003@gmail.com", label: "Email" },
 ];
 
@@ -44,16 +46,6 @@ export default function Footer() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-60px" });
   const year = new Date().getFullYear();
-
-  useEffect(() => {
-    const script = document.createElement("script");
-    script.src = "https://platform.linkedin.com/badges/js/profile.js";
-    script.async = true;
-    script.defer = true;
-    script.type = "text/javascript";
-    document.body.appendChild(script);
-    return () => { document.body.removeChild(script); };
-  }, []);
 
   return (
     <footer className="relative overflow-hidden border-t border-[var(--glass-5)]" ref={ref}>
@@ -119,25 +111,19 @@ export default function Footer() {
               Connect
             </h4>
 
-            {/* Fixed wrapper */}
-            <div className="w-full max-w-[350px] mx-auto min-h-[200px] sm:min-h-[300px]">
-
-              {/* Light + Dark handled by LinkedIn itself */}
-              <div
-                className="badge-base LI-profile-badge overflow-hidden rounded-xl"
-                data-locale="en_US"
-                data-size="medium"
-                data-theme="light"
-                data-type="VERTICAL"
-                data-vanity="akash-kumar-prajapati"
-                data-version="v1"
-              >
+            <div className="flex flex-wrap gap-3">
+              {socialLinks.map((link) => (
                 <a
-                  className="badge-base__link LI-simple-link"
-                  href="https://in.linkedin.com/in/akash-kumar-prajapati"
-                ></a>
-              </div>
-
+                  key={link.label}
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-11 h-11 rounded-xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center text-dark-400 hover:text-accent-blue hover:border-accent-blue/30 hover:bg-accent-blue/[0.05] transition-all duration-300 group"
+                  title={link.label}
+                >
+                  <link.icon className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                </a>
+              ))}
             </div>
           </motion.div>
 
@@ -166,8 +152,7 @@ export default function Footer() {
           className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 mt-4 border-t border-[var(--glass-5)]"
         >
           <p className="text-dark-400 text-xs sm:text-sm flex items-center">
-            &copy; {year} Made with
-            <FiHeart className="text-red-500 animate-pulse" /> by Akash Kumar Prajapati
+            &copy; {year} Copyright by Akash Kumar Prajapati
           </p>
         </motion.div>
       </div>
