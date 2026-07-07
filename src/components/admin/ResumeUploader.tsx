@@ -154,7 +154,7 @@ export default function ResumeUploader({ resumeUrl, onResumeUrlChange }: {
                 className="flex-1 py-2 rounded-lg bg-white/[0.04] border border-white/[0.06] text-slate-400 text-xs font-medium hover:bg-white/[0.08] hover:text-indigo-400 transition-all flex items-center justify-center gap-1.5">
                 <FiEye className="w-3.5 h-3.5" /> {showPreview ? "Hide" : "Preview"}
               </button>
-              <a href={previewUrl + "?t=" + (info.modified ? new Date(info.modified).getTime() : Date.now())} target="_blank" rel="noopener noreferrer"
+              <a href={previewUrl} target="_blank" rel="noopener noreferrer"
                 className="flex-1 py-2 rounded-lg bg-white/[0.04] border border-white/[0.06] text-slate-400 text-xs font-medium hover:bg-white/[0.08] hover:text-indigo-400 transition-all flex items-center justify-center gap-1.5">
                 <FiDownload className="w-3.5 h-3.5" /> Download
               </a>
@@ -169,7 +169,7 @@ export default function ResumeUploader({ resumeUrl, onResumeUrlChange }: {
               <div className="rounded-lg overflow-hidden border border-white/[0.06] bg-white/[0.01]">
                 <iframe
                   key={info.modified || "no-file"}
-                  src={previewUrl + "?t=" + (info.modified ? new Date(info.modified).getTime() : Date.now())}
+                  src={previewUrl}
                   className="w-full h-[500px]"
                   title="Resume Preview"
                 />

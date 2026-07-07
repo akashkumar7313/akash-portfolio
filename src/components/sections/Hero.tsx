@@ -350,14 +350,9 @@ export default function Hero() {
                 View Projects
               </Link>
               <a
-                href={resumeUrl || "#"}
+                href={resumeUrl && !resumeUrl.startsWith("data:") ? resumeUrl : "/api/resume"}
                 target="_blank"
                 rel="noopener noreferrer"
-                onClick={(e) => {
-                  e.preventDefault();
-                  const url = resumeUrl && !resumeUrl.startsWith("data:") ? resumeUrl : "/api/resume";
-                  window.open(url + (url.includes("?") ? "&" : "?") + "t=" + Date.now(), "_blank");
-                }}
                 className="btn-primary flex items-center gap-2 text-sm"
               >
                 <FiDownload />
