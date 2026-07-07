@@ -6,7 +6,7 @@ export const dynamic = "force-dynamic";
 
 const RESUME_FILE = process.env.VERCEL
   ? "/tmp/resume.pdf"
-  : path.join(process.cwd(), "public/uploads/resume.pdf");
+  : path.join(process.cwd(), ".data/resume.pdf");
 
 export async function GET() {
   try {

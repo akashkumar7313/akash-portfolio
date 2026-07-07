@@ -4,7 +4,7 @@ import path from "path";
 
 const RESUME_FILE = process.env.VERCEL
   ? "/tmp/resume.pdf"
-  : path.join(process.cwd(), "public/uploads/resume.pdf");
+  : path.join(process.cwd(), ".data/resume.pdf");
 
 export async function GET(req: NextRequest) {
   const token = req.cookies.get("admin_token")?.value;
