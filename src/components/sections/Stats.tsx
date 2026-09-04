@@ -16,8 +16,8 @@ export default function Stats() {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [stats, setStats] = useState<StatItem[]>([
     { value: 4, suffix: "+", label: "Years Exp", desc: "Cross-platform development" },
-    { value: 20, suffix: "+", label: "Projects", desc: "Flutter & React Native" },
-    { value: 15, suffix: "+", label: "Apps Deployed", desc: "Production-ready apps" },
+    { value: 25, suffix: "+", label: "Projects", desc: "Flutter & React Native" },
+    { value: 20, suffix: "+", label: "Apps Deployed", desc: "Production-ready apps" },
     { value: 12, suffix: "+", label: "Technologies", desc: "Mastered & counting" },
   ]);
 
