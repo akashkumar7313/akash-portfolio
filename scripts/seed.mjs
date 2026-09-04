@@ -129,7 +129,7 @@ const projects = [
     techStack: ["Flutter", "Firebase", "REST API", "Razorpay"],
     androidLink:
       "https://play.google.com/store/apps/details?id=com.singsys.dreamshop&hl=en",
-    iosLink: "",
+    iosLink: "https://apps.apple.com/in/app/dreamshop-india/id6767100533",
     githubLink: "",
     bannerImage: "",
     screenshots: [],
@@ -256,6 +256,52 @@ const projects = [
     role: "Built the reporting app for cane crushing data management for UK Cane Society.",
     category: "mobile",
     appIcon: "https://play-lh.googleusercontent.com/EclmHdu9rAJHx1fFOFCbsVvS0f259OQf3yjjKluZOZPOb8l7A3N3iMzhRK2RqVvhlByybqepEx1n_gE7DR9cGw=s512",
+  },
+  {
+    id: 12,
+    title: "FastFit User",
+    description:
+      "Fitness on-demand app for users to book personal trainers, track workouts, and manage fitness goals. Features trainer discovery, session scheduling, progress tracking, and secure payments.",
+    techStack: ["Flutter", "Firebase", "REST API"],
+    androidLink:
+      "https://play.google.com/store/apps/details?id=com.fastfit.user&hl=en",
+    iosLink: "",
+    githubLink: "",
+    bannerImage: "",
+    screenshots: [],
+    features: [
+      "Personal trainer discovery",
+      "Session booking & scheduling",
+      "Workout progress tracking",
+      "Secure payment integration",
+      "Real-time notifications",
+    ],
+    role: "Built the user-facing fitness on-demand app with trainer discovery, booking, and workout tracking.",
+    category: "mobile",
+    appIcon: "",
+  },
+  {
+    id: 13,
+    title: "FastFit Delivery",
+    description:
+      "Delivery companion app for FastFit fitness platform. Enables delivery partners to manage orders, track deliveries, update status, and optimize delivery routes.",
+    techStack: ["Flutter", "Firebase", "REST API"],
+    androidLink:
+      "https://play.google.com/store/apps/details?id=com.fastfit.delivery&hl=en",
+    iosLink: "",
+    githubLink: "",
+    bannerImage: "",
+    screenshots: [],
+    features: [
+      "Order management dashboard",
+      "Real-time delivery tracking",
+      "Route optimization",
+      "Status update & notifications",
+      "Earnings & payout tracking",
+    ],
+    role: "Developed the delivery partner app for FastFit with order management, tracking, and route optimization.",
+    category: "mobile",
+    appIcon: "",
   },
 ];
 
