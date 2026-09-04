@@ -47,14 +47,13 @@ export async function GET(req: NextRequest) {
 
     const user = await userRes.json();
 
-    // Debug: log user info
-    console.log("Google user:", JSON.stringify(user));
-    console.log("ADMIN_EMAIL env:", adminEmail);
-    console.log("User email:", user.email);
-
     // Check if email matches admin email
-    if (!user.email || user.email.toLowerCase() !== adminEmail.toLowerCase()) {
-      return NextResponse.redirect(new URL(`/admin/login?error=unauthorized&email=${user.email || "none"}`, req.url));
+    const userEmail = user.email || "";
+    const adminEmailLower = (adminEmail || "").toLowerCase();
+
+    if (!userEmail || userEmail.toLowerCase() !== adminEmailLower) {
+      const msg = !userEmail ? "no_email_received" : "email_mismatch";
+      return NextResponse.redirect(new URL(`/admin/login?error=${msg}&got=${userEmail}&expected=${adminEmailLower}`, req.url));
     }
 
     // Set session cookie
