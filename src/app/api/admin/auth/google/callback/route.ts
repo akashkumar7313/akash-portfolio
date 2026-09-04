@@ -48,12 +48,12 @@ export async function GET(req: NextRequest) {
     const user = await userRes.json();
 
     // Check if email matches admin email
-    const userEmail = user.email || "";
-    const adminEmailLower = (adminEmail || "").toLowerCase();
+    const userEmail = (user.email || "").trim().toLowerCase();
+    const adminEmailFinal = "akashkumarprajapati2003@gmail.com";
 
-    if (!userEmail || userEmail.toLowerCase() !== adminEmailLower) {
+    if (userEmail !== adminEmailFinal) {
       const msg = !userEmail ? "no_email_received" : "email_mismatch";
-      return NextResponse.redirect(new URL(`/admin/login?error=${msg}&got=${userEmail}&expected=${adminEmailLower}`, req.url));
+      return NextResponse.redirect(new URL(`/admin/login?error=${msg}&got=${userEmail}&expected=${adminEmailFinal}`, req.url));
     }
 
     // Set session cookie
