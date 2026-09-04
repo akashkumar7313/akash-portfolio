@@ -41,13 +41,17 @@ function LoginForm() {
   useEffect(() => {
     setMounted(true);
     const errorParam = searchParams.get("error");
+    const emailParam = searchParams.get("email");
     if (errorParam) {
       switch (errorParam) {
         case "unauthorized":
-          setError("This Gmail is not authorized to access admin panel.");
+          setError(`This Gmail is not authorized. Got: ${emailParam || "unknown"}`);
           break;
         case "access_denied":
           setError("Access denied. Please sign in with your Google account.");
+          break;
+        case "not_configured":
+          setError("OAuth not configured. Check environment variables.");
           break;
         default:
           setError("Authentication failed. Please try again.");

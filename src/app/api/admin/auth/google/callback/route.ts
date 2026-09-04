@@ -47,9 +47,14 @@ export async function GET(req: NextRequest) {
 
     const user = await userRes.json();
 
+    // Debug: log user info
+    console.log("Google user:", JSON.stringify(user));
+    console.log("ADMIN_EMAIL env:", adminEmail);
+    console.log("User email:", user.email);
+
     // Check if email matches admin email
-    if (user.email?.toLowerCase() !== adminEmail.toLowerCase()) {
-      return NextResponse.redirect(new URL("/admin/login?error=unauthorized", req.url));
+    if (!user.email || user.email.toLowerCase() !== adminEmail.toLowerCase()) {
+      return NextResponse.redirect(new URL(`/admin/login?error=unauthorized&email=${user.email || "none"}`, req.url));
     }
 
     // Set session cookie
