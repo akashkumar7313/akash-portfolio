@@ -49,11 +49,13 @@ export async function GET(req: NextRequest) {
 
     // Check if email matches admin email
     const userEmail = (user.email || "").trim().toLowerCase();
-    const adminEmailFinal = "akashkumarprajapati2003@gmail.com";
+    const allowedEmails = [
+      "akashkumarprajapati2003@gmail.com",
+      "akash@singsys.com",
+    ];
 
-    if (userEmail !== adminEmailFinal) {
-      const msg = !userEmail ? "no_email_received" : "email_mismatch";
-      return NextResponse.redirect(new URL(`/admin/login?error=${msg}&got=${userEmail}&expected=${adminEmailFinal}`, req.url));
+    if (!allowedEmails.includes(userEmail)) {
+      return NextResponse.redirect(new URL("/admin/login?error=unauthorized", req.url));
     }
 
     // Set session cookie

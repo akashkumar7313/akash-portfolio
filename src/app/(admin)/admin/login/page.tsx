@@ -41,18 +41,10 @@ function LoginForm() {
   useEffect(() => {
     setMounted(true);
     const errorParam = searchParams.get("error");
-    const gotEmail = searchParams.get("got");
-    const expectedEmail = searchParams.get("expected");
     if (errorParam) {
       switch (errorParam) {
-        case "email_mismatch":
-          setError(`Email mismatch. Got: ${gotEmail} | Expected: ${expectedEmail}`);
-          break;
-        case "no_email_received":
-          setError("Google did not return an email. Check OAuth consent screen.");
-          break;
         case "unauthorized":
-          setError("This Gmail is not authorized.");
+          setError("Please login with a valid authorized email.");
           break;
         case "access_denied":
           setError("Access denied. Please sign in with your Google account.");
