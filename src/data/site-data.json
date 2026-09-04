@@ -392,11 +392,15 @@
       {
         "id": 1,
         "title": "Pearlies",
-        "description": "Healthcare research app developed for NUS Dentistry faculty, focused on early childhood dental care intervention for parents. Features educational content, appointment reminders, and dental health tracking for children.",
+        "description": "Pearlies is a comprehensive healthcare research application developed exclusively for the Faculty of Dentistry at the National University of Singapore (NUS). The app is designed to support early childhood dental care intervention by empowering parents with the right tools, knowledge, and resources to maintain their children's oral health from an early age. It bridges the gap between dental researchers, healthcare professionals, and parents by providing a seamless digital platform for health education, tracking, and engagement. The app follows strict healthcare data privacy standards including PDPA compliance for the Singapore market.",
         "techStack": [
           "Flutter",
-          "Firebase",
-          "REST API"
+          "Dart",
+          "Firebase Authentication",
+          "Firebase Cloud Messaging (FCM)",
+          "Firestore",
+          "REST API",
+          "Postman"
         ],
         "androidLink": "https://play.google.com/store/apps/details?id=com.singsys.dentistry.nus&hl=en_IN",
         "iosLink": "https://apps.apple.com/in/app/pearlies/id6739769682",
@@ -404,24 +408,31 @@
         "bannerImage": "",
         "screenshots": [],
         "features": [
-          "Child dental health tracking",
-          "Educational content & videos",
-          "Appointment & reminder system",
-          "Parent-child interactive activities",
-          "Secure health records management"
+          "Child dental health tracking with progress history and visual charts",
+          "Educational content library with articles and instructional videos for parents",
+          "Appointment scheduling and intelligent reminder system",
+          "Interactive parent-child dental activities and games to build healthy habits",
+          "Secure health records management with encrypted data storage",
+          "Push notifications for appointment reminders and health tips",
+          "Research data collection module for NUS Dentistry faculty",
+          "Multi-child profile management for parents with multiple children"
         ],
-        "role": "Built the complete healthcare research app for NUS Dentistry, implementing educational content delivery and parent engagement features.",
+        "role": "Served as the primary Flutter developer responsible for architecting and building the complete application from scratch. Implemented the full UI based on designer mockups, integrated REST APIs for data management, set up Firebase for authentication and push notifications, handled Apple App Store and Google Play Store submission including resolving healthcare-specific review guidelines, and ensured PDPA compliance for Singapore market.",
         "category": "mobile",
         "appIcon": "https://play-lh.googleusercontent.com/BYbvK_T_jYWOHprH5nL_rlHivzD6Ns_9AiB3srCaaCZLQXnaybJPrzbzYNPqgeTR8O-QMjvs5JprhBM2QhneSZw=s512"
       },
       {
         "id": 2,
         "title": "Boskalis BOSS",
-        "description": "Enterprise mobile solution built for Boskalis, a Netherlands-based dredging and logistics company. Streamlines operations with real-time project tracking, fleet management, and crew coordination tools.",
+        "description": "Boskalis BOSS is an enterprise-grade workforce and project management system developed for Boskalis, one of the world's leading dredging and marine services companies headquartered in the Netherlands. The app is used by field workers and project managers to manage daily job assignments, track real-time work progress, and log accurate working hours across multiple project sites. It eliminates manual paperwork and provides managers with a live digital view of all ongoing field operations. The app was designed to handle multiple simultaneous users updating job statuses in real time, with robust data sync mechanisms to ensure accuracy across all devices.",
         "techStack": [
           "Flutter",
+          "Dart",
           "REST API",
-          "Firebase"
+          "Firebase Cloud Messaging (FCM)",
+          "Bloc State Management",
+          "Postman",
+          "Figma"
         ],
         "androidLink": "https://play.google.com/store/apps/details?id=com.boskalis.boss&hl=en_IN",
         "iosLink": "https://apps.apple.com/us/app/boskalis-boss/id6737225022",
@@ -429,50 +440,33 @@
         "bannerImage": "",
         "screenshots": [],
         "features": [
-          "Real-time project tracking",
-          "Fleet management dashboard",
-          "Crew coordination tools",
-          "Offline data sync capability",
-          "Enterprise-grade security"
+          "Job assignment dashboard with priority and status indicators",
+          "Real-time job status tracking — Pending, In Progress, Completed",
+          "Start / Stop / Complete time logging with automatic hour calculation",
+          "Working hours summary and daily timesheet generation",
+          "Manager dashboard with live field team progress overview",
+          "Multi-project support for workers assigned to multiple sites",
+          "Push notifications for new job assignments and updates",
+          "Offline support with automatic data sync when connectivity resumes",
+          "Timezone-aware data handling for Netherlands operations"
         ],
-        "role": "Developed the enterprise mobile solution for Boskalis, focusing on operational efficiency and real-time data synchronization.",
+        "role": "Led the end-to-end development of the workforce management application. Designed the app architecture, implemented real-time job tracking and time logging features, handled complex state management for simultaneous multi-user updates, managed timezone-specific data handling for Netherlands-based client, coordinated directly with international stakeholders for requirement clarification, and handled complete App Store and Play Store deployment.",
         "category": "mobile",
         "appIcon": "https://play-lh.googleusercontent.com/PAy3oP1xNOFvvPM-qojIxHbkdAdg6vZD6cto92pB8GClXf_mtcA4rcJkiRJJVCBb8UUCV5G-CJ4xm548hqS0=s512"
       },
       {
         "id": 3,
-        "title": "Kimi UAE",
-        "description": "Food ordering app built for the UAE market, designed for a cafe and restaurant ordering experience. Features menu browsing, cart management, order tracking, table reservations, and loyalty rewards.",
-        "techStack": [
-          "Flutter",
-          "Firebase",
-          "REST API"
-        ],
-        "androidLink": "https://play.google.com/store/apps/details?id=com.kimi.cafe&hl=en_IN",
-        "iosLink": "https://apps.apple.com/us/app/kimi-uae/id6747967998",
-        "githubLink": "",
-        "bannerImage": "",
-        "screenshots": [],
-        "features": [
-          "Menu browsing & search",
-          "Cart management & checkout",
-          "Real-time order tracking",
-          "Table reservation system",
-          "Loyalty rewards program"
-        ],
-        "role": "Built the complete food ordering app for the UAE market with menu management, cart functionality, and order tracking.",
-        "category": "mobile",
-        "appIcon": "https://play-lh.googleusercontent.com/_djjZgDdrLgwF7kjeaEIBBRFAyqVZ_UYxzbn797IDYlGDZk_cAGxfbNz12SsIJN_CCJbnmEHd_vsUv5L7Oo5=s512"
-      },
-      {
-        "id": 4,
         "title": "Atesplore",
-        "description": "Customer-facing marketplace app for the Atesplore ecosystem. Offers seamless product discovery, real-time order tracking, secure payments, and personalized recommendations for shoppers.",
+        "description": "Atesplore is the customer-facing application of a dual-app food ordering ecosystem built for the Singapore market. It provides users with a seamless food discovery and ordering experience — from browsing nearby restaurants and exploring menus to placing orders and tracking deliveries in real time. The app is part of a larger ecosystem that includes a separate merchant app, with both apps sharing the same backend infrastructure but serving completely different user journeys. Atesplore focuses on delivering a smooth, intuitive experience for end consumers with secure payment options and real-time order visibility.",
         "techStack": [
           "Flutter",
-          "Firebase",
+          "Dart",
           "REST API",
-          "Stripe"
+          "Firebase Cloud Messaging (FCM)",
+          "Razorpay",
+          "GetX State Management",
+          "Postman",
+          "Figma"
         ],
         "androidLink": "https://play.google.com/store/apps/details?id=com.user.atesplore&hl=en_IN",
         "iosLink": "https://apps.apple.com/us/app/atesplore/id6740129647",
@@ -480,24 +474,33 @@
         "bannerImage": "",
         "screenshots": [],
         "features": [
-          "Product discovery & search",
-          "Secure checkout with Stripe",
-          "Real-time order tracking",
-          "Wishlist management",
-          "Personalized recommendations"
+          "Location-based restaurant and food discovery",
+          "Advanced search and filter by cuisine, price, and rating",
+          "Detailed menu browsing with customizable order options",
+          "Cart management with real-time price calculation",
+          "Secure payment gateway integration",
+          "Real-time order tracking with live status updates",
+          "Order history and reorder functionality",
+          "Push notifications for order confirmation and delivery updates",
+          "User profile and saved address management",
+          "Ratings and reviews for restaurants and orders"
         ],
-        "role": "Developed the customer-facing marketplace app with product browsing, cart, checkout, and order management.",
+        "role": "Developed the complete customer-facing app including UI implementation, restaurant and menu browsing flow, cart and checkout system, real-time order tracking, payment gateway integration, and push notification setup. Coordinated closely with the backend team for API design and with the merchant app development to ensure seamless ecosystem sync.",
         "category": "mobile",
         "appIcon": "https://play-lh.googleusercontent.com/PxizNSv6zCHrdp72ER3ZX-zoFeYQMWjrr2Qf367JT1oc46xWvo_9edp_5hihjY7yWFFSsUY8Bbh7Z2hKv3AIbA=s512"
       },
       {
-        "id": 5,
+        "id": 4,
         "title": "Atesplore Merchant",
-        "description": "Merchant-facing companion app for the Atesplore marketplace ecosystem. Enables merchants to manage inventory, process orders, track sales analytics, and communicate with customers.",
+        "description": "Atesplore Merchant is the business-facing companion app of the Atesplore food ordering ecosystem. Designed exclusively for restaurant and food outlet owners on the Singapore platform, it gives merchants complete control over their orders, menus, and business performance. When a customer places an order through the Atesplore customer app, the merchant receives an instant notification and can accept, reject, or manage the order in real time. The app provides a comprehensive business dashboard to help merchants monitor sales, track popular items, and optimize their operations.",
         "techStack": [
           "Flutter",
-          "Firebase",
-          "REST API"
+          "Dart",
+          "REST API",
+          "Firebase Cloud Messaging (FCM)",
+          "GetX State Management",
+          "Postman",
+          "Figma"
         ],
         "androidLink": "https://play.google.com/store/apps/details?id=com.merchant.atesplore&hl=en_IN",
         "iosLink": "https://apps.apple.com/us/app/atesplore-merchant/id6740053552",
@@ -505,25 +508,70 @@
         "bannerImage": "",
         "screenshots": [],
         "features": [
-          "Inventory management",
-          "Order processing dashboard",
-          "Sales analytics & reports",
-          "Customer communication",
-          "Product listing management"
+          "Real-time order notifications with instant accept / reject functionality",
+          "Order queue management with status tracking",
+          "Complete menu and item management — add, edit, delete items",
+          "Category and pricing management",
+          "Sales dashboard with daily, weekly, and monthly reports",
+          "Popular items and peak hours analytics",
+          "Store availability toggle — open / closed status control",
+          "Order history with detailed transaction records",
+          "Push notifications for every new incoming order",
+          "Multi-branch support for merchants with multiple outlets"
         ],
-        "role": "Built the merchant companion app for inventory management, order processing, and sales analytics.",
+        "role": "Built the complete merchant-facing application including order management system, real-time notification handling, menu and item management, and sales reporting dashboard. Ensured seamless real-time sync between customer app orders and merchant app notifications using FCM push notifications and API polling.",
         "category": "mobile",
         "appIcon": "https://play-lh.googleusercontent.com/zL24cC9SzYLt3eAyPO9_Hz1LmKL4JfA9tV1gSObHid6X_gf5p3oIgajWpQCFlfRDCDLQdDbu8nwt6FTUS_TUn2U=s512"
       },
       {
-        "id": 6,
-        "title": "DreamShop India",
-        "description": "Feature-packed e-marketplace offering rewards, surprise discount coupons, and an engaging shopping experience for Indian consumers with seamless payments and order tracking.",
+        "id": 5,
+        "title": "Kimi UAE",
+        "description": "Kimi UAE is a food ordering and cafe experience application built specifically for the United Arab Emirates market. Designed with UAE consumers in mind, the app provides a seamless cafe and restaurant ordering experience with support for local payment methods and regional user preferences. The app focuses on delivering a premium digital cafe experience, allowing customers to browse menus, customize their orders, make secure payments, and earn loyalty rewards on every purchase. It was developed with localization support to cater to the diverse UAE audience.",
         "techStack": [
           "Flutter",
-          "Firebase",
+          "Dart",
           "REST API",
-          "Razorpay"
+          "Firebase Cloud Messaging (FCM)",
+          "Payment Gateway Integration",
+          "Provider State Management",
+          "Postman",
+          "Figma"
+        ],
+        "androidLink": "https://play.google.com/store/apps/details?id=com.kimi.cafe&hl=en_IN",
+        "iosLink": "https://apps.apple.com/us/app/kimi-uae/id6747967998",
+        "githubLink": "",
+        "bannerImage": "",
+        "screenshots": [],
+        "features": [
+          "Restaurant and cafe menu browsing with rich media",
+          "Customizable order options — size, extras, special instructions",
+          "Cart management with real-time total calculation",
+          "Secure payment gateway with UAE local payment support",
+          "Real-time order status tracking",
+          "Loyalty points earning and redemption system",
+          "Order history and favourite items management",
+          "Push notifications for order updates and promotional offers",
+          "User profile with saved preferences and addresses",
+          "Promotional banners and special offer highlights"
+        ],
+        "role": "Developed the complete food ordering application for the UAE market including menu browsing, order customization, UAE-specific payment gateway integration, loyalty rewards system implementation, and full App Store and Play Store deployment. Handled localization requirements specific to the UAE market.",
+        "category": "mobile",
+        "appIcon": "https://play-lh.googleusercontent.com/_djjZgDdrLgwF7kjeaEIBBRFAyqVZ_UYxzbn797IDYlGDZk_cAGxfbNz12SsIJN_CCJbnmEHd_vsUv5L7Oo5=s512"
+      },
+      {
+        "id": 6,
+        "title": "DreamShop India",
+        "description": "DreamShop India is a feature-rich e-commerce marketplace application designed for Indian consumers who want a rewarding and engaging online shopping experience. What sets DreamShop apart from typical e-commerce apps is its unique automated rewards system — every time a user completes an order, surprise discount coupons and cashback rewards are automatically added to their account, making every purchase more exciting and encouraging repeat shopping. The app covers a wide range of product categories and is built to handle high traffic with optimized performance and smooth user experience.",
+        "techStack": [
+          "Flutter",
+          "Dart",
+          "REST API",
+          "Razorpay",
+          "Firebase Authentication",
+          "Firebase Cloud Messaging (FCM)",
+          "Bloc State Management",
+          "Postman",
+          "Figma"
         ],
         "androidLink": "https://play.google.com/store/apps/details?id=com.singsys.dreamshop&hl=en",
         "iosLink": "https://apps.apple.com/in/app/dreamshop-india/id6767100533",
@@ -531,146 +579,35 @@
         "bannerImage": "",
         "screenshots": [],
         "features": [
-          "Reward points system",
-          "Surprise discount coupons",
-          "Category-based browsing",
-          "Secure payments via Razorpay",
-          "Real-time order tracking"
+          "Product browsing across multiple categories with rich media display",
+          "Advanced search with filters — price range, category, ratings",
+          "Wishlist and save for later functionality",
+          "Cart management with real-time price and discount calculation",
+          "Secure checkout with Razorpay payment integration",
+          "Automatic surprise rewards and discount coupons after every order",
+          "Cashback and loyalty points system",
+          "Real-time order tracking with delivery status updates",
+          "Order history with invoice and return management",
+          "Push notifications for offers, order updates, and new arrivals",
+          "User profile with multiple saved delivery addresses"
         ],
-        "role": "Developed the e-marketplace app with reward system, discount coupons, and engaging shopping experience for Indian consumers.",
+        "role": "Built the complete e-commerce application including product catalog, search and filter, cart and wishlist, checkout flow, Razorpay payment integration, automated rewards and coupon engine, order tracking, and full App Store and Play Store deployment. Optimized app performance for handling large product catalogs and high user traffic.",
         "category": "mobile",
         "appIcon": "https://play-lh.googleusercontent.com/r_iTRJinVPo6gUKh1ZF-j2HI2pPGCDiwDT-geTlxDt5V-hmN39zCOYCXvWoYt0vgVBG-XZ4gBcRVBeGPgKFH=s512"
       },
       {
         "id": 7,
-        "title": "SalesPulse",
-        "description": "Sales operations app to streamline placing new orders, tracking order status, and managing payments in real time. Empowers sales teams with instant data access and customer management.",
-        "techStack": [
-          "React Native",
-          "Firebase",
-          "REST API"
-        ],
-        "androidLink": "https://play.google.com/store/apps/details?id=com.vibrant.cachetindia&hl=en",
-        "iosLink": "",
-        "githubLink": "",
-        "bannerImage": "",
-        "screenshots": [],
-        "features": [
-          "New order placement",
-          "Real-time order status tracking",
-          "Payment management dashboard",
-          "Customer history & insights",
-          "Push notifications & alerts"
-        ],
-        "role": "Built the sales operations app for order placement, real-time tracking, and payment management.",
-        "category": "mobile",
-        "appIcon": "https://play-lh.googleusercontent.com/oY3bTt6fJSpHANJ67L54k7JdUohUKF9QeSAgKOyrpckKnBT8GheHorRUmKsPij2UB1FSSvEOdDAsv1AqKFWV3w=s512"
-      },
-      {
-        "id": 8,
-        "title": "Bajaj MIS",
-        "description": "Reporting app for cane crushing data at Bajaj Hindustan Ltd sugar mills. Provides real-time insights into production metrics, inventory levels, and operational efficiency across mills.",
-        "techStack": [
-          "React Native",
-          "Firebase",
-          "REST API"
-        ],
-        "androidLink": "https://play.google.com/store/apps/details?id=in.co.vibrant.bajajmis&hl=en",
-        "iosLink": "https://apps.apple.com/in/app/bajaj-mis/id1615612853",
-        "githubLink": "",
-        "bannerImage": "",
-        "screenshots": [],
-        "features": [
-          "Cane crushing production reports",
-          "Real-time metrics dashboard",
-          "Inventory level tracking",
-          "Historical data analysis",
-          "Multi-mill data aggregation"
-        ],
-        "role": "Developed the reporting app for Bajaj Hindustan Ltd sugar mills for cane crushing data monitoring and analysis.",
-        "category": "mobile",
-        "appIcon": "https://play-lh.googleusercontent.com/sAyAtHhNAB96jPOcO_6ExVnVzfTiTc_RotSCWO2ID3M463YXj3UXkEEDNjpnysh1lWEr8jBOF6OzhMJ7DbkO=s512"
-      },
-      {
-        "id": 9,
-        "title": "Dalmia MIS",
-        "description": "App used by farmers and salesmen to track cane position in factory, powered by Dalmia Sugar. Offers crop management insights, queue status, and real-time updates on cane processing.",
-        "techStack": [
-          "React Native",
-          "Firebase"
-        ],
-        "androidLink": "",
-        "iosLink": "https://apps.apple.com/in/app/dalmia-mis/id6474722177",
-        "githubLink": "",
-        "bannerImage": "",
-        "screenshots": [],
-        "features": [
-          "Cane position tracking",
-          "Factory queue management",
-          "Crop management insights",
-          "Real-time status updates",
-          "Farmer notification system"
-        ],
-        "role": "Built the app for farmers and salesmen to track cane position in factory for Dalmia Sugar.",
-        "category": "mobile",
-        "appIcon": "https://is1-ssl.mzstatic.com/image/thumb/Purple116/v4/01/5f/b4/015fb4ed-0676-804f-4b52-d6c51433d0d6/AppIcon-0-0-1x_U007emarketing-0-5-0-85-220.png/512x512bb.jpg"
-      },
-      {
-        "id": 10,
-        "title": "Wave MIS",
-        "description": "App used by farmers and salesmen to track cane position in factory, powered by Wave Industries Mills Ltd. Delivers actionable data on cane supply, queue position, and processing status.",
-        "techStack": [
-          "React Native",
-          "Firebase"
-        ],
-        "androidLink": "",
-        "iosLink": "https://apps.apple.com/in/app/wave-mis/id6473242854",
-        "githubLink": "",
-        "bannerImage": "",
-        "screenshots": [],
-        "features": [
-          "Cane position & queue tracking",
-          "Factory processing status",
-          "Real-time notifications",
-          "Supply data reporting",
-          "Farmer communication portal"
-        ],
-        "role": "Developed the app for farmers and salesmen to track cane position in factory for Wave Industries.",
-        "category": "mobile",
-        "appIcon": "https://is1-ssl.mzstatic.com/image/thumb/Purple126/v4/46/12/61/46126124-6268-fc5a-7265-420d0b3433a0/AppIcon-0-0-1x_U007emarketing-0-5-0-85-220.png/512x512bb.jpg"
-      },
-      {
-        "id": 11,
-        "title": "UK Cane MIS",
-        "description": "Reporting app for cane crushing data at UK Cane Society. Enables efficient tracking of cane procurement, crushing statistics, payment management, and operational reporting.",
-        "techStack": [
-          "React Native",
-          "Firebase"
-        ],
-        "androidLink": "https://play.google.com/store/apps/details?id=in.co.vibrant.ukmis&hl=en",
-        "iosLink": "",
-        "githubLink": "",
-        "bannerImage": "",
-        "screenshots": [],
-        "features": [
-          "Cane crushing data reports",
-          "Procurement tracking system",
-          "Payment management",
-          "Statistical data analysis",
-          "Offline data synchronization"
-        ],
-        "role": "Built the reporting app for cane crushing data management for UK Cane Society.",
-        "category": "mobile",
-        "appIcon": "https://play-lh.googleusercontent.com/EclmHdu9rAJHx1fFOFCbsVvS0f259OQf3yjjKluZOZPOb8l7A3N3iMzhRK2RqVvhlByybqepEx1n_gE7DR9cGw=s512"
-      },
-      {
-        "id": 12,
         "title": "FastFit User",
-        "description": "Fitness on-demand app for users to book personal trainers, track workouts, and manage fitness goals. Features trainer discovery, session scheduling, progress tracking, and secure payments.",
+        "description": "FastFit User is the customer-facing application of the FastFit e-commerce platform. It provides users with a smooth and efficient online shopping experience — from product discovery to doorstep delivery. The app is built for speed and performance, ensuring users can browse products, place orders, and track their deliveries without any friction. FastFit operates as a dual-app ecosystem with a separate delivery partner app, ensuring end-to-end order fulfillment management from the customer's tap to the delivery agent's doorstep.",
         "techStack": [
           "Flutter",
-          "Firebase",
-          "REST API"
+          "Dart",
+          "REST API",
+          "Firebase Cloud Messaging (FCM)",
+          "Razorpay",
+          "Bloc State Management",
+          "Postman",
+          "Figma"
         ],
         "androidLink": "https://play.google.com/store/apps/details?id=com.fastfit.user&hl=en",
         "iosLink": "",
@@ -678,24 +615,33 @@
         "bannerImage": "",
         "screenshots": [],
         "features": [
-          "Personal trainer discovery",
-          "Session booking & scheduling",
-          "Workout progress tracking",
-          "Secure payment integration",
-          "Real-time notifications"
+          "Product catalog browsing with categories and search",
+          "Advanced filter and sort options",
+          "Cart and wishlist management",
+          "Secure checkout and payment gateway integration",
+          "Real-time delivery tracking with live agent location",
+          "Order history and status management",
+          "Push notifications for order confirmation and delivery updates",
+          "User profile with saved addresses and preferences",
+          "Ratings and reviews for products and delivery experience",
+          "Promotional offers and discount code management"
         ],
-        "role": "Built the user-facing fitness on-demand app with trainer discovery, booking, and workout tracking.",
+        "role": "Developed the complete customer-facing application including product catalog, cart and checkout system, order placement, real-time delivery tracking, and payment integration. Coordinated with the backend team and delivery app development to ensure seamless order flow across the ecosystem.",
         "category": "mobile",
         "appIcon": ""
       },
       {
-        "id": 13,
+        "id": 8,
         "title": "FastFit Delivery",
-        "description": "Delivery companion app for FastFit fitness platform. Enables delivery partners to manage orders, track deliveries, update status, and optimize delivery routes.",
+        "description": "FastFit Delivery is the delivery partner application of the FastFit e-commerce ecosystem. Built for delivery agents and logistics personnel, the app streamlines the entire delivery workflow — from receiving new order assignments to navigating to pickup and drop locations, updating delivery status, and managing daily earnings. It provides delivery partners with a reliable and efficient tool to manage their work, with real-time navigation integration and clear order management features, ensuring fast and accurate deliveries for end customers.",
         "techStack": [
           "Flutter",
-          "Firebase",
-          "REST API"
+          "Dart",
+          "REST API",
+          "Firebase Cloud Messaging (FCM)",
+          "Google Maps Integration",
+          "Bloc State Management",
+          "Postman"
         ],
         "androidLink": "https://play.google.com/store/apps/details?id=com.fastfit.delivery&hl=en",
         "iosLink": "",
@@ -703,15 +649,180 @@
         "bannerImage": "",
         "screenshots": [],
         "features": [
-          "Order management dashboard",
-          "Real-time delivery tracking",
-          "Route optimization",
-          "Status update & notifications",
-          "Earnings & payout tracking"
+          "Real-time new order assignment notifications",
+          "Order details with pickup and delivery location information",
+          "Google Maps navigation integration for pickup and drop",
+          "Delivery status management — Accept, Picked Up, On the Way, Delivered",
+          "Real-time earnings tracker with daily and weekly summary",
+          "Order history with complete delivery records",
+          "Push notifications for new order alerts and updates",
+          "Availability toggle — online / offline status for agents",
+          "Customer contact and communication support",
+          "Performance dashboard with delivery stats and ratings"
         ],
-        "role": "Developed the delivery partner app for FastFit with order management, tracking, and route optimization.",
+        "role": "Built the complete delivery partner application including order assignment flow, real-time delivery status management, navigation integration, earnings dashboard, and push notification system for new order alerts.",
         "category": "mobile",
         "appIcon": ""
+      },
+      {
+        "id": 9,
+        "title": "SalesPulse",
+        "description": "SalesPulse is a comprehensive B2B sales operations management application designed to streamline and optimize the end-to-end sales workflow for field sales representatives. From placing new client orders to tracking payment status and monitoring order fulfillment, SalesPulse puts the entire sales process in the palm of a sales rep's hand. The app eliminates manual order-taking processes and gives sales managers real-time visibility into team performance, order pipeline, and revenue tracking — making the sales operation faster, more accurate, and more accountable.",
+        "techStack": [
+          "React Native",
+          "JavaScript",
+          "REST API",
+          "Redux State Management",
+          "Postman"
+        ],
+        "androidLink": "https://play.google.com/store/apps/details?id=com.vibrant.cachetindia&hl=en",
+        "iosLink": "",
+        "githubLink": "",
+        "bannerImage": "",
+        "screenshots": [],
+        "features": [
+          "New sales order placement with product catalog",
+          "Real-time order status tracking — Placed, Processing, Dispatched, Delivered",
+          "Customer profile and relationship management",
+          "Payment status tracking and collection management",
+          "Sales performance dashboard with targets and achievements",
+          "Order history with complete transaction records",
+          "Push notifications for order updates and approvals",
+          "Multi-product order management with quantity and pricing",
+          "Sales reports — daily, weekly, and monthly summaries",
+          "Offline order placement with automatic sync on connectivity"
+        ],
+        "role": "Developed the complete sales management application including order placement flow, real-time order status tracking, customer management, payment tracking, and sales reporting dashboard. Implemented complex business logic for multi-stage order workflows and approval processes.",
+        "category": "mobile",
+        "appIcon": "https://play-lh.googleusercontent.com/oY3bTt6fJSpHANJ67L54k7JdUohUKF9QeSAgKOyrpckKnBT8GheHorRUmKsPij2UB1FSSvEOdDAsv1AqKFWV3w=s512"
+      },
+      {
+        "id": 10,
+        "title": "Bajaj MIS",
+        "description": "Bajaj MIS is an agri-industrial Management Information System application developed for Bajaj Hindustan Ltd, one of India's largest sugar manufacturing companies. The app serves as a real-time digital reporting platform for farmers, field staff, and factory supervisors to monitor cane crushing operations, track cane supply chain movements, and access critical factory performance data. It replaces traditional paper-based reporting with a fast, reliable mobile solution that keeps all stakeholders informed about factory operations in real time.",
+        "techStack": [
+          "React Native",
+          "JavaScript",
+          "REST API",
+          "Redux State Management",
+          "Postman"
+        ],
+        "androidLink": "https://play.google.com/store/apps/details?id=in.co.vibrant.bajajmis&hl=en",
+        "iosLink": "https://apps.apple.com/in/app/bajaj-mis/id1615612853",
+        "githubLink": "",
+        "bannerImage": "",
+        "screenshots": [],
+        "features": [
+          "Real-time cane crushing data tracking and reporting",
+          "Cane supply chain position monitoring from farm to factory",
+          "Factory operation performance dashboard",
+          "Farmer portal with individual cane supply records",
+          "Payment and account summary for farmers",
+          "Field staff reporting and data entry module",
+          "Daily, weekly, and seasonal crushing reports",
+          "Offline data access with background sync",
+          "Multi-factory support for large operations",
+          "Alerts and notifications for critical factory updates"
+        ],
+        "role": "Developed the complete MIS reporting application including real-time cane crushing data tracking, factory operation reports, farmer and field staff portal, and payment summary features. Implemented data-heavy reporting dashboards with proper pagination and performance optimization for handling large datasets.",
+        "category": "mobile",
+        "appIcon": "https://play-lh.googleusercontent.com/sAyAtHhNAB96jPOcO_6ExVnVzfTiTc_RotSCWO2ID3M463YXj3UXkEEDNjpnysh1lWEr8jBOF6OzhMJ7DbkO=s512"
+      },
+      {
+        "id": 11,
+        "title": "Dalmia MIS",
+        "description": "Dalmia MIS is an agri-industrial tracking and reporting application developed for Dalmia Sugar, a leading sugar manufacturing company in India. Used by farmers, salesmen, and factory supervisors, the app provides real-time visibility into cane position within the factory, allowing stakeholders to track exactly where their cane supply stands in the crushing queue. It empowers farmers with transparent, accurate data about their cane movement and payments, while helping factory management monitor supply flow and optimize crushing operations efficiently.",
+        "techStack": [
+          "React Native",
+          "JavaScript",
+          "REST API",
+          "Redux State Management",
+          "Postman"
+        ],
+        "androidLink": "",
+        "iosLink": "https://apps.apple.com/in/app/dalmia-mis/id6474722177",
+        "githubLink": "",
+        "bannerImage": "",
+        "screenshots": [],
+        "features": [
+          "Real-time cane position tracking within factory queue",
+          "Cane crushing progress and status monitoring",
+          "Farmer individual supply and payment records",
+          "Salesman performance and target tracking",
+          "Factory crushing capacity and throughput reports",
+          "Daily supply chain movement reports",
+          "Payment account summary and history",
+          "Push notifications for cane position updates",
+          "Seasonal crushing data analytics",
+          "Offline report access for field areas with poor connectivity"
+        ],
+        "role": "Built cane position tracking and factory reporting features for Dalmia Sugar's field operations. Implemented complex data visualization for factory queue management and farmer account summaries with real-time API integration.",
+        "category": "mobile",
+        "appIcon": "https://is1-ssl.mzstatic.com/image/thumb/Purple116/v4/01/5f/b4/015fb4ed-0676-804f-4b52-d6c51433d0d6/AppIcon-0-0-1x_U007emarketing-0-5-0-85-220.png/512x512bb.jpg"
+      },
+      {
+        "id": 12,
+        "title": "Wave MIS",
+        "description": "Wave MIS is an agri-industrial tracking application developed for Wave Industries Mills Limited, a sugar manufacturing company in India. The app provides farmers and field staff with real-time access to cane position data, factory crushing reports, and payment summaries — all from their mobile device. By digitizing the traditionally manual reporting process, Wave MIS significantly reduces information delays and gives all stakeholders transparent, accurate, and timely data about factory operations and individual cane supply status.",
+        "techStack": [
+          "React Native",
+          "JavaScript",
+          "REST API",
+          "Redux State Management",
+          "Postman"
+        ],
+        "androidLink": "",
+        "iosLink": "https://apps.apple.com/in/app/wave-mis/id6473242854",
+        "githubLink": "",
+        "bannerImage": "",
+        "screenshots": [],
+        "features": [
+          "Real-time cane position tracking in factory queue",
+          "Factory crushing operations monitoring and reports",
+          "Farmer individual cane supply and account records",
+          "Salesman field data entry and reporting module",
+          "Payment and account summary with transaction history",
+          "Daily and seasonal crushing performance reports",
+          "Push notifications for important factory updates",
+          "Offline data access optimized for poor network areas",
+          "Multi-season data support for annual crushing cycles",
+          "Simple and intuitive UI designed for non-technical field users"
+        ],
+        "role": "Developed cane tracking, factory operation reporting, and farmer account management features for Wave Industries. Focused on building a reliable, data-heavy reporting interface optimized for performance in areas with limited internet connectivity.",
+        "category": "mobile",
+        "appIcon": "https://is1-ssl.mzstatic.com/image/thumb/Purple126/v4/46/12/61/46126124-6268-fc5a-7265-420d0b3433a0/AppIcon-0-0-1x_U007emarketing-0-5-0-85-220.png/512x512bb.jpg"
+      },
+      {
+        "id": 13,
+        "title": "UK Cane MIS",
+        "description": "UK Cane MIS is an agri-industrial reporting application developed for UK Cane Society, a cane farming cooperative organization in India. The app provides farmers, field agents, and cooperative managers with real-time access to cane crushing data, factory operation reports, and individual farmer account summaries. It serves as a transparent digital platform that keeps all cooperative members informed about their cane supply status, crushing progress, and payment records — replacing slow, manual paper-based reporting with instant mobile access to critical operational data.",
+        "techStack": [
+          "React Native",
+          "JavaScript",
+          "REST API",
+          "Redux State Management",
+          "Postman"
+        ],
+        "androidLink": "https://play.google.com/store/apps/details?id=in.co.vibrant.ukmis&hl=en",
+        "iosLink": "",
+        "githubLink": "",
+        "bannerImage": "",
+        "screenshots": [],
+        "features": [
+          "Real-time cane crushing data tracking and reporting",
+          "Cooperative member farmer portal with individual records",
+          "Cane supply position tracking within factory queue",
+          "Factory operation performance and capacity reports",
+          "Payment account summary and transaction history",
+          "Field agent data entry and reporting module",
+          "Daily, weekly, and seasonal crushing reports",
+          "Offline data access with background sync for field areas",
+          "Push notifications for crushing updates and payment alerts",
+          "Multi-village and multi-zone support for large cooperatives"
+        ],
+        "role": "Developed cane crushing data tracking, cooperative member portal, and factory reporting features for UK Cane Society. Implemented offline-capable reporting for field areas with poor internet connectivity and optimized data loading for large farmer databases.",
+        "category": "mobile",
+        "appIcon": "https://play-lh.googleusercontent.com/EclmHdu9rAJHx1fFOFCbsVvS0f259OQf3yjjKluZOZPOb8l7A3N3iMzhRK2RqVvhlByybqepEx1n_gE7DR9cGw=s512"
       }
     ],
     "filters": [

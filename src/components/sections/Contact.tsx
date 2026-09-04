@@ -105,12 +105,12 @@ export default function Contact() {
       <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent-blue/30 to-transparent pointer-events-none" />
       <div className="absolute top-1/4 right-1/4 w-72 h-72 bg-accent-purple/5 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute bottom-1/4 left-1/4 w-96 h-96 bg-accent-blue/5 rounded-full blur-[120px] pointer-events-none" />
-      <div className="max-width relative z-10">
+      <div className="max-width relative z-10 w-full overflow-hidden">
         <SectionHeading title="Get In Touch" subtitle="Have a project in mind? Let's build something great together." icon={<FiMail />} />
 
         <Toast show={toast.show} type={toast.type} title={toast.title} message={toast.message} onClose={() => setToast((prev) => ({ ...prev, show: false }))} />
 
-        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-4xl mx-auto px-4 sm:px-0">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -132,7 +132,7 @@ export default function Contact() {
                 </span>
                 Contact Info
               </h3>
-              <div className="space-y-5 relative z-10">
+              <div className="space-y-5 relative z-10 overflow-hidden">
                 {contactItems.map((item, i) => (
                   <motion.div
                     key={item.label}
@@ -140,15 +140,15 @@ export default function Contact() {
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.3, delay: i * 0.08 }}
-                    className="flex items-center gap-4 group/item"
+                    className="flex items-center gap-3 sm:gap-4 group/item"
                   >
-                    <motion.div className={`w-11 h-11 rounded-xl ${item.bg} flex items-center justify-center flex-shrink-0 ring-1 ring-white/5 group-hover/item:ring-white/20 transition-all duration-300`} whileHover={{ scale: 1.1 }}>
-                      <item.icon className={`${item.color} text-lg`} />
+                    <motion.div className={`w-10 h-10 sm:w-11 sm:h-11 rounded-xl ${item.bg} flex items-center justify-center flex-shrink-0 ring-1 ring-white/5 group-hover/item:ring-white/20 transition-all duration-300`} whileHover={{ scale: 1.1 }}>
+                      <item.icon className={`${item.color} text-base sm:text-lg`} />
                     </motion.div>
                     <div className="flex-1 min-w-0">
                       <p className="text-dark-500 text-[11px] uppercase tracking-wider mb-0.5">{item.label}</p>
                       {"action" in item ? (
-                        <button onClick={item.action} className="text-dark-100 dark:text-white text-sm hover:text-accent-blue transition-colors flex items-center gap-2 w-full text-left truncate">
+                        <button onClick={item.action} className="text-dark-100 dark:text-white text-sm hover:text-accent-blue transition-colors flex items-center gap-2 w-full text-left">
                           <span className="truncate">{item.value}</span>
                           {copied ? <FiCheck className="text-green-500 shrink-0" /> : <FiCopy className="text-dark-500 text-xs shrink-0 opacity-0 group-hover/item:opacity-100 transition-opacity" />}
                         </button>
