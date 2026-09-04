@@ -49,12 +49,8 @@ export async function GET(req: NextRequest) {
 
     // Check if email matches admin email
     const userEmail = (user.email || "").trim().toLowerCase();
-    const allowedEmails = [
-      "akashkumarprajapati2003@gmail.com",
-      "akash@singsys.com",
-    ];
 
-    if (!allowedEmails.includes(userEmail)) {
+    if (userEmail !== "akashkumarprajapati2003@gmail.com") {
       return NextResponse.redirect(new URL("/admin/login?error=unauthorized", req.url));
     }
 
