@@ -49,7 +49,7 @@ export async function GET(req: NextRequest) {
 
     // Check if email matches admin email
     const userEmail = (user.email || "").trim().toLowerCase();
-
+    // Only this email is allowed
     if (userEmail !== "akashkumarprajapati2003@gmail.com") {
       return NextResponse.redirect(new URL("/admin/login?error=unauthorized", req.url));
     }
