@@ -9,5 +9,12 @@ export async function POST() {
     maxAge: 0,
     path: "/",
   });
+  response.cookies.set("admin_user", "", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+    maxAge: 0,
+    path: "/",
+  });
   return response;
 }

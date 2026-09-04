@@ -6,7 +6,7 @@ import { useState } from "react";
 type SectionMeta = Record<string, { label: string; icon: React.ReactNode; color: string; desc: string }>;
 
 export default function AdminSidebar({
-  sectionMeta, activeTab, onTabChange, countFor, onLogout, mobileOpen, onMobileClose,
+  sectionMeta, activeTab, onTabChange, countFor, onLogout, mobileOpen, onMobileClose, user,
 }: {
   sectionMeta: SectionMeta;
   activeTab: string;
@@ -15,6 +15,7 @@ export default function AdminSidebar({
   onLogout: () => void;
   mobileOpen: boolean;
   onMobileClose: () => void;
+  user?: { name?: string; email?: string; picture?: string } | null;
 }) {
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
 
@@ -107,6 +108,24 @@ export default function AdminSidebar({
         {/* Bottom section */}
         <div className="p-2.5 border-t border-white/[0.04] space-y-0.5 flex-shrink-0 relative">
           <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-indigo-500/3 to-transparent pointer-events-none" />
+
+          {/* User info */}
+          {user && (
+            <div className="flex items-center gap-3 px-3.5 py-2.5 mb-1">
+              {user.picture ? (
+                <img src={user.picture} alt={user.name || "Admin"} className="w-8 h-8 rounded-full ring-2 ring-white/10" />
+              ) : (
+                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white text-xs font-bold">
+                  {user.name?.charAt(0) || "A"}
+                </div>
+              )}
+              <div className="flex-1 min-w-0">
+                <p className="text-white text-xs font-medium truncate">{user.name || "Admin"}</p>
+                <p className="text-slate-600 text-[10px] truncate">{user.email || ""}</p>
+              </div>
+            </div>
+          )}
+
           <a
             href="/"
             target="_blank"

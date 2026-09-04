@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { FiLock, FiShield, FiEye, FiEyeOff, FiArrowRight } from "react-icons/fi";
+import { useRouter, useSearchParams } from "next/navigation";
+import { FiShield, FiArrowRight } from "react-icons/fi";
 
 function FloatingParticle({ delay, size, x, y }: { delay: number; size: number; x: number; y: number }) {
   return (
@@ -20,40 +20,44 @@ function FloatingParticle({ delay, size, x, y }: { delay: number; size: number; 
   );
 }
 
+function GoogleIcon() {
+  return (
+    <svg className="w-5 h-5" viewBox="0 0 24 24">
+      <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+      <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+      <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+      <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+    </svg>
+  );
+}
+
 export default function AdminLogin() {
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [showPw, setShowPw] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [error, setError] = useState("");
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   useEffect(() => {
     setMounted(true);
-  }, []);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError("");
-    if (password.length < 3) { setError("Enter a valid password"); return; }
-    setLoading(true);
-    try {
-      const res = await fetch("/api/admin/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ password }),
-      });
-      if (res.ok) {
-        sessionStorage.setItem("admin_session", Date.now().toString());
-        router.push("/admin");
-      } else {
-        setError("Invalid password");
+    const errorParam = searchParams.get("error");
+    if (errorParam) {
+      switch (errorParam) {
+        case "unauthorized":
+          setError("This Gmail is not authorized to access admin panel.");
+          break;
+        case "access_denied":
+          setError("Access denied. Please sign in with your Google account.");
+          break;
+        default:
+          setError("Authentication failed. Please try again.");
       }
-    } catch {
-      setError("Connection error");
-    } finally {
-      setLoading(false);
     }
+  }, [searchParams]);
+
+  const handleGoogleLogin = () => {
+    setLoading(true);
+    window.location.href = "/api/admin/auth/google";
   };
 
   const particles = Array.from({ length: 20 }, (_, i) => ({
@@ -100,61 +104,45 @@ export default function AdminLogin() {
             <h1 className="text-white text-2xl font-bold tracking-tight">
               Welcome back
             </h1>
-            <p className="text-slate-500 text-sm mt-2">Enter password to access admin</p>
+            <p className="text-slate-500 text-sm mt-2">Sign in with your Google account</p>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-5 relative">
-            <div>
-              <label className="block text-slate-400 text-xs font-medium mb-2 tracking-wide uppercase">Password</label>
-              <div className="relative group">
-                <div className="absolute -inset-0.5 bg-gradient-to-r from-indigo-500/20 to-purple-500/20 rounded-xl opacity-0 group-focus-within:opacity-100 transition-opacity duration-500 blur-sm" />
-                <div className="relative flex items-center">
-                  <FiLock className="absolute left-4 w-4 h-4 text-slate-600 group-focus-within:text-indigo-400 transition-colors" />
-                  <input
-                    type={showPw ? "text" : "password"}
-                    value={password}
-                    onChange={(e) => { setPassword(e.target.value); if (error) setError(""); }}
-                    placeholder="Enter admin password"
-                    autoFocus
-                    className="w-full pl-11 pr-12 py-3.5 rounded-xl bg-white/[0.04] border border-white/[0.06] text-white placeholder:text-slate-700 focus:outline-none focus:border-indigo-500/40 focus:bg-white/[0.06] transition-all duration-300 text-sm"
-                  />
-                  <button type="button" onClick={() => setShowPw(!showPw)} className="absolute right-4 text-slate-600 hover:text-slate-400 transition-colors">
-                    {showPw ? <FiEyeOff className="w-4 h-4" /> : <FiEye className="w-4 h-4" />}
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            {/* Error message with animation */}
-            <div className={`transition-all duration-300 ${error ? "opacity-100 max-h-20" : "opacity-0 max-h-0 overflow-hidden"}`}>
+          <div className="space-y-5 relative">
+            {/* Error message */}
+            {error && (
               <div className="px-4 py-3 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm flex items-center gap-2.5">
                 <FiShield className="w-4 h-4 flex-shrink-0" />
                 <span>{error}</span>
               </div>
-            </div>
+            )}
 
+            {/* Google Sign In Button */}
             <button
-              type="submit"
-              disabled={loading || !password}
-              className="relative w-full py-3.5 rounded-xl text-white font-semibold text-sm disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-300 group overflow-hidden"
+              onClick={handleGoogleLogin}
+              disabled={loading}
+              className="relative w-full py-3.5 rounded-xl bg-white/[0.06] border border-white/[0.08] text-white font-semibold text-sm transition-all duration-300 group overflow-hidden hover:bg-white/[0.1] hover:border-white/[0.12] disabled:opacity-40 disabled:cursor-not-allowed"
             >
-              {/* Animated gradient background */}
-              <div className="absolute inset-0 bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-600 bg-[length:200%_100%] group-hover:animate-[shimmer_2s_linear_infinite] group-disabled:animate-none" />
-              <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              {/* Hover glow */}
+              <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-pink-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl" />
 
-              {/* Content */}
-              <span className="relative z-10 flex items-center justify-center gap-2">
+              <span className="relative z-10 flex items-center justify-center gap-3">
                 {loading ? (
                   <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                 ) : (
                   <>
-                    <span>Sign in</span>
-                    <FiArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+                    <GoogleIcon />
+                    <span>Sign in with Google</span>
+                    <FiArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300 opacity-0 group-hover:opacity-100" />
                   </>
                 )}
               </span>
             </button>
-          </form>
+
+            {/* Info text */}
+            <p className="text-slate-600 text-xs text-center leading-relaxed">
+              Only authorized Gmail accounts can access the admin panel.
+            </p>
+          </div>
 
           {/* Bottom decoration */}
           <div className="mt-6 flex items-center justify-center gap-1.5">

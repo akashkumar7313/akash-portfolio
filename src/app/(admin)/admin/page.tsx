@@ -39,8 +39,18 @@ export default function AdminDashboard() {
   const [confirmLogout, setConfirmLogout] = useState(false);
   const [mobileMenu, setMobileMenu] = useState(false);
   const [tabTransition, setTabTransition] = useState(false);
+  const [user, setUser] = useState<{ name?: string; email?: string; picture?: string } | null>(null);
 
   useEffect(() => {
+    // Fetch user info from cookie
+    const userCookie = document.cookie.split("; ").find((c) => c.startsWith("admin_user="));
+    if (userCookie) {
+      try {
+        const userData = JSON.parse(decodeURIComponent(userCookie.split("=")[1]));
+        setUser(userData);
+      } catch { /* ignore */ }
+    }
+
     fetch("/api/admin/data")
       .then((r) => {
         if (r.status === 401) { router.push("/admin/login"); return null; }
@@ -155,6 +165,7 @@ export default function AdminDashboard() {
         onLogout={() => setConfirmLogout(true)}
         mobileOpen={mobileMenu}
         onMobileClose={() => setMobileMenu(false)}
+        user={user}
       />
 
       <main className="flex-1 flex flex-col min-w-0 lg:pl-64">
