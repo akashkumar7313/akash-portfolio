@@ -271,7 +271,7 @@ export default function Hero() {
       />
       )}
 
-      <div className="absolute inset-0 bg-gradient-to-b from-[#c9f36c]/5 via-[#101412] to-[#101412] pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-b from-[#c9f36c]/5 via-white dark:via-[#101412] to-white dark:to-[#101412] pointer-events-none" />
 
       <div className="absolute top-1/3 left-1/4 w-[400px] h-[400px] bg-[#c9f36c]/8 rounded-full blur-[140px] pointer-events-none" />
       <div className="absolute top-1/2 right-1/4 w-[300px] h-[300px] bg-[#a8d94a]/8 rounded-full blur-[120px] pointer-events-none" />
@@ -397,11 +397,22 @@ export default function Hero() {
                   {typedCode.split("\n").map((line, i) => {
                     const indent = line.search(/\S/);
                     const trimmed = line.trim();
-                    let color = "text-[#91a096]";
-                    if (["import", "class", "Widget", "return", "const", "export", "React", "useRef"].some(w => trimmed.startsWith(w))) color = "text-[#c9f36c]";
-                    else if (["final", "String", "int", "bool", "View", "Text", "MaterialApp", "Scaffold", "AppBar", "Center"].some(w => trimmed.startsWith(w))) color = "text-[#a8d94a]";
-                    else if (trimmed.includes('"') || trimmed.includes("true") || trimmed.includes("false") || trimmed.includes("=>")) color = "text-[#c9f36c]";
-                    else if (["@override", "}:", "};", "});"].some(w => trimmed.startsWith(w))) color = "text-[#91a096]/60";
+                    let color = "text-[#91a096] dark:text-slate-400";
+                    // Keywords
+                    if (["import", "class", "void", "return", "const", "export", "final", "var"].some(w => trimmed.startsWith(w))) color = "text-[#c9f36c] dark:text-emerald-400";
+                    // Types
+                    else if (["String", "int", "bool", "Widget", "MobileApp", "FlutterApp", "ReactNativeApp"].some(w => trimmed.includes(w))) color = "text-[#06b6d4] dark:text-cyan-400";
+                    // Strings
+                    else if (trimmed.includes('"') || trimmed.includes("'")) color = "text-[#f59e0b] dark:text-amber-400";
+                    // Numbers & booleans
+                    else if (/\b\d+\b/.test(trimmed) || trimmed.includes("true") || trimmed.includes("false")) color = "text-[#a853ff] dark:text-violet-400";
+                    // Methods
+                    else if (trimmed.includes(".") && trimmed.includes("(")) color = "text-[#3b82f6] dark:text-blue-400";
+                    // Properties
+                    else if (trimmed.includes(":") && !trimmed.includes("//")) color = "text-[#ec4899] dark:text-pink-400";
+                    // Comments & brackets
+                    else if (trimmed.startsWith("//") || trimmed.startsWith("/*")) color = "text-[#6b7280] dark:text-slate-500 italic";
+                    else if (["};", "})", "};", "});"].some(w => trimmed.startsWith(w))) color = "text-[#91a096] dark:text-slate-500";
                     return (<div key={i} className={color} style={{ paddingLeft: indent * 8 }}>{trimmed || "\u00A0"}</div>);
                   })}
                   {typedCode.length < (codeTab === "flutter" ? flutterCode : rnCode).length && (
@@ -556,30 +567,30 @@ export default function Hero() {
               {liveStack.slice(0, 14).map((tech, i) => {
                 const p = {...badgePositions[i]};
                 if (!p.top && !p.bottom) return null;
-                const techColors: Record<string, { icon: string; from: string; to: string; border: string; text: string; shadow: string }> = {
-                  Flutter: { icon: "💙", from: "from-[#c9f36c]/80", to: "to-[#a8d94a]/50", border: "border-[#c9f36c]/60", text: "text-[#101412]", shadow: "shadow-[#c9f36c]/30" },
-                  Dart: { icon: "🎯", from: "from-[#c9f36c]/80", to: "to-[#a8d94a]/50", border: "border-[#c9f36c]/60", text: "text-[#101412]", shadow: "shadow-[#c9f36c]/30" },
-                  "React Native": { icon: "⚛️", from: "from-[#c9f36c]/80", to: "to-[#a8d94a]/50", border: "border-[#c9f36c]/60", text: "text-[#101412]", shadow: "shadow-[#c9f36c]/30" },
-                  Firebase: { icon: "🔥", from: "from-[#c9f36c]/80", to: "to-[#a8d94a]/50", border: "border-[#c9f36c]/60", text: "text-[#101412]", shadow: "shadow-[#c9f36c]/30" },
-                  Stripe: { icon: "💳", from: "from-[#c9f36c]/80", to: "to-[#a8d94a]/50", border: "border-[#c9f36c]/60", text: "text-[#101412]", shadow: "shadow-[#c9f36c]/30" },
-                  Razorpay: { icon: "💰", from: "from-[#c9f36c]/80", to: "to-[#a8d94a]/50", border: "border-[#c9f36c]/60", text: "text-[#101412]", shadow: "shadow-[#c9f36c]/30" },
-                  BLoC: { icon: "🧩", from: "from-[#c9f36c]/80", to: "to-[#a8d94a]/50", border: "border-[#c9f36c]/60", text: "text-[#101412]", shadow: "shadow-[#c9f36c]/30" },
-                  Riverpod: { icon: "📦", from: "from-[#c9f36c]/80", to: "to-[#a8d94a]/50", border: "border-[#c9f36c]/60", text: "text-[#101412]", shadow: "shadow-[#c9f36c]/30" },
-                  Redux: { icon: "🔄", from: "from-[#c9f36c]/80", to: "to-[#a8d94a]/50", border: "border-[#c9f36c]/60", text: "text-[#101412]", shadow: "shadow-[#c9f36c]/30" },
-                  GraphQL: { icon: "◈", from: "from-[#c9f36c]/80", to: "to-[#a8d94a]/50", border: "border-[#c9f36c]/60", text: "text-[#101412]", shadow: "shadow-[#c9f36c]/30" },
-                  FCM: { icon: "🔔", from: "from-[#c9f36c]/80", to: "to-[#a8d94a]/50", border: "border-[#c9f36c]/60", text: "text-[#101412]", shadow: "shadow-[#c9f36c]/30" },
-                  Git: { icon: "🔀", from: "from-[#c9f36c]/80", to: "to-[#a8d94a]/50", border: "border-[#c9f36c]/60", text: "text-[#101412]", shadow: "shadow-[#c9f36c]/30" },
-                  WebRTC: { icon: "📹", from: "from-[#c9f36c]/80", to: "to-[#a8d94a]/50", border: "border-[#c9f36c]/60", text: "text-[#101412]", shadow: "shadow-[#c9f36c]/30" },
-                  HealthKit: { icon: "❤️", from: "from-[#c9f36c]/80", to: "to-[#a8d94a]/50", border: "border-[#c9f36c]/60", text: "text-[#101412]", shadow: "shadow-[#c9f36c]/30" },
+                const techColors: Record<string, { icon: string; bg: string; border: string; text: string; lightBg: string; lightBorder: string; lightText: string }> = {
+                  Flutter: { icon: "💙", bg: "bg-blue-500/20", border: "border-blue-500/40", text: "text-blue-400", lightBg: "bg-blue-500/10", lightBorder: "border-blue-500/30", lightText: "text-blue-600" },
+                  Dart: { icon: "🎯", bg: "bg-teal-500/20", border: "border-teal-500/40", text: "text-teal-400", lightBg: "bg-teal-500/10", lightBorder: "border-teal-500/30", lightText: "text-teal-600" },
+                  "React Native": { icon: "⚛️", bg: "bg-sky-500/20", border: "border-sky-500/40", text: "text-sky-400", lightBg: "bg-sky-500/10", lightBorder: "border-sky-500/30", lightText: "text-sky-600" },
+                  Firebase: { icon: "🔥", bg: "bg-amber-500/20", border: "border-amber-500/40", text: "text-amber-400", lightBg: "bg-amber-500/10", lightBorder: "border-amber-500/30", lightText: "text-amber-600" },
+                  Stripe: { icon: "💳", bg: "bg-purple-500/20", border: "border-purple-500/40", text: "text-purple-400", lightBg: "bg-purple-500/10", lightBorder: "border-purple-500/30", lightText: "text-purple-600" },
+                  Razorpay: { icon: "💰", bg: "bg-indigo-500/20", border: "border-indigo-500/40", text: "text-indigo-400", lightBg: "bg-indigo-500/10", lightBorder: "border-indigo-500/30", lightText: "text-indigo-600" },
+                  BLoC: { icon: "🧩", bg: "bg-pink-500/20", border: "border-pink-500/40", text: "text-pink-400", lightBg: "bg-pink-500/10", lightBorder: "border-pink-500/30", lightText: "text-pink-600" },
+                  Riverpod: { icon: "📦", bg: "bg-orange-500/20", border: "border-orange-500/40", text: "text-orange-400", lightBg: "bg-orange-500/10", lightBorder: "border-orange-500/30", lightText: "text-orange-600" },
+                  Redux: { icon: "🔄", bg: "bg-violet-500/20", border: "border-violet-500/40", text: "text-violet-400", lightBg: "bg-violet-500/10", lightBorder: "border-violet-500/30", lightText: "text-violet-600" },
+                  GraphQL: { icon: "◈", bg: "bg-rose-500/20", border: "border-rose-500/40", text: "text-rose-400", lightBg: "bg-rose-500/10", lightBorder: "border-rose-500/30", lightText: "text-rose-600" },
+                  FCM: { icon: "🔔", bg: "bg-red-500/20", border: "border-red-500/40", text: "text-red-400", lightBg: "bg-red-500/10", lightBorder: "border-red-500/30", lightText: "text-red-600" },
+                  Git: { icon: "🔀", bg: "bg-emerald-500/20", border: "border-emerald-500/40", text: "text-emerald-400", lightBg: "bg-emerald-500/10", lightBorder: "border-emerald-500/30", lightText: "text-emerald-600" },
+                  WebRTC: { icon: "📹", bg: "bg-cyan-500/20", border: "border-cyan-500/40", text: "text-cyan-400", lightBg: "bg-cyan-500/10", lightBorder: "border-cyan-500/30", lightText: "text-cyan-600" },
+                  HealthKit: { icon: "❤️", bg: "bg-red-400/20", border: "border-red-400/40", text: "text-red-400", lightBg: "bg-red-400/10", lightBorder: "border-red-400/30", lightText: "text-red-500" },
                 };
                 const key = Object.keys(techColors).find(k => tech.toLowerCase().includes(k.toLowerCase())) || "";
-                const c = techColors[key] || { icon: "⚡", from: "from-[#c9f36c]/30", to: "to-[#a8d94a]/10", border: "border-[#c9f36c]/30", text: "text-[#f4f7f2]", shadow: "shadow-[#c9f36c]/20" };
+                const c = techColors[key] || { icon: "⚡", bg: "bg-[#c9f36c]/20", border: "border-[#c9f36c]/40", text: "text-[#c9f36c]", lightBg: "bg-[#c9f36c]/10", lightBorder: "border-[#c9f36c]/30", lightText: "text-[#16a34a]" };
                 return (
                   <motion.span key={tech} initial={{ opacity: 0, scale: 0 }} animate={{ opacity: 1, scale: 1, y: [0, -5, 0, 3, 0], x: [0, 2, -2, 2, 0] }} transition={{
                     opacity: { delay: 2.5 + i * 0.3, duration: 0.5 }, scale: { delay: 2.5 + i * 0.3, duration: 0.5 },
                     y: { repeat: Infinity, duration: 3 + (i % 3) * 0.5, ease: "easeInOut", delay: (i % 4) * 0.3 },
                     x: { repeat: Infinity, duration: 4 + (i % 2) * 0.7, ease: "easeInOut", delay: (i % 3) * 0.4 },
-                  }} className={`absolute z-20 px-3 py-1.5 text-[11px] font-bold rounded-full bg-gradient-to-br ${c.from} ${c.to} backdrop-blur-md border ${c.border} ${c.text} whitespace-nowrap shadow-lg ${c.shadow} flex items-center gap-1.5 w-fit`} style={p as React.CSSProperties} whileHover={{ scale: 1.2, y: -8 }}>
+                  }} className={`absolute z-20 px-3 py-1.5 text-[11px] font-bold rounded-full backdrop-blur-md border whitespace-nowrap shadow-lg flex items-center gap-1.5 w-fit dark:${c.bg} dark:${c.border} dark:${c.text} dark:shadow-black/20 ${c.lightBg} ${c.lightBorder} ${c.lightText} shadow-black/10`} style={p as React.CSSProperties} whileHover={{ scale: 1.2, y: -8 }}>
                     <span className="text-[13px]">{c.icon}</span>
                     {tech}
                   </motion.span>

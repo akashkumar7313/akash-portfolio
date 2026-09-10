@@ -68,11 +68,15 @@
   body {
     @apply font-sans overflow-x-hidden;
     background-color: var(--bg-body);
-    color: var(--dark-100);
+    color: var(--text-primary);
   }
 
   ::selection {
     background: rgba(201, 243, 108, 0.3);
+    color: #101412;
+  }
+
+  .dark ::selection {
     color: #f4f7f2;
   }
 
