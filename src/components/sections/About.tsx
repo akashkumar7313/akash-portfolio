@@ -63,7 +63,7 @@ export default function About() {
   if (!data) return null;
 
   return (
-    <section id="about" className="section-padding relative overflow-hidden">
+    <section id="about" className="section-padding relative overflow-hidden grid-bg">
       <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none" />
       <div className="max-width relative z-10">
         <SectionHeading title="About Me" subtitle="A passionate software engineer crafting exceptional mobile experiences" icon={<FiUser />} />
