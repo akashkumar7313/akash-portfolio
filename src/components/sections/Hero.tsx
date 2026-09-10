@@ -262,7 +262,7 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 grid-bg"
     >
       {particles && (
       <canvas
@@ -271,7 +271,7 @@ export default function Hero() {
       />
       )}
 
-      <div className="absolute inset-0 bg-gradient-to-b from-[#c9f36c]/5 via-white dark:via-[#101412] to-white dark:to-[#101412] pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-b from-[#c9f36c]/5 via-transparent to-transparent pointer-events-none" />
 
       <div className="absolute top-1/3 left-1/4 w-[400px] h-[400px] bg-[#c9f36c]/8 rounded-full blur-[140px] pointer-events-none" />
       <div className="absolute top-1/2 right-1/4 w-[300px] h-[300px] bg-[#a8d94a]/8 rounded-full blur-[120px] pointer-events-none" />
@@ -285,7 +285,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#c9f36c]/10 border border-[#c9f36c]/20 text-[#c9f36c] text-xs sm:text-sm mb-6"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#c9f36c]/10 border border-[#c9f36c]/20 text-[#16a34a] dark:text-[#c9f36c] text-xs sm:text-sm mb-6"
             >
               <span className="w-2 h-2 rounded-full bg-[#c9f36c] animate-pulse" />
               <span>Available for opportunities</span>
@@ -301,7 +301,7 @@ export default function Hero() {
                 Akash Kumar
               </span>
               <br />
-              <span className="text-[#f4f7f2]">Prajapati</span>
+              <span className="text-[#101412] dark:text-[#f4f7f2]">Prajapati</span>
             </motion.h1>
 
             <motion.div
@@ -310,9 +310,9 @@ export default function Hero() {
               transition={{ duration: 0.8, delay: 0.3 }}
               className="h-9 mb-6"
             >
-              <span className="text-base sm:text-lg md:text-xl text-[#f4f7f2] font-heading font-medium tracking-wide">
+              <span className="text-base sm:text-lg md:text-xl text-[#374151] dark:text-[#f4f7f2] font-heading font-medium tracking-wide">
                 {typedRole}
-                <span className="animate-pulse text-[#c9f36c] ml-0.5">|</span>
+                <span className="animate-pulse text-[#16a34a] dark:text-[#c9f36c] ml-0.5">|</span>
               </span>
             </motion.div>
 
@@ -320,7 +320,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.45 }}
-              className="text-sm sm:text-base text-[#91a096] font-sans max-w-xl mb-8 leading-relaxed"
+              className="text-sm sm:text-base text-[#6b7280] dark:text-[#91a096] font-sans max-w-xl mb-8 leading-relaxed"
             >
               <span className="text-[#c9f36c] font-semibold">$</span> building production-grade apps for <span className="text-[#a8d94a] font-semibold">Android</span> &amp; <span className="text-[#c9f36c] font-semibold">iOS</span> — shipped worldwide
             </motion.p>
@@ -331,10 +331,10 @@ export default function Hero() {
               transition={{ duration: 0.6, delay: 0.55 }}
               className="flex flex-wrap items-center justify-center lg:justify-start gap-2 mb-8"
             >
-              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[11px] font-semibold rounded-full bg-[#c9f36c]/20 border border-[#c9f36c]/30 text-[#c9f36c]">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[11px] font-semibold rounded-full bg-[#c9f36c]/20 border border-[#c9f36c]/30 text-[#16a34a] dark:text-[#c9f36c]">
                 🏆 Best Developer of the Year
               </span>
-              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[11px] font-semibold rounded-full bg-[#c9f36c]/10 border border-[#c9f36c]/20 text-[#f4f7f2]">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[11px] font-semibold rounded-full bg-[#c9f36c]/10 border border-[#c9f36c]/20 text-[#374151] dark:text-[#f4f7f2]">
                 ⭐ Employee of the Month (Multiple Times)
               </span>
             </motion.div>
@@ -389,30 +389,30 @@ export default function Hero() {
                     <div className="w-2.5 h-2.5 rounded-full bg-green-500/70" />
                   </div>
                   <div className="flex ml-4 gap-1">
-                    <button onClick={() => setCodeTab("flutter")} className={`px-3 py-1 rounded-lg text-[10px] font-mono font-medium transition-all ${codeTab === "flutter" ? "bg-[#c9f36c]/20 text-[#c9f36c]" : "text-[#91a096] hover:text-[#f4f7f2]"}`}>Flutter</button>
-                    <button onClick={() => setCodeTab("rn")} className={`px-3 py-1 rounded-lg text-[10px] font-mono font-medium transition-all ${codeTab === "rn" ? "bg-[#c9f36c]/20 text-[#c9f36c]" : "text-[#91a096] hover:text-[#f4f7f2]"}`}>React Native</button>
+                    <button onClick={() => setCodeTab("flutter")} className={`px-3 py-1 rounded-lg text-[10px] font-mono font-medium transition-all ${codeTab === "flutter" ? "bg-[#c9f36c]/20 text-[#16a34a] dark:text-[#c9f36c]" : "text-[#6b7280] dark:text-[#91a096] hover:text-[#101412] dark:hover:text-[#f4f7f2]"}`}>Flutter</button>
+                    <button onClick={() => setCodeTab("rn")} className={`px-3 py-1 rounded-lg text-[10px] font-mono font-medium transition-all ${codeTab === "rn" ? "bg-[#c9f36c]/20 text-[#16a34a] dark:text-[#c9f36c]" : "text-[#6b7280] dark:text-[#91a096] hover:text-[#101412] dark:hover:text-[#f4f7f2]"}`}>React Native</button>
                   </div>
                 </div>
                 <div className="p-4 font-mono text-[11px] leading-relaxed overflow-x-auto min-h-[200px]">
                   {typedCode.split("\n").map((line, i) => {
                     const indent = line.search(/\S/);
                     const trimmed = line.trim();
-                    let color = "text-[#91a096] dark:text-slate-400";
+                    let color = "text-[#6b7280] dark:text-slate-400";
                     // Keywords
-                    if (["import", "class", "void", "return", "const", "export", "final", "var"].some(w => trimmed.startsWith(w))) color = "text-[#c9f36c] dark:text-emerald-400";
+                    if (["import", "class", "void", "return", "const", "export", "final", "var"].some(w => trimmed.startsWith(w))) color = "text-[#16a34a] dark:text-emerald-400";
                     // Types
-                    else if (["String", "int", "bool", "Widget", "MobileApp", "FlutterApp", "ReactNativeApp"].some(w => trimmed.includes(w))) color = "text-[#06b6d4] dark:text-cyan-400";
+                    else if (["String", "int", "bool", "Widget", "MobileApp", "FlutterApp", "ReactNativeApp"].some(w => trimmed.includes(w))) color = "text-[#0891b2] dark:text-cyan-400";
                     // Strings
-                    else if (trimmed.includes('"') || trimmed.includes("'")) color = "text-[#f59e0b] dark:text-amber-400";
+                    else if (trimmed.includes('"') || trimmed.includes("'")) color = "text-[#d97706] dark:text-amber-400";
                     // Numbers & booleans
-                    else if (/\b\d+\b/.test(trimmed) || trimmed.includes("true") || trimmed.includes("false")) color = "text-[#a853ff] dark:text-violet-400";
+                    else if (/\b\d+\b/.test(trimmed) || trimmed.includes("true") || trimmed.includes("false")) color = "text-[#7c3aed] dark:text-violet-400";
                     // Methods
-                    else if (trimmed.includes(".") && trimmed.includes("(")) color = "text-[#3b82f6] dark:text-blue-400";
+                    else if (trimmed.includes(".") && trimmed.includes("(")) color = "text-[#2563eb] dark:text-blue-400";
                     // Properties
-                    else if (trimmed.includes(":") && !trimmed.includes("//")) color = "text-[#ec4899] dark:text-pink-400";
+                    else if (trimmed.includes(":") && !trimmed.includes("//")) color = "text-[#db2777] dark:text-pink-400";
                     // Comments & brackets
-                    else if (trimmed.startsWith("//") || trimmed.startsWith("/*")) color = "text-[#6b7280] dark:text-slate-500 italic";
-                    else if (["};", "})", "};", "});"].some(w => trimmed.startsWith(w))) color = "text-[#91a096] dark:text-slate-500";
+                    else if (trimmed.startsWith("//") || trimmed.startsWith("/*")) color = "text-[#9ca3af] dark:text-slate-500 italic";
+                    else if (["};", "})", "};", "});"].some(w => trimmed.startsWith(w))) color = "text-[#6b7280] dark:text-slate-500";
                     return (<div key={i} className={color} style={{ paddingLeft: indent * 8 }}>{trimmed || "\u00A0"}</div>);
                   })}
                   {typedCode.length < (codeTab === "flutter" ? flutterCode : rnCode).length && (

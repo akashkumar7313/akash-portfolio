@@ -34,7 +34,7 @@ export default function Skills() {
   if (categories.length === 0) return null;
 
   return (
-    <section id="skills" className="section-padding bg-dark-900/50">
+    <section id="skills" className="section-padding bg-dark-900/50 grid-bg">
       <div className="max-width">
         <SectionHeading title="Skills & Expertise" subtitle="Technologies and tools I work with daily" icon={<FiCpu />} />
 

@@ -101,7 +101,7 @@ export default function Contact() {
   ];
 
   return (
-    <section id="contact" className="section-padding relative overflow-hidden">
+    <section id="contact" className="section-padding relative overflow-hidden grid-bg">
       <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#c9f36c]/30 to-transparent pointer-events-none" />
       <div className="absolute top-1/4 right-1/4 w-72 h-72 bg-[#c9f36c]/5 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute bottom-1/4 left-1/4 w-96 h-96 bg-[#a8d94a]/5 rounded-full blur-[120px] pointer-events-none" />

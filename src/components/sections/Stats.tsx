@@ -33,7 +33,7 @@ export default function Stats() {
   if (stats.length === 0) return null;
 
   return (
-    <section className="overflow-hidden py-8 md:py-12">
+    <section className="overflow-hidden py-8 md:py-12 grid-bg">
       <div className="max-width" ref={ref}>
         <div className="grid grid-cols-2 md:flex md:flex-row md:items-center justify-center gap-4 md:gap-0 md:divide-x md:divide-[#c9f36c]/10">
           {stats.map((stat, idx) => (

@@ -39,7 +39,7 @@ export default function Testimonials() {
   const t = testimonials[current];
 
   return (
-    <section id="testimonials" className="section-padding overflow-hidden">
+    <section id="testimonials" className="section-padding overflow-hidden grid-bg">
       <div className="max-width">
         <SectionHeading title="What People Say" subtitle="Feedback from clients and colleagues I've worked with" icon={<FiMessageCircle />} />
 

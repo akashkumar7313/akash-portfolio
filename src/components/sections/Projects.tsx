@@ -87,7 +87,7 @@ export default function Projects() {
   if (projects.length === 0) return null;
 
   return (
-    <section id="projects" className="section-padding bg-dark-900/50 relative overflow-hidden">
+    <section id="projects" className="section-padding bg-dark-900/50 relative overflow-hidden grid-bg">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(59,130,246,0.05)_0%,transparent_50%)] pointer-events-none" />
       <div className="max-width relative z-10">
         <SectionHeading title="Featured Projects" subtitle="Real-world applications I have built and deployed" icon={<FiExternalLink />} />
