@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { FiArrowDown, FiDownload, FiEye, FiMail, FiStar, FiThumbsUp, FiClock } from "react-icons/fi";
 import { FaGooglePlay, FaApple } from "react-icons/fa";
 import { SiFlutter } from "react-icons/si";
+import Stats from "./Stats";
 import Link from "next/link";
 
 const roles = [
@@ -362,6 +363,11 @@ export default function Hero() {
                 Contact
               </Link>
             </motion.div>
+
+            {/* Stats */}
+            <div className="mt-8">
+              <Stats />
+            </div>
           </div>
 
           {/* Right - Phone + Code side by side */}

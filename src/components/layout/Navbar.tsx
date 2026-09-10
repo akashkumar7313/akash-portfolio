@@ -40,7 +40,7 @@ export default function Navbar() {
       transition={{ duration: 0.6, ease: "easeOut" }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled
-          ? "bg-white/80 dark:bg-dark-950/70 backdrop-blur-2xl border-b border-black/[0.04] dark:border-white/[0.04] shadow-lg shadow-black/5 dark:shadow-2xl dark:shadow-black/20"
+          ? "bg-[#f4f7f2]/80 dark:bg-[#101412]/80 backdrop-blur-2xl border-b border-[#c9f36c]/10 shadow-lg shadow-black/5 dark:shadow-2xl dark:shadow-black/20"
           : "bg-transparent"
       }`}
     >

@@ -35,7 +35,7 @@ export default function Stats() {
   return (
     <section className="overflow-hidden py-8 md:py-12">
       <div className="max-width" ref={ref}>
-        <div className="grid grid-cols-2 md:flex md:flex-row md:items-center justify-center gap-4 md:gap-0 md:divide-x md:divide-[var(--glass-10)]">
+        <div className="grid grid-cols-2 md:flex md:flex-row md:items-center justify-center gap-4 md:gap-0 md:divide-x md:divide-[#c9f36c]/10">
           {stats.map((stat, idx) => (
             <motion.div
               key={stat.label}
@@ -43,19 +43,16 @@ export default function Stats() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: idx * 0.1 }}
-              className="relative flex-1 flex flex-col items-center text-center group"
+              className="relative flex-1 flex flex-col items-center text-center group px-6"
             >
               <div
                 className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
                 style={{
-                  background: `radial-gradient(ellipse at center, rgba(255,255,255,0.12) 0%, transparent 70%)`,
+                  background: `radial-gradient(ellipse at center, rgba(201,243,108,0.12) 0%, transparent 70%)`,
                 }}
               />
               <div className="relative mb-1">
-                <span className="text-4xl sm:text-5xl lg:text-6xl font-black font-heading tracking-tight leading-none bg-gradient-to-r bg-clip-text text-transparent"
-                  style={{
-                    backgroundImage: `linear-gradient(135deg, ${["#6366f1", "#8b5cf6", "#06b6d4", "#10b981"][idx]}, ${["#06b6d4", "#6366f1", "#8b5cf6", "#6366f1"][idx]})`,
-                  }}
+                <span className="text-4xl sm:text-5xl lg:text-6xl font-black font-heading tracking-tight leading-none bg-gradient-to-r from-[#c9f36c] to-[#a8d94a] bg-clip-text text-transparent"
                 >
                   {isInView ? (
                     <CountUp end={stat.value} duration={2} delay={idx * 0.1} />
@@ -63,20 +60,20 @@ export default function Stats() {
                     0
                   )}
                 </span>
-                <span className="text-2xl sm:text-3xl lg:text-4xl font-black text-dark-500 ml-0.5">
+                <span className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#91a096] dark:text-[#91a096] ml-0.5">
                   {stat.suffix}
                 </span>
               </div>
-              <p className="text-dark-100 dark:text-white font-bold text-xs sm:text-sm mb-0.5 relative">
+              <p className="text-[#101412] dark:text-[#f4f7f2] font-bold text-xs sm:text-sm mb-0.5 relative">
                 {stat.label}
               </p>
-              <p className="text-dark-500 text-[10px] sm:text-xs relative">
+              <p className="text-[#6b7280] dark:text-[#91a096] text-[10px] sm:text-xs relative">
                 {stat.desc}
               </p>
               <motion.div
                 className="absolute bottom-0 left-1/4 right-1/4 h-1 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-500"
                 style={{
-                  background: `linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent)`,
+                  background: `linear-gradient(90deg, transparent, rgba(201,243,108,0.4), transparent)`,
                 }}
               />
             </motion.div>
