@@ -2,7 +2,7 @@
 
 import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { FiShield, FiArrowRight } from "react-icons/fi";
+import { FiShield, FiArrowRight, FiMail, FiLock } from "react-icons/fi";
 
 function FloatingParticle({ delay, size, x, y }: { delay: number; size: number; x: number; y: number }) {
   return (
@@ -35,6 +35,9 @@ function LoginForm() {
   const [loading, setLoading] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [error, setError] = useState("");
+  const [loginMode, setLoginMode] = useState<"google" | "email">("google");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -61,6 +64,31 @@ function LoginForm() {
   const handleGoogleLogin = () => {
     setLoading(true);
     window.location.href = "/api/admin/auth/google";
+  };
+
+  const handleEmailLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+
+    try {
+      const res = await fetch("/api/admin/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (res.ok) {
+        router.push("/admin");
+      } else {
+        const data = await res.json();
+        setError(data.error || "Login failed");
+      }
+    } catch {
+      setError("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const particles = Array.from({ length: 20 }, (_, i) => ({
@@ -100,14 +128,14 @@ function LoginForm() {
             <div className="relative w-20 h-20 mx-auto mb-6">
               <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-[#c9f36c] to-[#a8d94a] animate-spin" style={{ animationDuration: "8s" }} />
               <div className="absolute inset-[2px] rounded-2xl bg-[#151b17] flex items-center justify-center">
-                <span className="text-3xl font-black bg-gradient-to-br from-[#c9f36c] to-[#a8d94a] bg-clip-text text-transparent">A</span>
+                <span className="text-3xl font-black bg-gradient-to-br from-[#c9f36c] to-[#a8d94a] bg-clip-text text-transparent" style={{ fontFamily: 'Poppins, sans-serif' }}>A</span>
               </div>
             </div>
 
             <h1 className="text-[#f4f7f2] text-2xl font-bold tracking-tight">
               Welcome back
             </h1>
-            <p className="text-[#91a096] text-sm mt-2">Sign in with your Google account</p>
+            <p className="text-[#91a096] text-sm mt-2">Sign in to admin panel</p>
           </div>
 
           <div className="space-y-5 relative">
@@ -119,31 +147,101 @@ function LoginForm() {
               </div>
             )}
 
-            {/* Google Sign In Button */}
-            <button
-              onClick={handleGoogleLogin}
-              disabled={loading}
-              className="relative w-full py-3.5 rounded-xl bg-[#c9f36c]/10 border border-[#c9f36c]/20 text-[#f4f7f2] font-semibold text-sm transition-all duration-300 group overflow-hidden hover:bg-[#c9f36c]/20 hover:border-[#c9f36c]/30 disabled:opacity-40 disabled:cursor-not-allowed"
-            >
-              {/* Hover glow */}
-              <div className="absolute inset-0 bg-gradient-to-r from-[#c9f36c]/10 via-[#a8d94a]/10 to-[#c9f36c]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl" />
+            {/* Login Mode Toggle */}
+            <div className="flex gap-2 p-1 rounded-xl bg-[#101412] border border-[#c9f36c]/10">
+              <button
+                onClick={() => { setLoginMode("google"); setError(""); }}
+                className={`flex-1 py-2.5 rounded-lg text-xs font-semibold transition-all duration-300 ${
+                  loginMode === "google"
+                    ? "bg-[#c9f36c]/20 text-[#c9f36c] border border-[#c9f36c]/20"
+                    : "text-[#91a096] hover:text-[#f4f7f2]"
+                }`}
+              >
+                Google
+              </button>
+              <button
+                onClick={() => { setLoginMode("email"); setError(""); }}
+                className={`flex-1 py-2.5 rounded-lg text-xs font-semibold transition-all duration-300 ${
+                  loginMode === "email"
+                    ? "bg-[#c9f36c]/20 text-[#c9f36c] border border-[#c9f36c]/20"
+                    : "text-[#91a096] hover:text-[#f4f7f2]"
+                }`}
+              >
+                Email & Password
+              </button>
+            </div>
 
-              <span className="relative z-10 flex items-center justify-center gap-3">
-                {loading ? (
-                  <span className="w-5 h-5 border-2 border-[#c9f36c]/30 border-t-[#c9f36c] rounded-full animate-spin" />
-                ) : (
-                  <>
-                    <GoogleIcon />
-                    <span>Sign in with Google</span>
-                    <FiArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300 opacity-0 group-hover:opacity-100" />
-                  </>
-                )}
-              </span>
-            </button>
+            {/* Google Login */}
+            {loginMode === "google" && (
+              <button
+                onClick={handleGoogleLogin}
+                disabled={loading}
+                className="relative w-full py-3.5 rounded-xl bg-[#c9f36c]/10 border border-[#c9f36c]/20 text-[#f4f7f2] font-semibold text-sm transition-all duration-300 group overflow-hidden hover:bg-[#c9f36c]/20 hover:border-[#c9f36c]/30 disabled:opacity-40 disabled:cursor-not-allowed"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-[#c9f36c]/10 via-[#a8d94a]/10 to-[#c9f36c]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl" />
+                <span className="relative z-10 flex items-center justify-center gap-3">
+                  {loading ? (
+                    <span className="w-5 h-5 border-2 border-[#c9f36c]/30 border-t-[#c9f36c] rounded-full animate-spin" />
+                  ) : (
+                    <>
+                      <GoogleIcon />
+                      <span>Sign in with Google</span>
+                      <FiArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300 opacity-0 group-hover:opacity-100" />
+                    </>
+                  )}
+                </span>
+              </button>
+            )}
+
+            {/* Email/Password Login */}
+            {loginMode === "email" && (
+              <form onSubmit={handleEmailLogin} className="space-y-4">
+                <div className="relative">
+                  <FiMail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#91a096]" />
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Email address"
+                    required
+                    className="w-full pl-10 pr-4 py-3 rounded-xl bg-[#101412] border border-[#c9f36c]/10 text-[#f4f7f2] text-sm placeholder:text-[#91a096]/50 focus:outline-none focus:border-[#c9f36c]/30 focus:ring-1 focus:ring-[#c9f36c]/20 transition-all duration-300"
+                  />
+                </div>
+                <div className="relative">
+                  <FiLock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#91a096]" />
+                  <input
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Password"
+                    required
+                    className="w-full pl-10 pr-4 py-3 rounded-xl bg-[#101412] border border-[#c9f36c]/10 text-[#f4f7f2] text-sm placeholder:text-[#91a096]/50 focus:outline-none focus:border-[#c9f36c]/30 focus:ring-1 focus:ring-[#c9f36c]/20 transition-all duration-300"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="relative w-full py-3.5 rounded-xl bg-gradient-to-r from-[#c9f36c] to-[#a8d94a] text-[#101412] font-bold text-sm transition-all duration-300 group overflow-hidden hover:shadow-lg hover:shadow-[#c9f36c]/20 disabled:opacity-40 disabled:cursor-not-allowed"
+                >
+                  <span className="relative z-10 flex items-center justify-center gap-3">
+                    {loading ? (
+                      <span className="w-5 h-5 border-2 border-[#101412]/30 border-t-[#101412] rounded-full animate-spin" />
+                    ) : (
+                      <>
+                        <span>Sign In</span>
+                        <FiArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+                      </>
+                    )}
+                  </span>
+                </button>
+              </form>
+            )}
 
             {/* Info text */}
             <p className="text-[#91a096] text-xs text-center leading-relaxed">
-              Only authorized Gmail accounts can access the admin panel.
+              {loginMode === "google"
+                ? "Only authorized Gmail accounts can access the admin panel."
+                : "Use your registered email and password to sign in."}
             </p>
           </div>
 
