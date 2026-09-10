@@ -1,13 +1,13 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
-export async function GET(req: NextRequest) {
+export async function GET() {
   const clientId = process.env.GOOGLE_CLIENT_ID;
   if (!clientId) {
     return NextResponse.json({ error: "Google OAuth not configured" }, { status: 500 });
   }
 
-  const baseUrl = req.nextUrl.origin;
-  const redirectUri = `${baseUrl}/api/admin/auth/google/callback`;
+  // Use hardcoded redirect URI to match Google Console
+  const redirectUri = "https://the-dev-akash.vercel.app/api/admin/auth/google/callback";
 
   const params = new URLSearchParams({
     client_id: clientId,

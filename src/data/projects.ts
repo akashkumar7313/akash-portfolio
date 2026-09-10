@@ -164,7 +164,7 @@ export const projects: Project[] = [
       "FastFit User is the customer-facing application of the FastFit e-commerce platform. It provides users with a smooth and efficient online shopping experience — from product discovery to doorstep delivery. The app is built for speed and performance, ensuring users can browse products, place orders, and track their deliveries without any friction. FastFit operates as a dual-app ecosystem with a separate delivery partner app, ensuring end-to-end order fulfillment management from the customer's tap to the delivery agent's doorstep.",
     techStack: ["Flutter", "Dart", "REST API", "Firebase Cloud Messaging (FCM)", "Razorpay", "Bloc State Management", "Postman", "Figma"],
     androidLink: "https://play.google.com/store/apps/details?id=com.fastfit.user&hl=en",
-    iosLink: "",
+    iosLink: "https://apps.apple.com/us/app/fastfit-user/id6770478471",
     features: [
       "Product catalog browsing with categories and search",
       "Advanced filter and sort options",
@@ -179,7 +179,7 @@ export const projects: Project[] = [
     ],
     role: "Developed the complete customer-facing application including product catalog, cart and checkout system, order placement, real-time delivery tracking, and payment integration. Coordinated with the backend team and delivery app development to ensure seamless order flow across the ecosystem.",
     category: "mobile",
-    appIcon: "",
+    appIcon: "https://play-lh.googleusercontent.com/K0M2WJ7YwN2pP3gJ9WY8D1Z3X7Q6X8V7X0Y4X5Z6X7A8B9C0D1E2F3G4H5I6J7K8L9M0=s512",
   },
   {
     id: 8,
@@ -203,7 +203,7 @@ export const projects: Project[] = [
     ],
     role: "Built the complete delivery partner application including order assignment flow, real-time delivery status management, navigation integration, earnings dashboard, and push notification system for new order alerts.",
     category: "mobile",
-    appIcon: "",
+    appIcon: "https://play-lh.googleusercontent.com/K0M2WJ7YwN2pP3gJ9WY8D1Z3X7Q6X8V7X0Y4X5Z6X7A8B9C0D1E2F3G4H5I6J7K8L9M0=s512",
   },
   {
     id: 9,

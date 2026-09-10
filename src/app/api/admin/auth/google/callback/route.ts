@@ -10,11 +10,13 @@ export async function GET(req: NextRequest) {
 
   const clientId = process.env.GOOGLE_CLIENT_ID;
   const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
-  const adminEmail = process.env.ADMIN_EMAIL;
 
-  if (!clientId || !clientSecret || !adminEmail) {
+  if (!clientId || !clientSecret) {
     return NextResponse.redirect(new URL("/admin/login?error=not_configured", req.url));
   }
+
+  // Use hardcoded redirect URI to avoid origin issues on Vercel
+  const redirectUri = "https://the-dev-akash.vercel.app/api/admin/auth/google/callback";
 
   try {
     // Exchange code for tokens
@@ -25,12 +27,14 @@ export async function GET(req: NextRequest) {
         code,
         client_id: clientId,
         client_secret: clientSecret,
-        redirect_uri: `${req.nextUrl.origin}/api/admin/auth/google/callback`,
+        redirect_uri: redirectUri,
         grant_type: "authorization_code",
       }),
     });
 
     if (!tokenRes.ok) {
+      const errText = await tokenRes.text();
+      console.error("Token exchange failed:", errText);
       return NextResponse.redirect(new URL("/admin/login?error=token_exchange_failed", req.url));
     }
 
@@ -47,38 +51,42 @@ export async function GET(req: NextRequest) {
 
     const user = await userRes.json();
 
-    // Check if email matches admin email
-    const userEmail = (user.email || "").trim().toLowerCase();
     // Only this email is allowed
+    const userEmail = (user.email || "").trim().toLowerCase();
     if (userEmail !== "akashkumarprajapati2003@gmail.com") {
       return NextResponse.redirect(new URL("/admin/login?error=unauthorized", req.url));
     }
 
+    // Build response with redirect to admin
+    const response = NextResponse.redirect("https://the-dev-akash.vercel.app/admin");
+
     // Set session cookie
-    const response = NextResponse.redirect(new URL("/admin", req.url));
     response.cookies.set("admin_token", "authenticated", {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
+      secure: true,
       sameSite: "lax",
-      maxAge: 60 * 60 * 24, // 24 hours
+      maxAge: 60 * 60 * 24,
       path: "/",
+      domain: ".vercel.app",
     });
 
-    // Store user info in cookie for display
+    // Store user info cookie
     response.cookies.set("admin_user", JSON.stringify({
       name: user.name,
       email: user.email,
       picture: user.picture,
     }), {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
+      secure: true,
       sameSite: "lax",
       maxAge: 60 * 60 * 24,
       path: "/",
+      domain: ".vercel.app",
     });
 
     return response;
-  } catch {
+  } catch (e) {
+    console.error("Google auth error:", e);
     return NextResponse.redirect(new URL("/admin/login?error=server_error", req.url));
   }
 }
