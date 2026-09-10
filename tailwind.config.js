@@ -49,8 +49,8 @@ module.exports = {
         },
       },
       fontFamily: {
-        sans: ["DM Sans", "system-ui", "sans-serif"],
-        heading: ["Syne", "sans-serif"],
+        sans: ["Poppins", "system-ui", "sans-serif"],
+        heading: ["Poppins", "sans-serif"],
         mono: ["DM Mono", "monospace"],
       },
       animation: {
