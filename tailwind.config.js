@@ -35,15 +35,17 @@ module.exports = {
           950: "var(--dark-950)",
         },
         accent: {
-          blue: "#6366f1",
-          purple: "#8b5cf6",
-          cyan: "#06b6d4",
+          blue: "#2563eb",
+          purple: "#7c3aed",
+          cyan: "#0891b2",
         },
+        cream: "#f0ece4",
+        muted: "#9a9490",
       },
       fontFamily: {
-        sans: ["Inter", "system-ui", "sans-serif"],
-        heading: ["Poppins", "sans-serif"],
-        mono: ["JetBrains Mono", "monospace"],
+        sans: ["DM Sans", "system-ui", "sans-serif"],
+        heading: ["Syne", "sans-serif"],
+        mono: ["DM Mono", "monospace"],
       },
       animation: {
         "gradient-x": "gradient-x 4s ease infinite",
