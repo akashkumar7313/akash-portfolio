@@ -96,7 +96,7 @@ export default function Projects() {
           <AnimatePresence mode="popLayout">
             {filtered.map((project, idx) => {
               const domain = getDomain(project.title);
-              const gradient = domainGradients[domain] || "from-accent-blue/20 via-accent-purple/20 to-accent-cyan/20";
+              const gradient = domainGradients[domain] || "from-[#c9f36c]/20 via-[#a8d94a]/20 to-[#c9f36c]/20";
               const industry = industryLabels[domain] || domain;
 
               return (
@@ -133,7 +133,7 @@ export default function Projects() {
                         <span className="text-[10px] font-medium text-dark-500 uppercase tracking-wider">{industry}</span>
                       </div>
 
-                      <h3 className="text-dark-100 dark:text-white font-bold text-lg mb-2 group-hover:text-accent-blue transition-colors font-heading">
+                      <h3 className="text-dark-100 dark:text-white font-bold text-lg mb-2 group-hover:text-[#c9f36c] transition-colors font-heading">
                         {project.title}
                       </h3>
 

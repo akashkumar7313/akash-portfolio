@@ -94,17 +94,17 @@ export default function Contact() {
   };
 
   const contactItems = [
-    { icon: FiMail, label: "Email", value: email, color: "text-accent-blue", bg: "bg-accent-blue/10", action: copyEmail },
-    { icon: FiPhone, label: "Phone", value: contactInfo?.phone || "+91 63933 42727", color: "text-accent-purple", bg: "bg-accent-purple/10" },
-    { icon: FiMapPin, label: "Location", value: contactInfo?.location || "Lucknow, Uttar Pradesh, India", color: "text-accent-cyan", bg: "bg-accent-cyan/10" },
-    { icon: FiLinkedin, label: "LinkedIn", value: "/in/akash-kumar-prajapati", link: contactInfo?.linkedin || "https://www.linkedin.com/in/akash-kumar-prajapati/", color: "text-accent-blue", bg: "bg-accent-blue/10" },
+    { icon: FiMail, label: "Email", value: email, color: "text-[#c9f36c]", bg: "bg-[#c9f36c]/10", action: copyEmail },
+    { icon: FiPhone, label: "Phone", value: contactInfo?.phone || "+91 63933 42727", color: "text-[#a8d94a]", bg: "bg-[#a8d94a]/10" },
+    { icon: FiMapPin, label: "Location", value: contactInfo?.location || "Lucknow, Uttar Pradesh, India", color: "text-[#c9f36c]", bg: "bg-[#c9f36c]/10" },
+    { icon: FiLinkedin, label: "LinkedIn", value: "/in/akash-kumar-prajapati", link: contactInfo?.linkedin || "https://www.linkedin.com/in/akash-kumar-prajapati/", color: "text-[#a8d94a]", bg: "bg-[#a8d94a]/10" },
   ];
 
   return (
     <section id="contact" className="section-padding relative overflow-hidden">
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent-blue/30 to-transparent pointer-events-none" />
-      <div className="absolute top-1/4 right-1/4 w-72 h-72 bg-accent-purple/5 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-1/4 left-1/4 w-96 h-96 bg-accent-blue/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#c9f36c]/30 to-transparent pointer-events-none" />
+      <div className="absolute top-1/4 right-1/4 w-72 h-72 bg-[#c9f36c]/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-1/4 left-1/4 w-96 h-96 bg-[#a8d94a]/5 rounded-full blur-[120px] pointer-events-none" />
       <div className="max-width relative z-10 w-full overflow-hidden">
         <SectionHeading title="Get In Touch" subtitle="Have a project in mind? Let's build something great together." icon={<FiMail />} />
 
@@ -125,10 +125,10 @@ export default function Contact() {
               transition={{ duration: 0.4 }}
               className="card relative overflow-hidden group"
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-accent-blue/[0.03] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="absolute inset-0 bg-gradient-to-br from-[#c9f36c]/[0.03] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <h3 className="text-dark-100 dark:text-white font-bold text-lg mb-6 flex items-center gap-2 relative z-10">
-                <span className="w-8 h-8 rounded-lg bg-accent-blue/20 flex items-center justify-center">
-                  <FiMessageCircle className="text-accent-blue" />
+                <span className="w-8 h-8 rounded-lg bg-[#c9f36c]/20 flex items-center justify-center">
+                  <FiMessageCircle className="text-[#c9f36c]" />
                 </span>
                 Contact Info
               </h3>
@@ -148,12 +148,12 @@ export default function Contact() {
                     <div className="flex-1 min-w-0">
                       <p className="text-dark-500 text-[11px] uppercase tracking-wider mb-0.5">{item.label}</p>
                       {"action" in item ? (
-                        <button onClick={item.action} className="text-dark-100 dark:text-white text-sm hover:text-accent-blue transition-colors flex items-center gap-2 w-full text-left">
+                        <button onClick={item.action} className="text-dark-100 dark:text-white text-sm hover:text-[#c9f36c] transition-colors flex items-center gap-2 w-full text-left">
                           <span className="truncate">{item.value}</span>
                           {copied ? <FiCheck className="text-green-500 shrink-0" /> : <FiCopy className="text-dark-500 text-xs shrink-0 opacity-0 group-hover/item:opacity-100 transition-opacity" />}
                         </button>
                       ) : "link" in item ? (
-                        <a href={item.link} target="_blank" rel="noopener noreferrer" className="text-dark-100 dark:text-white text-sm hover:text-accent-blue transition-colors block truncate">
+                        <a href={item.link} target="_blank" rel="noopener noreferrer" className="text-dark-100 dark:text-white text-sm hover:text-[#c9f36c] transition-colors block truncate">
                           {item.value}
                         </a>
                       ) : (
@@ -170,11 +170,11 @@ export default function Contact() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: 0.15 }}
-              className="card bg-gradient-to-br from-accent-blue/[0.04] via-accent-purple/[0.04] to-accent-cyan/[0.04] relative overflow-hidden group"
+              className="card bg-gradient-to-br from-[#c9f36c]/[0.04] via-[#a8d94a]/[0.04] to-[#c9f36c]/[0.04] relative overflow-hidden group"
               whileHover={{ scale: 1.01 }}
             >
-              <div className="absolute -top-16 -right-16 w-32 h-32 bg-accent-blue/10 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700" />
-              <div className="absolute -bottom-8 -left-8 w-20 h-20 bg-accent-purple/10 rounded-full blur-2xl" />
+              <div className="absolute -top-16 -right-16 w-32 h-32 bg-[#c9f36c]/10 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700" />
+              <div className="absolute -bottom-8 -left-8 w-20 h-20 bg-[#a8d94a]/10 rounded-full blur-2xl" />
               <div className="relative z-10">
                 <h4 className="text-dark-100 dark:text-white font-semibold mb-2 flex items-center gap-2">
                   <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" /> Let&apos;s Work Together
@@ -194,12 +194,12 @@ export default function Contact() {
             transition={{ duration: 0.5, delay: 0.2 }}
           >
             <form onSubmit={handleSubmit} className="card space-y-5 relative overflow-hidden">
-              <div className="absolute -top-24 -right-24 w-48 h-48 bg-accent-purple/8 rounded-full blur-3xl pointer-events-none" />
-              <div className="absolute -bottom-16 -left-16 w-32 h-32 bg-accent-blue/8 rounded-full blur-3xl pointer-events-none" />
+              <div className="absolute -top-24 -right-24 w-48 h-48 bg-[#c9f36c]/8 rounded-full blur-3xl pointer-events-none" />
+              <div className="absolute -bottom-16 -left-16 w-32 h-32 bg-[#a8d94a]/8 rounded-full blur-3xl pointer-events-none" />
 
               <h3 className="text-dark-100 dark:text-white font-bold text-lg flex items-center gap-2 relative z-10">
-                <span className="w-8 h-8 rounded-lg bg-accent-purple/20 flex items-center justify-center">
-                  <FiSend className="text-accent-purple" />
+                <span className="w-8 h-8 rounded-lg bg-[#c9f36c]/20 flex items-center justify-center">
+                  <FiSend className="text-[#c9f36c]" />
                 </span>
                 Send a Message
               </h3>
@@ -213,8 +213,8 @@ export default function Contact() {
 
                 return (
                   <div key={field} className="relative z-10">
-                    <div className={`relative flex items-start rounded-xl border transition-all duration-300 ${error ? "border-red-500/50 bg-red-500/5" : isFocused ? "border-accent-blue bg-accent-blue/5 shadow-lg shadow-accent-blue/10" : "border-[var(--glass-10)] bg-[var(--glass-5)] hover:border-[var(--glass-20)]"}`}>
-                      <div className={`flex items-center justify-center pl-4 pt-3.5 ${isFocused ? "text-accent-blue" : error ? "text-red-500" : "text-dark-500"}`}>
+                    <div className={`relative flex items-start rounded-xl border transition-all duration-300 ${error ? "border-red-500/50 bg-red-500/5" : isFocused ? "border-[#c9f36c] bg-[#c9f36c]/5 shadow-lg shadow-[#c9f36c]/10" : "border-[var(--glass-10)] bg-[var(--glass-5)] hover:border-[var(--glass-20)]"}`}>
+                      <div className={`flex items-center justify-center pl-4 pt-3.5 ${isFocused ? "text-[#c9f36c]" : error ? "text-red-500" : "text-dark-500"}`}>
                         <Icon className="text-lg" />
                       </div>
                       <div className="flex-1 relative">
@@ -225,7 +225,7 @@ export default function Contact() {
                           <input type={meta.type} value={form[field]} onChange={(e) => setForm({ ...form, [field]: e.target.value })} onFocus={() => setFocused(field)} onBlur={() => { setFocused(null); setTouched((prev) => new Set(prev).add(field)); }} required={meta.required} placeholder={meta.placeholder}
                             className="w-full pl-3 pr-4 py-3.5 bg-transparent text-dark-100 dark:text-white placeholder:text-transparent focus:outline-none text-sm" />
                         )}
-                        <label className={`absolute left-3 transition-all duration-200 pointer-events-none ${isFocused || hasValue ? "text-[10px] -top-2 text-accent-blue" : "text-sm top-3.5 text-dark-500"}`}>
+                        <label className={`absolute left-3 transition-all duration-200 pointer-events-none ${isFocused || hasValue ? "text-[10px] -top-2 text-[#c9f36c]" : "text-sm top-3.5 text-dark-500"}`}>
                           {meta.label} {meta.required && <span className="text-red-500 ml-0.5">*</span>}
                         </label>
                       </div>
@@ -241,10 +241,10 @@ export default function Contact() {
               })}
 
               <motion.button type="submit" disabled={sending}
-                className="relative z-10 w-full py-3.5 rounded-xl font-semibold text-white transition-all duration-300 bg-gradient-to-r from-accent-blue to-accent-purple overflow-hidden group"
+                className="relative z-10 w-full py-3.5 rounded-xl font-semibold text-[#101412] transition-all duration-300 bg-gradient-to-r from-[#c9f36c] to-[#a8d94a] overflow-hidden group"
                 whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
               >
-                <motion.div className="absolute inset-0 bg-gradient-to-r from-accent-purple via-accent-blue to-accent-cyan bg-[length:200%_100%]"
+                <motion.div className="absolute inset-0 bg-gradient-to-r from-[#c9f36c] via-[#a8d94a] to-[#c9f36c] bg-[length:200%_100%]"
                   animate={{ backgroundPosition: ["0% 0%", "100% 0%"] }} transition={{ repeat: Infinity, duration: 3, ease: "linear" }} />
                 <span className="relative z-10 flex items-center justify-center gap-2">
                   {sending ? (

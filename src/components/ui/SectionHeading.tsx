@@ -25,7 +25,7 @@ export default function SectionHeading({
       className={`mb-16 ${align === "center" ? "text-center" : ""}`}
     >
       <div
-        className={`inline-flex items-center gap-3 px-4 py-2 rounded-full bg-[var(--glass-5)] border border-[var(--glass-10)] text-accent-blue text-sm font-medium mb-4 ${
+        className={`inline-flex items-center gap-3 px-4 py-2 rounded-full bg-[var(--glass-5)] border border-[var(--glass-10)] text-[#c9f36c] dark:text-[#c9f36c] text-sm font-medium mb-4 ${
           align === "center" ? "mx-auto" : ""
         }`}
       >

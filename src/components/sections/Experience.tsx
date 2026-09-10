@@ -41,8 +41,8 @@ export default function Experience() {
 
   return (
     <section id="experience" className="section-padding relative overflow-hidden">
-      <div className="absolute top-20 right-10 w-32 h-32 bg-accent-blue/5 rounded-full blur-3xl animate-float pointer-events-none" />
-      <div className="absolute bottom-20 left-10 w-40 h-40 bg-accent-purple/5 rounded-full blur-3xl animate-float pointer-events-none" style={{ animationDelay: "2s" }} />
+      <div className="absolute top-20 right-10 w-32 h-32 bg-[#c9f36c]/5 rounded-full blur-3xl animate-float pointer-events-none" />
+      <div className="absolute bottom-20 left-10 w-40 h-40 bg-[#a8d94a]/5 rounded-full blur-3xl animate-float pointer-events-none" style={{ animationDelay: "2s" }} />
       <div className="max-width relative z-10">
         <SectionHeading title="Work Experience" subtitle="My professional journey in software development" icon={<FiBriefcase />} />
 

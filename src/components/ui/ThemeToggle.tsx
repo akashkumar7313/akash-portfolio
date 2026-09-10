@@ -30,7 +30,7 @@ export default function ThemeToggle() {
         transition={{ duration: 0.3 }}
       >
         {isDark ? (
-          <FiMoon className="text-accent-blue text-sm" />
+          <FiMoon className="text-[#c9f36c] text-sm" />
         ) : (
           <FiSun className="text-amber-500 text-sm" />
         )}

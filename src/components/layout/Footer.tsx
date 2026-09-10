@@ -27,7 +27,7 @@ const socialLinks = [
   { icon: FiGithub, href: "https://github.com/akashkumar7313", label: "GitHub", color: "hover:text-white" },
   { icon: FiLinkedin, href: "https://www.linkedin.com/in/akash-kumar-prajapati/", label: "LinkedIn", color: "hover:text-blue-400" },
   { icon: FaWhatsapp, href: "https://wa.me/916393342727?text=Hi%20Akash!%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20connect.", label: "WhatsApp", color: "hover:text-green-400" },
-  { icon: FiMail, href: "mailto:akashkumarprajapati2003@gmail.com", label: "Email", color: "hover:text-accent-blue" },
+  { icon: FiMail, href: "mailto:akashkumarprajapati2003@gmail.com", label: "Email", color: "hover:text-[#c9f36c]" },
 ];
 
 export default function Footer() {
@@ -43,12 +43,12 @@ export default function Footer() {
         whileInView={{ scaleX: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 1 }}
-        className="h-px bg-gradient-to-r from-transparent via-accent-blue/40 to-transparent origin-center"
+        className="h-px bg-gradient-to-r from-transparent via-[#c9f36c]/40 to-transparent origin-center"
       />
 
       {/* Background glow */}
-      <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-accent-blue/5 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute top-0 right-1/4 w-64 h-64 bg-accent-purple/5 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-[#c9f36c]/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-0 right-1/4 w-64 h-64 bg-[#a8d94a]/5 rounded-full blur-[100px] pointer-events-none" />
 
       <div className="max-width px-4 py-12 sm:px-8 md:py-16 relative">
         {/* Top section - CTA */}
@@ -69,7 +69,7 @@ export default function Footer() {
           </p>
           <Link
             href="/contact"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-accent-blue to-accent-purple text-white text-sm font-semibold shadow-lg shadow-accent-blue/20 hover:shadow-accent-blue/40 hover:scale-105 transition-all duration-300 group"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-[#c9f36c] to-[#a8d94a] text-[#101412] text-sm font-semibold shadow-lg shadow-[#c9f36c]/20 hover:shadow-[#c9f36c]/40 hover:scale-105 transition-all duration-300 group"
           >
             <FiSend className="group-hover:translate-x-1 transition-transform" />
             Start a Conversation
@@ -88,8 +88,8 @@ export default function Footer() {
           >
             <Link href="/" className="inline-flex items-center gap-2.5 group mb-4">
               <div className="relative">
-                <div className="absolute -inset-1 bg-gradient-to-br from-accent-blue to-accent-purple rounded-xl blur opacity-30 group-hover:opacity-60 transition-opacity duration-500" />
-                <div className="relative w-9 h-9 rounded-xl bg-gradient-to-br from-accent-blue to-accent-purple flex items-center justify-center shadow-lg shadow-accent-blue/20 group-hover:shadow-accent-blue/40 group-hover:scale-110 transition-all duration-500">
+                <div className="absolute -inset-1 bg-gradient-to-br from-[#c9f36c] to-[#a8d94a] rounded-xl blur opacity-30 group-hover:opacity-60 transition-opacity duration-500" />
+                <div className="relative w-9 h-9 rounded-xl bg-gradient-to-br from-[#c9f36c] to-[#a8d94a] flex items-center justify-center shadow-lg shadow-[#c9f36c]/20 group-hover:shadow-[#c9f36c]/40 group-hover:scale-110 transition-all duration-500">
                   <span className="text-white font-bold text-base font-heading">A</span>
                 </div>
               </div>
@@ -104,17 +104,17 @@ export default function Footer() {
 
             <div className="flex items-center gap-3 mb-4">
               <div className="flex items-center gap-2 text-dark-400 text-xs">
-                <FiMapPin className="text-accent-blue" />
+                <FiMapPin className="text-[#c9f36c]" />
                 <span>Lucknow, India</span>
               </div>
               <div className="flex items-center gap-2 text-dark-400 text-xs">
-                <FiPhone className="text-accent-purple" />
+                <FiPhone className="text-[#a8d94a]" />
                 <span>+91 63933 42727</span>
               </div>
             </div>
 
             <div className="flex items-center gap-2">
-              <span className="text-2xl font-black font-heading text-accent-blue tabular-nums">
+              <span className="text-2xl font-black font-heading text-[#c9f36c] tabular-nums">
                 {isInView ? <CountUp end={4} duration={2} /> : 0}
               </span>
               <span className="text-dark-400 text-xs">+ Years of Experience</span>
@@ -213,9 +213,9 @@ export default function Footer() {
             &copy; {year} Copyright by Akash Kumar Prajapati
           </p>
           <div className="flex items-center gap-1.5">
-            <div className="w-8 h-0.5 rounded-full bg-gradient-to-r from-transparent to-accent-blue/30" />
-            <div className="w-1.5 h-1.5 rounded-full bg-accent-blue/40" />
-            <div className="w-8 h-0.5 rounded-full bg-gradient-to-l from-transparent to-accent-purple/30" />
+            <div className="w-8 h-0.5 rounded-full bg-gradient-to-r from-transparent to-[#c9f36c]/30" />
+            <div className="w-1.5 h-1.5 rounded-full bg-[#c9f36c]/40" />
+            <div className="w-8 h-0.5 rounded-full bg-gradient-to-l from-transparent to-[#a8d94a]/30" />
           </div>
         </motion.div>
       </div>

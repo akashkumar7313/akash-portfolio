@@ -104,7 +104,7 @@ export default function Chatbot() {
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
         onClick={() => setOpen(true)}
-        className="fixed bottom-24 lg:bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-gradient-to-r from-accent-blue to-accent-purple flex items-center justify-center text-white text-2xl shadow-lg shadow-accent-blue/30 hover:shadow-accent-blue/50 hover:shadow-xl transition-shadow duration-300"
+        className="fixed bottom-24 lg:bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-gradient-to-r from-[#c9f36c] to-[#a8d94a] flex items-center justify-center text-[#101412] text-2xl shadow-lg shadow-[#c9f36c]/30 hover:shadow-[#c9f36c]/50 hover:shadow-xl transition-shadow duration-300"
         aria-label="Open chatbot"
       >
         <HiSparkles />
@@ -120,7 +120,7 @@ export default function Chatbot() {
             className="fixed bottom-24 right-6 z-50 w-[92%] sm:w-96 h-[520px] max-h-[70vh] flex flex-col rounded-2xl border border-[var(--glass-10)] bg-dark-900/95 backdrop-blur-2xl shadow-2xl shadow-black/50 overflow-hidden"
           >
             {/* Header */}
-            <div className="flex items-center justify-between px-5 py-4 border-b border-[var(--glass-5)] bg-gradient-to-r from-accent-blue/10 to-accent-purple/10">
+            <div className="flex items-center justify-between px-5 py-4 border-b border-[var(--glass-5)] bg-gradient-to-r from-[#c9f36c]/10 to-[#a8d94a]/10">
               <div className="flex items-center gap-3">
                 <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-accent-blue to-accent-purple flex items-center justify-center">
                   <FiCpu className="text-dark-100 dark:text-white text-sm" />
