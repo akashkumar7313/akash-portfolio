@@ -79,6 +79,7 @@ function LoginForm() {
       });
 
       if (res.ok) {
+        sessionStorage.setItem("admin_session", "authenticated");
         router.push("/admin");
       } else {
         const data = await res.json();
