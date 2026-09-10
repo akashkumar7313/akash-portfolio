@@ -7,7 +7,7 @@ import { FiShield, FiArrowRight } from "react-icons/fi";
 function FloatingParticle({ delay, size, x, y }: { delay: number; size: number; x: number; y: number }) {
   return (
     <div
-      className="absolute rounded-full bg-indigo-500/20 blur-sm animate-pulse"
+      className="absolute rounded-full bg-[#c9f36c]/20 blur-sm animate-pulse"
       style={{
         width: size,
         height: size,
@@ -72,11 +72,11 @@ function LoginForm() {
   }));
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#06060b] relative overflow-hidden">
+    <div className="min-h-screen flex items-center justify-center bg-[#101412] relative overflow-hidden">
       {/* Animated gradient orbs */}
-      <div className="absolute top-[-20%] left-[-10%] w-[500px] h-[500px] bg-indigo-600/10 rounded-full blur-[120px] animate-pulse" style={{ animationDuration: "4s" }} />
-      <div className="absolute bottom-[-20%] right-[-10%] w-[400px] h-[400px] bg-purple-600/10 rounded-full blur-[120px] animate-pulse" style={{ animationDuration: "5s", animationDelay: "1s" }} />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-cyan-600/5 rounded-full blur-[100px] animate-pulse" style={{ animationDuration: "6s", animationDelay: "2s" }} />
+      <div className="absolute top-[-20%] left-[-10%] w-[500px] h-[500px] bg-[#c9f36c]/10 rounded-full blur-[120px] animate-pulse" style={{ animationDuration: "4s" }} />
+      <div className="absolute bottom-[-20%] right-[-10%] w-[400px] h-[400px] bg-[#a8d94a]/10 rounded-full blur-[120px] animate-pulse" style={{ animationDuration: "5s", animationDelay: "1s" }} />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-[#c9f36c]/5 rounded-full blur-[100px] animate-pulse" style={{ animationDuration: "6s", animationDelay: "2s" }} />
 
       {/* Floating particles */}
       {particles.map((p) => (
@@ -84,30 +84,30 @@ function LoginForm() {
       ))}
 
       {/* Grid lines */}
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(99,102,241,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(99,102,241,0.03)_1px,transparent_1px)] bg-[size:60px_60px] pointer-events-none" />
+      <div className="absolute inset-0 bg-[linear-gradient(rgba(201,243,108,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(201,243,108,0.03)_1px,transparent_1px)] bg-[size:60px_60px] pointer-events-none" />
 
       <div className={`relative w-full max-w-sm mx-4 transition-all duration-1000 ${mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
         {/* Glow effect behind card */}
-        <div className="absolute -inset-2 bg-gradient-to-r from-indigo-500/30 via-purple-500/30 to-pink-500/30 rounded-3xl blur-2xl opacity-40 animate-pulse" style={{ animationDuration: "3s" }} />
+        <div className="absolute -inset-2 bg-gradient-to-r from-[#c9f36c]/30 via-[#a8d94a]/30 to-[#c9f36c]/30 rounded-3xl blur-2xl opacity-40 animate-pulse" style={{ animationDuration: "3s" }} />
 
         {/* Card */}
-        <div className="relative bg-[#0c0c14]/80 backdrop-blur-xl border border-white/[0.06] rounded-2xl p-8 shadow-2xl shadow-black/50">
+        <div className="relative bg-[#151b17]/80 backdrop-blur-xl border border-[#c9f36c]/10 rounded-2xl p-8 shadow-2xl shadow-black/50">
           {/* Animated border gradient */}
-          <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-indigo-500/10 via-transparent to-purple-500/10 pointer-events-none" />
+          <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-[#c9f36c]/10 via-transparent to-[#c9f36c]/10 pointer-events-none" />
 
           <div className="relative text-center mb-8">
             {/* Logo with animated ring */}
             <div className="relative w-20 h-20 mx-auto mb-6">
-              <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 animate-spin" style={{ animationDuration: "8s" }} />
-              <div className="absolute inset-[2px] rounded-2xl bg-[#0c0c14] flex items-center justify-center">
-                <span className="text-3xl font-black bg-gradient-to-br from-indigo-400 to-purple-400 bg-clip-text text-transparent">A</span>
+              <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-[#c9f36c] to-[#a8d94a] animate-spin" style={{ animationDuration: "8s" }} />
+              <div className="absolute inset-[2px] rounded-2xl bg-[#151b17] flex items-center justify-center">
+                <span className="text-3xl font-black bg-gradient-to-br from-[#c9f36c] to-[#a8d94a] bg-clip-text text-transparent">A</span>
               </div>
             </div>
 
-            <h1 className="text-white text-2xl font-bold tracking-tight">
+            <h1 className="text-[#f4f7f2] text-2xl font-bold tracking-tight">
               Welcome back
             </h1>
-            <p className="text-slate-500 text-sm mt-2">Sign in with your Google account</p>
+            <p className="text-[#91a096] text-sm mt-2">Sign in with your Google account</p>
           </div>
 
           <div className="space-y-5 relative">
@@ -123,14 +123,14 @@ function LoginForm() {
             <button
               onClick={handleGoogleLogin}
               disabled={loading}
-              className="relative w-full py-3.5 rounded-xl bg-white/[0.06] border border-white/[0.08] text-white font-semibold text-sm transition-all duration-300 group overflow-hidden hover:bg-white/[0.1] hover:border-white/[0.12] disabled:opacity-40 disabled:cursor-not-allowed"
+              className="relative w-full py-3.5 rounded-xl bg-[#c9f36c]/10 border border-[#c9f36c]/20 text-[#f4f7f2] font-semibold text-sm transition-all duration-300 group overflow-hidden hover:bg-[#c9f36c]/20 hover:border-[#c9f36c]/30 disabled:opacity-40 disabled:cursor-not-allowed"
             >
               {/* Hover glow */}
-              <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-pink-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl" />
+              <div className="absolute inset-0 bg-gradient-to-r from-[#c9f36c]/10 via-[#a8d94a]/10 to-[#c9f36c]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl" />
 
               <span className="relative z-10 flex items-center justify-center gap-3">
                 {loading ? (
-                  <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  <span className="w-5 h-5 border-2 border-[#c9f36c]/30 border-t-[#c9f36c] rounded-full animate-spin" />
                 ) : (
                   <>
                     <GoogleIcon />
@@ -142,16 +142,16 @@ function LoginForm() {
             </button>
 
             {/* Info text */}
-            <p className="text-slate-600 text-xs text-center leading-relaxed">
+            <p className="text-[#91a096] text-xs text-center leading-relaxed">
               Only authorized Gmail accounts can access the admin panel.
             </p>
           </div>
 
           {/* Bottom decoration */}
           <div className="mt-6 flex items-center justify-center gap-1.5">
-            <div className="w-8 h-0.5 rounded-full bg-gradient-to-r from-transparent to-indigo-500/30" />
-            <div className="w-1.5 h-1.5 rounded-full bg-indigo-500/40" />
-            <div className="w-8 h-0.5 rounded-full bg-gradient-to-l from-transparent to-purple-500/30" />
+            <div className="w-8 h-0.5 rounded-full bg-gradient-to-r from-transparent to-[#c9f36c]/30" />
+            <div className="w-1.5 h-1.5 rounded-full bg-[#c9f36c]/40" />
+            <div className="w-8 h-0.5 rounded-full bg-gradient-to-l from-transparent to-[#c9f36c]/30" />
           </div>
         </div>
       </div>
@@ -162,8 +162,8 @@ function LoginForm() {
 export default function AdminLogin() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen flex items-center justify-center bg-[#06060b]">
-        <div className="w-10 h-10 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin" />
+      <div className="min-h-screen flex items-center justify-center bg-[#101412]">
+        <div className="w-10 h-10 border-2 border-[#c9f36c] border-t-transparent rounded-full animate-spin" />
       </div>
     }>
       <LoginForm />

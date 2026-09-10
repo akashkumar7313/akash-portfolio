@@ -24,23 +24,23 @@ export default function AdminSidebar({
       {mobileOpen && (
         <div className="fixed inset-0 bg-black/70 backdrop-blur-md z-30 lg:hidden" onClick={onMobileClose} />
       )}
-      <aside className={`fixed inset-y-0 left-0 z-40 w-64 h-screen bg-[#08080e]/95 backdrop-blur-xl border-r border-white/[0.04] flex flex-col transition-all duration-500 ease-out ${
+      <aside className={`fixed inset-y-0 left-0 z-40 w-64 h-screen bg-[#101412]/95 backdrop-blur-xl border-r border-[#c9f36c]/10 flex flex-col transition-all duration-500 ease-out ${
         mobileOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
       }`}>
         {/* Animated top glow */}
-        <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-indigo-500/5 to-transparent pointer-events-none" />
+        <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-[#c9f36c]/5 to-transparent pointer-events-none" />
 
         {/* Logo */}
-        <div className="h-16 flex items-center gap-3 px-5 border-b border-white/[0.04] flex-shrink-0 relative">
+        <div className="h-16 flex items-center gap-3 px-5 border-b border-[#c9f36c]/10 flex-shrink-0 relative">
           <div className="relative group">
-            <div className="absolute -inset-1 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl blur opacity-30 group-hover:opacity-60 transition-opacity duration-500" />
-            <div className="relative w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white text-sm font-bold shadow-lg shadow-indigo-500/20">
+            <div className="absolute -inset-1 bg-gradient-to-br from-[#c9f36c] to-[#a8d94a] rounded-xl blur opacity-30 group-hover:opacity-60 transition-opacity duration-500" />
+            <div className="relative w-9 h-9 rounded-xl bg-gradient-to-br from-[#c9f36c] to-[#a8d94a] flex items-center justify-center text-[#101412] text-sm font-bold shadow-lg shadow-[#c9f36c]/20">
               A
             </div>
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-white font-semibold text-sm leading-tight truncate">Portfolio</p>
-            <p className="text-slate-600 text-[10px] leading-tight truncate">Admin Dashboard</p>
+            <p className="text-[#f4f7f2] font-semibold text-sm leading-tight truncate">Portfolio</p>
+            <p className="text-[#91a096] text-[10px] leading-tight truncate">Admin Dashboard</p>
           </div>
         </div>
 
@@ -59,18 +59,18 @@ export default function AdminSidebar({
                 onMouseLeave={() => setHoveredItem(null)}
                 className={`w-full flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all duration-300 group relative overflow-hidden ${
                   isActive
-                    ? "text-white"
-                    : "text-slate-500 hover:text-slate-300"
+                    ? "text-[#f4f7f2]"
+                    : "text-[#91a096] hover:text-[#f4f7f2]"
                 }`}
               >
                 {/* Active background */}
                 {isActive && (
-                  <div className="absolute inset-0 bg-white/[0.06] rounded-xl" />
+                  <div className="absolute inset-0 bg-[#c9f36c]/10 rounded-xl" />
                 )}
 
                 {/* Hover glow */}
                 {isHovered && !isActive && (
-                  <div className="absolute inset-0 bg-white/[0.02] rounded-xl" />
+                  <div className="absolute inset-0 bg-[#c9f36c]/5 rounded-xl" />
                 )}
 
                 {/* Active left indicator with glow */}
@@ -93,8 +93,8 @@ export default function AdminSidebar({
                 {cnt !== null && (
                   <span className={`text-[10px] px-1.5 py-0.5 rounded-md font-mono relative z-10 transition-all duration-300 ${
                     isActive
-                      ? "text-white"
-                      : "bg-white/[0.03] text-slate-600"
+                      ? "text-[#101412]"
+                      : "bg-[#c9f36c]/5 text-[#91a096]"
                   }`}
                     style={isActive ? { backgroundColor: `${meta.color}20`, color: meta.color } : {}}>
                     {cnt}
@@ -106,22 +106,22 @@ export default function AdminSidebar({
         </nav>
 
         {/* Bottom section */}
-        <div className="p-2.5 border-t border-white/[0.04] space-y-0.5 flex-shrink-0 relative">
-          <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-indigo-500/3 to-transparent pointer-events-none" />
+        <div className="p-2.5 border-t border-[#c9f36c]/10 space-y-0.5 flex-shrink-0 relative">
+          <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-[#c9f36c]/3 to-transparent pointer-events-none" />
 
           {/* User info */}
           {user && (
             <div className="flex items-center gap-3 px-3.5 py-2.5 mb-1">
               {user.picture ? (
-                <img src={user.picture} alt={user.name || "Admin"} className="w-8 h-8 rounded-full ring-2 ring-white/10" />
+                <img src={user.picture} alt={user.name || "Admin"} className="w-8 h-8 rounded-full ring-2 ring-[#c9f36c]/20" />
               ) : (
-                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white text-xs font-bold">
+                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#c9f36c] to-[#a8d94a] flex items-center justify-center text-[#101412] text-xs font-bold">
                   {user.name?.charAt(0) || "A"}
                 </div>
               )}
               <div className="flex-1 min-w-0">
-                <p className="text-white text-xs font-medium truncate">{user.name || "Admin"}</p>
-                <p className="text-slate-600 text-[10px] truncate">{user.email || ""}</p>
+                <p className="text-[#f4f7f2] text-xs font-medium truncate">{user.name || "Admin"}</p>
+                <p className="text-[#91a096] text-[10px] truncate">{user.email || ""}</p>
               </div>
             </div>
           )}
@@ -129,7 +129,7 @@ export default function AdminSidebar({
           <a
             href="/"
             target="_blank"
-            className="relative flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl text-sm text-slate-500 hover:text-slate-300 hover:bg-white/[0.03] transition-all duration-300 group"
+            className="relative flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl text-sm text-[#91a096] hover:text-[#f4f7f2] hover:bg-[#c9f36c]/5 transition-all duration-300 group"
           >
             <FiExternalLink className="w-4 h-4 group-hover:rotate-45 transition-transform duration-300" />
             <span>View Site</span>

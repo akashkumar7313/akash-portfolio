@@ -16,18 +16,18 @@ type SectionKey = string;
 interface SiteData { [key: string]: unknown; }
 
 const sectionMeta: Record<string, { label: string; icon: React.ReactNode; color: string; desc: string }> = {
-  overview:    { label: "Overview",    icon: <FiGrid />,         color: "#6366f1", desc: "Dashboard analytics" },
-  hero:        { label: "Hero",        icon: <FiStar />,         color: "#6366f1", desc: "Hero section content" },
-  about:       { label: "About",       icon: <FiUser />,         color: "#10b981", desc: "About section content" },
-  skills:      { label: "Skills",      icon: <FiTool />,         color: "#f59e0b", desc: "Skills & categories" },
-  experience:  { label: "Experience",  icon: <FiBriefcase />,    color: "#8b5cf6", desc: "Work experience" },
-  education:   { label: "Education",   icon: <FiBook />,         color: "#06b6d4", desc: "Education & achievements" },
-  projects:    { label: "Projects",    icon: <FiFolder />,       color: "#ec4899", desc: "Portfolio projects" },
-  testimonials:{ label:"Testimonials", icon: <FiMessageSquare />,color: "#d97706", desc: "Client testimonials" },
-  stats:       { label: "Stats",       icon: <FiBarChart2 />,    color: "#84cc16", desc: "Statistics" },
-  contact:     { label: "Contact",     icon: <FiMail />,         color: "#0ea5e9", desc: "Contact information" },
-  settings:    { label: "Settings",    icon: <FiSettings />,     color: "#64748b", desc: "Site configuration" },
-  socialLinks: { label: "Social Links",icon: <FiLink />,         color: "#f43f5e", desc: "Social media links" },
+  overview:    { label: "Overview",    icon: <FiGrid />,         color: "#c9f36c", desc: "Dashboard analytics" },
+  hero:        { label: "Hero",        icon: <FiStar />,         color: "#c9f36c", desc: "Hero section content" },
+  about:       { label: "About",       icon: <FiUser />,         color: "#a8d94a", desc: "About section content" },
+  skills:      { label: "Skills",      icon: <FiTool />,         color: "#c9f36c", desc: "Skills & categories" },
+  experience:  { label: "Experience",  icon: <FiBriefcase />,    color: "#a8d94a", desc: "Work experience" },
+  education:   { label: "Education",   icon: <FiBook />,         color: "#c9f36c", desc: "Education & achievements" },
+  projects:    { label: "Projects",    icon: <FiFolder />,       color: "#a8d94a", desc: "Portfolio projects" },
+  testimonials:{ label:"Testimonials", icon: <FiMessageSquare />,color: "#c9f36c", desc: "Client testimonials" },
+  stats:       { label: "Stats",       icon: <FiBarChart2 />,    color: "#a8d94a", desc: "Statistics" },
+  contact:     { label: "Contact",     icon: <FiMail />,         color: "#c9f36c", desc: "Contact information" },
+  settings:    { label: "Settings",    icon: <FiSettings />,     color: "#91a096", desc: "Site configuration" },
+  socialLinks: { label: "Social Links",icon: <FiLink />,         color: "#a8d94a", desc: "Social media links" },
 };
 
 export default function AdminDashboard() {
@@ -135,20 +135,20 @@ export default function AdminDashboard() {
 
   if (!data) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#06060b] relative overflow-hidden">
+      <div className="min-h-screen flex items-center justify-center bg-[#101412] relative overflow-hidden">
         {/* Animated bg */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(99,102,241,0.08)_0%,transparent_60%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(201,243,108,0.08)_0%,transparent_60%)]" />
 
         <div className="text-center relative">
           <div className="relative w-16 h-16 mx-auto mb-6">
-            <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 animate-spin" style={{ animationDuration: "3s" }} />
-            <div className="absolute inset-[2px] rounded-2xl bg-[#06060b] flex items-center justify-center">
-              <span className="text-2xl font-black bg-gradient-to-br from-indigo-400 to-purple-400 bg-clip-text text-transparent">A</span>
+            <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-[#c9f36c] to-[#a8d94a] animate-spin" style={{ animationDuration: "3s" }} />
+            <div className="absolute inset-[2px] rounded-2xl bg-[#101412] flex items-center justify-center">
+              <span className="text-2xl font-black bg-gradient-to-br from-[#c9f36c] to-[#a8d94a] bg-clip-text text-transparent">A</span>
             </div>
           </div>
-          <p className="text-slate-500 text-sm font-medium">Loading dashboard...</p>
-          <div className="mt-3 w-32 h-1 rounded-full bg-white/[0.05] overflow-hidden mx-auto">
-            <div className="h-full bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full animate-[loading_1.5s_ease-in-out_infinite]" />
+          <p className="text-[#91a096] text-sm font-medium">Loading dashboard...</p>
+          <div className="mt-3 w-32 h-1 rounded-full bg-[#c9f36c]/10 overflow-hidden mx-auto">
+            <div className="h-full bg-gradient-to-r from-[#c9f36c] to-[#a8d94a] rounded-full animate-[loading_1.5s_ease-in-out_infinite]" />
           </div>
         </div>
       </div>
@@ -156,7 +156,7 @@ export default function AdminDashboard() {
   }
 
   return (
-    <div className="h-screen overflow-hidden bg-[#06060b] flex">
+    <div className="h-screen overflow-hidden bg-[#101412] flex">
       <AdminSidebar
         sectionMeta={sectionMeta}
         activeTab={activeTab}
@@ -225,9 +225,9 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        <footer className="flex-shrink-0 px-6 py-3 border-t border-white/[0.03] bg-[#06060b]/80 flex items-center justify-between text-[10px] text-slate-600">
+        <footer className="flex-shrink-0 px-6 py-3 border-t border-[#c9f36c]/10 bg-[#101412]/80 flex items-center justify-between text-[10px] text-[#91a096]">
           <span className="flex items-center gap-1.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500/70" />
+            <span className="w-1.5 h-1.5 rounded-full bg-[#c9f36c]" />
             Portfolio Admin v2.0
           </span>
           <span>&copy; {new Date().getFullYear()}</span>
