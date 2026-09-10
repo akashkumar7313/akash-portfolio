@@ -215,14 +215,14 @@ export default function Hero() {
     resize();
     window.addEventListener("resize", resize);
 
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 80; i++) {
       pts.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 0.6,
-        vy: (Math.random() - 0.5) * 0.6,
-        size: Math.random() * 3 + 0.5,
-        alpha: Math.random() * 0.4 + 0.05,
+        vx: (Math.random() - 0.5) * 0.4,
+        vy: (Math.random() - 0.5) * 0.4,
+        size: Math.random() * 5 + 2,
+        alpha: Math.random() * 0.5 + 0.1,
       });
     }
 
