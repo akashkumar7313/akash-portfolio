@@ -5,29 +5,29 @@
 @tailwind utilities;
 
 :root {
-  --dark-50: #f4f7f2;
-  --dark-100: #f4f7f2;
-  --dark-200: #dcffbc;
-  --dark-300: #91a096;
-  --dark-400: #6b7a70;
-  --dark-500: #4a5a50;
-  --dark-600: #2a3a30;
-  --dark-700: #1b221d;
-  --dark-800: #151b17;
-  --dark-900: #101412;
-  --dark-950: #0a0d0b;
-  --bg-body: #f4f7f2;
+  --dark-50: #101412;
+  --dark-100: #1b221d;
+  --dark-200: #374151;
+  --dark-300: #4b5563;
+  --dark-400: #6b7280;
+  --dark-500: #9ca3af;
+  --dark-600: #d1d5db;
+  --dark-700: #e5e7eb;
+  --dark-800: #f3f4f6;
+  --dark-900: #f9fafb;
+  --dark-950: #ffffff;
+  --bg-body: #ffffff;
   --text-primary: #101412;
-  --glass-bg: rgba(255,255,255,0.6);
-  --glass-border: rgba(0,0,0,0.12);
-  --glass-5: rgba(0,0,0,0.04);
-  --glass-10: rgba(0,0,0,0.08);
-  --glass-20: rgba(0,0,0,0.12);
-  --glass-30: rgba(0,0,0,0.2);
-  --glass-60: rgba(0,0,0,0.4);
-  --glass-80: rgba(0,0,0,0.6);
-  --card-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
-  --card-hover-shadow: 0 10px 25px rgba(0,0,0,0.08), 0 4px 10px rgba(0,0,0,0.04);
+  --glass-bg: rgba(255,255,255,0.8);
+  --glass-border: rgba(0,0,0,0.08);
+  --glass-5: rgba(0,0,0,0.03);
+  --glass-10: rgba(0,0,0,0.05);
+  --glass-20: rgba(0,0,0,0.08);
+  --glass-30: rgba(0,0,0,0.12);
+  --glass-60: rgba(0,0,0,0.25);
+  --glass-80: rgba(0,0,0,0.4);
+  --card-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
+  --card-hover-shadow: 0 10px 25px rgba(0,0,0,0.1), 0 4px 10px rgba(0,0,0,0.05);
 }
 
 .dark {
@@ -85,12 +85,20 @@
   }
 
   ::-webkit-scrollbar-track {
+    background: #f3f4f6;
+  }
+
+  .dark ::-webkit-scrollbar-track {
     background: #101412;
   }
 
   ::-webkit-scrollbar-thumb {
-    background: #2a3a30;
+    background: #d1d5db;
     border-radius: 3px;
+  }
+
+  .dark ::-webkit-scrollbar-thumb {
+    background: #2a3a30;
   }
 
   ::-webkit-scrollbar-thumb:hover {
