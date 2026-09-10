@@ -34,7 +34,7 @@ export default function AdminSidebar({
         <div className="h-16 flex items-center gap-3 px-5 border-b border-[#c9f36c]/10 flex-shrink-0 relative">
           <div className="relative group">
             <div className="absolute -inset-1 bg-gradient-to-br from-[#c9f36c] to-[#a8d94a] rounded-xl blur opacity-30 group-hover:opacity-60 transition-opacity duration-500" />
-            <div className="relative w-9 h-9 rounded-xl bg-gradient-to-br from-[#c9f36c] to-[#a8d94a] flex items-center justify-center text-[#101412] text-lg font-bold shadow-lg shadow-[#c9f36c]/20">
+            <div className="relative w-9 h-9 rounded-xl bg-gradient-to-br from-[#c9f36c] to-[#a8d94a] flex items-center justify-center text-[#101412] font-black text-xl shadow-lg shadow-[#c9f36c]/20" style={{ fontFamily: 'Poppins, sans-serif' }}>
               A
             </div>
           </div>

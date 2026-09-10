@@ -55,7 +55,7 @@ export default function Navbar() {
           <div className="relative">
             <div className="absolute -inset-1 bg-gradient-to-br from-[#c9f36c] to-[#a8d94a] rounded-xl blur opacity-30 group-hover:opacity-60 transition-opacity duration-500" />
             <div className="relative w-9 h-9 rounded-xl bg-gradient-to-br from-[#c9f36c] to-[#a8d94a] flex items-center justify-center shadow-lg shadow-[#c9f36c]/20 group-hover:shadow-[#c9f36c]/40 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500">
-              <span className="text-[#101412] font-bold text-lg font-heading">A</span>
+              <span className="text-[#101412] font-black text-xl" style={{ fontFamily: 'Poppins, sans-serif' }}>A</span>
             </div>
           </div>
           <span className="text-xl md:text-2xl font-bold gradient-text">
