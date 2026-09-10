@@ -3,10 +3,11 @@ out/
 node_modules/
 
 # local env files
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+.env*.local
+.env
 
 # vercel
 .vercel
+
+# downloaded reference files
+saveweb2zip-com-rishabhdashboard-vercel-app/
