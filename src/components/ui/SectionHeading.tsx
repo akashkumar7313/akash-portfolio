@@ -39,6 +39,22 @@ export default function SectionHeading({
       >
         {title}
       </h2>
+
+      {/* Unique decorative line */}
+      <motion.div
+        initial={{ scaleX: 0, opacity: 0 }}
+        whileInView={{ scaleX: 1, opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8, delay: 0.2 }}
+        className={`flex items-center justify-center gap-3 mt-4 mb-4 ${align === "center" ? "mx-auto" : ""}`}
+      >
+        <div className="w-12 h-[2px] bg-gradient-to-r from-transparent to-[#c9f36c]/50 rounded-full" />
+        <div className="w-2 h-2 rounded-full bg-[#c9f36c] animate-pulse" />
+        <div className="w-20 h-[2px] bg-gradient-to-r from-[#c9f36c]/30 via-[#c9f36c] to-[#c9f36c]/30 rounded-full" />
+        <div className="w-2 h-2 rounded-full bg-[#a8d94a] animate-pulse" />
+        <div className="w-12 h-[2px] bg-gradient-to-l from-transparent to-[#a8d94a]/50 rounded-full" />
+      </motion.div>
+
       {subtitle && (
         <p
           className={`section-subtitle ${
