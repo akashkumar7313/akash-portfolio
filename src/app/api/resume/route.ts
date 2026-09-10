@@ -1,25 +1,23 @@
-import { NextRequest, NextResponse } from "next/server";
-import fs from "fs";
-import path from "path";
+import { NextResponse } from "next/server";
+import { connectToDatabase } from "@/lib/mongodb";
 
 export const dynamic = "force-dynamic";
 
-const RESUME_FILE = process.env.VERCEL
-  ? "/tmp/resume.pdf"
-  : path.join(process.cwd(), ".data/resume.pdf");
-
 export async function GET() {
   try {
-    if (!fs.existsSync(RESUME_FILE)) {
+    const { db } = await connectToDatabase();
+    const resume = await db.collection("resume").findOne({ slug: "current" });
+
+    if (!resume || !resume.data) {
       return NextResponse.json({ error: "Resume not found" }, { status: 404 });
     }
-    const fileBuffer = fs.readFileSync(RESUME_FILE);
-    const stat = fs.statSync(RESUME_FILE);
-    return new NextResponse(fileBuffer, {
+
+    const buffer = Buffer.from(resume.data, "base64");
+    return new NextResponse(buffer, {
       headers: {
         "Content-Type": "application/pdf",
-        "Content-Length": String(stat.size),
-        "Content-Disposition": `inline; filename="resume.pdf"`,
+        "Content-Length": String(buffer.length),
+        "Content-Disposition": `inline; filename="${resume.fileName || 'resume.pdf'}"`,
         "Cache-Control": "no-cache, no-store, must-revalidate",
         "Pragma": "no-cache",
         "Expires": "0",

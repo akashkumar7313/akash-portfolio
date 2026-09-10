@@ -1,10 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import fs from "fs";
-import path from "path";
-
-const RESUME_FILE = process.env.VERCEL
-  ? "/tmp/resume.pdf"
-  : path.join(process.cwd(), ".data/resume.pdf");
+import { connectToDatabase } from "@/lib/mongodb";
 
 export async function GET(req: NextRequest) {
   const token = req.cookies.get("admin_token")?.value;
@@ -14,29 +9,32 @@ export async function GET(req: NextRequest) {
 
   const isCheck = req.nextUrl.searchParams.get("check") === "true";
 
-  if (isCheck) {
-    try {
-      if (!fs.existsSync(RESUME_FILE)) {
+  try {
+    const { db } = await connectToDatabase();
+    const resume = await db.collection("resume").findOne({ slug: "current" });
+
+    if (isCheck) {
+      if (!resume) {
         return NextResponse.json({ exists: false, size: 0, modified: null });
       }
-      const stat = fs.statSync(RESUME_FILE);
-      return NextResponse.json({ exists: true, size: stat.size, modified: stat.mtime.toISOString() });
-    } catch {
-      return NextResponse.json({ exists: false, size: 0, modified: null });
+      return NextResponse.json({
+        exists: true,
+        size: resume.size || 0,
+        modified: resume.modified || null,
+      });
     }
-  }
 
-  try {
-    if (!fs.existsSync(RESUME_FILE)) {
+    if (!resume || !resume.data) {
       return NextResponse.json({ success: false, error: "No resume uploaded" }, { status: 404 });
     }
-    const fileBuffer = fs.readFileSync(RESUME_FILE);
-    const stat = fs.statSync(RESUME_FILE);
-    return new NextResponse(fileBuffer, {
+
+    const buffer = Buffer.from(resume.data, "base64");
+    return new NextResponse(buffer, {
       headers: {
         "Content-Type": "application/pdf",
-        "Content-Length": String(stat.size),
-        "Content-Disposition": `inline; filename="resume.pdf"`,
+        "Content-Length": String(buffer.length),
+        "Content-Disposition": `inline; filename="${resume.fileName || 'resume.pdf'}"`,
+        "Cache-Control": "no-cache, no-store, must-revalidate",
       },
     });
   } catch {
@@ -49,6 +47,7 @@ export async function POST(req: NextRequest) {
   if (token !== "authenticated") {
     return NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 });
   }
+
   try {
     const formData = await req.formData();
     const file = formData.get("file") as File | null;
@@ -58,19 +57,30 @@ export async function POST(req: NextRequest) {
     if (file.type !== "application/pdf") {
       return NextResponse.json({ success: false, error: "Only PDF files are allowed" }, { status: 400 });
     }
+
     const bytes = await file.arrayBuffer();
-    const dir = path.dirname(RESUME_FILE);
-    if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir, { recursive: true });
-    }
-    fs.writeFileSync(RESUME_FILE, Buffer.from(bytes));
-    const stat = fs.statSync(RESUME_FILE);
+    const base64 = Buffer.from(bytes).toString("base64");
+
+    const { db } = await connectToDatabase();
+    await db.collection("resume").updateOne(
+      { slug: "current" },
+      {
+        $set: {
+          data: base64,
+          fileName: file.name,
+          fileSize: file.size,
+          size: base64.length,
+          modified: new Date().toISOString(),
+        },
+      },
+      { upsert: true }
+    );
+
     return NextResponse.json({
       success: true,
       fileName: file.name,
       fileSize: file.size,
-      actualSize: stat.size,
-      modified: stat.mtime.toISOString(),
+      modified: new Date().toISOString(),
     });
   } catch {
     return NextResponse.json({ success: false, error: "Failed to upload resume" }, { status: 500 });
@@ -82,10 +92,10 @@ export async function DELETE(req: NextRequest) {
   if (token !== "authenticated") {
     return NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 });
   }
+
   try {
-    if (fs.existsSync(RESUME_FILE)) {
-      fs.unlinkSync(RESUME_FILE);
-    }
+    const { db } = await connectToDatabase();
+    await db.collection("resume").deleteOne({ slug: "current" });
     return NextResponse.json({ success: true });
   } catch {
     return NextResponse.json({ success: false, error: "Failed to delete resume" }, { status: 500 });
