@@ -166,29 +166,53 @@
 
   .btn-outline {
     @apply px-6 py-3 rounded-xl font-semibold transition-all duration-300 backdrop-blur-sm hover:scale-105 active:scale-95;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    color: #374151;
+  }
+  .dark .btn-outline {
     border: 1px solid rgba(201, 243, 108, 0.2);
     color: #f4f7f2;
   }
   .btn-outline:hover {
-    background: rgba(201, 243, 108, 0.1);
+    background: rgba(201, 243, 108, 0.15);
     border-color: #c9f36c;
+    color: #101412;
+  }
+  .dark .btn-outline:hover {
+    background: rgba(201, 243, 108, 0.1);
+    color: #f4f7f2;
   }
 
   .card {
     @apply rounded-2xl p-6 md:p-8;
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+  .dark .card {
     background: #151b17;
     border: 1px solid rgba(201, 243, 108, 0.1);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
   }
 
   .skill-badge {
     @apply px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300;
+    background: rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    color: #374151;
+  }
+  .dark .skill-badge {
     background: rgba(201, 243, 108, 0.05);
     border: 1px solid rgba(201, 243, 108, 0.1);
     color: #f4f7f2;
   }
   .skill-badge:hover {
-    background: rgba(201, 243, 108, 0.15);
+    background: rgba(201, 243, 108, 0.2);
     border-color: #c9f36c;
+    color: #16a34a;
+  }
+  .dark .skill-badge:hover {
+    background: rgba(201, 243, 108, 0.15);
     color: #c9f36c;
   }
 
@@ -198,10 +222,18 @@
 
   .section-heading {
     @apply text-3xl md:text-4xl lg:text-5xl font-bold mb-4;
+    color: #101412;
+  }
+  .dark .section-heading {
+    color: #f4f7f2;
   }
 
   .section-subtitle {
-    @apply text-dark-400 text-base md:text-lg max-w-2xl;
+    @apply text-base md:text-lg max-w-2xl;
+    color: #6b7280;
+  }
+  .dark .section-subtitle {
+    color: #91a096;
   }
 }
 
