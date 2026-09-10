@@ -5,19 +5,19 @@
 @tailwind utilities;
 
 :root {
-  --dark-50: #f0ece4;
-  --dark-100: #f0ece4;
-  --dark-200: #d4d0c8;
-  --dark-300: #9a9490;
-  --dark-400: #706b66;
-  --dark-500: #5a5650;
-  --dark-600: #3a3733;
-  --dark-700: #242424;
-  --dark-800: #181818;
-  --dark-900: #0f0f0f;
-  --dark-950: #080808;
-  --bg-body: #f0ece4;
-  --text-primary: #080808;
+  --dark-50: #f4f7f2;
+  --dark-100: #f4f7f2;
+  --dark-200: #dcffbc;
+  --dark-300: #91a096;
+  --dark-400: #6b7a70;
+  --dark-500: #4a5a50;
+  --dark-600: #2a3a30;
+  --dark-700: #1b221d;
+  --dark-800: #151b17;
+  --dark-900: #101412;
+  --dark-950: #0a0d0b;
+  --bg-body: #f4f7f2;
+  --text-primary: #101412;
   --glass-bg: rgba(255,255,255,0.6);
   --glass-border: rgba(0,0,0,0.12);
   --glass-5: rgba(0,0,0,0.04);
@@ -31,27 +31,27 @@
 }
 
 .dark {
-  --dark-50: #f0ece4;
-  --dark-100: #f0ece4;
-  --dark-200: #d4d0c8;
-  --dark-300: #9a9490;
-  --dark-400: #706b66;
-  --dark-500: #5a5650;
-  --dark-600: #3a3733;
-  --dark-700: #242424;
-  --dark-800: #181818;
-  --dark-900: #0f0f0f;
-  --dark-950: #080808;
-  --bg-body: #080808;
-  --text-primary: #f0ece4;
-  --glass-bg: rgba(255,255,255,0.05);
-  --glass-border: rgba(255,255,255,0.1);
-  --glass-5: rgba(255,255,255,0.05);
-  --glass-10: rgba(255,255,255,0.1);
-  --glass-20: rgba(255,255,255,0.2);
-  --glass-30: rgba(255,255,255,0.3);
-  --glass-60: rgba(255,255,255,0.6);
-  --glass-80: rgba(255,255,255,0.8);
+  --dark-50: #f4f7f2;
+  --dark-100: #f4f7f2;
+  --dark-200: #dcffbc;
+  --dark-300: #91a096;
+  --dark-400: #6b7a70;
+  --dark-500: #4a5a50;
+  --dark-600: #2a3a30;
+  --dark-700: #1b221d;
+  --dark-800: #151b17;
+  --dark-900: #101412;
+  --dark-950: #0a0d0b;
+  --bg-body: #101412;
+  --text-primary: #f4f7f2;
+  --glass-bg: rgba(201,243,108,0.05);
+  --glass-border: rgba(201,243,108,0.1);
+  --glass-5: rgba(201,243,108,0.05);
+  --glass-10: rgba(201,243,108,0.1);
+  --glass-20: rgba(201,243,108,0.2);
+  --glass-30: rgba(201,243,108,0.3);
+  --glass-60: rgba(201,243,108,0.6);
+  --glass-80: rgba(201,243,108,0.8);
   --card-shadow: 0 1px 3px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2);
   --card-hover-shadow: 0 10px 25px rgba(0,0,0,0.4), 0 4px 10px rgba(0,0,0,0.2);
 }

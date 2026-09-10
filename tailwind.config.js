@@ -38,9 +38,15 @@ module.exports = {
           blue: "#2563eb",
           purple: "#7c3aed",
           cyan: "#0891b2",
+          lime: "#c9f36c",
         },
-        cream: "#f0ece4",
-        muted: "#9a9490",
+        cream: "#f4f7f2",
+        muted: "#91a096",
+        forest: {
+          900: "#101412",
+          800: "#151b17",
+          700: "#1b221d",
+        },
       },
       fontFamily: {
         sans: ["DM Sans", "system-ui", "sans-serif"],
