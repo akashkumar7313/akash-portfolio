@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { FiCheck, FiAlertCircle, FiX, FiPlus, FiEdit3, FiTrash2 } from "react-icons/fi";
 
 export function ToastItem({ toast, onDismiss }: {
@@ -131,8 +131,10 @@ export function AddButton({ onClick, label }: { onClick: () => void; label: stri
 export function Modal({ open, onClose, title, children }: {
   open: boolean; onClose: () => void; title: string; children: React.ReactNode;
 }) {
+  const scrollRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
+    if (open && scrollRef.current) scrollRef.current.scrollTop = 0;
     return () => { document.body.style.overflow = ""; };
   }, [open]);
   if (!open) return null;
@@ -140,7 +142,7 @@ export function Modal({ open, onClose, title, children }: {
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4" onClick={onClose}>
       <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
       <div className="relative w-full max-w-lg max-h-[85vh] overflow-y-auto bg-[#151520] border border-white/[0.06] rounded-xl shadow-2xl shadow-black/40"
-        onClick={(e) => e.stopPropagation()}>
+        ref={scrollRef} onClick={(e) => e.stopPropagation()}>
         <div className="sticky top-0 z-10 flex items-center justify-between px-5 py-3.5 border-b border-white/[0.05] bg-[#151520]/90 backdrop-blur-xl rounded-t-xl">
           <h2 className="text-white font-semibold text-sm">{title}</h2>
           <button onClick={onClose}
