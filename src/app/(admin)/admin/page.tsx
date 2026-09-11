@@ -10,6 +10,7 @@ import AdminSidebar from "@/components/admin/AdminSidebar";
 import AdminHeader from "@/components/admin/AdminHeader";
 import OverviewDashboard from "@/components/admin/OverviewDashboard";
 import EditorShell from "@/components/admin/EditorShell";
+import MessagesView from "@/components/admin/MessagesView";
 import { ToastItem, ConfirmDlg } from "@/components/admin/ModalComponents";
 
 type SectionKey = string;
@@ -25,6 +26,7 @@ const sectionMeta: Record<string, { label: string; icon: React.ReactNode; color:
   projects:    { label: "Projects",    icon: <FiFolder />,       color: "#a8d94a", desc: "Portfolio projects" },
   testimonials:{ label:"Testimonials", icon: <FiMessageSquare />,color: "#c9f36c", desc: "Client testimonials" },
   stats:       { label: "Stats",       icon: <FiBarChart2 />,    color: "#a8d94a", desc: "Statistics" },
+  messages:    { label: "Messages",    icon: <FiMail />,         color: "#25d366", desc: "Contact form messages" },
   contact:     { label: "Contact",     icon: <FiMail />,         color: "#c9f36c", desc: "Contact information" },
   settings:    { label: "Settings",    icon: <FiSettings />,     color: "#91a096", desc: "Site configuration" },
   socialLinks: { label: "Social Links",icon: <FiLink />,         color: "#a8d94a", desc: "Social media links" },
@@ -182,6 +184,8 @@ export default function AdminDashboard() {
             <div className={`transition-all duration-200 ${tabTransition ? "opacity-0 translate-y-2" : "opacity-100 translate-y-0"}`}>
               {activeTab === "overview" ? (
                 <OverviewDashboard data={data} sectionMeta={sectionMeta} onNavigate={handleTabChange} />
+              ) : activeTab === "messages" ? (
+                <MessagesView />
               ) : (
                 <>
                   {/* Section header */}
