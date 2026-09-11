@@ -4,9 +4,7 @@ import twilio from "twilio";
 const accountSid = process.env.TWILIO_ACCOUNT_SID || "";
 const authToken = process.env.TWILIO_AUTH_TOKEN || "";
 const fromNumber = process.env.TWILIO_PHONE_NUMBER || "";
-const toNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER
-  ? `+${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER}`
-  : "+916393342727";
+const toNumber = process.env.YOUR_PHONE_NUMBER || "+916393342727";
 
 export async function POST(req: NextRequest) {
   try {
