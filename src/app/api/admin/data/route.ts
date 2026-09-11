@@ -15,7 +15,11 @@ export async function GET(req: NextRequest) {
       const doc = await db.collection(col).findOne({ slug: "main" });
       if (doc) {
         const { _id, slug, ...rest } = doc;
-        result[col] = rest;
+        if (col === "socialLinks") {
+          result[col] = rest.socialLinks || rest || [];
+        } else {
+          result[col] = rest;
+        }
       }
     }
     return NextResponse.json(result);
@@ -36,11 +40,19 @@ export async function PATCH(req: NextRequest) {
       return NextResponse.json({ success: false, error: "Section and data required" }, { status: 400 });
     }
     const { db } = await connectToDatabase();
-    await db.collection(section).updateOne(
-      { slug: "main" },
-      { $set: { ...data, slug: "main" } },
-      { upsert: true }
-    );
+    if (section === "socialLinks") {
+      await db.collection(section).updateOne(
+        { slug: "main" },
+        { $set: { slug: "main", socialLinks: data } },
+        { upsert: true }
+      );
+    } else {
+      await db.collection(section).updateOne(
+        { slug: "main" },
+        { $set: { ...data, slug: "main" } },
+        { upsert: true }
+      );
+    }
     return NextResponse.json({ success: true });
   } catch (e) {
     console.error("Admin data save error:", e);

@@ -70,7 +70,7 @@ async function seed() {
   // Seed projects
   await db.collection("projects").updateOne(
     { slug: "main" },
-    { $set: { projects: data.projects, slug: "main" } },
+    { $set: { slug: "main", projects: data.projects.projects || data.projects, filters: data.projects.filters || [] } },
     { upsert: true }
   );
   console.log("✅ Projects seeded");
@@ -86,7 +86,7 @@ async function seed() {
   // Seed stats
   await db.collection("stats").updateOne(
     { slug: "main" },
-    { $set: { stats: data.stats, slug: "main" } },
+    { $set: { slug: "main", stats: data.stats.stats || data.stats } },
     { upsert: true }
   );
   console.log("✅ Stats seeded");
