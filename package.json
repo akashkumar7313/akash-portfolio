@@ -21,7 +21,8 @@
     "react-countup": "^6.5.3",
     "react-dom": "^18.3.0",
     "react-icons": "^5.0.0",
-    "react-simple-code-editor": "^0.14.1"
+    "react-simple-code-editor": "^0.14.1",
+    "twilio": "^6.1.1"
   },
   "devDependencies": {
     "@types/jsdom": "^28.0.3",

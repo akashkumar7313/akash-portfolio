@@ -133,9 +133,16 @@ ${escPhone ? `<td style="padding-left:14px;vertical-align:middle;">
       });
     }
 
+    // Send SMS in background (non-blocking)
+    fetch(`${req.nextUrl.origin}/api/send-sms`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, email, phone, message }),
+    }).catch(() => {});
+
     return NextResponse.json({
       success: true,
-      message: "Message saved & email sent",
+      message: "Message saved, email & SMS sent",
       whatsappLink,
     });
   } catch (error) {
