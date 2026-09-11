@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { FiCheck, FiAlertCircle, FiX, FiPlus, FiEdit3, FiTrash2 } from "react-icons/fi";
 
 export function ToastItem({ toast, onDismiss }: {
@@ -37,8 +38,10 @@ export function ConfirmDlg({ open, title, message, confirmLabel = "Delete", onCo
   open: boolean; title: string; message: string; confirmLabel?: string;
   onConfirm: () => void; onCancel: () => void; danger?: boolean;
 }) {
-  if (!open) return null;
-  return (
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => { setMounted(true); }, []);
+  if (!open || !mounted) return null;
+  return createPortal(
     <div className="fixed inset-0 z-[150] flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onCancel} />
       <div className="relative w-full max-w-sm bg-[#151520] border border-white/[0.06] rounded-xl p-6 shadow-2xl shadow-black/40">
@@ -64,7 +67,8 @@ export function ConfirmDlg({ open, title, message, confirmLabel = "Delete", onCo
           </button>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
 
@@ -132,27 +136,40 @@ export function Modal({ open, onClose, title, children }: {
   open: boolean; onClose: () => void; title: string; children: React.ReactNode;
 }) {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => { setMounted(true); }, []);
+
   useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : "";
-    if (open && scrollRef.current) scrollRef.current.scrollTop = 0;
-    return () => { document.body.style.overflow = ""; };
-  }, [open]);
-  if (!open) return null;
-  return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4" onClick={onClose}>
+    if (!open || !mounted) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    if (scrollRef.current) scrollRef.current.scrollTop = 0;
+    return () => { document.body.style.overflow = prev; };
+  }, [open, mounted]);
+
+  if (!open || !mounted) return null;
+
+  return createPortal(
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4" onClick={onClose} style={{ margin: 0 }}>
       <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
-      <div className="relative w-full max-w-lg max-h-[85vh] overflow-y-auto bg-[#151520] border border-white/[0.06] rounded-xl shadow-2xl shadow-black/40"
-        ref={scrollRef} onClick={(e) => e.stopPropagation()}>
-        <div className="sticky top-0 z-10 flex items-center justify-between px-5 py-3.5 border-b border-white/[0.05] bg-[#151520]/90 backdrop-blur-xl rounded-t-xl">
+      <div
+        ref={scrollRef}
+        onClick={(e) => e.stopPropagation()}
+        className="relative w-full max-w-lg bg-[#151520] border border-white/[0.06] rounded-xl shadow-2xl shadow-black/40 flex flex-col"
+        style={{ maxHeight: "85vh" }}
+      >
+        <div className="flex-shrink-0 flex items-center justify-between px-5 py-3.5 border-b border-white/[0.05] bg-[#151520] rounded-t-xl sticky top-0 z-10">
           <h2 className="text-white font-semibold text-sm">{title}</h2>
           <button onClick={onClose}
             className="w-7 h-7 flex items-center justify-center rounded-lg bg-white/[0.04] text-slate-500 hover:text-white hover:bg-white/[0.08] transition-all">
             <FiX className="w-3.5 h-3.5" />
           </button>
         </div>
-        <div className="p-5 space-y-4">{children}</div>
+        <div className="flex-1 overflow-y-auto p-5 space-y-4 min-h-0">{children}</div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
 

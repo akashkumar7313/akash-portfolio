@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
+import { createPortal } from "react-dom";
 import {
   FiCode, FiAward, FiStar, FiBriefcase, FiBook, FiUser,
   FiTool, FiFolder, FiMessageSquare, FiBarChart2, FiMail, FiLink,
@@ -477,8 +478,10 @@ function ConfirmDlgCustom({ deleteConfirm, setDeleteConfirm, executeDelete }: {
   setDeleteConfirm: (v: any) => void;
   executeDelete: () => Promise<void>;
 }) {
-  if (!deleteConfirm) return null;
-  return (
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => { setMounted(true); }, []);
+  if (!deleteConfirm || !mounted) return null;
+  return createPortal(
     <div className="fixed inset-0 z-[150] flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setDeleteConfirm(null)} />
       <div className="relative w-full max-w-sm bg-[#151520] border border-white/[0.06] rounded-xl p-6 shadow-2xl shadow-black/40">
@@ -500,6 +503,7 @@ function ConfirmDlgCustom({ deleteConfirm, setDeleteConfirm, executeDelete }: {
           </button>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
