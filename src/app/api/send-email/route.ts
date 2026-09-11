@@ -26,6 +26,7 @@ export async function POST(req: NextRequest) {
         read: false,
         createdAt: new Date().toISOString(),
       });
+      console.log("Message saved to MongoDB");
     } catch (e) {
       console.error("Failed to save message to DB:", e);
     }
@@ -42,27 +43,29 @@ export async function POST(req: NextRequest) {
     const to = process.env.CONTACT_EMAIL || user;
 
     if (host && user && pass) {
-      const transporter = nodemailer.createTransport({
-        host,
-        port: Number(port) || 587,
-        secure: Number(port) === 465,
-        auth: { user, pass },
-      });
+      try {
+        const transporter = nodemailer.createTransport({
+          host,
+          port: Number(port) || 587,
+          secure: false,
+          auth: { user, pass },
+          tls: { rejectUnauthorized: false },
+        });
 
-      const dateStr = new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric", hour: "2-digit", minute: "2-digit" });
-      const initials = name.split(" ").map((n: string) => n[0]).join("").slice(0, 2).toUpperCase() || "?";
-      const escName = name.replace(/'/g, "\\'");
-      const escEmail = email.replace(/'/g, "\\'");
-      const escPhone = phone ? phone.replace(/'/g, "\\'") : "";
-      const escMessage = message.replace(/'/g, "\\'");
-      const mailtoLink = `mailto:${escEmail}?subject=Re%3A%20Your%20Portfolio%20Message&body=Hi%20${encodeURIComponent(name)}%2C%0A%0AThanks%20for%20reaching%20out%20through%20my%20portfolio.`;
+        const dateStr = new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric", hour: "2-digit", minute: "2-digit" });
+        const initials = name.split(" ").map((n: string) => n[0]).join("").slice(0, 2).toUpperCase() || "?";
+        const escName = name.replace(/'/g, "\\'");
+        const escEmail = email.replace(/'/g, "\\'");
+        const escPhone = phone ? phone.replace(/'/g, "\\'") : "";
+        const escMessage = message.replace(/'/g, "\\'");
+        const mailtoLink = `mailto:${escEmail}?subject=Re%3A%20Your%20Portfolio%20Message&body=Hi%20${encodeURIComponent(name)}%2C%0A%0AThanks%20for%20reaching%20out%20through%20my%20portfolio.`;
 
-      await transporter.sendMail({
-        from: `"Portfolio Contact" <${user}>`,
-        replyTo: email,
-        to,
-        subject: `New message from ${name} — Portfolio Contact`,
-        html: `<!DOCTYPE html>
+        await transporter.sendMail({
+          from: `"Portfolio Contact" <${user}>`,
+          replyTo: email,
+          to,
+          subject: `New message from ${name} — Portfolio Contact`,
+          html: `<!DOCTYPE html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
 <body style="margin:0;padding:0;background:#0a0a0f;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
 <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background:#0a0a0f;">
@@ -130,7 +133,14 @@ ${escPhone ? `<td style="padding-left:14px;vertical-align:middle;">
 </td></tr>
 </table>
 </body></html>`,
-      });
+        });
+
+        console.log("Email sent successfully to", to);
+      } catch (emailError) {
+        console.error("Email sending failed:", emailError);
+      }
+    } else {
+      console.log("SMTP not configured, skipping email");
     }
 
     // Send SMS in background (non-blocking)

@@ -54,8 +54,18 @@ export default function Contact() {
   const fieldMeta = {
     name: { label: "Your Name", icon: FiUser, required: true, type: "text" as const, placeholder: "John Doe" },
     email: { label: "Your Email", icon: FiMail, required: true, type: "email" as const, placeholder: "john@example.com" },
-    phone: { label: "Phone Number", icon: FiSmartphone, required: false, type: "tel" as const, placeholder: "+91 98765 43210" },
+    phone: { label: "Phone Number", icon: FiSmartphone, required: false, type: "tel" as const, placeholder: "98765 43210" },
     message: { label: "Your Message", icon: FiEdit3, required: true, type: "textarea" as const, placeholder: "Tell me about your project..." },
+  };
+
+  const handlePhoneChange = (val: string) => {
+    const digits = val.replace(/\D/g, "").slice(0, 10);
+    setForm((f) => ({ ...f, phone: digits }));
+  };
+
+  const formatPhone = (phone: string) => {
+    if (!phone) return "";
+    return phone.startsWith("+91") ? phone : `+91 ${phone}`;
   };
 
   const getError = (field: string) => {
@@ -72,11 +82,12 @@ export default function Contact() {
     setTouched(allTouched);
     if (!form.name.trim() || !form.email.trim() || !form.message.trim() || (form.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email))) return;
     setSending(true);
+    const phoneWithPrefix = form.phone ? `+91${form.phone}` : "";
     try {
       const res = await fetch("/api/send-email", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, phone: phoneWithPrefix }),
       });
       if (res.ok) {
         setToast({ show: true, type: "success", title: "Message Sent!", message: "Thank you! I'll get back to you within 24 hours." });
@@ -221,6 +232,12 @@ export default function Contact() {
                         {meta.type === "textarea" ? (
                           <textarea value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} onFocus={() => setFocused("message")} onBlur={() => { setFocused(null); setTouched((prev) => new Set(prev).add("message")); }} required={meta.required} rows={4} placeholder={meta.placeholder}
                             className="w-full pl-3 pr-4 pt-3.5 pb-3 bg-transparent text-dark-100 dark:text-white placeholder:text-transparent focus:outline-none resize-none text-sm leading-relaxed" />
+                        ) : field === "phone" ? (
+                          <div className="flex items-center">
+                            <span className="pl-3 pt-3.5 text-sm text-[#91a096] font-medium select-none">+91</span>
+                            <input type="tel" value={form.phone} onChange={(e) => handlePhoneChange(e.target.value)} onFocus={() => setFocused("phone")} onBlur={() => { setFocused(null); setTouched((prev) => new Set(prev).add("phone")); }} placeholder={meta.placeholder} maxLength={10}
+                              className="w-full pl-2 pr-4 py-3.5 bg-transparent text-dark-100 dark:text-white placeholder:text-transparent focus:outline-none text-sm" />
+                          </div>
                         ) : (
                           <input type={meta.type} value={form[field]} onChange={(e) => setForm({ ...form, [field]: e.target.value })} onFocus={() => setFocused(field)} onBlur={() => { setFocused(null); setTouched((prev) => new Set(prev).add(field)); }} required={meta.required} placeholder={meta.placeholder}
                             className="w-full pl-3 pr-4 py-3.5 bg-transparent text-dark-100 dark:text-white placeholder:text-transparent focus:outline-none text-sm" />
