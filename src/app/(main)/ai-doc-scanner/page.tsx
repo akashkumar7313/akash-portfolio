@@ -1,14 +1,12 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 import dynamic from "next/dynamic";
-import type { DocumentModel, ProcessingState } from "@/features/ai-doc-scanner/types";
-import { processImage, validateFile } from "@/features/ai-doc-scanner/services/imageProcessor";
-import { saveDocument } from "@/features/ai-doc-scanner/services/storage";
+import type { ProcessingState } from "@/features/ai-doc-scanner/types";
 import DocumentUploader from "@/components/ai-doc-scanner/DocumentUploader";
 import ProcessingProgress from "@/components/ai-doc-scanner/ProcessingProgress";
 
-const DocumentEditor = dynamic(() => import("@/components/ai-doc-scanner/DocumentEditor"), {
+const ImageTextEditor = dynamic(() => import("@/components/ai-doc-scanner/ImageTextEditor"), {
   ssr: false,
   loading: () => (
     <div className="h-screen flex items-center justify-center bg-[var(--bg-body)]">
@@ -17,8 +15,30 @@ const DocumentEditor = dynamic(() => import("@/components/ai-doc-scanner/Documen
   ),
 });
 
+function readFileAsDataUrl(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+function loadImage(src: string): Promise<HTMLImageElement> {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => resolve(img);
+    img.onerror = reject;
+    img.src = src;
+  });
+}
+
 export default function AIDocScannerPage() {
-  const [document, setDocument] = useState<DocumentModel | null>(null);
+  const [ocrWords, setOcrWords] = useState<any[]>([]);
+  const [pageWidth, setPageWidth] = useState(0);
+  const [pageHeight, setPageHeight] = useState(0);
+  const [originalImage, setOriginalImage] = useState("");
+  const [docName, setDocName] = useState("");
   const [processing, setProcessing] = useState<ProcessingState>({
     status: "idle",
     progress: 0,
@@ -27,6 +47,8 @@ export default function AIDocScannerPage() {
 
   const handleFileSelect = useCallback(async (file: File) => {
     const isPDF = file.type === "application/pdf" || file.name.endsWith(".pdf");
+    const name = file.name.replace(/\.[^.]+$/, "");
+    setDocName(name);
 
     if (isPDF) {
       setProcessing({ status: "reading", progress: 0, message: "Reading PDF file" });
@@ -45,16 +67,28 @@ export default function AIDocScannerPage() {
           setProcessing({ status, progress, message });
         });
 
-        const doc: DocumentModel = {
-          id: crypto.randomUUID(),
-          name: file.name.replace(/\.[^.]+$/, ""),
-          pages,
-          createdAt: Date.now(),
-          updatedAt: Date.now(),
-        };
+        if (pages[0]) {
+          const firstPage = pages[0];
+          setOriginalImage(firstPage.originalImage || "");
+          setPageWidth(firstPage.width);
+          setPageHeight(firstPage.height);
 
-        await saveDocument(doc);
-        setDocument(doc);
+          const allWords: any[] = [];
+          for (const el of firstPage.elements) {
+            if ("text" in el && "x" in el && "y" in el) {
+              allWords.push({
+                text: (el as any).text,
+                x: (el as any).x,
+                y: (el as any).y,
+                width: (el as any).width || 100,
+                height: (el as any).height || 20,
+                confidence: 0.9,
+              });
+            }
+          }
+          setOcrWords(allWords);
+        }
+
         setProcessing({ status: "done", progress: 100, message: "Done" });
       } catch (err) {
         console.error("PDF processing failed:", err);
@@ -72,28 +106,20 @@ export default function AIDocScannerPage() {
     setProcessing({ status: "reading", progress: 0, message: "Reading image file" });
 
     try {
-      const pages = await processImage(file, (progress, message) => {
-        const statusMap: Record<string, ProcessingState["status"]> = {
-          "Reading image file": "reading",
-          "Processing image": "rendering",
-          "Detecting text": "ocr",
-          "Building editable document": "building",
-          Done: "done",
-        };
-        const status = statusMap[message] || "ocr";
-        setProcessing({ status, progress, message });
+      const { performOCR } = await import("@/features/ai-doc-scanner/services/ocr");
+      const dataUrl = await readFileAsDataUrl(file);
+      const img = await loadImage(dataUrl);
+
+      setOriginalImage(dataUrl);
+      setPageWidth(img.naturalWidth);
+      setPageHeight(img.naturalHeight);
+
+      setProcessing({ status: "ocr", progress: 30, message: "Detecting text" });
+      const ocrResult = await performOCR(dataUrl, (p, msg) => {
+        setProcessing({ status: "ocr", progress: 30 + Math.round(p * 0.6), message: msg });
       });
 
-      const doc: DocumentModel = {
-        id: crypto.randomUUID(),
-        name: file.name.replace(/\.[^.]+$/, ""),
-        pages,
-        createdAt: Date.now(),
-        updatedAt: Date.now(),
-      };
-
-      await saveDocument(doc);
-      setDocument(doc);
+      setOcrWords(ocrResult.words);
       setProcessing({ status: "done", progress: 100, message: "Done" });
     } catch (err) {
       console.error("Image processing failed:", err);
@@ -108,9 +134,20 @@ export default function AIDocScannerPage() {
   }, []);
 
   const handleReset = useCallback(() => {
-    setDocument(null);
+    setOcrWords([]);
+    setPageWidth(0);
+    setPageHeight(0);
+    setOriginalImage("");
+    setDocName("");
     setProcessing({ status: "idle", progress: 0, message: "" });
   }, []);
+
+  const handleSaveModified = useCallback((modifiedImageUrl: string) => {
+    const link = window.document.createElement("a");
+    link.download = `${docName || "modified"}-edited.png`;
+    link.href = modifiedImageUrl;
+    link.click();
+  }, [docName]);
 
   if (processing.status !== "idle" && processing.status !== "done" && processing.status !== "error") {
     return <ProcessingProgress state={processing} />;
@@ -141,8 +178,17 @@ export default function AIDocScannerPage() {
     );
   }
 
-  if (document) {
-    return <DocumentEditor document={document} onClose={handleReset} />;
+  if (originalImage && ocrWords.length > 0 && pageWidth > 0) {
+    return (
+      <ImageTextEditor
+        originalImage={originalImage}
+        words={ocrWords}
+        pageWidth={pageWidth}
+        pageHeight={pageHeight}
+        onSave={handleSaveModified}
+        onBack={handleReset}
+      />
+    );
   }
 
   return <DocumentUploader onFileSelect={handleFileSelect} isProcessing={false} />;
