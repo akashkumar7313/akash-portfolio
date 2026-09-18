@@ -19,7 +19,7 @@ export async function processImage(
   ctx.drawImage(img, 0, 0);
 
   onProgress?.(30, "Detecting text");
-  const ocrResult = await performOCR(canvas, (p, msg) => {
+  const ocrResult = await performOCR(dataUrl, (p, msg) => {
     onProgress?.(30 + Math.round(p * 0.6), msg);
   });
 

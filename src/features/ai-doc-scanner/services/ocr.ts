@@ -14,6 +14,8 @@ export async function performOCR(
   onProgress?: (progress: number, status: string) => void
 ): Promise<OCRResult> {
   const tess = await initTesseract();
+
+  onProgress?.(10, "Initializing OCR engine");
   const worker = await tess.createWorker("eng", 1, {
     logger: (m: { status: string; progress: number }) => {
       if (onProgress) {
@@ -25,27 +27,72 @@ export async function performOCR(
   });
 
   try {
-    const { data } = await worker.recognize(imageSource);
+    onProgress?.(20, "Running OCR");
+    const result = await worker.recognize(imageSource);
+    const data = result.data;
     const words: OCRWord[] = [];
 
-    if (data.lines) {
+    // Tesseract.js v5+ puts words directly in data.words
+    if (data.words && data.words.length > 0) {
+      for (const word of data.words) {
+        const bbox = word.bbox;
+        words.push({
+          text: word.text,
+          x: bbox.x0,
+          y: bbox.y0,
+          width: bbox.x1 - bbox.x0,
+          height: bbox.y1 - bbox.y0,
+          confidence: (word.confidence || 0) / 100,
+        });
+      }
+    }
+    // Fallback: try lines -> words path (older API)
+    else if (data.lines) {
       for (const line of data.lines) {
-        for (const word of line.words) {
-          words.push({
-            text: word.text,
-            x: word.bbox.x0,
-            y: word.bbox.y0,
-            width: word.bbox.x1 - word.bbox.x0,
-            height: word.bbox.y1 - word.bbox.y0,
-            confidence: word.confidence / 100,
-          });
+        if (line.words) {
+          for (const word of line.words) {
+            const bbox = word.bbox || word.bounding_box;
+            if (bbox) {
+              words.push({
+                text: word.text,
+                x: bbox.x0 ?? bbox.left,
+                y: bbox.y0 ?? bbox.top,
+                width: (bbox.x1 ?? bbox.right) - (bbox.x0 ?? bbox.left),
+                height: (bbox.y1 ?? bbox.bottom) - (bbox.y0 ?? bbox.top),
+                confidence: (word.confidence || 0) / 100,
+              });
+            }
+          }
         }
       }
     }
+    // Fallback: build words from text + paragraphs
+    else if (data.text && data.text.trim()) {
+      const lines = data.text.split("\n").filter((l: string) => l.trim());
+      let y = 40;
+      for (const line of lines) {
+        const lineWords = line.split(/\s+/).filter(Boolean);
+        let x = 20;
+        for (const w of lineWords) {
+          words.push({
+            text: w,
+            x,
+            y,
+            width: w.length * 8,
+            height: 20,
+            confidence: 0.8,
+          });
+          x += w.length * 9;
+        }
+        y += 28;
+      }
+    }
+
+    onProgress?.(95, "Building editable document");
 
     return {
-      text: data.text,
-      confidence: data.confidence / 100,
+      text: data.text || "",
+      confidence: (data.confidence || 0) / 100,
       words,
     };
   } finally {
@@ -63,7 +110,9 @@ export function groupWordsIntoLines(words: OCRWord[]): OCRWord[][] {
   for (let i = 1; i < sorted.length; i++) {
     const word = sorted[i];
     const prevWord = currentLine[currentLine.length - 1];
-    const sameLine = Math.abs(word.y - prevWord.y) < prevWord.height * 0.5;
+    const prevCenter = prevWord.y + prevWord.height / 2;
+    const wordCenter = word.y + word.height / 2;
+    const sameLine = Math.abs(wordCenter - prevCenter) < Math.max(prevWord.height, word.height) * 0.6;
 
     if (sameLine) {
       currentLine.push(word);

@@ -36,7 +36,7 @@ export async function processPDF(
       `Detecting text on page ${i}`
     );
 
-    const ocrResult = await performOCR(canvas, (p, msg) => {
+    const ocrResult = await performOCR(originalImage, (p, msg) => {
       onProgress?.(
         Math.round(40 + (i / pdf.numPages) * (40 + p * 0.1)),
         msg
