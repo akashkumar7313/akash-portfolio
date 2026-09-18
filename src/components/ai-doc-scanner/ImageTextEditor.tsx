@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
+import { FiArrowLeft, FiMinus, FiPlus, FiDownload, FiCheck, FiEdit2 } from "react-icons/fi";
 import type { OCRWord } from "@/features/ai-doc-scanner/types";
 
 interface TextBlock {
@@ -87,6 +88,7 @@ export default function ImageTextEditor({ originalImage, words, pageWidth, pageH
   const [blocks, setBlocks] = useState<TextBlock[]>(() => groupWordsToBlocks(words));
   const [editingId, setEditingId] = useState<string | null>(null);
   const [zoom, setZoom] = useState(1);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const imgRef = useRef<HTMLImageElement | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -112,20 +114,20 @@ export default function ImageTextEditor({ originalImage, words, pageWidth, pageH
       const bx = block.x * zoom, by = block.y * zoom, bw = block.width * zoom, bh = block.height * zoom;
 
       if (block.edited) {
-        // Cover old text with background
         ctx.fillStyle = sampleColor(ctx, bx, by, bw, bh, false);
         ctx.fillRect(bx - 2, by - 2, bw + 4, bh + 4);
-        // Draw new text
         ctx.fillStyle = sampleColor(ctx, bx, by, bw, bh, true);
         ctx.font = `${block.fontSize * zoom}px Arial, sans-serif`;
         ctx.textBaseline = "top";
         ctx.fillText(block.text, bx, by + (bh - block.fontSize * zoom) / 2);
       }
 
-      // Highlight on hover / selection
       if (block.id === editingId) {
-        ctx.fillStyle = "rgba(201,243,108,0.15)";
+        ctx.fillStyle = "rgba(201,243,108,0.12)";
         ctx.fillRect(bx - 2, by - 2, bw + 4, bh + 4);
+        ctx.strokeStyle = "rgba(201,243,108,0.5)";
+        ctx.lineWidth = 1.5;
+        ctx.strokeRect(bx - 2, by - 2, bw + 4, bh + 4);
       }
     }
   }, [blocks, zoom, editingId, pageWidth, pageHeight]);
@@ -138,12 +140,7 @@ export default function ImageTextEditor({ originalImage, words, pageWidth, pageH
     for (const block of blocks) {
       if (mx >= block.x && mx <= block.x + block.width && my >= block.y && my <= block.y + block.height) {
         setEditingId(block.id);
-        setTimeout(() => {
-          if (inputRef.current) {
-            inputRef.current.focus();
-            inputRef.current.select();
-          }
-        }, 30);
+        setTimeout(() => inputRef.current?.focus(), 30);
         return;
       }
     }
@@ -163,40 +160,64 @@ export default function ImageTextEditor({ originalImage, words, pageWidth, pageH
   const editedCount = blocks.filter((b) => b.edited).length;
 
   return (
-    <div className="h-screen flex flex-col bg-[#0a0a0a]">
+    <div className="h-screen flex flex-col bg-[#0c0c0c]">
       {/* Header */}
-      <div className="flex items-center justify-between px-4 py-2.5 border-b border-white/10 bg-[#0a0a0a]/90 backdrop-blur-xl shrink-0 z-50">
-        <div className="flex items-center gap-3">
-          <button onClick={onBack} className="text-sm text-white/50 hover:text-white transition-colors">← Back</button>
-          <div className="w-px h-5 bg-white/10" />
-          <h1 className="text-sm font-semibold text-white">Edit Text on Image</h1>
+      <header className="flex items-center justify-between px-3 sm:px-5 py-2.5 border-b border-white/10 bg-[#0c0c0c]/95 backdrop-blur-xl shrink-0 z-50">
+        <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+          <button onClick={onBack} className="p-2 -ml-2 rounded-lg hover:bg-white/5 text-white/50 hover:text-white transition-colors">
+            <FiArrowLeft className="w-4 h-4" />
+          </button>
+          <div className="hidden sm:block w-px h-5 bg-white/10" />
+          <h1 className="text-sm font-semibold text-white truncate">Edit Text on Image</h1>
           {editedCount > 0 && (
-            <span className="text-xs px-2 py-0.5 rounded-full bg-[#c9f36c]/10 text-[#c9f36c]">{editedCount} changed</span>
+            <span className="hidden sm:inline-flex items-center gap-1 text-[11px] px-2 py-0.5 rounded-full bg-[#c9f36c]/10 text-[#c9f36c] shrink-0">
+              <FiCheck className="w-3 h-3" /> {editedCount}
+            </span>
           )}
         </div>
-        <div className="flex items-center gap-2">
-          <button onClick={() => setZoom((z) => Math.max(0.25, z - 0.25))} className="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 flex items-center justify-center text-white/60 text-sm">−</button>
-          <span className="text-xs text-white/40 w-12 text-center">{Math.round(zoom * 100)}%</span>
-          <button onClick={() => setZoom((z) => Math.min(3, z + 0.25))} className="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 flex items-center justify-center text-white/60 text-sm">+</button>
-          <div className="w-px h-5 bg-white/10 mx-1" />
-          <button onClick={handleSave} className="px-4 py-1.5 rounded-lg bg-[#c9f36c] text-[#101412] text-sm font-semibold hover:bg-[#a8d94a] transition-colors">Save Modified Image</button>
-        </div>
-      </div>
 
-      {/* Main area */}
+        <div className="flex items-center gap-1.5 sm:gap-2">
+          {/* Zoom */}
+          <div className="flex items-center bg-white/5 rounded-lg">
+            <button onClick={() => setZoom((z) => Math.max(0.25, z - 0.25))} className="p-2 hover:bg-white/5 rounded-l-lg text-white/50 hover:text-white transition-colors">
+              <FiMinus className="w-3.5 h-3.5" />
+            </button>
+            <span className="text-[11px] text-white/40 w-10 text-center select-none">{Math.round(zoom * 100)}%</span>
+            <button onClick={() => setZoom((z) => Math.min(3, z + 0.25))} className="p-2 hover:bg-white/5 rounded-r-lg text-white/50 hover:text-white transition-colors">
+              <FiPlus className="w-3.5 h-3.5" />
+            </button>
+          </div>
+
+          {/* Sidebar toggle (mobile) */}
+          <button
+            onClick={() => setSidebarOpen(!sidebarOpen)}
+            className="sm:hidden p-2 rounded-lg hover:bg-white/5 text-white/50 hover:text-white transition-colors"
+          >
+            <FiEdit2 className="w-4 h-4" />
+          </button>
+
+          {/* Save */}
+          <button
+            onClick={handleSave}
+            className="flex items-center gap-1.5 px-3 sm:px-4 py-2 rounded-lg bg-[#c9f36c] text-[#101412] text-sm font-semibold hover:bg-[#a8d94a] active:scale-95 transition-all"
+          >
+            <FiDownload className="w-4 h-4" />
+            <span className="hidden sm:inline">Save</span>
+          </button>
+        </div>
+      </header>
+
+      {/* Main */}
       <div className="flex flex-1 min-h-0 overflow-hidden">
-        {/* Image canvas - click text to edit */}
-        <div className="flex-1 overflow-auto flex items-center justify-center bg-black/30 p-8">
+        {/* Canvas */}
+        <div className="flex-1 overflow-auto flex items-center justify-center bg-black/20 p-4 sm:p-8">
           <div className="relative inline-block">
-            {/* Canvas draws the image + edited text */}
             <canvas
               ref={canvasRef}
               onClick={handleCanvasClick}
-              className="shadow-2xl max-w-full max-h-full"
-              style={{ cursor: editingId ? "text" : "pointer" }}
+              className="shadow-2xl max-w-full max-h-full rounded-sm"
+              style={{ cursor: editingId ? "text" : "crosshair" }}
             />
-
-            {/* Transparent input overlay - sits exactly on the text being edited */}
             {editingBlock && (
               <input
                 ref={inputRef}
@@ -234,34 +255,49 @@ export default function ImageTextEditor({ originalImage, words, pageWidth, pageH
           </div>
         </div>
 
-        {/* Sidebar - text list */}
-        <div className="w-72 border-l border-white/10 bg-[#0a0a0a] flex flex-col shrink-0">
+        {/* Sidebar */}
+        <aside className={`${
+          sidebarOpen ? "translate-x-0" : "translate-x-full"
+        } fixed right-0 top-[45px] bottom-0 w-72 sm:w-72 sm:static sm:translate-x-0 border-l border-white/10 bg-[#0c0c0c] flex flex-col shrink-0 z-40 transition-transform duration-200`}>
           <div className="px-4 py-3 border-b border-white/10">
             <h2 className="text-sm font-semibold text-white">Detected Text</h2>
-            <p className="text-xs text-white/40 mt-1">Click text on image to edit in place</p>
+            <p className="text-[11px] text-white/30 mt-0.5">Click text on image to edit</p>
           </div>
-          <div className="flex-1 overflow-y-auto p-3 space-y-1">
+          <div className="flex-1 overflow-y-auto p-2.5 space-y-1">
+            {blocks.length === 0 && (
+              <p className="text-xs text-white/20 text-center py-10">No text detected</p>
+            )}
             {blocks.map((block) => (
-              <div
+              <button
                 key={block.id}
-                onClick={() => { setEditingId(block.id); setTimeout(() => inputRef.current?.focus(), 30); }}
-                className={`px-3 py-2 rounded-lg cursor-pointer transition-all text-sm ${
+                onClick={() => { setEditingId(block.id); setSidebarOpen(false); setTimeout(() => inputRef.current?.focus(), 30); }}
+                className={`w-full text-left px-3 py-2.5 rounded-lg transition-all ${
                   block.id === editingId
-                    ? "bg-[#c9f36c]/10 text-[#c9f36c] border border-[#c9f36c]/30"
+                    ? "bg-[#c9f36c]/10 border border-[#c9f36c]/30"
                     : block.edited
-                    ? "bg-white/5 text-[#c9f36c]/70 border border-transparent"
-                    : "bg-white/5 text-white/70 border border-transparent hover:bg-white/10"
+                    ? "bg-white/[0.03] border border-[#c9f36c]/10 hover:bg-white/5"
+                    : "bg-white/[0.03] border border-transparent hover:bg-white/5"
                 }`}
               >
-                <div className="flex items-center justify-between">
-                  <span className="truncate">{block.text}</span>
-                  {block.edited && <span className="text-[10px] text-[#c9f36c] ml-2 shrink-0">edited</span>}
+                <div className="flex items-center justify-between mb-0.5">
+                  <span className={`text-[10px] font-medium ${
+                    block.edited ? "text-[#c9f36c]" : "text-white/25"
+                  }`}>
+                    {block.edited ? "edited" : "original"}
+                  </span>
                 </div>
-                {block.edited && <p className="text-[10px] text-white/25 mt-0.5 line-through truncate">{block.originalText}</p>}
-              </div>
+                <p className={`text-sm break-words leading-snug ${
+                  block.id === editingId ? "text-[#c9f36c]" : block.edited ? "text-[#c9f36c]/70" : "text-white/70"
+                }`}>
+                  {block.text || <span className="italic text-white/20">empty</span>}
+                </p>
+                {block.edited && (
+                  <p className="text-[10px] text-white/20 mt-0.5 line-through truncate">{block.originalText}</p>
+                )}
+              </button>
             ))}
           </div>
-        </div>
+        </aside>
       </div>
     </div>
   );
