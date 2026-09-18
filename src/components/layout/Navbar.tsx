@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { HiMenu, HiX } from "react-icons/hi";
+import { FiFileText } from "react-icons/fi";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import ThemeToggle from "@/components/ui/ThemeToggle";
@@ -16,6 +17,7 @@ const navLinks = [
   { label: "Projects", href: "/projects" },
   { label: "Testimonials", href: "/testimonials" },
   { label: "Contact", href: "/contact" },
+  { label: "AI Doc Scanner", href: "/ai-doc-scanner", icon: <FiFileText /> },
 ];
 
 export default function Navbar() {
@@ -89,7 +91,10 @@ export default function Navbar() {
                 {!isActive && (
                   <div className="absolute inset-0 bg-white/[0.03] rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 )}
-                <span className="relative z-10">{link.label}</span>
+                <span className="relative z-10 flex items-center gap-1.5">
+                  {link.icon && <span className="text-sm">{link.icon}</span>}
+                  {link.label}
+                </span>
               </Link>
             );
           })}
@@ -144,6 +149,7 @@ export default function Navbar() {
                       {isActive && (
                         <div className="w-1.5 h-1.5 rounded-full bg-accent-blue" />
                       )}
+                      {link.icon && <span className="text-sm">{link.icon}</span>}
                       {link.label}
                     </Link>
                   </motion.div>
