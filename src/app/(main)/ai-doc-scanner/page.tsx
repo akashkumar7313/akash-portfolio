@@ -58,11 +58,12 @@ export default function AIDocScannerPage() {
         setProcessing({ status: "done", progress: 100, message: "Done" });
       } catch (err) {
         console.error("PDF processing failed:", err);
+        const msg = err instanceof Error ? err.message : String(err);
         setProcessing({
           status: "error",
           progress: 0,
           message: "Failed to process PDF",
-          error: "Unable to process this PDF. It may be corrupted or too large. Try a different file.",
+          error: `Unable to process this PDF: ${msg}. Try a smaller file or an image instead.`,
         });
       }
       return;
@@ -96,11 +97,12 @@ export default function AIDocScannerPage() {
       setProcessing({ status: "done", progress: 100, message: "Done" });
     } catch (err) {
       console.error("Image processing failed:", err);
+      const msg = err instanceof Error ? err.message : String(err);
       setProcessing({
         status: "error",
         progress: 0,
         message: "Failed to process image",
-        error: "Unable to process this image. Try a higher quality image or a different format.",
+        error: `Unable to process this image: ${msg}. Try a higher quality image or a different format.`,
       });
     }
   }, []);
