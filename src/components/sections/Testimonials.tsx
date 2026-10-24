@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiMessageCircle, FiChevronLeft, FiChevronRight, FiStar } from "react-icons/fi";
 import SectionHeading from "@/components/ui/SectionHeading";
+import TiltCard from "@/components/ui/TiltCard";
 
 interface TestimonialItem {
   name: string;
@@ -61,6 +62,7 @@ export default function Testimonials() {
                 transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
                 className="relative"
               >
+                <TiltCard intensity={4} className="rounded-3xl">
                 <div className="relative rounded-3xl overflow-hidden bg-gradient-to-br from-white to-gray-50 dark:from-[#151b17] dark:to-[#1b221d] border border-gray-200 dark:border-[#c9f36c]/10 shadow-xl shadow-gray-200/50 dark:shadow-black/30">
                   {/* Top accent line */}
                   <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#c9f36c] via-[#a8d94a] to-[#c9f36c]" />
@@ -121,6 +123,7 @@ export default function Testimonials() {
                     </div>
                   </div>
                 </div>
+                </TiltCard>
               </motion.div>
             </AnimatePresence>
           </div>

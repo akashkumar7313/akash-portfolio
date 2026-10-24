@@ -6,6 +6,7 @@ import { FiExternalLink } from "react-icons/fi";
 import { FaAndroid, FaApple } from "react-icons/fa";
 import SectionHeading from "@/components/ui/SectionHeading";
 import ProjectModal from "@/components/projects/ProjectModal";
+import TiltCard from "@/components/ui/TiltCard";
 
 interface Project {
   id: number;
@@ -108,7 +109,8 @@ export default function Projects() {
                   exit={{ opacity: 0, scale: 0.95 }}
                   transition={{ duration: 0.4, delay: idx * 0.05 }}
                 >
-                  <motion.div className="group cursor-pointer" onClick={() => setSelectedProject(project)} whileHover={{ y: -4 }}>
+                  <motion.div className="group cursor-pointer h-full" onClick={() => setSelectedProject(project)} whileHover={{ y: -4 }}>
+                    <TiltCard intensity={5} fill className="rounded-2xl">
                     <div className="card h-full flex flex-col glass-hover group relative overflow-hidden">
                       <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" style={{ boxShadow: "inset 0 0 30px rgba(59,130,246,0.1)" }} />
 
@@ -163,6 +165,7 @@ export default function Projects() {
                         )}
                       </div>
                     </div>
+                    </TiltCard>
                   </motion.div>
                 </motion.div>
               );

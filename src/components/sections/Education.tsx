@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { FiBookOpen, FiAward, FiStar } from "react-icons/fi";
 import SectionHeading from "@/components/ui/SectionHeading";
+import TiltCard from "@/components/ui/TiltCard";
 
 interface EducationItem {
   degree: string;
@@ -56,29 +57,30 @@ export default function Education() {
               Education
             </h3>
             {education.map((edu, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: i * 0.1 }}
-                className="card glass-hover relative overflow-hidden group"
-                whileHover={{ scale: 1.02, x: 4 }}
-              >
-                <div className={`absolute inset-0 bg-gradient-to-r ${i % 2 === 0 ? "from-accent-purple/20 to-accent-blue/20" : "from-accent-cyan/20 to-accent-purple/20"} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
-                <div className="relative z-10 flex items-start gap-4">
-                  <motion.span className="text-2xl" animate={{ y: [0, -3, 0] }} transition={{ repeat: Infinity, duration: 2.5, delay: i * 0.5 }}>
-                    {edu.icon}
-                  </motion.span>
-                  <div>
-                    <h4 className="text-dark-100 dark:text-white font-semibold font-heading">{edu.degree}</h4>
-                    <p className="text-dark-400 text-sm mt-1">{edu.school}</p>
-                    <span className={`inline-block mt-2 px-3 py-1 rounded-full ${i % 2 === 0 ? "bg-accent-purple/10 text-accent-purple" : "bg-accent-cyan/10 text-accent-cyan"} text-xs font-mono`}>
-                      {edu.period}
-                    </span>
+              <TiltCard key={i} intensity={6} className="rounded-2xl">
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: i * 0.1 }}
+                  className="card glass-hover relative overflow-hidden group h-full"
+                  whileHover={{ scale: 1.02, x: 4 }}
+                >
+                  <div className={`absolute inset-0 bg-gradient-to-r ${i % 2 === 0 ? "from-accent-purple/20 to-accent-blue/20" : "from-accent-cyan/20 to-accent-purple/20"} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
+                  <div className="relative z-10 flex items-start gap-4">
+                    <motion.span className="text-2xl" animate={{ y: [0, -3, 0] }} transition={{ repeat: Infinity, duration: 2.5, delay: i * 0.5 }}>
+                      {edu.icon}
+                    </motion.span>
+                    <div>
+                      <h4 className="text-dark-100 dark:text-white font-semibold font-heading">{edu.degree}</h4>
+                      <p className="text-dark-400 text-sm mt-1">{edu.school}</p>
+                      <span className={`inline-block mt-2 px-3 py-1 rounded-full ${i % 2 === 0 ? "bg-accent-purple/10 text-accent-purple" : "bg-accent-cyan/10 text-accent-cyan"} text-xs font-mono`}>
+                        {edu.period}
+                      </span>
+                    </div>
                   </div>
-                </div>
-              </motion.div>
+                </motion.div>
+              </TiltCard>
             ))}
           </motion.div>
 
@@ -96,28 +98,29 @@ export default function Education() {
               Achievements
             </h3>
             {achievements.map((ach, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, x: 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: 0.3 + i * 0.1 }}
-                className="card glass-hover relative overflow-hidden group"
-                whileHover={{ scale: 1.02, x: -4 }}
-              >
-                <div className={`absolute inset-0 bg-gradient-to-r ${ach.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
-                <div className="relative z-10 flex items-center gap-4">
-                  <motion.span className="text-2xl" animate={{ scale: [1, 1.2, 1] }} transition={{ repeat: Infinity, duration: 2, delay: i * 0.3 }}>
-                    {ach.icon}
-                  </motion.span>
-                  <div>
-                    <p className="text-dark-100 dark:text-white font-medium">{ach.text}</p>
-                    <p className="text-dark-500 text-xs mt-0.5 flex items-center gap-1">
-                      <FiStar className={ach.accent} size={10} /> Recognized achievement
-                    </p>
+              <TiltCard key={i} intensity={6} className="rounded-2xl">
+                <motion.div
+                  initial={{ opacity: 0, x: 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: 0.3 + i * 0.1 }}
+                  className="card glass-hover relative overflow-hidden group h-full"
+                  whileHover={{ scale: 1.02, x: -4 }}
+                >
+                  <div className={`absolute inset-0 bg-gradient-to-r ${ach.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
+                  <div className="relative z-10 flex items-center gap-4">
+                    <motion.span className="text-2xl" animate={{ scale: [1, 1.2, 1] }} transition={{ repeat: Infinity, duration: 2, delay: i * 0.3 }}>
+                      {ach.icon}
+                    </motion.span>
+                    <div>
+                      <p className="text-dark-100 dark:text-white font-medium">{ach.text}</p>
+                      <p className="text-dark-500 text-xs mt-0.5 flex items-center gap-1">
+                        <FiStar className={ach.accent} size={10} /> Recognized achievement
+                      </p>
+                    </div>
                   </div>
-                </div>
-              </motion.div>
+                </motion.div>
+              </TiltCard>
             ))}
           </motion.div>
         </div>

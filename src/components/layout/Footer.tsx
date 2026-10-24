@@ -14,6 +14,7 @@ import {
 } from "react-icons/fi";
 import { FaWhatsapp } from "react-icons/fa";
 import Link from "next/link";
+import TiltCard from "@/components/ui/TiltCard";
 
 const quickLinks = [
   { label: "Home", href: "/" },
@@ -186,18 +187,20 @@ export default function Footer() {
             <h4 className="text-dark-100 dark:text-white font-semibold text-sm mb-4 uppercase tracking-wider">
               Availability
             </h4>
-            <div className="p-4 rounded-xl bg-white/[0.03] border border-white/[0.06] relative overflow-hidden group">
-              <div className="absolute inset-0 bg-gradient-to-br from-green-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="relative">
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse" />
-                  <span className="text-green-400 text-sm font-medium">Available for Work</span>
+            <TiltCard intensity={6} className="rounded-xl">
+              <div className="p-4 rounded-xl bg-white/[0.03] border border-white/[0.06] relative overflow-hidden group h-full">
+                <div className="absolute inset-0 bg-gradient-to-br from-green-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="relative">
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse" />
+                    <span className="text-green-400 text-sm font-medium">Available for Work</span>
+                  </div>
+                  <p className="text-dark-400 text-xs leading-relaxed">
+                    Open to freelance projects and full-time opportunities. Let&apos;s create something exceptional.
+                  </p>
                 </div>
-                <p className="text-dark-400 text-xs leading-relaxed">
-                  Open to freelance projects and full-time opportunities. Let&apos;s create something exceptional.
-                </p>
               </div>
-            </div>
+            </TiltCard>
           </motion.div>
         </div>
 

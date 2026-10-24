@@ -6,6 +6,7 @@ import { FiArrowDown, FiDownload, FiEye, FiMail, FiStar, FiThumbsUp, FiClock } f
 import { FaGooglePlay, FaApple } from "react-icons/fa";
 import { SiFlutter } from "react-icons/si";
 import Stats from "./Stats";
+import TiltCard from "@/components/ui/TiltCard";
 import Link from "next/link";
 
 const roles = [
@@ -381,6 +382,7 @@ export default function Hero() {
               transition={{ duration: 0.8, delay: 1.6 }}
               className="w-full max-w-[350px] mt-16"
             >
+              <TiltCard intensity={6} spotlight={false} className="rounded-2xl">
               <div className="rounded-2xl overflow-hidden border border-[#c9f36c]/20 bg-[#151b17] shadow-2xl shadow-black/30">
                 <div className="flex items-center gap-2 px-4 py-2 bg-[#1b221d] border-b border-[#c9f36c]/10">
                   <div className="flex gap-1.5">
@@ -420,6 +422,7 @@ export default function Hero() {
                   )}
                 </div>
               </div>
+              </TiltCard>
 
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -450,6 +453,7 @@ export default function Hero() {
                 className="dark relative"
                 style={{ width: "300px", height: "620px" }}
               >
+                <TiltCard intensity={7} spotlight={false} fill className="rounded-[3rem]">
                 <div className="absolute inset-0 rounded-[3rem] bg-gradient-to-b from-[#2a3a30] to-[#101412] p-[3px] shadow-2xl shadow-[#c9f36c]/20">
                   <div className="w-full h-full rounded-[2.85rem] bg-[#0a0d0b] overflow-hidden relative">
                     <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[120px] h-[30px] bg-[#0a0d0b] rounded-b-2xl z-10 flex items-center justify-center gap-2">
@@ -564,6 +568,7 @@ export default function Hero() {
                     </div>
                   </div>
                 </div>
+                </TiltCard>
               {liveStack.slice(0, 14).map((tech, i) => {
                 const p = {...badgePositions[i]};
                 if (!p.top && !p.bottom) return null;

@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { FiCpu } from "react-icons/fi";
 import SectionHeading from "@/components/ui/SectionHeading";
+import TiltCard from "@/components/ui/TiltCard";
 
 interface SkillCategory {
   title: string;
@@ -46,28 +47,32 @@ export default function Skills() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: idx * 0.1 }}
-              className="card glass-hover group"
+              className="h-full"
             >
-              <h3 className="text-dark-100 dark:text-white font-semibold mb-5 text-lg flex items-center gap-3">
-                <span className="w-9 h-9 rounded-lg bg-[#c9f36c]/10 flex items-center justify-center text-base group-hover:bg-[#c9f36c]/20 transition-all duration-300">
-                  {cat.icon}
-                </span>
-                {cat.title}
-              </h3>
-              <div className="flex flex-wrap gap-2">
-                {cat.skills.map((skill, sIdx) => (
-                  <motion.span
-                    key={skill}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.3, delay: idx * 0.1 + sIdx * 0.03 }}
-                    className={`px-3.5 py-1.5 rounded-lg text-sm font-medium border bg-gradient-to-br transition-all duration-300 cursor-default text-dark-200 ${badgeColors[sIdx % badgeColors.length]}`}
-                  >
-                    {skill}
-                  </motion.span>
-                ))}
-              </div>
+              <TiltCard intensity={6} fill className="rounded-2xl">
+                <div className="card glass-hover group h-full">
+                  <h3 className="text-dark-100 dark:text-white font-semibold mb-5 text-lg flex items-center gap-3">
+                    <span className="w-9 h-9 rounded-lg bg-[#c9f36c]/10 flex items-center justify-center text-base group-hover:bg-[#c9f36c]/20 transition-all duration-300">
+                      {cat.icon}
+                    </span>
+                    {cat.title}
+                  </h3>
+                  <div className="flex flex-wrap gap-2">
+                    {cat.skills.map((skill, sIdx) => (
+                      <motion.span
+                        key={skill}
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.3, delay: idx * 0.1 + sIdx * 0.03 }}
+                        className={`px-3.5 py-1.5 rounded-lg text-sm font-medium border bg-gradient-to-br transition-all duration-300 cursor-default text-dark-200 ${badgeColors[sIdx % badgeColors.length]}`}
+                      >
+                        {skill}
+                      </motion.span>
+                    ))}
+                  </div>
+                </div>
+              </TiltCard>
             </motion.div>
           ))}
         </div>

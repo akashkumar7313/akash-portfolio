@@ -440,3 +440,73 @@ html {
   outline-offset: 2px;
   border-radius: 4px;
 }
+
+/* ===== Contact 3D enhancements ===== */
+@property --border-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes borderRotate {
+  to {
+    --border-angle: 360deg;
+  }
+}
+
+.animated-border {
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  border-radius: inherit;
+  background: conic-gradient(
+    from var(--border-angle),
+    transparent 0deg,
+    rgba(201, 243, 108, 0.9) 55deg,
+    transparent 130deg,
+    transparent 230deg,
+    rgba(168, 217, 74, 0.8) 305deg,
+    transparent 360deg
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: borderRotate 7s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes floatSlow {
+  0%, 100% {
+    transform: translateY(0) rotateZ(0deg);
+  }
+  50% {
+    transform: translateY(-12px) rotateZ(2deg);
+  }
+}
+
+.animate-float-slow {
+  animation: floatSlow 6s ease-in-out infinite;
+}
+
+@keyframes pulseRing {
+  0% {
+    transform: scale(0.7);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+
+.animate-pulse-ring {
+  animation: pulseRing 2.4s ease-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animated-border,
+  .animate-float-slow,
+  .animate-pulse-ring {
+    animation: none !important;
+  }
+}

@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { FiBriefcase, FiCalendar, FiChevronDown, FiMapPin } from "react-icons/fi";
 import { FaApple, FaGooglePlay } from "react-icons/fa";
 import SectionHeading from "@/components/ui/SectionHeading";
+import TiltCard from "@/components/ui/TiltCard";
 
 interface ExperienceItem {
   role: string;
@@ -57,10 +58,11 @@ export default function Experience() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.45, delay: idx * 0.12 }}
-                className="group"
+                className="group h-full"
               >
-                <motion.div
-                  className="relative overflow-hidden rounded-3xl transition-all duration-300 cursor-pointer h-full select-none"
+                <TiltCard intensity={5} fill className="rounded-3xl">
+                  <motion.div
+                    className="relative overflow-hidden rounded-3xl transition-all duration-300 cursor-pointer h-full select-none"
                   style={{
                     background: "var(--glass-bg)",
                     backdropFilter: "blur(20px)",
@@ -145,7 +147,8 @@ export default function Experience() {
                       </motion.div>
                     )}
                   </AnimatePresence>
-                </motion.div>
+                  </motion.div>
+                </TiltCard>
               </motion.div>
             );
           })}
