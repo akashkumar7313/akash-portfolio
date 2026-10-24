@@ -8,6 +8,7 @@ interface Props {
   subtitle?: string;
   icon?: ReactNode;
   align?: "left" | "center";
+  kicker?: string;
 }
 
 export default function SectionHeading({
@@ -15,99 +16,41 @@ export default function SectionHeading({
   subtitle,
   icon,
   align = "center",
+  kicker,
 }: Props) {
+  const centered = align === "center";
+
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.6 }}
-      className={`mb-16 ${align === "center" ? "text-center" : ""}`}
+      transition={{ duration: 0.55 }}
+      className={`mb-12 md:mb-16 ${centered ? "flex flex-col items-center text-center" : ""}`}
     >
-      <div
-        className={`inline-flex items-center gap-3 px-4 py-2 rounded-full bg-[var(--glass-5)] border border-[var(--glass-10)] text-[#16a34a] dark:text-[#c9f36c] text-sm font-medium mb-4 ${
-          align === "center" ? "mx-auto" : ""
-        }`}
-      >
-        {icon && <span className="text-lg">{icon}</span>}
-        <span>{title.split(" ")[0]}</span>
+      <div className={`mb-4 flex items-center gap-3 ${centered ? "justify-center" : ""}`}>
+        <span className="bento-kicker">
+          {icon && <span className="text-sm">{icon}</span>}
+          {kicker || title.split(" ")[0]}
+        </span>
+        <span className="hidden h-px w-12 bg-gradient-to-r from-[#c9f36c]/60 to-transparent sm:block" />
       </div>
-      <h2
-        className={`section-heading gradient-text ${
-          align === "center" ? "" : ""
-        }`}
-      >
+
+      <h2 className="max-w-4xl text-3xl font-bold tracking-tight text-[#101412] sm:text-4xl lg:text-[2.9rem] lg:leading-[1.08] dark:text-[#f4f7f2]">
         {title}
       </h2>
 
-      {/* Hand-drawn style underline */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8, delay: 0.3 }}
-        className={`mt-4 mb-4 ${align === "center" ? "flex justify-center" : ""}`}
-      >
-        <svg
-          width="180"
-          height="12"
-          viewBox="0 0 180 12"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          className="overflow-visible"
-        >
-          {/* Main hand-drawn squiggly line */}
-          <motion.path
-            d="M2 8 C20 2, 35 10, 55 5 C75 0, 90 9, 110 4 C130 -1, 145 8, 165 5 C172 4, 176 6, 178 5"
-            stroke="url(#handDrawnGrad)"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            fill="none"
-            initial={{ pathLength: 0 }}
-            whileInView={{ pathLength: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1.2, delay: 0.4, ease: "easeOut" }}
-          />
-          {/* Second subtle line for depth */}
-          <motion.path
-            d="M10 10 C30 5, 50 11, 70 6 C90 1, 110 10, 130 5 C150 0, 165 8, 175 6"
-            stroke="url(#handDrawnGrad2)"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            fill="none"
-            opacity="0.4"
-            initial={{ pathLength: 0 }}
-            whileInView={{ pathLength: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1.2, delay: 0.6, ease: "easeOut" }}
-          />
-          <defs>
-            <linearGradient id="handDrawnGrad" x1="0" y1="0" x2="180" y2="0" gradientUnits="userSpaceOnUse">
-              <stop offset="0%" stopColor="#c9f36c" stopOpacity="0.2" />
-              <stop offset="30%" stopColor="#c9f36c" />
-              <stop offset="70%" stopColor="#a8d94a" />
-              <stop offset="100%" stopColor="#a8d94a" stopOpacity="0.2" />
-            </linearGradient>
-            <linearGradient id="handDrawnGrad2" x1="0" y1="0" x2="180" y2="0" gradientUnits="userSpaceOnUse">
-              <stop offset="0%" stopColor="#a8d94a" stopOpacity="0" />
-              <stop offset="50%" stopColor="#c9f36c" stopOpacity="0.6" />
-              <stop offset="100%" stopColor="#a8d94a" stopOpacity="0" />
-            </linearGradient>
-          </defs>
-        </svg>
-      </motion.div>
-
       {subtitle && (
-        <p
-          className={`section-subtitle ${
-            align === "center" ? "mx-auto" : ""
-          }`}
-        >
+        <p className={`mt-4 max-w-2xl text-sm leading-relaxed text-[#6b7280] sm:text-base dark:text-[#91a096] ${centered ? "mx-auto" : ""}`}>
           {subtitle}
         </p>
       )}
+
+      <div className={`mt-6 flex items-center gap-1.5 ${centered ? "justify-center" : ""}`}>
+        <span className="h-1 w-10 rounded-full bg-gradient-to-r from-[#c9f36c] to-[#a8d94a]" />
+        <span className="h-1 w-1.5 rounded-full bg-[#c9f36c]/60" />
+        <span className="h-1 w-1 rounded-full bg-[#c9f36c]/30" />
+      </div>
     </motion.div>
   );
 }

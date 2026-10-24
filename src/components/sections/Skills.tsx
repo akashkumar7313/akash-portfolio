@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { FiCpu } from "react-icons/fi";
+import { FiCpu, FiGitBranch, FiLayers } from "react-icons/fi";
 import SectionHeading from "@/components/ui/SectionHeading";
 import TiltCard from "@/components/ui/TiltCard";
 
@@ -12,18 +12,26 @@ interface SkillCategory {
   skills: string[];
 }
 
-const badgeColors = [
-  "from-[#c9f36c]/20 to-[#c9f36c]/5 border-[#c9f36c]/20 hover:border-[#c9f36c]/50 hover:text-[#c9f36c]",
-  "from-[#a8d94a]/20 to-[#a8d94a]/5 border-[#a8d94a]/20 hover:border-[#a8d94a]/50 hover:text-[#a8d94a]",
-  "from-[#c9f36c]/15 to-[#c9f36c]/5 border-[#c9f36c]/15 hover:border-[#c9f36c]/40 hover:text-[#c9f36c]",
-  "from-green-500/20 to-green-500/5 border-green-500/20 hover:border-green-500/50 hover:text-green-400",
-  "from-pink-500/20 to-pink-500/5 border-pink-500/20 hover:border-pink-500/50 hover:text-pink-400",
-  "from-yellow-500/20 to-yellow-500/5 border-yellow-500/20 hover:border-yellow-500/50 hover:text-yellow-400",
-  "from-orange-500/20 to-orange-500/5 border-orange-500/20 hover:border-orange-500/50 hover:text-orange-400",
+const nodes = [
+  { x: 50, y: 8 },
+  { x: 20, y: 20 },
+  { x: 80, y: 20 },
+  { x: 9, y: 50 },
+  { x: 91, y: 50 },
+  { x: 20, y: 80 },
+  { x: 80, y: 80 },
+  { x: 50, y: 92 },
 ];
+
+function linkPath(x: number, y: number) {
+  const mx = (50 + x) / 2;
+  const my = (50 + y) / 2;
+  return `M50,50 C${mx},50 ${mx},${y} ${x},${y}`;
+}
 
 export default function Skills() {
   const [categories, setCategories] = useState<SkillCategory[]>([]);
+  const [active, setActive] = useState<number | null>(null);
 
   useEffect(() => {
     fetch("/api/skills")
@@ -34,43 +42,189 @@ export default function Skills() {
 
   if (categories.length === 0) return null;
 
-  return (
-    <section id="skills" className="section-padding bg-dark-900/50 grid-bg">
-      <div className="max-width">
-        <SectionHeading title="Skills & Expertise" subtitle="Technologies and tools I work with daily" icon={<FiCpu />} />
+  const total = categories.reduce((sum, cat) => sum + cat.skills.length, 0);
+  const activeCat = active !== null ? categories[active] : null;
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+  return (
+    <section id="skills" className="section-padding relative overflow-hidden">
+      <div aria-hidden className="pointer-events-none absolute inset-0 page-glow" />
+      <div className="relative z-10 mx-auto max-w-6xl px-1 sm:px-0">
+        <SectionHeading
+          title="Skills & Expertise"
+          kicker="Skills"
+          subtitle="The tools I reach for when turning an idea into a shipped product."
+          icon={<FiCpu />}
+        />
+
+        <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+          <div className="flex items-center gap-2">
+            <span className="bento-icon"><FiLayers /></span>
+            <div>
+              <p className="text-xs font-semibold text-[#101412] dark:text-[#f4f7f2]">The skill map</p>
+              <p className="text-[10px] text-[#6b7280] dark:text-[#91a096]">{categories.length} branches · {total} skills</p>
+            </div>
+          </div>
+          <span className="bento-chip">Always learning</span>
+        </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.6 }}
+          className="bento relative mb-6 hidden overflow-hidden p-5 lg:block"
+          onMouseLeave={() => setActive(null)}
+        >
+          <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(201,243,108,0.10),transparent_58%)]" />
+
+          <div className="relative mb-1 flex items-center justify-between">
+            <span className="bento-label flex items-center gap-1.5"><FiGitBranch /> Skill flow</span>
+            <span className="font-mono text-[10px] text-[#6b7280] dark:text-[#91a096]">
+              {activeCat ? activeCat.title : "hover a branch to trace it"}
+            </span>
+          </div>
+
+          <div className="relative h-[590px] w-full xl:h-[620px]">
+            <svg
+              aria-hidden
+              viewBox="0 0 100 100"
+              preserveAspectRatio="none"
+              className="absolute inset-0 h-full w-full"
+            >
+              {nodes.slice(0, categories.length).map((node, i) => {
+                const isActive = active === i;
+                return (
+                  <path
+                    key={i}
+                    d={linkPath(node.x, node.y)}
+                    fill="none"
+                    vectorEffect="non-scaling-stroke"
+                    strokeLinecap="round"
+                    className={`skill-link transition-all duration-300 ${isActive ? "skill-link-active" : ""} ${active !== null && !isActive ? "opacity-20" : ""}`}
+                  />
+                );
+              })}
+            </svg>
+
+            <div className="absolute left-1/2 top-1/2 z-10 w-[224px] -translate-x-1/2 -translate-y-1/2 rounded-[28px] bg-gradient-to-br from-[#d9ff8a] via-[#c9f36c] to-[#a8d94a] px-5 py-5 text-center text-[#101412] shadow-[0_24px_70px_-20px_rgba(201,243,108,0.75)]">
+              <span className="font-mono text-[9px] uppercase tracking-[0.22em] opacity-60">Core stack</span>
+              <p className="mt-1 text-lg font-black leading-tight">Akash&apos;s toolkit</p>
+              <p className="mt-1 text-[11px] font-medium opacity-70">{total} skills · {categories.length} branches</p>
+              <div className="mx-auto my-3 h-px w-12 bg-[#101412]/20" />
+              <p className="min-h-9 text-[11px] font-semibold leading-snug">
+                {activeCat ? activeCat.title : "Hover a branch to trace the stack"}
+              </p>
+              <p className="mt-1 text-[10px] leading-snug opacity-65">
+                {activeCat ? activeCat.skills.slice(0, 3).join(" · ") : "Flutter · React Native · Firebase"}
+              </p>
+            </div>
+
+            {nodes.slice(0, categories.length).map((node, i) => {
+              const cat = categories[i];
+              const isActive = active === i;
+              return (
+                <button
+                  key={cat.title}
+                  type="button"
+                  onMouseEnter={() => setActive(i)}
+                  onFocus={() => setActive(i)}
+                  onClick={() => setActive(i)}
+                  style={{ left: `${node.x}%`, top: `${node.y}%` }}
+                  className={`group absolute z-10 w-[150px] -translate-x-1/2 -translate-y-1/2 rounded-2xl border p-3 text-left backdrop-blur transition-all duration-300 xl:w-[168px] ${
+                    isActive
+                      ? "border-[#c9f36c] bg-[#c9f36c]/[0.14] shadow-[0_0_46px_-10px_rgba(201,243,108,0.65)]"
+                      : "border-[#101412]/10 bg-white/75 hover:border-[#c9f36c]/60 dark:border-[#c9f36c]/[0.14] dark:bg-[#0d1512]/85"
+                  }`}
+                >
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm">{cat.icon}</span>
+                    <span className="line-clamp-2 text-[11px] font-semibold leading-tight text-[#101412] dark:text-[#f4f7f2]">{cat.title}</span>
+                  </div>
+                  <p className="mt-1.5 truncate text-[9px] text-[#6b7280] dark:text-[#91a096]">
+                    {cat.skills.slice(0, 2).join(" · ")}
+                  </p>
+                  <div className="mt-2 flex items-center justify-between">
+                    <span className="font-mono text-[9px] text-[#16a34a] dark:text-[#c9f36c]">
+                      {String(cat.skills.length).padStart(2, "0")} skills
+                    </span>
+                    <span className={`h-1.5 w-1.5 rounded-full transition-colors ${isActive ? "bg-[#c9f36c]" : "bg-[#101412]/15 dark:bg-white/15"}`} />
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        </motion.div>
+
+        <div className="relative lg:hidden">
+          <div aria-hidden className="absolute bottom-3 left-[19px] top-3 w-px bg-gradient-to-b from-[#c9f36c] via-[#c9f36c]/35 to-transparent" />
           {categories.map((cat, idx) => (
             <motion.div
               key={cat.title}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: idx * 0.1 }}
-              className="h-full"
+              transition={{ duration: 0.4, delay: idx * 0.04 }}
+              className="relative mb-3 pl-11"
             >
-              <TiltCard intensity={6} fill className="rounded-2xl">
-                <div className="card glass-hover group h-full">
-                  <h3 className="text-dark-100 dark:text-white font-semibold mb-5 text-lg flex items-center gap-3">
-                    <span className="w-9 h-9 rounded-lg bg-[#c9f36c]/10 flex items-center justify-center text-base group-hover:bg-[#c9f36c]/20 transition-all duration-300">
-                      {cat.icon}
+              <span className="absolute left-[19px] top-5 z-10 h-2.5 w-2.5 -translate-x-1/2 rounded-full bg-[#c9f36c] shadow-[0_0_0_4px_rgba(201,243,108,0.15)]" />
+              <div className="bento bento-hover p-4">
+                <div className="flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-2">
+                    <span className="flex h-8 w-8 items-center justify-center rounded-lg border border-[#c9f36c]/20 bg-[#c9f36c]/10 text-sm">{cat.icon}</span>
+                    <h3 className="text-xs font-semibold text-[#101412] dark:text-[#f4f7f2]">{cat.title}</h3>
+                  </div>
+                  <span className="font-mono text-[9px] text-[#6b7280] dark:text-[#91a096]">{String(idx + 1).padStart(2, "0")}</span>
+                </div>
+                <div className="mt-3 flex flex-wrap gap-1.5">
+                  {cat.skills.map((skill) => (
+                    <span key={skill} className="bento-chip">{skill}</span>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        <div className="bento-grid hidden lg:grid">
+          {categories.map((cat, idx) => (
+            <motion.div
+              key={cat.title}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.45, delay: idx * 0.04 }}
+              className="md:col-span-6 xl:col-span-3"
+            >
+              <TiltCard intensity={6} glow="201 243 108" className="h-full rounded-[26px]">
+                <div className="bento bento-hover relative h-full p-5">
+                  <div className="mb-4 flex items-start justify-between gap-3">
+                    <div className="flex items-center gap-3">
+                      <span className="flex h-10 w-10 items-center justify-center rounded-xl border border-[#c9f36c]/20 bg-[#c9f36c]/10 text-base">
+                        {cat.icon}
+                      </span>
+                      <h3 className="text-sm font-semibold leading-tight text-[#101412] dark:text-[#f4f7f2]">
+                        {cat.title}
+                      </h3>
+                    </div>
+                    <span className="font-mono text-[10px] text-[#6b7280] dark:text-[#91a096]">
+                      {String(idx + 1).padStart(2, "0")}
                     </span>
-                    {cat.title}
-                  </h3>
-                  <div className="flex flex-wrap gap-2">
-                    {cat.skills.map((skill, sIdx) => (
+                  </div>
+                  <div className="flex flex-wrap gap-1.5">
+                    {cat.skills.map((skill) => (
                       <motion.span
                         key={skill}
-                        initial={{ opacity: 0, scale: 0.8 }}
+                        initial={{ opacity: 0, scale: 0.92 }}
                         whileInView={{ opacity: 1, scale: 1 }}
                         viewport={{ once: true }}
-                        transition={{ duration: 0.3, delay: idx * 0.1 + sIdx * 0.03 }}
-                        className={`px-3.5 py-1.5 rounded-lg text-sm font-medium border bg-gradient-to-br transition-all duration-300 cursor-default text-dark-200 ${badgeColors[sIdx % badgeColors.length]}`}
+                        transition={{ duration: 0.25, delay: idx * 0.03 }}
+                        className="bento-chip"
                       >
                         {skill}
                       </motion.span>
                     ))}
                   </div>
+                  <div aria-hidden className="pointer-events-none absolute -bottom-12 -right-10 h-32 w-32 rounded-full bg-[#c9f36c]/[0.06] blur-2xl" />
                 </div>
               </TiltCard>
             </motion.div>

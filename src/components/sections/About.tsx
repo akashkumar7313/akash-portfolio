@@ -1,8 +1,16 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { FiUser, FiCode, FiServer, FiSmartphone, FiAward } from "react-icons/fi";
+import {
+  FiAward,
+  FiCode,
+  FiMapPin,
+  FiServer,
+  FiSmartphone,
+  FiUser,
+  FiZap,
+} from "react-icons/fi";
 import SectionHeading from "@/components/ui/SectionHeading";
 import TiltCard from "@/components/ui/TiltCard";
 
@@ -13,12 +21,15 @@ interface AboutData {
 }
 
 const iconMap: Record<string, React.ElementType> = {
-  FiSmartphone, FiServer, FiCode, FiUser, FiAward,
+  FiSmartphone,
+  FiServer,
+  FiCode,
+  FiUser,
+  FiAward,
 };
 
 export default function About() {
   const [data, setData] = useState<AboutData | null>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     fetch("/api/about")
@@ -27,140 +38,153 @@ export default function About() {
       .catch(() => {});
   }, []);
 
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-    let animationId: number;
-    const drops: { x: number; y: number; speed: number; alpha: number }[] = [];
-    for (let i = 0; i < 30; i++) {
-      drops.push({
-        x: Math.random() * canvas.width, y: Math.random() * canvas.height,
-        speed: 0.3 + Math.random() * 0.5, alpha: 0.03 + Math.random() * 0.04,
-      });
-    }
-    const resize = () => { canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight; };
-    resize();
-    window.addEventListener("resize", resize);
-    const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      drops.forEach((d) => {
-        d.y += d.speed;
-        if (d.y > canvas.height) { d.y = -5; d.x = Math.random() * canvas.width; }
-        ctx.beginPath();
-        ctx.moveTo(d.x, d.y - 10);
-        ctx.lineTo(d.x, d.y);
-        ctx.strokeStyle = `rgba(59, 130, 246, ${d.alpha})`;
-        ctx.lineWidth = 1;
-        ctx.stroke();
-      });
-      animationId = requestAnimationFrame(animate);
-    };
-    animate();
-    return () => { cancelAnimationFrame(animationId); window.removeEventListener("resize", resize); };
-  }, []);
-
   if (!data) return null;
 
   return (
-    <section id="about" className="section-padding relative overflow-hidden grid-bg">
-      <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none" />
-      <div className="max-width relative z-10">
-        <SectionHeading title="About Me" subtitle="A passionate software engineer crafting exceptional mobile experiences" icon={<FiUser />} />
+    <section id="about" className="section-padding relative overflow-hidden">
+      <div aria-hidden className="pointer-events-none absolute inset-0 page-glow" />
+      <div className="relative z-10 mx-auto max-w-6xl px-1 sm:px-0">
+        <SectionHeading
+          title="About Me"
+          kicker="About"
+          subtitle="A software engineer who cares about the details — from architecture to the last animation frame."
+          icon={<FiUser />}
+        />
 
-        <div className="grid md:grid-cols-5 gap-8 md:gap-12 items-start">
+        <div className="bento-grid">
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 22 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="md:col-span-3"
+            transition={{ duration: 0.5 }}
+            className="md:col-span-7"
           >
-            <TiltCard intensity={5} className="rounded-2xl">
-              <div className="card space-y-5 relative overflow-hidden">
-                <div className="absolute -top-20 -right-20 w-40 h-40 bg-accent-blue/10 rounded-full blur-3xl" />
-                {data.paragraphs.map((p, i) => (
-                  <p key={i} className={`${i === 0 ? "text-dark-200 text-base md:text-lg" : "text-dark-300"} leading-relaxed relative z-10`}>
-                    {p}
-                  </p>
-                ))}
+            <TiltCard intensity={4} glow="201 243 108" className="h-full rounded-[26px]">
+              <div className="bento bento-pad relative h-full overflow-hidden">
+                <span className="bento-label">The short version</span>
+                <div className="relative mt-4 space-y-4">
+                  {data.paragraphs.map((p, i) => (
+                    <p
+                      key={i}
+                      className={`leading-relaxed ${
+                        i === 0
+                          ? "text-base font-medium text-[#101412] dark:text-[#f4f7f2] sm:text-lg"
+                          : "text-sm text-[#6b7280] dark:text-[#91a096]"
+                      }`}
+                    >
+                      {p}
+                    </p>
+                  ))}
+                </div>
+                <div className="mt-6 flex flex-wrap gap-2">
+                  <span className="bento-chip"><FiMapPin /> Lucknow, India</span>
+                  <span className="bento-chip"><FiZap /> Product-minded</span>
+                  <span className="bento-chip"><FiCode /> Clean architecture</span>
+                </div>
+                <div aria-hidden className="pointer-events-none absolute -bottom-20 -right-14 h-52 w-52 rounded-full bg-[#c9f36c]/10 blur-[70px]" />
               </div>
             </TiltCard>
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 22 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="md:col-span-2"
+            transition={{ duration: 0.5, delay: 0.08 }}
+            className="md:col-span-5"
           >
-            <div className="grid gap-4">
-              {data.highlights.map((item, i) => {
-                const Icon = iconMap[item.icon] || FiCode;
-                const gradients: Record<string, string> = {
-                  "from-accent-blue/20 to-accent-purple/20": "from-accent-blue/20 to-accent-purple/20",
-                  "from-accent-purple/20 to-accent-cyan/20": "from-accent-purple/20 to-accent-cyan/20",
-                  "from-accent-cyan/20 to-green-500/20": "from-accent-cyan/20 to-green-500/20",
-                };
-                const grad = gradients[Object.keys(gradients)[i % 3]] || "from-accent-blue/20 to-accent-purple/20";
-                return (
-                  <TiltCard key={item.title} intensity={7} className="rounded-xl">
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.4, delay: 0.3 + i * 0.1 }}
-                      className="glass rounded-xl p-5 flex items-start gap-4 glass-hover relative overflow-hidden group h-full"
-                      whileHover={{ scale: 1.02 }}
-                    >
-                      <div className={`absolute inset-0 bg-gradient-to-r ${grad} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
-                      <div className={`w-12 h-12 rounded-xl bg-[var(--glass-10)] flex items-center justify-center flex-shrink-0 relative z-10 group-hover:scale-110 transition-transform duration-300 ${item.iconColor}`}>
-                        <Icon className="text-xl" />
-                      </div>
-                      <div className="relative z-10">
-                        <h4 className="text-dark-100 dark:text-white font-semibold mb-1">{item.title}</h4>
-                        <p className="text-dark-400 text-sm">{item.desc}</p>
-                      </div>
-                    </motion.div>
-                  </TiltCard>
-                );
-              })}
+            <TiltCard intensity={6} glow="168 217 74" className="h-full rounded-[26px]">
+              <div className="bento relative h-full overflow-hidden p-6 sm:p-7">
+                <div aria-hidden className="absolute inset-0 bg-[radial-gradient(circle_at_75%_20%,rgba(201,243,108,0.14),transparent_55%)]" />
+                <div className="relative flex items-start justify-between gap-4">
+                  <div>
+                    <span className="bento-label">Currently</span>
+                    <p className="mt-2 max-w-[14rem] text-lg font-semibold leading-snug text-[#101412] dark:text-[#f4f7f2]">
+                      Building mobile apps and web products end to end.
+                    </p>
+                  </div>
+                  <div className="relative flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-[#c9f36c] to-[#a8d94a] text-2xl font-black text-[#101412] shadow-xl shadow-[#c9f36c]/20">
+                    A
+                    <span className="absolute -bottom-2 -right-2 rounded-full border border-[#101412] bg-[#101412] px-2 py-0.5 font-mono text-[8px] uppercase tracking-wider text-[#c9f36c]">
+                      dev
+                    </span>
+                  </div>
+                </div>
+
+                <div className="relative mt-7 space-y-3">
+                  {[
+                    { k: "Focus", v: "Mobile + web" },
+                    { k: "Frameworks", v: "Flutter · React Native · Web" },
+                    { k: "Backend", v: "Firebase · REST" },
+                    { k: "Experience", v: "4+ years shipping" },
+                  ].map((row) => (
+                    <div key={row.k} className="flex items-center justify-between gap-3 border-b border-[#101412]/5 pb-2.5 text-xs last:border-0 dark:border-[#c9f36c]/8">
+                      <span className="font-mono uppercase tracking-wider text-[#6b7280] dark:text-[#91a096]">{row.k}</span>
+                      <span className="text-right font-medium text-[#101412] dark:text-[#f4f7f2]">{row.v}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </TiltCard>
+          </motion.div>
+
+          {data.highlights.map((item, i) => {
+            const Icon = iconMap[item.icon] || FiCode;
+            return (
+              <motion.div
+                key={item.title}
+                initial={{ opacity: 0, y: 18 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.45, delay: 0.05 + i * 0.06 }}
+                className="md:col-span-4"
+              >
+                <TiltCard intensity={6} glow="201 243 108" className="h-full rounded-[26px]">
+                  <div className="bento bento-hover h-full p-5 sm:p-6">
+                    <div className="bento-icon">
+                      <Icon className="text-lg" />
+                    </div>
+                    <h3 className="mt-4 text-sm font-semibold text-[#101412] dark:text-[#f4f7f2]">{item.title}</h3>
+                    <p className="mt-1.5 text-xs leading-relaxed text-[#6b7280] dark:text-[#91a096]">{item.desc}</p>
+                  </div>
+                </TiltCard>
+              </motion.div>
+            );
+          })}
+
+          <motion.div
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.45, delay: 0.15 }}
+            className="md:col-span-12"
+          >
+            <div className="bento p-5 sm:p-6">
+              <div className="mb-4 flex items-center justify-between gap-3">
+                <div className="flex items-center gap-2">
+                  <FiAward className="text-[#16a34a] dark:text-[#c9f36c]" />
+                  <h3 className="text-sm font-semibold text-[#101412] dark:text-[#f4f7f2]">Key achievements</h3>
+                </div>
+                <span className="bento-label hidden sm:block">Recognition</span>
+              </div>
+              <div className="grid gap-3 sm:grid-cols-3">
+                {data.achievements.map((item, i) => (
+                  <motion.div
+                    key={item.text}
+                    initial={{ opacity: 0, y: 14 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: 0.2 + i * 0.06 }}
+                    className="flex items-center gap-3 rounded-2xl border border-[#101412]/8 bg-[#101412]/[0.02] p-4 transition-colors hover:border-[#c9f36c]/40 hover:bg-[#c9f36c]/5 dark:border-[#c9f36c]/10 dark:bg-white/[0.02]"
+                  >
+                    <span className="text-2xl">{item.icon}</span>
+                    <p className="text-xs leading-relaxed text-[#4b5563] dark:text-[#c5cdc8]">{item.text}</p>
+                  </motion.div>
+                ))}
+              </div>
             </div>
           </motion.div>
         </div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="mt-12"
-        >
-          <h3 className="text-dark-100 dark:text-white font-semibold text-lg mb-5 flex items-center gap-2">
-            <FiAward className="text-accent-blue" /> Key Achievements
-          </h3>
-          <div className="grid sm:grid-cols-3 gap-4">
-            {data.achievements.map((item, i) => (
-              <TiltCard key={item.text} intensity={6} className="rounded-xl">
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: 0.4 + i * 0.1 }}
-                  className="glass rounded-xl p-5 flex items-center gap-4 glass-hover relative overflow-hidden h-full"
-                  whileHover={{ scale: 1.03, boxShadow: "0 0 30px rgba(59,130,246,0.15)" }}
-                >
-                  <motion.span className="text-2xl" animate={{ rotate: [0, 10, -10, 0] }} transition={{ repeat: Infinity, duration: 3, delay: i * 0.5 }}>
-                    {item.icon}
-                  </motion.span>
-                  <p className="text-dark-300 text-sm leading-relaxed">{item.text}</p>
-                </motion.div>
-              </TiltCard>
-            ))}
-          </div>
-        </motion.div>
       </div>
     </section>
   );

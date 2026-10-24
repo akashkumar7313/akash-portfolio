@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState, useEffect } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion } from "framer-motion";
 import CountUp from "react-countup";
 import TiltCard from "@/components/ui/TiltCard";
 
@@ -13,8 +13,6 @@ interface StatItem {
 }
 
 export default function Stats() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [stats, setStats] = useState<StatItem[]>([
     { value: 4, suffix: "+", label: "Years Exp", desc: "Cross-platform development" },
     { value: 25, suffix: "+", label: "Projects", desc: "Flutter & React Native" },
@@ -34,55 +32,31 @@ export default function Stats() {
   if (stats.length === 0) return null;
 
   return (
-    <section className="overflow-hidden py-8 md:py-12 grid-bg">
-      <div className="max-width" ref={ref}>
-        <div className="grid grid-cols-2 md:flex md:flex-row md:items-center justify-center gap-4 md:gap-0 md:divide-x md:divide-[#c9f36c]/10">
-          {stats.map((stat, idx) => (
-            <motion.div
-              key={stat.label}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: idx * 0.1 }}
-              className="relative flex-1 px-6"
-            >
-              <TiltCard intensity={4} spotlight={false} className="group flex flex-col items-center text-center rounded-2xl">
-                <div
-                  className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                  style={{
-                    background: `radial-gradient(ellipse at center, rgba(201,243,108,0.12) 0%, transparent 70%)`,
-                  }}
-                />
-                <div className="relative mb-1">
-                  <span className="text-4xl sm:text-5xl lg:text-6xl font-black font-heading tracking-tight leading-none bg-gradient-to-r from-[#c9f36c] to-[#a8d94a] bg-clip-text text-transparent"
-                  >
-                    {isInView ? (
-                      <CountUp end={stat.value} duration={2} delay={idx * 0.1} />
-                    ) : (
-                      0
-                    )}
-                  </span>
-                  <span className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#91a096] dark:text-[#91a096] ml-0.5">
-                    {stat.suffix}
-                  </span>
-                </div>
-                <p className="text-[#101412] dark:text-[#f4f7f2] font-bold text-xs sm:text-sm mb-0.5 relative">
-                  {stat.label}
-                </p>
-                <p className="text-[#6b7280] dark:text-[#91a096] text-[10px] sm:text-xs relative">
-                  {stat.desc}
-                </p>
-                <motion.div
-                  className="absolute bottom-0 left-1/4 right-1/4 h-1 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-500"
-                  style={{
-                    background: `linear-gradient(90deg, transparent, rgba(201,243,108,0.4), transparent)`,
-                  }}
-                />
-              </TiltCard>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-    </section>
+    <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+      {stats.map((stat, idx) => (
+        <motion.div
+          key={stat.label}
+          initial={{ opacity: 0, y: 18 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.45, delay: idx * 0.07 }}
+        >
+          <TiltCard intensity={5} spotlight className="rounded-2xl">
+            <div className="bento bento-hover relative h-full p-4">
+              <div className="relative flex items-baseline gap-0.5">
+                <span className="bg-gradient-to-r from-[#c9f36c] to-[#a8d94a] bg-clip-text text-3xl font-black tracking-tight text-transparent sm:text-4xl">
+                  <CountUp end={stat.value} duration={1.8} delay={idx * 0.08} />
+                </span>
+                <span className="text-xl font-black text-[#16a34a] dark:text-[#c9f36c]">{stat.suffix}</span>
+              </div>
+              <p className="mt-1 text-[11px] font-bold uppercase tracking-wider text-[#101412] dark:text-[#f4f7f2]">
+                {stat.label}
+              </p>
+              <p className="mt-0.5 line-clamp-1 text-[10px] text-[#6b7280] dark:text-[#91a096]">{stat.desc}</p>
+            </div>
+          </TiltCard>
+        </motion.div>
+      ))}
+    </div>
   );
 }

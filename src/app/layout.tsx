@@ -2,13 +2,15 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Akash Kumar Prajapati | Mobile App Developer | Flutter & React Native Expert",
+  title: "Akash Kumar Prajapati | Mobile & Web Developer | Flutter, React Native & Web",
   description:
-    "Portfolio of Akash Kumar Prajapati — Senior Software Engineer specializing in Flutter & React Native. Crafting beautiful, high-performance cross-platform mobile apps.",
+    "Portfolio of Akash Kumar Prajapati — Senior Software Engineer specializing in Flutter, React Native and web. Crafting high-performance mobile apps and web storefronts.",
   keywords: [
     "Flutter Developer",
     "React Native Developer",
     "Mobile App Developer",
+    "Web Developer",
+    "Web App Developer",
     "Software Engineer",
     "Akash Kumar Prajapati",
     "Cross-platform Apps",
@@ -17,16 +19,16 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Akash Kumar Prajapati" }],
   openGraph: {
-    title: "Akash Kumar Prajapati | Mobile App Developer",
+    title: "Akash Kumar Prajapati | Mobile & Web Developer",
     description:
-      "Senior Software Engineer specializing in Flutter & React Native. Crafting beautiful, high-performance cross-platform mobile apps.",
+      "Senior Software Engineer specializing in Flutter, React Native and web. Crafting high-performance mobile apps and web storefronts.",
     type: "website",
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Akash Kumar Prajapati | Mobile App Developer",
-    description: "Senior Software Engineer | Flutter & React Native Expert",
+    title: "Akash Kumar Prajapati | Mobile & Web Developer",
+    description: "Senior Software Engineer | Flutter, React Native & Web",
   },
   robots: "index, follow",
   icons: { icon: "/favicon.svg" },

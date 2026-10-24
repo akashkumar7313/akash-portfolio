@@ -1,11 +1,13 @@
 {
   "settings": {
-    "title": "Akash Kumar Prajapati | Senior Mobile App Developer",
-    "description": "Portfolio of Akash Kumar Prajapati — Software Engineer specializing in Flutter & React Native. Builds scalable, high-performance mobile apps for Android & iOS.",
+    "title": "Akash Kumar Prajapati | Senior Mobile & Web Developer",
+    "description": "Portfolio of Akash Kumar Prajapati — Software Engineer specializing in Flutter, React Native and web. Builds scalable mobile apps and web storefronts.",
     "keywords": [
       "Flutter Developer",
       "React Native Developer",
       "Mobile App Developer",
+      "Web Developer",
+      "Web App Developer",
       "Software Engineer",
       "Akash Kumar Prajapati",
       "Cross-platform Apps"
@@ -19,10 +21,10 @@
       "Software Engineer",
       "Flutter Developer",
       "React Native Developer",
-      "Cross-Platform Expert",
+      "Mobile & Web Developer",
       "Mobile App Architect"
     ],
-    "tagline": "building production-grade apps for Android & iOS — shipped worldwide",
+    "tagline": "building production-grade mobile apps and web storefronts — shipped worldwide",
     "availableText": "Available for opportunities",
     "playStoreUrl": "",
     "appStoreUrl": "",
@@ -184,8 +186,8 @@
   },
   "about": {
     "paragraphs": [
-      "I am a detail-oriented Software Engineer with 4+ years of experience building scalable mobile applications using Flutter and React Native.",
-      "I specialize in cross-platform mobile apps, Firebase backend systems, REST API integration, payment gateways (Stripe, Razorpay), App Store & Play Store deployment, and performance optimization.",
+      "I am a detail-oriented Software Engineer with 4+ years of experience building scalable mobile apps and web storefronts using Flutter, React Native, and modern web tooling.",
+      "I specialize in cross-platform mobile apps, responsive web experiences, Firebase backend systems, REST API integration, payment gateways (Stripe, Razorpay), App Store & Play Store deployment, web deployment, and performance optimization.",
       "I believe in writing clean, scalable, and production-ready code that delivers real business value. Every project I take on is an opportunity to solve meaningful problems through technology."
     ],
     "highlights": [
@@ -226,57 +228,102 @@
   "skills": {
     "categories": [
       {
-        "title": "Mobile Development",
+        "title": "Languages",
+        "icon": "🧠",
+        "skills": [
+          "Dart",
+          "JavaScript",
+          "TypeScript",
+          "Java (Android basics)",
+          "HTML5",
+          "CSS3"
+        ]
+      },
+      {
+        "title": "Mobile Frameworks",
         "icon": "📱",
         "skills": [
           "Flutter",
-          "Dart",
           "React Native",
-          "Android",
-          "iOS"
+          "Expo",
+          "Native Module Linking"
         ]
       },
       {
-        "title": "State Management",
+        "title": "State & Architecture",
         "icon": "⚙️",
         "skills": [
-          "BLoC",
+          "Provider",
+          "BLoC / Cubit",
+          "GetX",
           "Riverpod",
-          "Redux",
-          "Provider"
+          "Redux Toolkit",
+          "Clean Architecture"
         ]
       },
       {
-        "title": "Backend & Cloud",
+        "title": "Backend & APIs",
         "icon": "☁️",
         "skills": [
-          "Firebase",
-          "Firestore",
-          "FCM",
           "REST APIs",
-          "GraphQL"
+          "GraphQL",
+          "Firebase Auth",
+          "Firestore",
+          "Realtime DB",
+          "FCM",
+          "Crashlytics",
+          "Remote Config",
+          "WebSockets"
         ]
       },
       {
-        "title": "Payments",
+        "title": "Payments & Integrations",
         "icon": "💳",
         "skills": [
           "Stripe",
           "Razorpay",
-          "In-App Purchases"
+          "PayPal",
+          "Google Maps SDK",
+          "In-App Purchases",
+          "Push Notifications",
+          "Deep Linking"
         ]
       },
       {
-        "title": "Tools & Platforms",
+        "title": "Web Frontend",
+        "icon": "🌐",
+        "skills": [
+          "JavaScript",
+          "HTML5",
+          "CSS3",
+          "Responsive UI"
+        ]
+      },
+      {
+        "title": "Tools & Practices",
         "icon": "🛠️",
         "skills": [
           "Git",
           "GitHub",
-          "Xcode",
-          "Android Studio",
-          "VS Code",
+          "Bitbucket",
           "Jira",
-          "Codemagic"
+          "Postman",
+          "Fastlane",
+          "App Center",
+          "Agile / Scrum",
+          "Code Review",
+          "Jest"
+        ]
+      },
+      {
+        "title": "App Store Operations",
+        "icon": "🚀",
+        "skills": [
+          "Play Store Releases",
+          "App Store Releases",
+          "Versioning",
+          "Crash Monitoring",
+          "ASO Basics"
         ]
       }
     ]
@@ -319,13 +366,13 @@
         "skills": [
           "React Native",
           "JavaScript",
-          "React",
+          "REST APIs",
           "Firebase",
           "API Integration",
           "Git"
         ],
         "description": [
-          "Built cutting-edge React Native apps, leveraging React and JavaScript for optimal performance.",
+          "Built cutting-edge React Native apps with JavaScript for optimal performance.",
           "Guided cross-functional teams through complex React Native projects meeting tight deadlines.",
           "Integrated third-party APIs including payment gateways and social media platforms.",
           "Led code reviews and proactively addressed bugs and performance bottlenecks."
@@ -342,14 +389,14 @@
           "HTML",
           "CSS",
           "JavaScript",
-          "React.js",
+          "Web UI",
           "Node.js",
           "Express.js",
           "MongoDB",
           "Git"
         ],
         "description": [
-          "Built web applications using HTML, CSS, JavaScript, and React.js.",
+          "Built web applications using HTML, CSS, JavaScript, and modern web tooling.",
           "Developed backend services with Node.js and Express.js.",
           "Managed NoSQL databases with MongoDB.",
           "Used Git and GitHub for version control and collaboration."

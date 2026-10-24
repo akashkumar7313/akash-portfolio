@@ -8,9 +8,9 @@ import {
   FiLinkedin,
   FiMail,
   FiArrowUpRight,
-  FiSend,
   FiMapPin,
   FiPhone,
+  FiSend,
 } from "react-icons/fi";
 import { FaWhatsapp } from "react-icons/fa";
 import Link from "next/link";
@@ -20,15 +20,17 @@ const quickLinks = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
   { label: "Skills", href: "/skills" },
+  { label: "Experience", href: "/experience" },
+  { label: "Process", href: "/process" },
   { label: "Projects", href: "/projects" },
   { label: "Contact", href: "/contact" },
 ];
 
 const socialLinks = [
-  { icon: FiGithub, href: "https://github.com/akashkumar7313", label: "GitHub", color: "hover:text-white" },
-  { icon: FiLinkedin, href: "https://www.linkedin.com/in/akash-kumar-prajapati/", label: "LinkedIn", color: "hover:text-blue-400" },
-  { icon: FaWhatsapp, href: "https://wa.me/916393342727?text=Hi%20Akash!%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20connect.", label: "WhatsApp", color: "hover:text-green-400" },
-  { icon: FiMail, href: "mailto:akashkumarprajapati2003@gmail.com", label: "Email", color: "hover:text-[#c9f36c]" },
+  { icon: FiGithub, href: "https://github.com/akashkumar7313", label: "GitHub" },
+  { icon: FiLinkedin, href: "https://www.linkedin.com/in/akash-kumar-prajapati/", label: "LinkedIn" },
+  { icon: FaWhatsapp, href: "https://wa.me/916393342727?text=Hi%20Akash!%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20connect.", label: "WhatsApp" },
+  { icon: FiMail, href: "mailto:akashkumarprajapati2003@gmail.com", label: "Email" },
 ];
 
 export default function Footer() {
@@ -37,110 +39,83 @@ export default function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="relative overflow-hidden" ref={ref}>
-      {/* Top gradient line */}
-      <motion.div
-        initial={{ scaleX: 0 }}
-        whileInView={{ scaleX: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 1 }}
-        className="h-px bg-gradient-to-r from-transparent via-[#c9f36c]/40 to-transparent origin-center"
-      />
+    <footer ref={ref} className="relative overflow-hidden border-t border-[#101412]/5 px-4 pb-8 pt-14 dark:border-[#c9f36c]/8 sm:px-8 md:pt-20">
+      <div aria-hidden className="pointer-events-none absolute -bottom-24 left-1/4 h-80 w-80 rounded-full bg-[#c9f36c]/8 blur-[130px]" />
+      <div aria-hidden className="pointer-events-none absolute right-1/4 top-10 h-52 w-52 rounded-full bg-[#a8d94a]/5 blur-[100px]" />
 
-      {/* Background glow */}
-      <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-[#c9f36c]/5 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute top-0 right-1/4 w-64 h-64 bg-[#a8d94a]/5 rounded-full blur-[100px] pointer-events-none" />
-
-      <div className="max-width px-4 py-12 sm:px-8 md:py-16 relative">
-        {/* Top section - CTA */}
+      <div className="relative mx-auto max-w-6xl">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 26 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-12"
+          transition={{ duration: 0.55 }}
+          className="bento mb-4 overflow-hidden"
         >
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3">
-            <span className="gradient-text">Let&apos;s Build Something</span>
-            <br />
-            <span className="text-dark-100 dark:text-white">Amazing Together</span>
-          </h2>
-          <p className="text-dark-400 text-sm sm:text-base max-w-md mx-auto mb-6">
-            Have a project in mind? I&apos;m always open to discussing new opportunities.
-          </p>
-          <Link
-            href="/contact"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-[#c9f36c] to-[#a8d94a] text-[#101412] text-sm font-semibold shadow-lg shadow-[#c9f36c]/20 hover:shadow-[#c9f36c]/40 hover:scale-105 transition-all duration-300 group"
-          >
-            <FiSend className="group-hover:translate-x-1 transition-transform" />
-            Start a Conversation
-          </Link>
+          <div className="relative grid gap-6 p-6 sm:p-8 md:grid-cols-[1fr_auto] md:items-center lg:p-10">
+            <div aria-hidden className="pointer-events-none absolute -right-16 -top-24 h-64 w-64 rounded-full bg-[#c9f36c]/[0.12] blur-[90px]" />
+            <div aria-hidden className="pointer-events-none absolute inset-0 opacity-[0.35]" style={{ backgroundImage: "linear-gradient(rgba(201,243,108,0.12) 1px, transparent 1px), linear-gradient(90deg, rgba(201,243,108,0.12) 1px, transparent 1px)", backgroundSize: "38px 38px", maskImage: "radial-gradient(circle at 70% 40%, black, transparent 70%)" }} />
+            <div className="relative">
+              <span className="bento-label">Next project</span>
+              <h2 className="mt-3 max-w-xl text-3xl font-bold tracking-tight text-[#101412] sm:text-4xl dark:text-[#f4f7f2]">
+                Let&apos;s build something{" "}
+                <span className="text-[#16a34a] dark:text-[#c9f36c]">remarkable</span> together.
+              </h2>
+              <p className="mt-3 max-w-md text-sm leading-relaxed text-[#6b7280] dark:text-[#91a096]">
+                Open to freelance projects and full-time roles. Tell me what you are building — I reply within 24 hours.
+              </p>
+            </div>
+            <Link
+              href="/contact"
+              className="group relative inline-flex w-fit items-center gap-2 rounded-full bg-[#c9f36c] px-6 py-3.5 text-sm font-semibold text-[#101412] shadow-lg shadow-[#c9f36c]/20 transition-all duration-300 hover:scale-[1.03] hover:bg-[#d9ff8a]"
+            >
+              Start a conversation
+              <FiSend className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-0.5" />
+            </Link>
+          </div>
         </motion.div>
 
-        {/* Main grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-8 md:gap-12">
-          {/* Brand */}
+        <div className="bento-grid">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 18 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="sm:col-span-2 lg:col-span-4"
+            transition={{ delay: 0.05 }}
+            className="bento bento-pad md:col-span-5"
           >
-            <Link href="/" className="inline-flex items-center gap-2.5 group mb-4">
-              <div className="relative">
-                <div className="absolute -inset-1 bg-gradient-to-br from-[#c9f36c] to-[#a8d94a] rounded-xl blur opacity-30 group-hover:opacity-60 transition-opacity duration-500" />
-                <div className="relative w-9 h-9 rounded-xl bg-gradient-to-br from-[#c9f36c] to-[#a8d94a] flex items-center justify-center shadow-lg shadow-[#c9f36c]/20 group-hover:shadow-[#c9f36c]/40 group-hover:scale-110 transition-all duration-500">
-                  <span className="text-[#101412] font-black text-xl" style={{ fontFamily: 'Poppins, sans-serif' }}>A</span>
-                </div>
-              </div>
-              <span className="text-xl font-bold gradient-text">
-                Akash<span className="text-[#101412] dark:text-white">.</span>
+            <Link href="/" className="inline-flex items-center gap-2.5">
+              <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-[#c9f36c] to-[#a8d94a] text-lg font-black text-[#101412]">A</span>
+              <span className="text-lg font-bold text-[#101412] dark:text-[#f4f7f2]">
+                Akash<span className="text-[#16a34a] dark:text-[#c9f36c]">.</span>
               </span>
             </Link>
-
-            <p className="text-dark-400 text-sm leading-relaxed mb-4 max-w-xs">
-              Software Engineer specializing in Flutter & React Native. Building high-performance cross-platform mobile apps.
+            <p className="mt-4 max-w-sm text-sm leading-relaxed text-[#6b7280] dark:text-[#91a096]">
+              Software engineer specializing in Flutter, React Native and web. I design and ship high-performance mobile and web products.
             </p>
-
-            <div className="flex items-center gap-3 mb-4">
-              <div className="flex items-center gap-2 text-dark-400 text-xs">
-                <FiMapPin className="text-[#c9f36c]" />
-                <span>Lucknow, India</span>
-              </div>
-              <div className="flex items-center gap-2 text-dark-400 text-xs">
-                <FiPhone className="text-[#a8d94a]" />
-                <span>+91 63933 42727</span>
-              </div>
+            <div className="mt-5 flex flex-wrap gap-2">
+              <span className="bento-chip"><FiMapPin /> Lucknow, India</span>
+              <span className="bento-chip"><FiPhone /> +91 63933 42727</span>
             </div>
-
-            <div className="flex items-center gap-2">
-              <span className="text-2xl font-black font-heading text-[#c9f36c] tabular-nums">
-                {isInView ? <CountUp end={4} duration={2} /> : 0}
+            <div className="mt-6 flex items-end gap-2">
+              <span className="text-4xl font-black tracking-tight text-[#16a34a] dark:text-[#c9f36c]">
+                {isInView ? <CountUp end={4} duration={1.8} /> : 0}
               </span>
-              <span className="text-dark-400 text-xs">+ Years of Experience</span>
+              <span className="pb-1 text-xs leading-tight text-[#6b7280] dark:text-[#91a096]">+ years<br />shipping apps</span>
             </div>
           </motion.div>
 
-          {/* Quick Links */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 18 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="sm:col-span-1 lg:col-span-2"
+            transition={{ delay: 0.1 }}
+            className="bento bento-pad md:col-span-3"
           >
-            <h4 className="text-dark-100 dark:text-white font-semibold text-sm mb-4 uppercase tracking-wider">
-              Navigation
-            </h4>
-            <ul className="space-y-2.5">
+            <h4 className="bento-label mb-4">Navigate</h4>
+            <ul className="grid grid-cols-2 gap-x-4 gap-y-2.5 md:grid-cols-1">
               {quickLinks.map((link) => (
                 <li key={link.label}>
-                  <Link
-                    href={link.href}
-                    className="text-dark-400 text-sm hover:text-white transition-all duration-300 flex items-center gap-1.5 group/link"
-                  >
-                    <FiArrowUpRight className="text-[10px] opacity-0 group-hover/link:opacity-100 -ml-4 group-hover/link:ml-0 transition-all duration-300" />
+                  <Link href={link.href} className="group inline-flex items-center gap-1 text-sm text-[#4b5563] transition-colors hover:text-[#16a34a] dark:text-[#91a096] dark:hover:text-[#c9f36c]">
+                    <FiArrowUpRight className="text-[10px] opacity-0 transition-all group-hover:opacity-100" />
                     {link.label}
                   </Link>
                 </li>
@@ -148,79 +123,49 @@ export default function Footer() {
             </ul>
           </motion.div>
 
-          {/* Social */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 18 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.3 }}
-            className="sm:col-span-1 lg:col-span-3"
+            transition={{ delay: 0.15 }}
+            className="bento bento-pad md:col-span-4"
           >
-            <h4 className="text-dark-100 dark:text-white font-semibold text-sm mb-4 uppercase tracking-wider">
-              Connect
-            </h4>
-            <div className="flex flex-wrap gap-3">
+            <h4 className="bento-label mb-4">Connect</h4>
+            <div className="grid grid-cols-2 gap-2">
               {socialLinks.map((link) => (
                 <a
                   key={link.label}
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`w-11 h-11 rounded-xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center text-dark-400 ${link.color} hover:border-current/30 hover:bg-current/[0.05] transition-all duration-300 group relative overflow-hidden`}
-                  title={link.label}
+                  className="group flex items-center gap-2 rounded-xl border border-[#101412]/8 bg-[#101412]/[0.02] px-3 py-2.5 text-xs font-medium text-[#4b5563] transition-all duration-300 hover:border-[#c9f36c]/40 hover:bg-[#c9f36c]/10 hover:text-[#16a34a] dark:border-[#c9f36c]/10 dark:bg-white/[0.03] dark:text-[#91a096] dark:hover:text-[#c9f36c]"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-br from-current/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  <link.icon className="w-5 h-5 relative z-10 group-hover:scale-110 transition-transform" />
+                  <link.icon className="text-sm transition-transform duration-300 group-hover:scale-110" />
+                  {link.label}
                 </a>
               ))}
             </div>
-          </motion.div>
-
-          {/* Status */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.4 }}
-            className="sm:col-span-2 lg:col-span-3"
-          >
-            <h4 className="text-dark-100 dark:text-white font-semibold text-sm mb-4 uppercase tracking-wider">
-              Availability
-            </h4>
-            <TiltCard intensity={6} className="rounded-xl">
-              <div className="p-4 rounded-xl bg-white/[0.03] border border-white/[0.06] relative overflow-hidden group h-full">
-                <div className="absolute inset-0 bg-gradient-to-br from-green-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="relative">
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse" />
-                    <span className="text-green-400 text-sm font-medium">Available for Work</span>
-                  </div>
-                  <p className="text-dark-400 text-xs leading-relaxed">
-                    Open to freelance projects and full-time opportunities. Let&apos;s create something exceptional.
-                  </p>
+            <TiltCard intensity={4} glow="201 243 108" className="mt-3 rounded-2xl">
+              <div className="rounded-2xl border border-emerald-500/20 bg-emerald-500/[0.06] p-3.5">
+                <div className="flex items-center gap-2 text-xs font-semibold text-emerald-600 dark:text-emerald-300">
+                  <span className="relative flex h-2 w-2">
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60" />
+                    <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
+                  </span>
+                  Available for work
                 </div>
+                <p className="mt-1 text-[11px] leading-relaxed text-[#6b7280] dark:text-[#91a096]">
+                  Freelance and full-time opportunities.
+                </p>
               </div>
             </TiltCard>
           </motion.div>
         </div>
 
-        {/* Bottom bar */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.6 }}
-          className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 mt-8 border-t border-white/[0.04]"
-        >
-          <p className="text-dark-500 text-xs sm:text-sm">
-            &copy; {year} Copyright by Akash Kumar Prajapati
-          </p>
-          <div className="flex items-center gap-1.5">
-            <div className="w-8 h-0.5 rounded-full bg-gradient-to-r from-transparent to-[#c9f36c]/30" />
-            <div className="w-1.5 h-1.5 rounded-full bg-[#c9f36c]/40" />
-            <div className="w-8 h-0.5 rounded-full bg-gradient-to-l from-transparent to-[#a8d94a]/30" />
-          </div>
-        </motion.div>
+        <div className="mt-8 flex flex-col items-center justify-between gap-3 border-t border-[#101412]/5 pt-6 text-[11px] text-[#6b7280] dark:border-[#c9f36c]/8 dark:text-[#91a096] sm:flex-row">
+          <p>&copy; {year} Akash Kumar Prajapati. All rights reserved.</p>
+          <p className="font-mono uppercase tracking-[0.18em]">Designed &amp; built with care</p>
+        </div>
       </div>
     </footer>
   );

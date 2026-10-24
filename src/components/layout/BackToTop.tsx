@@ -25,7 +25,7 @@ export default function BackToTop() {
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
           onClick={() => window.scrollTo({ top: 0, behavior: "auto" })}
-          className="fixed bottom-6 right-6 z-40 w-14 h-14 rounded-full bg-gradient-to-r from-accent-blue to-accent-purple flex items-center justify-center text-white shadow-lg shadow-accent-blue/25 hover:shadow-accent-blue/40 transition-shadow duration-300"
+          className="fixed bottom-6 right-6 z-40 flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-[#c9f36c] to-[#a8d94a] text-[#101412] shadow-lg shadow-[#c9f36c]/25 transition-shadow duration-300 hover:shadow-[#c9f36c]/45"
           aria-label="Back to top"
         >
           <FiArrowUp className="text-lg" />

@@ -12,13 +12,13 @@ interface Props {
 }
 
 const domainColors: Record<string, { gradient: string; accent: string }> = {
-  healthcare: { gradient: "from-emerald-500/20 via-teal-500/20 to-cyan-500/20", accent: "text-emerald-400" },
-  enterprise: { gradient: "from-blue-500/20 via-indigo-500/20 to-violet-500/20", accent: "text-blue-400" },
-  "f&b": { gradient: "from-orange-500/20 via-amber-500/20 to-yellow-500/20", accent: "text-orange-400" },
-  marketplace: { gradient: "from-purple-500/20 via-pink-500/20 to-rose-500/20", accent: "text-purple-400" },
-  ecommerce: { gradient: "from-rose-500/20 via-red-500/20 to-orange-500/20", accent: "text-rose-400" },
-  sales: { gradient: "from-cyan-500/20 via-sky-500/20 to-blue-500/20", accent: "text-cyan-400" },
-  agri: { gradient: "from-green-500/20 via-emerald-500/20 to-teal-500/20", accent: "text-green-400" },
+  healthcare: { gradient: "from-[#c9f36c]/20 via-[#a8d94a]/15 to-transparent", accent: "text-[#a8d94a]" },
+  enterprise: { gradient: "from-[#c9f36c]/20 via-[#a8d94a]/15 to-transparent", accent: "text-[#c9f36c]" },
+  "f&b": { gradient: "from-[#a8d94a]/20 via-[#c9f36c]/15 to-transparent", accent: "text-[#a8d94a]" },
+  marketplace: { gradient: "from-[#c9f36c]/20 via-[#a8d94a]/15 to-transparent", accent: "text-[#c9f36c]" },
+  ecommerce: { gradient: "from-[#a8d94a]/20 via-[#c9f36c]/15 to-transparent", accent: "text-[#a8d94a]" },
+  sales: { gradient: "from-[#c9f36c]/20 via-[#a8d94a]/15 to-transparent", accent: "text-[#c9f36c]" },
+  agri: { gradient: "from-[#a8d94a]/20 via-[#c9f36c]/15 to-transparent", accent: "text-[#a8d94a]" },
 };
 
 function getDomain(title: string): string {
@@ -60,7 +60,7 @@ export default function ProjectModal({ project, onClose }: Props) {
       label: "Google Play",
       url: project.androidLink,
       icon: <FaAndroid />,
-      color: "hover:bg-green-500/20 hover:text-green-400 hover:border-green-500/30",
+      color: "hover:border-[#c9f36c]/50 hover:bg-[#c9f36c]/10 hover:text-[#16a34a] dark:hover:text-[#c9f36c]",
     });
   }
   if (project.iosLink) {
@@ -68,7 +68,7 @@ export default function ProjectModal({ project, onClose }: Props) {
       label: "App Store",
       url: project.iosLink,
       icon: <FaApple />,
-      color: "hover:bg-white/10 hover:text-white hover:border-white/30",
+      color: "hover:border-[#c9f36c]/50 hover:bg-[#c9f36c]/10",
     });
   }
 
@@ -88,13 +88,13 @@ export default function ProjectModal({ project, onClose }: Props) {
           exit={{ opacity: 0, y: 20 }}
           transition={{ duration: 0.3, type: "spring", damping: 25 }}
           onClick={(e) => e.stopPropagation()}
-          className="glass rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto"
+          className="bento max-w-3xl w-full max-h-[90vh] overflow-y-auto"
         >
-          <div className="sticky top-0 z-20 flex items-center justify-between p-5 border-b border-[var(--glass-10)] bg-dark-950 backdrop-blur-xl">
+          <div className="sticky top-0 z-20 flex items-center justify-between p-5 border-b border-[#101412]/8 bg-[#f7faf4]/90 backdrop-blur-xl dark:border-[#c9f36c]/10 dark:bg-[#0b0f0c]/90">
             <h3 className="text-dark-100 dark:text-white font-bold text-lg">{project.title}</h3>
             <button
               onClick={onClose}
-              className="w-9 h-9 rounded-xl bg-[var(--glass-5)] flex items-center justify-center text-dark-300 hover:text-dark-100 dark:text-white hover:bg-[var(--glass-10)] transition-all"
+              className="flex h-9 w-9 items-center justify-center rounded-xl border border-[#101412]/8 bg-[#101412]/[0.03] text-[#4b5563] transition-all hover:border-[#c9f36c]/40 hover:text-[#16a34a] dark:border-[#c9f36c]/10 dark:bg-white/[0.04] dark:text-[#f4f7f2] dark:hover:text-[#c9f36c]"
             >
               <HiX />
             </button>
@@ -102,7 +102,7 @@ export default function ProjectModal({ project, onClose }: Props) {
 
           <div className="p-5 md:p-6 space-y-6">
             {project.appIcon && (
-              <div className="relative rounded-xl overflow-hidden bg-dark-900 aspect-video flex items-center justify-center">
+              <div className="relative flex aspect-video items-center justify-center overflow-hidden rounded-2xl border border-[#c9f36c]/10 bg-[radial-gradient(circle_at_30%_20%,rgba(201,243,108,0.16),transparent_55%),linear-gradient(145deg,#101612,#0a0d0b)]">
                 <div className="absolute inset-0 w-full h-full overflow-hidden">
                   <img src={project.appIcon} alt="" className="w-full h-full object-cover blur-3xl scale-110 opacity-60" />
                 </div>
@@ -110,12 +110,12 @@ export default function ProjectModal({ project, onClose }: Props) {
               </div>
             )}
 
-            <p className="text-dark-200 leading-relaxed">
+            <p className="text-sm leading-relaxed text-[#4b5563] dark:text-[#c5cdc8]">
               {project.description}
             </p>
 
             <div>
-              <h4 className="text-dark-100 dark:text-white font-semibold mb-3">Tech Stack</h4>
+              <h4 className="mb-3 font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-[#6b7280] dark:text-[#91a096]">Tech Stack</h4>
               <div className="flex flex-wrap gap-2">
                 {project.techStack.map((t) => (
                   <span key={t} className="tech-badge">
@@ -126,21 +126,21 @@ export default function ProjectModal({ project, onClose }: Props) {
             </div>
 
             <div>
-              <h4 className="text-dark-100 dark:text-white font-semibold mb-3">Key Features</h4>
+              <h4 className="mb-3 font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-[#6b7280] dark:text-[#91a096]">Key Features</h4>
               <ul className="space-y-2">
                 {project.features.map((f, i) => (
                   <li
                     key={i}
-                    className="text-dark-300 text-sm flex items-start gap-3"
+                    className="flex items-start gap-3 text-sm text-[#4b5563] dark:text-[#c5cdc8]"
                   >
-                    <span className="w-1.5 h-1.5 rounded-full bg-accent-blue mt-2 flex-shrink-0" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#c9f36c] mt-2 flex-shrink-0" />
                     {f}
                   </li>
                 ))}
               </ul>
             </div>
 
-            <div className="glass rounded-xl p-4">
+            <div className="rounded-2xl border border-[#c9f36c]/15 bg-[#c9f36c]/[0.04] p-4">
               <h4 className="text-dark-100 dark:text-white font-semibold mb-2">My Role</h4>
               <p className="text-dark-300 text-sm leading-relaxed">
                 {project.role}
@@ -165,7 +165,7 @@ export default function ProjectModal({ project, onClose }: Props) {
                     href={project.githubLink}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-5 py-3 bg-[var(--glass-5)] border border-[var(--glass-10)] rounded-xl text-sm font-medium text-dark-100 dark:text-white hover:bg-[var(--glass-10)] hover:border-[var(--glass-20)] transition-all flex items-center gap-2"
+                    className="flex items-center gap-2 rounded-xl border border-[#c9f36c]/15 bg-white/50 px-5 py-3 text-sm font-medium text-[#101412] transition-all hover:border-[#c9f36c]/50 hover:bg-[#c9f36c]/10 dark:bg-white/[0.03] dark:text-[#f4f7f2]"
                   >
                     <FaAndroid /> GitHub
                   </a>

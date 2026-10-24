@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { HiMenu, HiX } from "react-icons/hi";
+import { FiArrowUpRight } from "react-icons/fi";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import ThemeToggle from "@/components/ui/ThemeToggle";
@@ -12,6 +13,7 @@ const navLinks = [
   { label: "About", href: "/about" },
   { label: "Skills", href: "/skills" },
   { label: "Experience", href: "/experience" },
+  { label: "Process", href: "/process" },
   { label: "Education", href: "/education" },
   { label: "Projects", href: "/projects" },
   { label: "Testimonials", href: "/testimonials" },
@@ -24,7 +26,8 @@ export default function Navbar() {
   const pathname = usePathname();
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
+    const handleScroll = () => setScrolled(window.scrollY > 24);
+    handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -33,128 +36,125 @@ export default function Navbar() {
     setMobileOpen(false);
   }, [pathname]);
 
-  return (
-    <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled
-          ? "bg-[#f4f7f2]/80 dark:bg-[#101412]/80 backdrop-blur-2xl border-b border-[#c9f36c]/10 shadow-lg shadow-black/5 dark:shadow-2xl dark:shadow-black/20"
-          : "bg-transparent"
-      }`}
-    >
-      {/* Animated gradient line at top */}
-      {scrolled && (
-        <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#c9f36c]/60 to-transparent" />
-      )}
+  useEffect(() => {
+    document.body.style.overflow = mobileOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobileOpen]);
 
-      <div className="max-width flex items-center justify-between px-4 sm:px-8 h-16 md:h-20">
-        {/* Logo */}
-        <Link href="/" className="flex items-center gap-2.5 group relative">
-          <div className="relative">
-            <div className="absolute -inset-1 bg-gradient-to-br from-[#c9f36c] to-[#a8d94a] rounded-xl blur opacity-30 group-hover:opacity-60 transition-opacity duration-500" />
-            <div className="relative w-9 h-9 rounded-xl bg-gradient-to-br from-[#c9f36c] to-[#a8d94a] flex items-center justify-center shadow-lg shadow-[#c9f36c]/20 group-hover:shadow-[#c9f36c]/40 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500">
-              <span className="text-[#101412] font-black text-xl" style={{ fontFamily: 'Poppins, sans-serif' }}>A</span>
-            </div>
-          </div>
-          <span className="text-xl md:text-2xl font-bold gradient-text">
-            Akash<span className="text-[#101412] dark:text-white">.</span>
+  return (
+    <motion.header
+      initial={{ y: -80, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+      className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5 sm:pt-4"
+    >
+      <nav
+        className={`mx-auto flex h-14 max-w-6xl items-center justify-between rounded-2xl px-3 transition-all duration-500 sm:h-16 sm:px-4 ${
+          scrolled
+            ? "glass-nav"
+            : "border border-transparent bg-transparent"
+        }`}
+      >
+        <Link href="/" className="group flex shrink-0 items-center gap-2.5">
+          <span className="relative flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-[#c9f36c] to-[#a8d94a] shadow-lg shadow-[#c9f36c]/20 transition-transform duration-500 group-hover:rotate-6 group-hover:scale-105">
+            <span className="text-lg font-black text-[#101412]">A</span>
+            <span className="absolute -right-1 -top-1 h-2 w-2 rounded-full border border-[#101412] bg-[#101412] dark:border-[#0b0f0c]" />
+          </span>
+          <span className="text-lg font-bold tracking-tight text-[#101412] dark:text-[#f4f7f2]">
+            Akash<span className="text-[#16a34a] dark:text-[#c9f36c]">.</span>
           </span>
         </Link>
 
-        {/* Desktop Nav */}
-        <div className="hidden md:flex items-center gap-1 relative">
+        <div className="hidden items-center gap-1 lg:flex">
           {navLinks.map((link) => {
             const isActive = pathname === link.href;
             return (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`relative px-3 py-2 rounded-xl text-sm font-medium transition-all duration-300 group ${
+                className={`relative whitespace-nowrap rounded-full px-2.5 py-2 text-[12px] font-medium transition-colors duration-300 xl:px-3 xl:text-[13px] ${
                   isActive
-                    ? "text-[#101412] dark:text-white"
-                    : "text-gray-600 dark:text-dark-400 hover:text-[#101412] dark:hover:text-white"
+                    ? "text-[#101412]"
+                    : "text-[#4b5563] hover:text-[#101412] dark:text-[#91a096] dark:hover:text-white"
                 }`}
               >
-                {/* Active bg */}
                 {isActive && (
-                  <motion.div
-                    layoutId="nav-active"
-                    className="absolute inset-0 bg-white/[0.08] rounded-xl border border-white/[0.06]"
-                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                  <motion.span
+                    layoutId="nav-pill"
+                    className="absolute inset-0 rounded-full bg-[#c9f36c] shadow-[0_0_24px_rgba(201,243,108,0.25)]"
+                    transition={{ type: "spring", stiffness: 380, damping: 32 }}
                   />
                 )}
-                {/* Hover bg */}
-                {!isActive && (
-                  <div className="absolute inset-0 bg-white/[0.03] rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                )}
-                <span className="relative z-10 flex items-center gap-1.5">
-                  {link.label}
-                </span>
+                <span className="relative z-10">{link.label}</span>
               </Link>
             );
           })}
         </div>
 
-        {/* Right side */}
         <div className="flex items-center gap-2">
+          <Link
+            href="/contact"
+            className="hidden shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full border border-[#101412]/10 bg-[#101412] px-4 py-2 text-xs font-semibold text-white transition-all duration-300 hover:bg-[#16a34a] dark:border-[#c9f36c]/20 dark:bg-[#c9f36c] dark:text-[#101412] dark:hover:bg-[#d9ff8a] sm:flex"
+          >
+            Let&apos;s talk <FiArrowUpRight />
+          </Link>
           <ThemeToggle />
           <button
-            onClick={() => setMobileOpen(!mobileOpen)}
-            className="md:hidden w-10 h-10 flex items-center justify-center rounded-xl text-dark-300 text-xl relative group"
-            style={{ background: "var(--glass-bg)", border: "1px solid var(--glass-border)" }}
+            onClick={() => setMobileOpen((v) => !v)}
+            className="flex h-10 w-10 items-center justify-center rounded-xl border border-[#101412]/10 bg-white/60 text-lg text-[#101412] backdrop-blur transition-colors hover:bg-white dark:border-[#c9f36c]/15 dark:bg-white/[0.04] dark:text-[#f4f7f2] lg:hidden"
             aria-label="Toggle menu"
+            aria-expanded={mobileOpen}
           >
-            <div className="absolute inset-0 bg-white/[0.05] rounded-xl opacity-0 group-hover:opacity-100 transition-opacity" />
-            <span className="relative z-10">
-              {mobileOpen ? <HiX /> : <HiMenu />}
-            </span>
+            {mobileOpen ? <HiX /> : <HiMenu />}
           </button>
         </div>
-      </div>
+      </nav>
 
-      {/* Mobile Menu */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="md:hidden overflow-hidden border-t backdrop-blur-2xl"
-            style={{ borderColor: "rgba(255,255,255,0.04)", backgroundColor: "rgba(6,6,11,0.95)" }}
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.25 }}
+            className="mx-auto mt-2 max-w-6xl overflow-hidden rounded-3xl border border-[#101412]/10 bg-[#f7faf4]/95 p-3 shadow-2xl shadow-black/20 backdrop-blur-2xl dark:border-[#c9f36c]/[0.12] dark:bg-[#0b0f0c]/95 lg:hidden"
           >
-            <div className="flex flex-col px-4 py-4 gap-1">
+            <div className="grid grid-cols-2 gap-2">
               {navLinks.map((link, idx) => {
                 const isActive = pathname === link.href;
                 return (
                   <motion.div
                     key={link.href}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: idx * 0.05 }}
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: idx * 0.03 }}
                   >
                     <Link
                       href={link.href}
-                      className={`px-4 py-3 rounded-xl text-sm font-medium transition-all flex items-center gap-3 ${
+                      className={`flex items-center justify-between rounded-2xl px-4 py-3 text-sm font-medium transition-colors ${idx === navLinks.length - 1 ? "col-span-2" : ""} ${
                         isActive
-                          ? "text-white bg-white/[0.08] border border-white/[0.06]"
-                          : "text-dark-400 hover:text-white hover:bg-white/[0.03]"
+                          ? "bg-[#c9f36c] text-[#101412]"
+                          : "bg-[#101412]/[0.03] text-[#374151] hover:bg-[#c9f36c]/15 dark:bg-white/[0.04] dark:text-[#c9f36c]/80"
                       }`}
                     >
-                      {isActive && (
-                        <div className="w-1.5 h-1.5 rounded-full bg-accent-blue" />
-                      )}
                       {link.label}
+                      <FiArrowUpRight className="text-xs opacity-50" />
                     </Link>
                   </motion.div>
                 );
               })}
             </div>
+            <Link
+              href="/contact"
+              className="mt-2 flex items-center justify-center gap-2 rounded-2xl bg-[#101412] px-4 py-3.5 text-sm font-semibold text-white dark:bg-[#c9f36c] dark:text-[#101412]"
+            >
+              Start a project <FiArrowUpRight />
+            </Link>
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.nav>
+    </motion.header>
   );
 }

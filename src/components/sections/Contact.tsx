@@ -131,101 +131,80 @@ export default function Contact() {
   ];
 
   return (
-    <section id="contact" className="section-padding relative overflow-hidden grid-bg">
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#c9f36c]/30 to-transparent pointer-events-none" />
-      <div className="absolute top-1/4 right-1/4 w-72 h-72 bg-[#c9f36c]/5 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-1/4 left-1/4 w-96 h-96 bg-[#a8d94a]/5 rounded-full blur-[120px] pointer-events-none" />
-
+    <section id="contact" className="section-padding relative overflow-hidden">
+      <div aria-hidden className="pointer-events-none absolute inset-0 page-glow" />
+      <div aria-hidden className="pointer-events-none absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#c9f36c]/25 to-transparent" />
       <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
         {particles.map((p, i) => (
           <motion.span
             key={i}
-            className="absolute rounded-full bg-[#c9f36c]"
-            style={{
-              left: p.left,
-              top: p.top,
-              width: p.size,
-              height: p.size,
-              boxShadow: "0 0 12px rgba(201,243,108,0.8)",
-            }}
-            animate={
-              reduceMotion
-                ? undefined
-                : { y: [0, -18, 0], opacity: [0.15, 0.7, 0.15] }
-            }
-            transition={{
-              duration: p.duration,
-              delay: p.delay,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
+            className="absolute h-1 w-1 rounded-full bg-[#c9f36c]"
+            style={{ left: p.left, top: p.top, width: p.size, height: p.size, boxShadow: "0 0 12px rgba(201,243,108,0.7)" }}
+            animate={reduceMotion ? undefined : { y: [0, -16, 0], opacity: [0.15, 0.6, 0.15] }}
+            transition={{ duration: p.duration, delay: p.delay, repeat: Infinity, ease: "easeInOut" }}
           />
         ))}
       </div>
 
-      <div className="max-width relative z-10 w-full overflow-hidden">
-        <SectionHeading title="Get In Touch" subtitle="Have a project in mind? Let's build something great together." icon={<FiMail />} />
+      <div className="relative z-10 mx-auto max-w-6xl px-1 sm:px-0">
+        <SectionHeading
+          title="Get In Touch"
+          kicker="Contact"
+          subtitle="Have a product in mind? Share the idea and I will help you shape it into something shippable."
+          icon={<FiMail />}
+        />
 
         <Toast show={toast.show} type={toast.type} title={toast.title} message={toast.message} onClose={() => setToast((prev) => ({ ...prev, show: false }))} />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-4xl mx-auto px-4 sm:px-0">
+        <div className="bento-grid">
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 22 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="space-y-5"
+            className="space-y-4 md:col-span-5"
           >
-            <TiltCard className="card overflow-hidden" intensity={5}>
-              <div aria-hidden className="pointer-events-none absolute -right-12 -top-12 h-40 w-40">
-                <div className="absolute inset-0 rounded-full border border-[#c9f36c]/15 motion-safe:animate-spin [animation-duration:22s]" />
-                <div className="absolute inset-5 rounded-full border border-dashed border-[#c9f36c]/15 motion-safe:animate-spin [animation-duration:15s] [animation-direction:reverse]" />
-                <div className="absolute inset-10 rounded-full bg-[#c9f36c]/10 blur-xl" />
-              </div>
+            <TiltCard intensity={4} glow="201 243 108" className="rounded-[26px]">
+              <div className="bento bento-pad relative overflow-hidden">
+                <div aria-hidden className="pointer-events-none absolute -right-12 -top-12 h-40 w-40 rounded-full bg-[#c9f36c]/10 blur-3xl" />
+                <div className="relative flex items-center gap-3">
+                  <span className="bento-icon"><FiMessageCircle /></span>
+                  <div>
+                    <h3 className="text-sm font-semibold text-[#101412] dark:text-[#f4f7f2]">Contact info</h3>
+                    <p className="text-[10px] text-[#6b7280] dark:text-[#91a096]">Direct line to me</p>
+                  </div>
+                </div>
 
-              <div className="relative [transform:translateZ(22px)]">
-                <h3 className="text-dark-100 dark:text-white font-bold text-lg mb-6 flex items-center gap-2">
-                  <motion.span
-                    whileHover={{ rotate: 12, scale: 1.08 }}
-                    transition={{ type: "spring", stiffness: 260, damping: 16 }}
-                    className="w-8 h-8 rounded-lg bg-[#c9f36c]/20 flex items-center justify-center shadow-lg shadow-[#c9f36c]/10"
-                  >
-                    <FiMessageCircle className="text-[#c9f36c]" />
-                  </motion.span>
-                  Contact Info
-                </h3>
-
-                <div className="space-y-5">
+                <div className="relative mt-6 space-y-4">
                   {contactItems.map((item, i) => (
                     <motion.div
                       key={item.label}
                       initial={{ opacity: 0, x: -10 }}
                       whileInView={{ opacity: 1, x: 0 }}
                       viewport={{ once: true }}
-                      transition={{ duration: 0.3, delay: i * 0.08 }}
-                      whileHover={{ x: 4 }}
-                      className="flex items-center gap-3 sm:gap-4 group/item"
+                      transition={{ duration: 0.3, delay: i * 0.06 }}
+                      className="group/item flex items-center gap-3"
                     >
-                      <motion.div
-                        whileHover={{ scale: 1.12, rotate: 6, rotateY: 12 }}
-                        transition={{ type: "spring", stiffness: 280, damping: 15 }}
-                        className={`w-10 h-10 sm:w-11 sm:h-11 rounded-xl ${item.bg} flex items-center justify-center flex-shrink-0 ring-1 ring-white/5 group-hover/item:ring-[#c9f36c]/30 transition-all duration-300 [transform-style:preserve-3d]`}
+                      <motion.span
+                        whileHover={{ scale: 1.08, rotate: 4 }}
+                        transition={{ type: "spring", stiffness: 260, damping: 16 }}
+                        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-[#c9f36c]/15 bg-[#c9f36c]/10 text-[#16a34a] dark:text-[#c9f36c]"
                       >
-                        <item.icon className={`${item.color} text-base sm:text-lg`} />
-                      </motion.div>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-dark-500 text-[11px] uppercase tracking-wider mb-0.5">{item.label}</p>
+                        <item.icon className="text-base" />
+                      </motion.span>
+                      <div className="min-w-0 flex-1">
+                        <p className="font-mono text-[9px] uppercase tracking-[0.16em] text-[#6b7280] dark:text-[#91a096]">{item.label}</p>
                         {"action" in item ? (
-                          <button onClick={item.action} className="text-dark-100 dark:text-white text-sm hover:text-[#c9f36c] transition-colors flex items-center gap-2 w-full text-left">
+                          <button onClick={item.action} className="flex w-full items-center gap-2 text-left text-xs font-medium text-[#101412] transition-colors hover:text-[#16a34a] dark:text-[#f4f7f2] dark:hover:text-[#c9f36c]">
                             <span className="truncate">{item.value}</span>
-                            {copied ? <FiCheck className="text-green-500 shrink-0" /> : <FiCopy className="text-dark-500 text-xs shrink-0 opacity-0 group-hover/item:opacity-100 transition-opacity" />}
+                            {copied ? <FiCheck className="shrink-0 text-emerald-500" /> : <FiCopy className="shrink-0 text-[10px] text-[#6b7280] opacity-0 transition-opacity group-hover/item:opacity-100 dark:text-[#91a096]" />}
                           </button>
                         ) : "link" in item ? (
-                          <a href={item.link} target="_blank" rel="noopener noreferrer" className="text-dark-100 dark:text-white text-sm hover:text-[#c9f36c] transition-colors block truncate">
+                          <a href={item.link} target="_blank" rel="noopener noreferrer" className="block truncate text-xs font-medium text-[#101412] transition-colors hover:text-[#16a34a] dark:text-[#f4f7f2] dark:hover:text-[#c9f36c]">
                             {item.value}
                           </a>
                         ) : (
-                          <p className="text-dark-100 dark:text-white text-sm truncate">{item.value}</p>
+                          <p className="truncate text-xs font-medium text-[#101412] dark:text-[#f4f7f2]">{item.value}</p>
                         )}
                       </div>
                     </motion.div>
@@ -234,120 +213,60 @@ export default function Contact() {
               </div>
             </TiltCard>
 
-            <TiltCard
-              intensity={6}
-              className="card bg-gradient-to-br from-[#c9f36c]/[0.05] via-[#a8d94a]/[0.04] to-[#c9f36c]/[0.05] relative overflow-hidden"
-            >
-              <div aria-hidden className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-[#c9f36c]/10 blur-3xl" />
-              <div className="relative [transform:translateZ(24px)]">
-                <h4 className="text-dark-100 dark:text-white font-semibold mb-2 flex items-center gap-2">
+            <TiltCard intensity={5} glow="168 217 74" className="rounded-[26px]">
+              <div className="bento relative overflow-hidden p-5">
+                <div aria-hidden className="pointer-events-none absolute -bottom-12 -right-10 h-32 w-32 rounded-full bg-[#c9f36c]/10 blur-3xl" />
+                <div className="relative flex items-center gap-2">
                   <span className="relative flex h-2 w-2">
-                    <span className="absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-75 motion-safe:animate-ping" />
-                    <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500" />
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60" />
+                    <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
                   </span>
-                  Let&apos;s Work Together
-                </h4>
-                <p className="text-dark-300 text-sm leading-relaxed">
-                  I&apos;m currently open to freelance opportunities and full-time roles. Whether you have a project idea or just want to connect, feel free to reach out!
+                  <p className="text-xs font-semibold text-[#101412] dark:text-[#f4f7f2]">Available for new work</p>
+                </div>
+                <p className="mt-2 text-xs leading-relaxed text-[#6b7280] dark:text-[#91a096]">
+                  Freelance projects, full-time roles, or a quick product conversation — all welcome.
                 </p>
+                <div className="mt-4 flex flex-wrap gap-1.5">
+                  <span className="bento-chip">Replies in 24h</span>
+                  <span className="bento-chip">Remote friendly</span>
+                  <span className="bento-chip">Long-term mindset</span>
+                </div>
               </div>
             </TiltCard>
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 22 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.2 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="md:col-span-7"
           >
-            <TiltCard
-              intensity={3}
-              animatedBorder
-              className="card rounded-2xl shadow-2xl shadow-[#c9f36c]/5"
-            >
-              <div aria-hidden className="pointer-events-none absolute -top-24 -right-24 h-48 w-48 rounded-full bg-[#c9f36c]/10 blur-3xl" />
-              <div aria-hidden className="pointer-events-none absolute -bottom-16 -left-16 h-32 w-32 rounded-full bg-[#a8d94a]/10 blur-3xl" />
+            <TiltCard intensity={3} animatedBorder className="rounded-[26px]">
+              <div className="bento bento-pad relative overflow-hidden">
+                <div aria-hidden className="pointer-events-none absolute -right-20 -top-20 h-52 w-52 rounded-full bg-[#c9f36c]/8 blur-3xl" />
+                <form onSubmit={handleSubmit} className="relative">
+                  <div className="mb-6 flex items-center gap-3">
+                    <span className="bento-icon"><FiSend /></span>
+                    <div>
+                      <h3 className="text-sm font-semibold text-[#101412] dark:text-[#f4f7f2]">Tell me about your project</h3>
+                      <p className="text-[10px] text-[#6b7280] dark:text-[#91a096]">A few details are enough to get started.</p>
+                    </div>
+                  </div>
 
-              <form onSubmit={handleSubmit} className="relative space-y-5 [transform-style:preserve-3d]">
-                <div className="relative [transform:translateZ(26px)]">
-                  <h3 className="text-dark-100 dark:text-white font-bold text-lg flex items-center gap-2">
-                    <motion.span
-                      whileHover={{ rotateY: 180, rotateX: 12 }}
-                      transition={{ type: "spring", stiffness: 200, damping: 14 }}
-                      className="w-8 h-8 rounded-lg bg-[#c9f36c]/20 flex items-center justify-center shadow-lg shadow-[#c9f36c]/10 [transform-style:preserve-3d]"
-                    >
-                      <FiSend className="text-[#c9f36c]" />
-                    </motion.span>
-                    Send a Message
-                  </h3>
-                </div>
-
-                {(["name", "email", "phone", "message"] as const).map((field) => {
-                  const meta = fieldMeta[field];
-                  const error = getError(field);
-                  const hasValue = !!form[field];
-                  const isFocused = focused === field;
-                  const Icon = meta.icon;
-                  const inputId = `contact-${field}`;
-
-                  return (
-                    <div key={field} className="relative z-10 [transform:translateZ(14px)]">
-                      <label
-                        htmlFor={inputId}
-                        className={`mb-1.5 ml-1 flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.12em] transition-colors duration-300 ${
-                          isFocused ? "text-[#c9f36c]" : error ? "text-red-500" : "text-dark-500"
-                        }`}
-                      >
-                        {meta.label} {meta.required && <span className="text-red-500">*</span>}
-                      </label>
-
-                      <div
-                        className={`group/field relative flex items-start overflow-hidden rounded-xl border transition-all duration-300 ${
-                          error
-                            ? "border-red-500/50 bg-red-500/5"
-                            : isFocused
-                            ? "-translate-y-0.5 border-[#c9f36c] bg-[#c9f36c]/5 shadow-lg shadow-[#c9f36c]/10"
-                            : "border-[var(--glass-10)] bg-[var(--glass-5)] hover:border-[var(--glass-20)] hover:bg-[var(--glass-10)]"
-                        }`}
-                      >
-                        <div
-                          className={`flex items-center justify-center pl-4 pt-3.5 transition-all duration-300 group-focus-within/field:scale-110 group-focus-within/field:-rotate-6 ${
-                            isFocused ? "text-[#c9f36c]" : error ? "text-red-500" : "text-dark-500"
-                          }`}
-                        >
-                          <Icon className="text-lg" />
-                        </div>
-
-                        <div className="flex-1">
-                          {meta.type === "textarea" ? (
-                            <textarea
-                              id={inputId}
-                              value={form.message}
-                              onChange={(e) => setForm({ ...form, message: e.target.value })}
-                              onFocus={() => setFocused("message")}
-                              onBlur={() => { setFocused(null); setTouched((prev) => new Set(prev).add("message")); }}
-                              required={meta.required}
-                              rows={4}
-                              placeholder={meta.placeholder}
-                              className="w-full resize-none bg-transparent pl-3 pr-4 pt-3.5 pb-3 text-sm leading-relaxed text-dark-100 placeholder:text-dark-500 focus:outline-none dark:text-white"
-                            />
-                          ) : field === "phone" ? (
-                            <div className="flex items-center">
-                              <span className="pl-3 text-sm font-medium text-[#91a096] select-none">+91</span>
-                              <input
-                                id={inputId}
-                                type="tel"
-                                value={form.phone}
-                                onChange={(e) => handlePhoneChange(e.target.value)}
-                                onFocus={() => setFocused("phone")}
-                                onBlur={() => { setFocused(null); setTouched((prev) => new Set(prev).add("phone")); }}
-                                placeholder={meta.placeholder}
-                                maxLength={10}
-                                required={meta.required}
-                                className="w-full bg-transparent py-3.5 pl-2 pr-4 text-sm text-dark-100 placeholder:text-dark-500 focus:outline-none dark:text-white"
-                              />
-                            </div>
-                          ) : (
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    {(["name", "email"] as const).map((field) => {
+                      const meta = fieldMeta[field];
+                      const error = getError(field);
+                      const Icon = meta.icon;
+                      const inputId = `contact-${field}`;
+                      return (
+                        <div key={field}>
+                          <label htmlFor={inputId} className={`mb-1.5 ml-1 flex items-center gap-1 font-mono text-[9px] font-semibold uppercase tracking-[0.16em] ${focused === field ? "text-[#16a34a] dark:text-[#c9f36c]" : error ? "text-red-500" : "text-[#6b7280] dark:text-[#91a096]"}`}>
+                            {meta.label} {meta.required && <span className="text-red-500">*</span>}
+                          </label>
+                          <div className={`flex items-center overflow-hidden rounded-xl border transition-all duration-300 ${error ? "border-red-500/50 bg-red-500/5" : focused === field ? "border-[#c9f36c] bg-[#c9f36c]/5 shadow-lg shadow-[#c9f36c]/10" : "border-[#101412]/8 bg-[#101412]/[0.02] hover:border-[#101412]/15 dark:border-[#c9f36c]/10 dark:bg-white/[0.03]"}`}>
+                            <span className={`pl-3.5 ${focused === field ? "text-[#16a34a] dark:text-[#c9f36c]" : "text-[#6b7280] dark:text-[#91a096]"}`}><Icon className="text-sm" /></span>
                             <input
                               id={inputId}
                               type={meta.type}
@@ -357,66 +276,78 @@ export default function Contact() {
                               onBlur={() => { setFocused(null); setTouched((prev) => new Set(prev).add(field)); }}
                               required={meta.required}
                               placeholder={meta.placeholder}
-                              className="w-full bg-transparent py-3.5 pl-3 pr-4 text-sm text-dark-100 placeholder:text-dark-500 focus:outline-none dark:text-white"
+                              className="w-full bg-transparent py-3 pl-2.5 pr-3 text-xs text-[#101412] placeholder:text-[#9ca3af] focus:outline-none dark:text-[#f4f7f2] dark:placeholder:text-[#4a5a50]"
                             />
-                          )}
-                        </div>
-
-                        {(isFocused || hasValue) && !error && (
-                          <div className="pr-4 pt-3.5">
-                            <motion.span
-                              initial={{ scale: 0, rotate: -90 }}
-                              animate={{ scale: 1, rotate: 0 }}
-                              transition={{ type: "spring", stiffness: 320, damping: 16 }}
-                              className="block"
-                            >
-                              <FiCheck className="text-sm text-green-500" />
-                            </motion.span>
                           </div>
-                        )}
+                          {error && <p className="mt-1 ml-1 text-[10px] font-medium text-red-500">{error}</p>}
+                        </div>
+                      );
+                    })}
 
-                        {!error && (
-                          <span
-                            aria-hidden
-                            className={`pointer-events-none absolute inset-x-3 bottom-0 h-[2px] origin-left rounded-full bg-gradient-to-r from-[#c9f36c] via-[#d9ff8a] to-[#a8d94a] transition-transform duration-500 ${
-                              isFocused ? "scale-x-100" : "scale-x-0"
-                            }`}
-                          />
-                        )}
+                    <div className="sm:col-span-2">
+                      <label htmlFor="contact-phone" className={`mb-1.5 ml-1 flex items-center gap-1 font-mono text-[9px] font-semibold uppercase tracking-[0.16em] ${focused === "phone" ? "text-[#16a34a] dark:text-[#c9f36c]" : getError("phone") ? "text-red-500" : "text-[#6b7280] dark:text-[#91a096]"}`}>
+                        Phone Number <span className="text-red-500">*</span>
+                      </label>
+                      <div className={`flex items-center overflow-hidden rounded-xl border transition-all duration-300 ${getError("phone") ? "border-red-500/50 bg-red-500/5" : focused === "phone" ? "border-[#c9f36c] bg-[#c9f36c]/5 shadow-lg shadow-[#c9f36c]/10" : "border-[#101412]/8 bg-[#101412]/[0.02] hover:border-[#101412]/15 dark:border-[#c9f36c]/10 dark:bg-white/[0.03]"}`}>
+                        <span className="pl-3.5 text-[#6b7280] dark:text-[#91a096]"><FiSmartphone className="text-sm" /></span>
+                        <span className="pl-2.5 text-xs font-medium text-[#6b7280] dark:text-[#91a096]">+91</span>
+                        <input
+                          id="contact-phone"
+                          type="tel"
+                          value={form.phone}
+                          onChange={(e) => handlePhoneChange(e.target.value)}
+                          onFocus={() => setFocused("phone")}
+                          onBlur={() => { setFocused(null); setTouched((prev) => new Set(prev).add("phone")); }}
+                          placeholder="98765 43210"
+                          maxLength={10}
+                          required
+                          className="w-full bg-transparent py-3 pl-2 pr-3 text-xs text-[#101412] placeholder:text-[#9ca3af] focus:outline-none dark:text-[#f4f7f2] dark:placeholder:text-[#4a5a50]"
+                        />
                       </div>
-
-                      {error && (
-                        <p className="mt-1 ml-1 text-[11px] font-medium text-red-500">{error}</p>
-                      )}
+                      {getError("phone") && <p className="mt-1 ml-1 text-[10px] font-medium text-red-500">{getError("phone")}</p>}
                     </div>
-                  );
-                })}
 
-                <motion.button
-                  type="submit"
-                  disabled={sending}
-                  className="group/btn relative z-10 w-full overflow-hidden rounded-xl py-3.5 font-semibold text-[#101412] transition-all duration-300 bg-gradient-to-r from-[#c9f36c] to-[#a8d94a] shadow-lg shadow-[#c9f36c]/20 disabled:cursor-not-allowed disabled:opacity-70 [transform-style:preserve-3d]"
-                  whileHover={sending ? undefined : { scale: 1.015, rotateX: 6 }}
-                  whileTap={sending ? undefined : { scale: 0.985 }}
-                >
-                  <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-[#c9f36c] via-[#d9ff8a] to-[#a8d94a] bg-[length:200%_100%]"
-                    animate={{ backgroundPosition: ["0% 0%", "100% 0%"] }}
-                    transition={{ repeat: Infinity, duration: 3, ease: "linear" }}
-                  />
-                  <span
-                    aria-hidden
-                    className="absolute inset-0 -translate-x-full skew-x-12 bg-gradient-to-r from-transparent via-white/50 to-transparent transition-transform duration-1000 group-hover/btn:translate-x-full"
-                  />
-                  <span className="relative z-10 flex items-center justify-center gap-2">
+                    <div className="sm:col-span-2">
+                      <label htmlFor="contact-message" className={`mb-1.5 ml-1 flex items-center gap-1 font-mono text-[9px] font-semibold uppercase tracking-[0.16em] ${focused === "message" ? "text-[#16a34a] dark:text-[#c9f36c]" : getError("message") ? "text-red-500" : "text-[#6b7280] dark:text-[#91a096]"}`}>
+                        Your Message <span className="text-red-500">*</span>
+                      </label>
+                      <div className={`flex items-start overflow-hidden rounded-xl border transition-all duration-300 ${getError("message") ? "border-red-500/50 bg-red-500/5" : focused === "message" ? "border-[#c9f36c] bg-[#c9f36c]/5 shadow-lg shadow-[#c9f36c]/10" : "border-[#101412]/8 bg-[#101412]/[0.02] hover:border-[#101412]/15 dark:border-[#c9f36c]/10 dark:bg-white/[0.03]"}`}>
+                        <span className={`pl-3.5 pt-3.5 ${focused === "message" ? "text-[#16a34a] dark:text-[#c9f36c]" : "text-[#6b7280] dark:text-[#91a096]"}`}><FiEdit3 className="text-sm" /></span>
+                        <textarea
+                          id="contact-message"
+                          value={form.message}
+                          onChange={(e) => setForm({ ...form, message: e.target.value })}
+                          onFocus={() => setFocused("message")}
+                          onBlur={() => { setFocused(null); setTouched((prev) => new Set(prev).add("message")); }}
+                          required
+                          rows={4}
+                          placeholder="Tell me about your project..."
+                          className="w-full resize-none bg-transparent py-3 pl-2.5 pr-3 text-xs leading-relaxed text-[#101412] placeholder:text-[#9ca3af] focus:outline-none dark:text-[#f4f7f2] dark:placeholder:text-[#4a5a50]"
+                        />
+                      </div>
+                      {getError("message") && <p className="mt-1 ml-1 text-[10px] font-medium text-red-500">{getError("message")}</p>}
+                    </div>
+                  </div>
+
+                  <motion.button
+                    type="submit"
+                    disabled={sending}
+                    whileHover={sending ? undefined : { scale: 1.01 }}
+                    whileTap={sending ? undefined : { scale: 0.99 }}
+                    className="group/btn relative mt-5 flex w-full items-center justify-center gap-2 overflow-hidden rounded-xl bg-gradient-to-r from-[#c9f36c] to-[#a8d94a] py-3.5 text-xs font-bold text-[#101412] shadow-lg shadow-[#c9f36c]/20 transition-all disabled:cursor-not-allowed disabled:opacity-70"
+                  >
+                    <span aria-hidden className="absolute inset-0 -translate-x-full skew-x-12 bg-gradient-to-r from-transparent via-white/50 to-transparent transition-transform duration-1000 group-hover/btn:translate-x-full" />
                     {sending ? (
-                      <><span className="w-4 h-4 border-2 border-[var(--glass-30)] border-t-white rounded-full animate-spin" /><span>Sending...</span></>
+                      <><span className="h-4 w-4 animate-spin rounded-full border-2 border-[#101412]/20 border-t-[#101412]" /> Sending...</>
                     ) : (
-                      <><FiSend className="transition-transform duration-300 group-hover/btn:-translate-y-0.5 group-hover/btn:translate-x-0.5" /> Send Message <FiArrowRight className="transition-transform duration-300 group-hover/btn:translate-x-1" /></>
+                      <><FiSend className="transition-transform duration-300 group-hover/btn:-translate-y-0.5 group-hover/btn:translate-x-0.5" /> Send message <FiArrowRight className="transition-transform duration-300 group-hover/btn:translate-x-1" /></>
                     )}
-                  </span>
-                </motion.button>
-              </form>
+                  </motion.button>
+                  <p className="mt-3 text-center text-[10px] text-[#6b7280] dark:text-[#91a096]">
+                    Your details stay private. No spam, ever.
+                  </p>
+                </form>
+              </div>
             </TiltCard>
           </motion.div>
         </div>

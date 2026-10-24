@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { FiExternalLink } from "react-icons/fi";
+import { useEffect, useMemo, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { FiExternalLink, FiLayers } from "react-icons/fi";
 import { FaAndroid, FaApple } from "react-icons/fa";
 import SectionHeading from "@/components/ui/SectionHeading";
 import ProjectModal from "@/components/projects/ProjectModal";
@@ -23,16 +23,6 @@ interface Project {
   category: string;
   appIcon?: string;
 }
-
-const domainGradients: Record<string, string> = {
-  healthcare: "from-emerald-500/20 via-teal-500/20 to-cyan-500/20",
-  enterprise: "from-blue-500/20 via-indigo-500/20 to-violet-500/20",
-  "f&b": "from-orange-500/20 via-amber-500/20 to-yellow-500/20",
-  marketplace: "from-purple-500/20 via-pink-500/20 to-rose-500/20",
-  ecommerce: "from-rose-500/20 via-red-500/20 to-orange-500/20",
-  sales: "from-cyan-500/20 via-sky-500/20 to-blue-500/20",
-  agri: "from-green-500/20 via-emerald-500/20 to-teal-500/20",
-};
 
 const industryLabels: Record<string, string> = {
   healthcare: "Healthcare",
@@ -65,20 +55,17 @@ export default function Projects() {
   useEffect(() => {
     fetch("/api/projects")
       .then((r) => r.json())
-      .then((data) => {
-        setProjects((data.projects || []) as Project[]);
-      })
+      .then((data) => setProjects((data.projects || []) as Project[]))
       .catch(() => {});
   }, []);
 
   const filters = useMemo(() => {
     const cats = [...new Set(projects.map((p) => p.category))];
     return [
-      { value: "all", label: "All", icon: "🔍" },
+      { value: "all", label: "All work" },
       ...cats.map((c) => ({
         value: c,
         label: c.charAt(0).toUpperCase() + c.slice(1),
-        icon: "📱",
       })),
     ];
   }, [projects]);
@@ -88,91 +75,122 @@ export default function Projects() {
   if (projects.length === 0) return null;
 
   return (
-    <section id="projects" className="section-padding bg-dark-900/50 relative overflow-hidden grid-bg">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(59,130,246,0.05)_0%,transparent_50%)] pointer-events-none" />
-      <div className="max-width relative z-10">
-        <SectionHeading title="Featured Projects" subtitle="Real-world applications I have built and deployed" icon={<FiExternalLink />} />
+    <section id="projects" className="section-padding relative overflow-hidden">
+      <div aria-hidden className="pointer-events-none absolute inset-0 page-glow" />
+      <div className="relative z-10 mx-auto max-w-6xl px-1 sm:px-0">
+        <SectionHeading
+          title="Featured Projects"
+          kicker="Projects"
+          subtitle="Production apps used in healthcare, enterprise, commerce, and field operations."
+          icon={<FiLayers />}
+        />
 
-        <motion.div layout className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="mb-6 flex flex-wrap items-center gap-2">
+          {filters.map((f) => (
+            <button
+              key={f.value}
+              onClick={() => setActiveFilter(f.value)}
+              className={`rounded-full px-4 py-2 text-xs font-semibold transition-all duration-300 ${
+                activeFilter === f.value
+                  ? "bg-[#c9f36c] text-[#101412] shadow-lg shadow-[#c9f36c]/20"
+                  : "border border-[#101412]/8 bg-white/40 text-[#4b5563] hover:border-[#c9f36c]/40 hover:text-[#16a34a] dark:border-[#c9f36c]/10 dark:bg-white/[0.03] dark:text-[#91a096] dark:hover:text-[#c9f36c]"
+              }`}
+            >
+              {f.label}
+            </button>
+          ))}
+          <span className="ml-auto font-mono text-[10px] uppercase tracking-wider text-[#6b7280] dark:text-[#91a096]">
+            {filtered.length} projects
+          </span>
+        </div>
+
+        <motion.div layout className="bento-grid">
           <AnimatePresence mode="popLayout">
             {filtered.map((project, idx) => {
               const domain = getDomain(project.title);
-              const gradient = domainGradients[domain] || "from-[#c9f36c]/20 via-[#a8d94a]/20 to-[#c9f36c]/20";
               const industry = industryLabels[domain] || domain;
 
               return (
                 <motion.div
                   key={project.id}
                   layout
-                  initial={{ opacity: 0, y: 30 }}
+                  initial={{ opacity: 0, y: 22 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.95 }}
-                  transition={{ duration: 0.4, delay: idx * 0.05 }}
+                  exit={{ opacity: 0, scale: 0.97 }}
+                  transition={{ duration: 0.35, delay: idx * 0.04 }}
+                  className={idx < 2 ? "md:col-span-6" : "md:col-span-4"}
                 >
-                  <motion.div className="group cursor-pointer h-full" onClick={() => setSelectedProject(project)} whileHover={{ y: -4 }}>
-                    <TiltCard intensity={5} fill className="rounded-2xl">
-                    <div className="card h-full flex flex-col glass-hover group relative overflow-hidden">
-                      <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" style={{ boxShadow: "inset 0 0 30px rgba(59,130,246,0.1)" }} />
-
-                        <div className={`w-full aspect-video rounded-xl mb-5 bg-dark-900 flex items-center justify-center overflow-hidden relative ${project.appIcon ? "" : `bg-gradient-to-br ${gradient}`}`}>
-                        {project.appIcon && (
+                  <TiltCard intensity={5} glow="201 243 108" className="h-full rounded-[26px]">
+                    <div
+                      role="button"
+                      tabIndex={0}
+                      onClick={() => setSelectedProject(project)}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" || e.key === " ") setSelectedProject(project);
+                      }}
+                      className="bento bento-hover group flex h-full cursor-pointer flex-col"
+                    >
+                      <div className="relative m-3 mb-0 aspect-[16/10] overflow-hidden rounded-[20px] border border-[#c9f36c]/10 bg-[radial-gradient(circle_at_30%_20%,rgba(201,243,108,0.18),transparent_55%),linear-gradient(145deg,#101612,#0a0d0b)]">
+                        <div aria-hidden className="absolute inset-0 opacity-40" style={{ backgroundImage: "linear-gradient(rgba(201,243,108,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(201,243,108,0.1) 1px, transparent 1px)", backgroundSize: "26px 26px" }} />
+                        {project.appIcon ? (
                           <>
-                            <div className="absolute inset-0 w-full h-full overflow-hidden">
-                              <img src={project.appIcon} alt="" className="w-full h-full object-cover blur-2xl scale-110 opacity-50" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
-                            </div>
-                            <img src={project.appIcon} alt="" className="relative z-10 w-4/5 h-4/5 object-contain drop-shadow-2xl" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
+                            <img src={project.appIcon} alt="" className="absolute inset-0 h-full w-full scale-110 object-cover opacity-30 blur-2xl" onError={(e) => ((e.target as HTMLImageElement).style.display = "none")} />
+                            <img src={project.appIcon} alt={project.title} className="relative z-10 mx-auto mt-8 h-[72%] w-[72%] object-contain drop-shadow-2xl transition-transform duration-500 group-hover:scale-105" onError={(e) => ((e.target as HTMLImageElement).style.display = "none")} />
                           </>
+                        ) : (
+                          <span className="absolute inset-0 flex items-center justify-center text-5xl font-black text-[#c9f36c]/30">{project.title[0]}</span>
                         )}
-                        {!project.appIcon && (
-                          <span className="text-dark-500 text-4xl font-bold opacity-20">{project.title[0]}</span>
-                        )}
-                        <div className="absolute top-2 right-2 px-2 py-0.5 rounded-full bg-dark-900/80 backdrop-blur-sm border border-[var(--glass-10)] flex items-center text-[10px] text-dark-300 font-mono">
+                        <div className="absolute left-3 top-3 rounded-full border border-[#c9f36c]/20 bg-[#0a0d0b]/70 px-2.5 py-1 font-mono text-[9px] uppercase tracking-wider text-[#c9f36c] backdrop-blur">
+                          {industry}
+                        </div>
+                        <div className="absolute right-3 top-3 rounded-full border border-white/10 bg-black/40 px-2 py-1 font-mono text-[9px] text-white/70 backdrop-blur">
                           #{project.id}
                         </div>
                       </div>
 
-                      <div className="flex items-center gap-2 mb-2">
-                        <span className="text-[10px] font-medium text-dark-500 uppercase tracking-wider">{industry}</span>
-                      </div>
+                      <div className="flex flex-1 flex-col p-5">
+                        <div className="flex items-start justify-between gap-3">
+                          <h3 className="text-base font-semibold text-[#101412] transition-colors group-hover:text-[#16a34a] dark:text-[#f4f7f2] dark:group-hover:text-[#c9f36c]">
+                            {project.title}
+                          </h3>
+                          <FiExternalLink className="mt-0.5 shrink-0 text-sm text-[#6b7280] transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[#16a34a] dark:text-[#91a096] dark:group-hover:text-[#c9f36c]" />
+                        </div>
+                        <p className="mt-2 flex-1 text-xs leading-relaxed text-[#6b7280] dark:text-[#91a096]">
+                          {project.description.length > 130 ? project.description.slice(0, 130) + "..." : project.description}
+                        </p>
 
-                      <h3 className="text-dark-100 dark:text-white font-bold text-lg mb-2 group-hover:text-[#c9f36c] transition-colors font-heading">
-                        {project.title}
-                      </h3>
+                        <div className="mt-4 flex flex-wrap gap-1.5">
+                          {project.techStack.slice(0, 3).map((t) => (
+                            <span key={t} className="bento-chip">{t}</span>
+                          ))}
+                          {project.techStack.length > 3 && (
+                            <span className="bento-chip">+{project.techStack.length - 3}</span>
+                          )}
+                        </div>
 
-                      <p className="text-dark-400 text-sm leading-relaxed mb-4 flex-1">
-                        {project.description.length > 100 ? project.description.slice(0, 100) + "..." : project.description}
-                      </p>
-
-                      <div className="flex flex-wrap gap-2 mb-4">
-                        {project.techStack.slice(0, 3).map((t) => (
-                          <span key={t} className="tech-badge text-[0.6rem]">{t}</span>
-                        ))}
-                        {project.techStack.length > 3 && (
-                          <span className="tech-badge text-[0.6rem]">+{project.techStack.length - 3}</span>
-                        )}
-                      </div>
-
-                      <div className="flex items-center gap-3 mt-auto pt-4 border-t border-[var(--glass-5)]">
-                        {project.androidLink && (
-                          <a href={project.androidLink} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="text-dark-500 text-xs flex items-center gap-1 group-hover:text-green-400 transition-colors">
-                            <FaAndroid className="text-green-400/70" /> Play Store
-                          </a>
-                        )}
-                        {project.iosLink && (
-                          <a href={project.iosLink} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="text-dark-500 text-xs flex items-center gap-1 group-hover:text-white transition-colors">
-                            <FaApple className="text-white/70" /> App Store
-                          </a>
-                        )}
+                        <div className="mt-4 flex items-center gap-3 border-t border-[#101412]/6 pt-3 dark:border-[#c9f36c]/8">
+                          {project.androidLink && (
+                            <a href={project.androidLink} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="flex items-center gap-1 text-[10px] text-[#6b7280] transition-colors hover:text-emerald-500 dark:text-[#91a096]">
+                              <FaAndroid /> Play Store
+                            </a>
+                          )}
+                          {project.iosLink && (
+                            <a href={project.iosLink} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="flex items-center gap-1 text-[10px] text-[#6b7280] transition-colors hover:text-[#101412] dark:text-[#91a096] dark:hover:text-white">
+                              <FaApple /> App Store
+                            </a>
+                          )}
+                          <span className="ml-auto text-[10px] font-medium text-[#16a34a] opacity-0 transition-opacity group-hover:opacity-100 dark:text-[#c9f36c]">
+                            View case study
+                          </span>
+                        </div>
                       </div>
                     </div>
-                    </TiltCard>
-                  </motion.div>
+                  </TiltCard>
                 </motion.div>
               );
             })}
           </AnimatePresence>
         </motion.div>
-
       </div>
 
       {selectedProject && (

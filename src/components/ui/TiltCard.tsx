@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, type ReactNode, type MouseEvent } from "react";
+import { useEffect, useRef, type ReactNode, type MouseEvent, type CSSProperties } from "react";
 import {
   motion,
   useMotionValue,
@@ -16,6 +16,7 @@ interface TiltCardProps {
   spotlight?: boolean;
   animatedBorder?: boolean;
   fill?: boolean;
+  glow?: string;
 }
 
 export default function TiltCard({
@@ -25,6 +26,7 @@ export default function TiltCard({
   spotlight = true,
   animatedBorder = false,
   fill = false,
+  glow = "201 243 108",
 }: TiltCardProps) {
   const ref = useRef<HTMLDivElement>(null);
   const canTilt = useRef(false);
@@ -65,7 +67,10 @@ export default function TiltCard({
   };
 
   return (
-    <div className={fill ? "h-full [perspective:1400px]" : "[perspective:1400px]"}>
+    <div
+      className={fill ? "h-full [perspective:1400px]" : "[perspective:1400px]"}
+      style={{ "--tilt-glow": glow } as CSSProperties}
+    >
       <motion.div
         ref={ref}
         onMouseMove={handleMove}
@@ -87,7 +92,7 @@ export default function TiltCard({
             className="pointer-events-none absolute inset-0 z-20 rounded-[inherit] opacity-0 transition-opacity duration-500 group-hover/tilt:opacity-100"
             style={{
               background:
-                "radial-gradient(430px circle at var(--spot-x, 50%) var(--spot-y, 50%), rgba(201,243,108,0.12), transparent 45%)",
+                "radial-gradient(430px circle at var(--spot-x, 50%) var(--spot-y, 50%), rgb(var(--tilt-glow) / 0.14), transparent 45%)",
             }}
           />
         )}
