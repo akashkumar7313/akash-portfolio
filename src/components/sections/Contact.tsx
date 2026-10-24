@@ -54,7 +54,7 @@ export default function Contact() {
   const fieldMeta = {
     name: { label: "Your Name", icon: FiUser, required: true, type: "text" as const, placeholder: "John Doe" },
     email: { label: "Your Email", icon: FiMail, required: true, type: "email" as const, placeholder: "john@example.com" },
-    phone: { label: "Phone Number", icon: FiSmartphone, required: false, type: "tel" as const, placeholder: "98765 43210" },
+    phone: { label: "Phone Number", icon: FiSmartphone, required: true, type: "tel" as const, placeholder: "98765 43210" },
     message: { label: "Your Message", icon: FiEdit3, required: true, type: "textarea" as const, placeholder: "Tell me about your project..." },
   };
 
@@ -80,7 +80,7 @@ export default function Contact() {
     e.preventDefault();
     const allTouched = new Set(["name", "email", "message", "phone"]);
     setTouched(allTouched);
-    if (!form.name.trim() || !form.email.trim() || !form.message.trim() || (form.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email))) return;
+    if (!form.name.trim() || !form.email.trim() || !form.message.trim() || !form.phone.trim() || (form.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email))) return;
     setSending(true);
     const phoneWithPrefix = form.phone ? `+91${form.phone}` : "";
     try {
@@ -221,38 +221,39 @@ export default function Contact() {
                 const hasValue = !!form[field];
                 const isFocused = focused === field;
                 const Icon = meta.icon;
+                const inputId = `contact-${field}`;
 
                 return (
                   <div key={field} className="relative z-10">
+                    <label htmlFor={inputId} className="block text-xs font-medium text-dark-500 mb-1.5 ml-1">
+                      {meta.label} {meta.required && <span className="text-red-500">*</span>}
+                    </label>
                     <div className={`relative flex items-start rounded-xl border transition-all duration-300 ${error ? "border-red-500/50 bg-red-500/5" : isFocused ? "border-[#c9f36c] bg-[#c9f36c]/5 shadow-lg shadow-[#c9f36c]/10" : "border-[var(--glass-10)] bg-[var(--glass-5)] hover:border-[var(--glass-20)]"}`}>
                       <div className={`flex items-center justify-center pl-4 pt-3.5 ${isFocused ? "text-[#c9f36c]" : error ? "text-red-500" : "text-dark-500"}`}>
                         <Icon className="text-lg" />
                       </div>
-                      <div className="flex-1 relative">
+                      <div className="flex-1">
                         {meta.type === "textarea" ? (
-                          <textarea value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} onFocus={() => setFocused("message")} onBlur={() => { setFocused(null); setTouched((prev) => new Set(prev).add("message")); }} required={meta.required} rows={4} placeholder={meta.placeholder}
-                            className="w-full pl-3 pr-4 pt-3.5 pb-3 bg-transparent text-dark-100 dark:text-white placeholder:text-transparent focus:outline-none resize-none text-sm leading-relaxed" />
+                          <textarea id={inputId} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} onFocus={() => setFocused("message")} onBlur={() => { setFocused(null); setTouched((prev) => new Set(prev).add("message")); }} required={meta.required} rows={4} placeholder={meta.placeholder}
+                            className="w-full pl-3 pr-4 pt-3.5 pb-3 bg-transparent text-dark-100 dark:text-white placeholder:text-dark-500 focus:outline-none resize-none text-sm leading-relaxed" />
                         ) : field === "phone" ? (
                           <div className="flex items-center">
-                            <span className="pl-3 pt-3.5 text-sm text-[#91a096] font-medium select-none">+91</span>
-                            <input type="tel" value={form.phone} onChange={(e) => handlePhoneChange(e.target.value)} onFocus={() => setFocused("phone")} onBlur={() => { setFocused(null); setTouched((prev) => new Set(prev).add("phone")); }} placeholder={meta.placeholder} maxLength={10}
-                              className="w-full pl-2 pr-4 py-3.5 bg-transparent text-dark-100 dark:text-white placeholder:text-transparent focus:outline-none text-sm" />
+                            <span className="pl-3 text-sm text-[#91a096] font-medium select-none">+91</span>
+                            <input id={inputId} type="tel" value={form.phone} onChange={(e) => handlePhoneChange(e.target.value)} onFocus={() => setFocused("phone")} onBlur={() => { setFocused(null); setTouched((prev) => new Set(prev).add("phone")); }} placeholder={meta.placeholder} maxLength={10} required={meta.required}
+                              className="w-full pl-2 pr-4 py-3.5 bg-transparent text-dark-100 dark:text-white placeholder:text-dark-500 focus:outline-none text-sm" />
                           </div>
                         ) : (
-                          <input type={meta.type} value={form[field]} onChange={(e) => setForm({ ...form, [field]: e.target.value })} onFocus={() => setFocused(field)} onBlur={() => { setFocused(null); setTouched((prev) => new Set(prev).add(field)); }} required={meta.required} placeholder={meta.placeholder}
-                            className="w-full pl-3 pr-4 py-3.5 bg-transparent text-dark-100 dark:text-white placeholder:text-transparent focus:outline-none text-sm" />
+                          <input id={inputId} type={meta.type} value={form[field]} onChange={(e) => setForm({ ...form, [field]: e.target.value })} onFocus={() => setFocused(field)} onBlur={() => { setFocused(null); setTouched((prev) => new Set(prev).add(field)); }} required={meta.required} placeholder={meta.placeholder}
+                            className="w-full pl-3 pr-4 py-3.5 bg-transparent text-dark-100 dark:text-white placeholder:text-dark-500 focus:outline-none text-sm" />
                         )}
-                        <label className={`absolute left-3 transition-all duration-200 pointer-events-none ${isFocused || hasValue ? "text-[10px] -top-2 text-[#c9f36c]" : "text-sm top-3.5 text-dark-500"}`}>
-                          {meta.label} {meta.required && <span className="text-red-500 ml-0.5">*</span>}
-                        </label>
                       </div>
                       {(isFocused || hasValue) && !error && (
                         <div className="pr-4 pt-3.5"><FiCheck className="text-green-500 text-sm" /></div>
                       )}
-                      {error && (
-                        <div className="pr-4 pt-3.5"><span className="text-red-500 text-[10px] font-medium">{error}</span></div>
-                      )}
                     </div>
+                    {error && (
+                      <p className="mt-1 ml-1 text-[11px] font-medium text-red-500">{error}</p>
+                    )}
                   </div>
                 );
               })}
