@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { FiArrowUpRight, FiMapPin } from "react-icons/fi";
 import { FaAndroid, FaApple } from "react-icons/fa";
 import TiltCard from "@/components/ui/TiltCard";
+import { FEATURED_DEFAULTS } from "@/lib/defaults";
 
 interface Project {
   id: number;
@@ -15,6 +16,7 @@ interface Project {
   androidLink: string;
   iosLink: string;
   appIcon?: string;
+  domain?: string;
 }
 
 const domains: Record<string, string> = {
@@ -25,17 +27,27 @@ const domains: Record<string, string> = {
   salespulse: "Sales Ops · India",
 };
 
-function domainFor(title: string) {
-  return domains[title.toLowerCase()] ?? "Mobile · India";
+function domainFor(project: Project) {
+  if (project.domain) return project.domain;
+  return domains[project.title.toLowerCase()] ?? "Mobile · India";
 }
 
 export default function FeaturedWork() {
   const [projects, setProjects] = useState<Project[]>([]);
+  const [featured, setFeatured] = useState(FEATURED_DEFAULTS);
 
   useEffect(() => {
     fetch("/api/projects")
       .then((r) => r.json())
       .then((data) => setProjects(((data.projects || []) as Project[]).slice(0, 3)))
+      .catch(() => {});
+    fetch("/api/featured")
+      .then((r) => r.json())
+      .then((d) => {
+        if (d && typeof d === "object" && !d.error) {
+          setFeatured({ ...FEATURED_DEFAULTS, ...d });
+        }
+      })
       .catch(() => {});
   }, []);
 
@@ -49,16 +61,16 @@ export default function FeaturedWork() {
       <div className="relative mx-auto max-w-6xl">
         <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
           <div>
-            <span className="bento-label">Selected work</span>
+            <span className="bento-label">{featured.kicker}</span>
             <h2 className="mt-2 text-2xl font-bold tracking-tight text-[#101412] dark:text-[#f4f7f2] sm:text-3xl">
-              Apps people actually use.
+              {featured.title}
             </h2>
           </div>
           <Link
-            href="/projects"
+            href={featured.linkHref || "/projects"}
             className="group inline-flex items-center gap-1.5 rounded-full border border-[#101412]/10 bg-white/50 px-4 py-2 text-xs font-semibold text-[#4b5563] transition-colors hover:border-[#c9f36c]/50 hover:text-[#16a34a] dark:border-[#c9f36c]/[0.12] dark:bg-white/[0.03] dark:text-[#91a096] dark:hover:text-[#c9f36c]"
           >
-            All projects
+            {featured.linkText}
             <FiArrowUpRight className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </Link>
         </div>
@@ -75,7 +87,7 @@ export default function FeaturedWork() {
               <div className="bento bento-hover relative flex h-full flex-col overflow-hidden p-5 sm:p-7">
                 <div aria-hidden className="pointer-events-none absolute -right-16 -top-20 h-56 w-56 rounded-full bg-[#c9f36c]/[0.12] blur-[80px]" />
                 <div className="relative flex items-start justify-between gap-4">
-                  <span className="bento-chip"><FiMapPin /> {domainFor(lead.title)}</span>
+                  <span className="bento-chip"><FiMapPin /> {domainFor(lead)}</span>
                   <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#6b7280] dark:text-[#91a096]">Featured</span>
                 </div>
 
@@ -144,7 +156,7 @@ export default function FeaturedWork() {
                         <h3 className="truncate text-sm font-semibold text-[#101412] dark:text-[#f4f7f2]">{project.title}</h3>
                         <span className="font-mono text-[9px] text-[#6b7280] dark:text-[#91a096]">{String(idx + 2).padStart(2, "0")}</span>
                       </div>
-                      <p className="mt-0.5 text-[10px] text-[#6b7280] dark:text-[#91a096]">{domainFor(project.title)}</p>
+                      <p className="mt-0.5 text-[10px] text-[#6b7280] dark:text-[#91a096]">{domainFor(project)}</p>
                       <div className="mt-2 flex flex-wrap gap-1.5">
                         {project.techStack.slice(0, 2).map((tech) => (
                           <span key={tech} className="rounded-full border border-[#101412]/8 px-2 py-0.5 text-[9px] text-[#4b5563] dark:border-[#c9f36c]/10 dark:text-[#91a096]">{tech}</span>
@@ -176,10 +188,10 @@ export default function FeaturedWork() {
               className="bento flex items-center justify-between gap-3 p-4 sm:p-5"
             >
               <div>
-                <p className="text-sm font-semibold text-[#101412] dark:text-[#f4f7f2]">20+ production apps</p>
-                <p className="mt-0.5 text-[10px] text-[#6b7280] dark:text-[#91a096]">4 countries · 5 industries</p>
+                <p className="text-sm font-semibold text-[#101412] dark:text-[#f4f7f2]">{featured.statTitle}</p>
+                <p className="mt-0.5 text-[10px] text-[#6b7280] dark:text-[#91a096]">{featured.statDesc}</p>
               </div>
-              <span className="rounded-full bg-[#c9f36c]/15 px-2.5 py-1 font-mono text-[9px] uppercase tracking-wider text-[#16a34a] dark:text-[#c9f36c]">Live</span>
+              <span className="rounded-full bg-[#c9f36c]/15 px-2.5 py-1 font-mono text-[9px] uppercase tracking-wider text-[#16a34a] dark:text-[#c9f36c]">{featured.statTag}</span>
             </motion.div>
           </div>
         </div>

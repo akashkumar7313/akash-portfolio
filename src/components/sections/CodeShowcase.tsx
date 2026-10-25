@@ -3,56 +3,20 @@
 import { useEffect, useState } from "react";
 import { SiFlutter, SiReact } from "react-icons/si";
 import { FiCheckCircle } from "react-icons/fi";
+import { HERO_DEFAULTS } from "@/lib/defaults";
 
 type Tab = "flutter" | "rn";
 
-const snippets: Record<Tab, { file: string; language: string; code: string }> = {
-  flutter: {
-    file: "home_screen.dart",
-    language: "Dart",
-    code: `import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final orders =
-        context.watch<HomeCubit>().state.orders;
-
-    return Scaffold(
-      body: SafeArea(child: OrderList(orders: orders)),
-      floatingActionButton: SyncButton(),
-    );
-  }
-}`,
-  },
-  rn: {
-    file: "HomeScreen.tsx",
-    language: "TypeScript",
-    code: `import { View, Text, Pressable } from "react-native";
-import { useAppSelector } from "./store";
-
-export function HomeScreen() {
-  const orders = useAppSelector(selectOrders);
-
-  return (
-    <View style={styles.screen}>
-      <Text style={styles.title}>Orders</Text>
-      <OrderList data={orders} />
-      <Pressable onPress={syncOrders} style={styles.cta}>
-        <Text>Sync now</Text>
-      </Pressable>
-    </View>
-  );
-}`,
-  },
-};
+interface CodeShowcaseProps {
+  flutterFile?: string;
+  flutterCode?: string;
+  rnFile?: string;
+  rnCode?: string;
+}
 
 const keywords = new Set([
   "import", "from", "class", "extends", "const", "final", "return", "export",
-  "function", "override", "if", "else", "new", "await", "async",
+  "function", "override", "if", "else", "new", "await", "async", "void", "var",
 ]);
 
 const types = new Set([
@@ -80,9 +44,28 @@ function Line({ text }: { text: string }) {
   );
 }
 
-export default function CodeShowcase() {
+export default function CodeShowcase({
+  flutterFile,
+  flutterCode,
+  rnFile,
+  rnCode,
+}: CodeShowcaseProps) {
   const [tab, setTab] = useState<Tab>("flutter");
   const [typedCode, setTypedCode] = useState("");
+
+  const snippets: Record<Tab, { file: string; language: string; code: string }> = {
+    flutter: {
+      file: flutterFile || HERO_DEFAULTS.flutterFile,
+      language: "Dart",
+      code: flutterCode || HERO_DEFAULTS.flutterCode,
+    },
+    rn: {
+      file: rnFile || HERO_DEFAULTS.rnFile,
+      language: "TypeScript",
+      code: rnCode || HERO_DEFAULTS.rnCode,
+    },
+  };
+
   const snippet = snippets[tab];
   const fullCode = snippet.code;
   const totalLines = fullCode.split("\n").length;
@@ -98,22 +81,24 @@ export default function CodeShowcase() {
 
     const step = () => {
       if (cancelled) return;
-      index = Math.min(index + 2, fullCode.length);
+      index = Math.min(index + 1, fullCode.length);
       setTypedCode(fullCode.slice(0, index));
 
       if (index < fullCode.length) {
-        timer = setTimeout(step, fullCode[index - 1] === "\n" ? 110 : 10);
+        const onNewLine = fullCode[index - 1] === "\n";
+        const delay = onNewLine ? 240 : fullCode[index] === " " ? 34 : 26;
+        timer = setTimeout(step, delay);
       } else {
         timer = setTimeout(() => {
           if (cancelled) return;
           index = 0;
           setTypedCode("");
-          timer = setTimeout(step, 420);
-        }, 6000);
+          timer = setTimeout(step, 520);
+        }, 7000);
       }
     };
 
-    timer = setTimeout(step, 360);
+    timer = setTimeout(step, 500);
     return () => {
       cancelled = true;
       clearTimeout(timer);
@@ -121,17 +106,17 @@ export default function CodeShowcase() {
   }, [fullCode]);
 
   return (
-    <div className="bento overflow-hidden">
+    <div className="bento min-w-0 w-full overflow-hidden">
       <div className="flex items-center gap-2 border-b border-[#101412]/8 px-3.5 py-3 dark:border-[#c9f36c]/10">
         <div className="flex gap-1.5">
           <span className="h-2 w-2 rounded-full bg-[#ff5f57]" />
           <span className="h-2 w-2 rounded-full bg-[#febc2e]" />
           <span className="h-2 w-2 rounded-full bg-[#28c840]" />
         </div>
-        <span className="ml-1 hidden truncate font-mono text-[10px] text-[#6b7280] dark:text-[#91a096] sm:block">
+        <span className="ml-1 hidden min-w-0 flex-1 truncate font-mono text-[10px] text-[#6b7280] dark:text-[#91a096] sm:block">
           {snippet.file}
         </span>
-        <div className="ml-auto flex items-center gap-0.5 rounded-lg border border-[#101412]/8 bg-[#101412]/[0.03] p-0.5 dark:border-[#c9f36c]/10 dark:bg-white/[0.04]">
+        <div className="ml-auto flex shrink-0 items-center gap-0.5 rounded-lg border border-[#101412]/8 bg-[#101412]/[0.03] p-0.5 dark:border-[#c9f36c]/10 dark:bg-white/[0.04]">
           <button
             onClick={() => setTab("flutter")}
             className={`flex items-center gap-1 rounded-md px-2 py-1 text-[9px] font-semibold transition-colors ${
@@ -164,27 +149,29 @@ export default function CodeShowcase() {
         </span>
       </div>
 
-      <div className="overflow-x-auto bg-[#f8fbf4]/60 px-2.5 py-3 font-mono text-[9px] leading-[1.7] dark:bg-white/[0.015] sm:text-[10.5px]">
-        {Array.from({ length: totalLines }).map((_, i) => {
-          const text = typedLines[i] ?? "";
-          const isActive = !isComplete && i === typedLines.length - 1;
-          return (
-            <div
-              key={`${tab}-${i}`}
-              className={`flex gap-2 rounded px-1.5 transition-colors duration-300 ${
-                isActive ? "bg-[#c9f36c]/[0.22] dark:bg-[#c9f36c]/[0.07]" : ""
-              }`}
-            >
-              <span className="w-4 shrink-0 text-right text-[8.5px] leading-[1.9] text-[#6b7280] dark:text-[#4d5c53]">{i + 1}</span>
-              <span className="whitespace-pre">
-                {text ? <Line text={text} /> : " "}
-                {isActive && (
-                  <span className="ml-0.5 inline-block h-3 w-[5px] translate-y-[2px] animate-pulse rounded-sm bg-[#16a34a] dark:bg-[#c9f36c]" />
-                )}
-              </span>
-            </div>
-          );
-        })}
+      <div className="w-full min-w-0 overflow-x-auto bg-[#f8fbf4]/60 px-2.5 py-3 font-mono text-[9px] leading-[1.7] dark:bg-white/[0.015] sm:text-[10.5px]">
+        <div className="min-w-0 max-w-full">
+          {Array.from({ length: totalLines }).map((_, i) => {
+            const text = typedLines[i] ?? "";
+            const isActive = !isComplete && i === typedLines.length - 1;
+            return (
+              <div
+                key={`${tab}-${i}`}
+                className={`flex gap-2 rounded px-1.5 transition-colors duration-300 ${
+                  isActive ? "animate-code-line-in bg-[#c9f36c]/[0.22] dark:bg-[#c9f36c]/[0.07]" : ""
+                }`}
+              >
+                <span className="w-4 shrink-0 text-right text-[8.5px] leading-[1.9] text-[#6b7280] dark:text-[#4d5c53]">{i + 1}</span>
+                <span className="whitespace-pre">
+                  {text ? <Line text={text} /> : " "}
+                  {isActive && (
+                    <span className="ml-0.5 inline-block h-3 w-[5px] translate-y-[2px] animate-pulse rounded-sm bg-[#16a34a] dark:bg-[#c9f36c]" />
+                  )}
+                </span>
+              </div>
+            );
+          })}
+        </div>
       </div>
 
       <div className="flex items-center justify-between border-t border-[#101412]/8 px-3.5 py-2 dark:border-[#c9f36c]/10">

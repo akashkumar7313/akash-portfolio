@@ -1,27 +1,20 @@
 "use client";
 
-const tools = [
-  "Flutter",
-  "React Native",
-  "Dart",
-  "TypeScript",
-  "Firebase",
-  "REST APIs",
-  "GraphQL",
-  "Stripe",
-  "Razorpay",
-  "PayPal",
-  "BLoC",
-  "Riverpod",
-  "Redux Toolkit",
-  "GetX",
-  "Fastlane",
-  "App Store",
-  "Play Store",
-  "CI/CD",
-];
+import { useEffect, useState } from "react";
+import { MARQUEE_DEFAULTS } from "@/lib/defaults";
 
 export default function TechMarquee() {
+  const [tools, setTools] = useState<string[]>(MARQUEE_DEFAULTS.tools);
+
+  useEffect(() => {
+    fetch("/api/marquee")
+      .then((r) => r.json())
+      .then((d) => {
+        if (Array.isArray(d?.tools) && d.tools.length) setTools(d.tools);
+      })
+      .catch(() => {});
+  }, []);
+
   return (
     <div className="relative overflow-hidden border-y border-[#101412]/[0.06] bg-white/[0.35] py-3 backdrop-blur dark:border-[#c9f36c]/[0.08] dark:bg-white/[0.015]">
       <div aria-hidden className="pointer-events-none absolute inset-y-0 left-0 z-10 w-20 bg-gradient-to-r from-white to-transparent dark:from-[#101412]" />

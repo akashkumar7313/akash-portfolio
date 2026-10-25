@@ -56,16 +56,14 @@ export default function Testimonials() {
   const slideVariants = {
     enter: (d: number) => ({
       opacity: 0,
-      x: d > 0 ? 90 : -90,
-      rotateY: d > 0 ? 18 : -18,
-      scale: 0.94,
+      x: d > 0 ? 60 : -60,
+      scale: 0.97,
     }),
-    center: { opacity: 1, x: 0, rotateY: 0, scale: 1 },
+    center: { opacity: 1, x: 0, scale: 1 },
     exit: (d: number) => ({
       opacity: 0,
-      x: d > 0 ? -90 : 90,
-      rotateY: d > 0 ? -18 : 18,
-      scale: 0.94,
+      x: d > 0 ? -60 : 60,
+      scale: 0.97,
     }),
   };
 
@@ -90,7 +88,7 @@ export default function Testimonials() {
         />
 
         <div className="mx-auto max-w-5xl">
-          <div className="relative [perspective:1600px]">
+          <div className="relative">
             {/* stacked card depth */}
             <div aria-hidden className="pointer-events-none absolute inset-x-6 -top-3 bottom-3 rotate-[-2.2deg] rounded-[28px] border border-[#c9f36c]/15 bg-white/50 dark:bg-[#101612]/60" />
             <div aria-hidden className="pointer-events-none absolute inset-x-3 -top-1.5 bottom-1.5 rotate-[1.4deg] rounded-[28px] border border-[#c9f36c]/15 bg-white/60 dark:bg-[#0d120e]/70" />
@@ -104,7 +102,7 @@ export default function Testimonials() {
                 animate="center"
                 exit="exit"
                 transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                className="relative [transform-style:preserve-3d]"
+                className="relative"
               >
                 <TiltCard intensity={5} glow="201 243 108" className="rounded-[28px]">
                   <div className="relative overflow-hidden rounded-[28px] border border-[#a8d94a]/15 bg-white/90 shadow-[0_30px_90px_-40px_rgba(132,204,22,0.35)] backdrop-blur-md dark:border-[#c9f36c]/10 dark:bg-[#0b0f0c]/95">

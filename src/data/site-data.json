@@ -64,8 +64,8 @@
         "likes": 31
       }
     ],
-    "flutterCode": "class FlutterApp {\n  final String name = \"Cross-Platform App\";\n  final String framework = \"Flutter + Firebase\";\n\n  void build() {\n    var app = MobileApp(\n      platform: \"Android & iOS\",\n      stateMgmt: \"BLoC + Riverpod\",\n      payments: \"Stripe & Razorpay\",\n    );\n    app.deploy();\n    app.ship();\n  }\n}",
-    "rnCode": "class ReactNativeApp {\n  final name = \"Cross-Platform App\";\n  final framework = \"React Native + Firebase\";\n\n  void build() {\n    var app = MobileApp(\n      platform: \"Android & iOS\",\n      stateMgmt: \"Redux + Context\",\n      payments: \"Stripe & Razorpay\",\n    );\n    app.deploy();\n    app.ship();\n  }\n}",
+    "flutterCode": "class FlutterApp {\n  final String name = \"Cross-Platform App\";\n  final String framework = \"Flutter + Firebase\";\n  final String backend = \"Firebase + Cloud Functions\";\n\n  void build() {\n    var app = MobileApp(\n      platform: \"Android & iOS\",\n      stateMgmt: \"BLoC + Riverpod\",\n      payments: \"Stripe & Razorpay\",\n      auth: \"Firebase Auth\",\n    );\n\n    app.configure(debug: false);\n\n    // ship to Play Store & App Store\n    app.deploy();\n    app.ship();\n  }\n}",
+    "rnCode": "class ReactNativeApp {\n  final name = \"Cross-Platform App\";\n  final framework = \"React Native + Firebase\";\n  final backend = \"Firebase + Cloud Functions\";\n\n  void build() {\n    var app = MobileApp(\n      platform: \"Android & iOS\",\n      stateMgmt: \"Redux + Context\",\n      payments: \"Stripe & Razorpay\",\n      auth: \"Firebase Auth\",\n    );\n\n    app.configure(debug: false);\n\n    // ship to Play Store & App Store\n    app.deploy();\n    app.ship();\n  }\n}",
     "phoneAppName": "Akash Portfolio",
     "phoneDeveloper": "Mobile App Developer",
     "phoneRating": 4.9,

@@ -7,23 +7,26 @@ import { FiArrowUpRight } from "react-icons/fi";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import ThemeToggle from "@/components/ui/ThemeToggle";
-
-const navLinks = [
-  { label: "Home", href: "/" },
-  { label: "About", href: "/about" },
-  { label: "Skills", href: "/skills" },
-  { label: "Experience", href: "/experience" },
-  { label: "Process", href: "/process" },
-  { label: "Education", href: "/education" },
-  { label: "Projects", href: "/projects" },
-  { label: "Testimonials", href: "/testimonials" },
-  { label: "Contact", href: "/contact" },
-];
+import { NAVBAR_DEFAULTS } from "@/lib/defaults";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [nav, setNav] = useState(NAVBAR_DEFAULTS);
   const pathname = usePathname();
+
+  useEffect(() => {
+    fetch("/api/navbar")
+      .then((r) => r.json())
+      .then((d) => {
+        if (d && typeof d === "object" && !d.error) {
+          setNav({ ...NAVBAR_DEFAULTS, ...d });
+        }
+      })
+      .catch(() => {});
+  }, []);
+
+  const navLinks = Array.isArray(nav.links) && nav.links.length ? nav.links : NAVBAR_DEFAULTS.links;
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 24);
@@ -95,10 +98,10 @@ export default function Navbar() {
 
         <div className="flex items-center gap-2">
           <Link
-            href="/contact"
+            href={nav.ctaHref || "/contact"}
             className="hidden shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full border border-[#101412]/10 bg-[#101412] px-4 py-2 text-xs font-semibold text-white transition-all duration-300 hover:bg-[#16a34a] dark:border-[#c9f36c]/20 dark:bg-[#c9f36c] dark:text-[#101412] dark:hover:bg-[#d9ff8a] sm:flex"
           >
-            Let&apos;s talk <FiArrowUpRight />
+            {nav.ctaLabel || "Let's talk"} <FiArrowUpRight />
           </Link>
           <ThemeToggle />
           <button
@@ -147,10 +150,10 @@ export default function Navbar() {
               })}
             </div>
             <Link
-              href="/contact"
+              href={nav.ctaHref || "/contact"}
               className="mt-2 flex items-center justify-center gap-2 rounded-2xl bg-[#101412] px-4 py-3.5 text-sm font-semibold text-white dark:bg-[#c9f36c] dark:text-[#101412]"
             >
-              Start a project <FiArrowUpRight />
+              {nav.mobileCtaLabel || "Start a project"} <FiArrowUpRight />
             </Link>
           </motion.div>
         )}

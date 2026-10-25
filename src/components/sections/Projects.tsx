@@ -22,6 +22,8 @@ interface Project {
   role: string;
   category: string;
   appIcon?: string;
+  domain?: string;
+  industry?: string;
 }
 
 const industryLabels: Record<string, string> = {
@@ -107,8 +109,8 @@ export default function Projects() {
         <motion.div layout className="bento-grid">
           <AnimatePresence mode="popLayout">
             {filtered.map((project, idx) => {
-              const domain = getDomain(project.title);
-              const industry = industryLabels[domain] || domain;
+              const domain = project.domain || getDomain(project.title);
+              const industry = project.industry || industryLabels[domain] || domain;
 
               return (
                 <motion.div

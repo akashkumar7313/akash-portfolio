@@ -449,6 +449,30 @@
   animation: slideIn 0.3s ease-out;
 }
 
+/* Smooth reveal for each newly typed code line */
+@keyframes codeLineIn {
+  from { opacity: 0; transform: translateX(-6px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+.animate-code-line-in {
+  animation: codeLineIn 0.32s ease-out both;
+}
+
+/* Name headline: gradient that keeps sliding + cycling through all hues */
+@keyframes nameGradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+@keyframes nameHueCycle {
+  from { filter: hue-rotate(0deg); }
+  to { filter: hue-rotate(360deg); }
+}
+.animate-name-gradient {
+  background-size: 300% 300%;
+  animation: nameGradientShift 7s ease-in-out infinite, nameHueCycle 14s linear infinite;
+}
+
 /* Shimmer animation for buttons */
 @keyframes shimmer {
   from { background-position: 200% 0; }
@@ -635,6 +659,7 @@ html {
   .animated-border,
   .animate-float-slow,
   .animate-pulse-ring,
+  .animate-name-gradient,
   .skill-link,
   .process-link,
   .marquee-track {

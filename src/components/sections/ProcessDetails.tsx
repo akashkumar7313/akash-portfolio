@@ -1,110 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import DeliveryPipeline from "./DeliveryPipeline";
 import {
   FiArrowUpRight,
-  FiBookOpen,
   FiCheck,
   FiChevronDown,
-  FiCreditCard,
-  FiFileText,
-  FiGithub,
-  FiLayout,
-  FiLifeBuoy,
-  FiServer,
   FiShield,
-  FiUploadCloud,
 } from "react-icons/fi";
-
-const phases = [
-  { n: "01", title: "Discovery & scope", output: "Requirement doc, feature list, success metrics", gate: "Scope sign-off" },
-  { n: "02", title: "UI/UX & approval", output: "User flows, Figma screens, approved design", gate: "Design approval" },
-  { n: "03", title: "Build & integrations", output: "Working build, auth, APIs, payments", gate: "Build demo" },
-  { n: "04", title: "QA, security & UAT", output: "QA report, security checklist, sign-off", gate: "UAT sign-off" },
-  { n: "05", title: "Launch & support", output: "Store + web release, monitoring, handoff docs", gate: "Release go/no-go" },
-];
-
-const deliverables = [
-  { icon: FiFileText, title: "Requirement document", desc: "Features, user roles, scope and acceptance criteria." },
-  { icon: FiLayout, title: "Design prototype", desc: "Clickable Figma flow approved before development." },
-  { icon: FiGithub, title: "Source code", desc: "Clean repository with branches and handoff notes." },
-  { icon: FiServer, title: "API integration", desc: "REST or GraphQL, auth, database and Firebase setup." },
-  { icon: FiCreditCard, title: "Payments", desc: "Stripe, Razorpay, PayPal and in-app purchases." },
-  { icon: FiUploadCloud, title: "Release & deploy", desc: "Play Store, App Store and web deployment, versioning and monitoring." },
-  { icon: FiBookOpen, title: "Documentation", desc: "Architecture, setup steps and release checklist." },
-  { icon: FiLifeBuoy, title: "Post-launch support", desc: "Post-launch fixes, monitoring and handover help." },
-];
-
-const models = [
-  {
-    title: "Fixed-scope project",
-    tag: "Best for new apps",
-    desc: "A clear feature list, agreed milestones and clear acceptance criteria. Ideal for MVPs and first releases.",
-    points: ["Scope and estimate upfront", "Milestone-based payments", "Defined handoff and support"],
-    accent: true,
-  },
-  {
-    title: "Monthly retainer",
-    tag: "Best for live products",
-    desc: "Ongoing development, improvements and priority support for a product that is already in the market.",
-    points: ["Reserved delivery capacity", "Feature roadmap support", "Priority bug fixes"],
-  },
-  {
-    title: "Freelance / contract",
-    tag: "Best for extra capacity",
-    desc: "Embedded with your team on a sprint or contract basis, with the same delivery and quality gates.",
-    points: ["Sprint-based delivery", "Works with your stack", "Clear progress reporting"],
-  },
-];
-
-const qualityGates = [
-  "Requirement and scope signed off",
-  "Design approved before build",
-  "Code reviewed and merged",
-  "Tested on Android, iOS and web",
-  "Auth, API and payment flows verified",
-  "Security and dependency checks",
-  "Store assets and privacy reviewed",
-  "UAT sign-off with rollback plan",
-];
-
-const faqs = [
-  {
-    q: "How do you keep a project on track?",
-    a: "Work is split into milestones with clear outputs and a demo at each phase. Scope, feedback and integrations decide the pace, and the next steps are agreed in writing before moving on.",
-  },
-  {
-    q: "Can you work with an existing codebase?",
-    a: "Yes. I start with a short audit to understand the architecture, release process and biggest risks, then share a remediation or feature plan before making changes.",
-  },
-  {
-    q: "Do you handle store release and web deployment?",
-    a: "Yes. That includes build configuration, versioning, store assets, privacy details, Play Store / App Store submission, web deployment, release monitoring and post-launch fixes.",
-  },
-  {
-    q: "Can you build for Android, iOS and web?",
-    a: "Yes. Flutter or React Native covers Android and iOS from one shared codebase, while web apps and storefronts are built with modern web tooling. APIs, auth and Firebase can stay shared across surfaces.",
-  },
-  {
-    q: "Who owns the source code?",
-    a: "You do, after the final payment. Repository access, documentation and a clean handoff are part of every fixed-scope project.",
-  },
-  {
-    q: "How do payments work?",
-    a: "Fixed-scope projects use milestone payments; retainers are billed monthly. The exact split and deliverables are agreed in writing before work starts.",
-  },
-  {
-    q: "Is post-launch support included?",
-    a: "Every project includes post-launch support for fixes and stability. Ongoing maintenance and feature work can continue on a retainer.",
-  },
-  {
-    q: "What happens if the scope changes?",
-    a: "Changes are handled as a written change request, with the impact on milestones and cost agreed before the work starts.",
-  },
-];
+import { PROCESS_DEFAULTS } from "@/lib/defaults";
+import { resolveIcon } from "@/lib/iconMap";
 
 function SectionIntro({ kicker, title, desc }: { kicker: string; title: string; desc: string }) {
   return (
@@ -118,30 +25,44 @@ function SectionIntro({ kicker, title, desc }: { kicker: string; title: string; 
 
 export default function ProcessDetails() {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const [data, setData] = useState<any>(PROCESS_DEFAULTS);
+
+  useEffect(() => {
+    fetch("/api/process")
+      .then((r) => r.json())
+      .then((d) => {
+        if (d && typeof d === "object" && !d.error) {
+          setData({ ...PROCESS_DEFAULTS, ...d });
+        }
+      })
+      .catch(() => {});
+  }, []);
+
+  const p = data;
+  const phases: any[] = Array.isArray(p.phases) ? p.phases : PROCESS_DEFAULTS.phases;
+  const deliverables: any[] = Array.isArray(p.deliverables) ? p.deliverables : PROCESS_DEFAULTS.deliverables;
+  const models: any[] = Array.isArray(p.models) ? p.models : PROCESS_DEFAULTS.models;
+  const qualityGates: string[] = Array.isArray(p.qualityGates) ? p.qualityGates : PROCESS_DEFAULTS.qualityGates;
+  const faqs: any[] = Array.isArray(p.faqs) ? p.faqs : PROCESS_DEFAULTS.faqs;
+  const rules: string[] = Array.isArray(p.rules) ? p.rules : PROCESS_DEFAULTS.rules;
+  const ruleTags: string[] = Array.isArray(p.ruleTags) ? p.ruleTags : PROCESS_DEFAULTS.ruleTags;
+  const startPoints: string[] = Array.isArray(p.startPoints) ? p.startPoints : PROCESS_DEFAULTS.startPoints;
+  const faqTags: string[] = Array.isArray(p.faqTags) ? p.faqTags : PROCESS_DEFAULTS.faqTags;
 
   return (
     <>
       <section id="pipeline" className="relative overflow-hidden px-4 pb-16 sm:px-8">
         <div aria-hidden className="pointer-events-none absolute inset-0 page-glow" />
         <div className="relative mx-auto max-w-6xl">
-          <SectionIntro
-            kicker="Live pipeline"
-            title="A build you can watch move."
-            desc="The same delivery pipeline runs behind every product — requirement, design, development, testing, security and release."
-          />
+          <SectionIntro kicker={p.pipeKicker} title={p.pipeTitle} desc={p.pipeDesc} />
           <div className="grid gap-4 lg:grid-cols-[1.05fr_0.95fr]">
             <DeliveryPipeline />
             <div className="bento relative h-full overflow-hidden p-5 sm:p-6">
               <div aria-hidden className="pointer-events-none absolute -right-12 -top-16 h-44 w-44 rounded-full bg-[#c9f36c]/[0.12] blur-3xl" />
               <span className="bento-label">Pipeline rules</span>
-              <h3 className="mt-2 text-lg font-bold tracking-tight text-[#101412] dark:text-[#f4f7f2]">No stage moves forward on assumptions.</h3>
+              <h3 className="mt-2 text-lg font-bold tracking-tight text-[#101412] dark:text-[#f4f7f2]">{p.rulesTitle}</h3>
               <div className="mt-4 space-y-2.5">
-                {[
-                  "Scope and design are approved before development.",
-                  "Every build is tested on Android, iOS and web.",
-                  "Security and UAT sign-off come before release.",
-                  "Every release includes monitoring and a rollback plan.",
-                ].map((rule) => (
+                {rules.map((rule) => (
                   <div key={rule} className="flex items-start gap-2.5 rounded-xl border border-[#101412]/6 bg-white/40 px-3 py-2.5 dark:border-[#c9f36c]/8 dark:bg-white/[0.02]">
                     <FiCheck className="mt-0.5 shrink-0 text-[#16a34a] dark:text-[#c9f36c]" />
                     <span className="text-[10px] leading-relaxed text-[#4b5563] dark:text-[#cbd5ce]">{rule}</span>
@@ -149,7 +70,7 @@ export default function ProcessDetails() {
                 ))}
               </div>
               <div className="mt-4 grid grid-cols-2 gap-2">
-                {["3 platforms", "Mobile + web", "Design sign-off", "Security gate"].map((tag) => (
+                {ruleTags.map((tag) => (
                   <span key={tag} className="rounded-full border border-[#101412]/8 px-2.5 py-1 text-center text-[9px] text-[#6b7280] dark:border-[#c9f36c]/10 dark:text-[#91a096]">{tag}</span>
                 ))}
               </div>
@@ -160,11 +81,7 @@ export default function ProcessDetails() {
 
       <section className="relative overflow-hidden px-4 pb-16 sm:px-8">
         <div className="relative mx-auto max-w-6xl">
-          <SectionIntro
-            kicker="Delivery phases"
-            title="Every phase ends with something you can see."
-            desc="Each phase has a clear output and a review gate, so nothing moves forward on assumptions."
-          />
+          <SectionIntro kicker={p.phasesKicker} title={p.phasesTitle} desc={p.phasesDesc} />
 
           <motion.div
             initial={{ opacity: 0, y: 18 }}
@@ -201,41 +118,36 @@ export default function ProcessDetails() {
       <section className="relative overflow-hidden px-4 pb-16 sm:px-8">
         <div aria-hidden className="pointer-events-none absolute inset-0 page-glow" />
         <div className="relative mx-auto max-w-6xl">
-          <SectionIntro
-            kicker="Deliverables"
-            title="Everything needed to ship, not just code."
-            desc="Every engagement is built to leave you with a maintainable product, release-ready builds and a clean handoff."
-          />
+          <SectionIntro kicker={p.delKicker} title={p.delTitle} desc={p.delDesc} />
           <div className="bento-grid">
-            {deliverables.map((item, idx) => (
-              <motion.div
-                key={item.title}
-                initial={{ opacity: 0, y: 14 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.35, delay: idx * 0.04 }}
-                className="bento bento-hover p-4 md:col-span-6 lg:col-span-3"
-              >
-                <span className="bento-icon"><item.icon /></span>
-                <h3 className="mt-3 text-xs font-semibold text-[#101412] dark:text-[#f4f7f2]">{item.title}</h3>
-                <p className="mt-1 text-[10px] leading-relaxed text-[#6b7280] dark:text-[#91a096]">{item.desc}</p>
-              </motion.div>
-            ))}
+            {deliverables.map((item, idx) => {
+              const Icon = resolveIcon(item.icon, FiShield);
+              return (
+                <motion.div
+                  key={`${item.title}-${idx}`}
+                  initial={{ opacity: 0, y: 14 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.35, delay: idx * 0.04 }}
+                  className="bento bento-hover p-4 md:col-span-6 lg:col-span-3"
+                >
+                  <span className="bento-icon"><Icon /></span>
+                  <h3 className="mt-3 text-xs font-semibold text-[#101412] dark:text-[#f4f7f2]">{item.title}</h3>
+                  <p className="mt-1 text-[10px] leading-relaxed text-[#6b7280] dark:text-[#91a096]">{item.desc}</p>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>
 
       <section className="relative overflow-hidden px-4 pb-16 sm:px-8">
         <div className="mx-auto max-w-6xl">
-          <SectionIntro
-            kicker="Engagement models"
-            title="Work together the way that fits."
-            desc="Whether you are starting from zero, improving a live product, or adding capacity to an existing team, there is a clear way to work together."
-          />
+          <SectionIntro kicker={p.modKicker} title={p.modTitle} desc={p.modDesc} />
           <div className="bento-grid">
             {models.map((model, idx) => (
               <motion.div
-                key={model.title}
+                key={`${model.title}-${idx}`}
                 initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -250,7 +162,7 @@ export default function ProcessDetails() {
                   <h3 className="mt-4 text-lg font-bold tracking-tight text-[#101412] dark:text-[#f4f7f2]">{model.title}</h3>
                   <p className="mt-2 text-[11px] leading-relaxed text-[#6b7280] dark:text-[#91a096]">{model.desc}</p>
                   <ul className="mt-4 space-y-2">
-                    {model.points.map((point) => (
+                    {(model.points || []).map((point: string) => (
                       <li key={point} className="flex items-start gap-2 text-[10px] text-[#4b5563] dark:text-[#cbd5ce]">
                         <FiCheck className="mt-0.5 shrink-0 text-[#16a34a] dark:text-[#c9f36c]" /> {point}
                       </li>
@@ -281,8 +193,8 @@ export default function ProcessDetails() {
                 <div className="flex items-center gap-2">
                   <span className="bento-icon"><FiShield /></span>
                   <div>
-                    <p className="text-xs font-semibold text-[#101412] dark:text-[#f4f7f2]">Definition of done</p>
-                    <p className="text-[10px] text-[#6b7280] dark:text-[#91a096]">Nothing ships until these pass.</p>
+                    <p className="text-xs font-semibold text-[#101412] dark:text-[#f4f7f2]">{p.qualityTitle}</p>
+                    <p className="text-[10px] text-[#6b7280] dark:text-[#91a096]">{p.qualitySub}</p>
                   </div>
                 </div>
                 <div className="mt-5 grid gap-2 sm:grid-cols-2">
@@ -305,22 +217,22 @@ export default function ProcessDetails() {
             >
               <div className="bento relative h-full overflow-hidden p-5 sm:p-6">
                 <div aria-hidden className="pointer-events-none absolute -right-12 -top-16 h-40 w-40 rounded-full bg-[#c9f36c]/[0.12] blur-3xl" />
-                <span className="bento-label">How we start</span>
-                <h3 className="mt-3 text-xl font-bold tracking-tight text-[#101412] dark:text-[#f4f7f2]">A 20-minute discovery call.</h3>
+                <span className="bento-label">{p.startKicker}</span>
+                <h3 className="mt-3 text-xl font-bold tracking-tight text-[#101412] dark:text-[#f4f7f2]">{p.startTitle}</h3>
                 <p className="mt-2 text-[11px] leading-relaxed text-[#6b7280] dark:text-[#91a096]">
-                  Tell me the idea, the users and the deadline. I will map the scope, flag risks and suggest the smallest sensible first release.
+                  {p.startDesc}
                 </p>
                 <div className="mt-4 space-y-2">
-                  {["No commitment", "Clear next steps", "NDA on request"].map((item) => (
+                  {startPoints.map((item) => (
                     <div key={item} className="flex items-center gap-2 text-[10px] text-[#4b5563] dark:text-[#cbd5ce]">
                       <FiCheck className="text-[#16a34a] dark:text-[#c9f36c]" /> {item}
                     </div>
                   ))}
                 </div>
                 <Link href="/contact" className="mt-5 inline-flex w-full items-center justify-center gap-1.5 rounded-full bg-[#c9f36c] px-4 py-2.5 text-xs font-semibold text-[#101412] transition-colors hover:bg-[#d9ff8a]">
-                  Book a discovery call <FiArrowUpRight />
+                  {p.startCta} <FiArrowUpRight />
                 </Link>
-                <p className="mt-2 text-center text-[9px] text-[#6b7280] dark:text-[#6b7a70]">Usually replies within 24 hours</p>
+                <p className="mt-2 text-center text-[9px] text-[#6b7280] dark:text-[#6b7a70]">{p.startNote}</p>
               </div>
             </motion.div>
           </div>
@@ -340,16 +252,16 @@ export default function ProcessDetails() {
                 className="relative overflow-hidden border-b border-[#101412]/8 p-6 sm:p-8 lg:border-b-0 lg:border-r dark:border-[#c9f36c]/10"
               >
                 <div aria-hidden className="pointer-events-none absolute -right-16 -top-20 h-56 w-56 rounded-full bg-[#c9f36c]/[0.1] blur-[80px]" />
-                <span className="bento-kicker">FAQ</span>
+                <span className="bento-kicker">{p.faqKicker}</span>
                 <h2 className="mt-4 text-2xl font-bold tracking-tight text-[#101412] sm:text-3xl dark:text-[#f4f7f2]">
-                  Questions worth asking before you start.
+                  {p.faqTitle}
                 </h2>
                 <p className="mt-3 text-sm leading-relaxed text-[#6b7280] dark:text-[#91a096]">
-                  Straight answers about scope, ownership, launch and post-launch support.
+                  {p.faqDesc}
                 </p>
 
                 <div className="mt-6 grid grid-cols-2 gap-2">
-                  {["You own the code", "NDA on request", "Android · iOS · Web", "Post-launch support"].map((item) => (
+                  {faqTags.map((item) => (
                     <div key={item} className="flex items-center gap-2 rounded-xl border border-[#101412]/6 bg-white/40 px-2.5 py-2 dark:border-[#c9f36c]/8 dark:bg-white/[0.02]">
                       <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-[#c9f36c]/20 text-[8px] text-[#16a34a] dark:text-[#c9f36c]"><FiCheck /></span>
                       <span className="text-[9px] font-medium text-[#4b5563] dark:text-[#cbd5ce]">{item}</span>
@@ -358,10 +270,10 @@ export default function ProcessDetails() {
                 </div>
 
                 <div className="mt-6 rounded-2xl border border-[#c9f36c]/25 bg-[#c9f36c]/[0.08] p-4">
-                  <p className="text-xs font-semibold text-[#101412] dark:text-[#f4f7f2]">Still have a question?</p>
-                  <p className="mt-1 text-[10px] leading-relaxed text-[#6b7280] dark:text-[#91a096]">Tell me about the product and I will answer directly.</p>
+                  <p className="text-xs font-semibold text-[#101412] dark:text-[#f4f7f2]">{p.faqStillTitle}</p>
+                  <p className="mt-1 text-[10px] leading-relaxed text-[#6b7280] dark:text-[#91a096]">{p.faqStillDesc}</p>
                   <Link href="/contact" className="mt-3 inline-flex items-center gap-1 text-[10px] font-semibold text-[#16a34a] hover:underline dark:text-[#c9f36c]">
-                    Ask me directly <FiArrowUpRight />
+                    {p.faqStillCta} <FiArrowUpRight />
                   </Link>
                 </div>
               </motion.div>
@@ -371,7 +283,7 @@ export default function ProcessDetails() {
                   const isOpen = openFaq === idx;
                   return (
                     <motion.div
-                      key={faq.q}
+                      key={`${faq.q}-${idx}`}
                       initial={{ opacity: 0, y: 10 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}

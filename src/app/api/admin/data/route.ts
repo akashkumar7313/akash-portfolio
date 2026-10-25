@@ -1,7 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { connectToDatabase } from "@/lib/mongodb";
+import { DEFAULTS } from "@/lib/defaults";
 
-const COLLECTIONS = ["settings", "hero", "about", "skills", "experience", "education", "projects", "testimonials", "stats", "contact", "socialLinks"];
+const COLLECTIONS = [
+  "settings", "hero", "about", "skills", "experience", "education", "projects",
+  "testimonials", "stats", "contact", "socialLinks",
+  "marquee", "explore", "navbar", "footer", "featured", "process",
+];
 
 export async function GET(req: NextRequest) {
   const token = req.cookies.get("admin_token")?.value;
@@ -12,7 +17,12 @@ export async function GET(req: NextRequest) {
     const { db } = await connectToDatabase();
     const result: Record<string, unknown> = {};
     for (const col of COLLECTIONS) {
-      const doc = await db.collection(col).findOne({ slug: "main" });
+      let doc: any = await db.collection(col).findOne({ slug: "main" });
+      if (!doc && DEFAULTS[col]) {
+        const seed: any = { slug: "main", ...DEFAULTS[col] };
+        await db.collection(col).insertOne({ ...seed });
+        doc = seed;
+      }
       if (doc) {
         const { _id, slug, ...rest } = doc;
         if (col === "socialLinks") {

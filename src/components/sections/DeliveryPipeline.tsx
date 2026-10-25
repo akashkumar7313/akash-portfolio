@@ -1,18 +1,28 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { FiCheck, FiCode, FiPenTool, FiSearch, FiShield, FiUploadCloud, FiZap } from "react-icons/fi";
-
-const steps = [
-  { label: "Requirement", desc: "Goals, scope & success metrics", icon: FiSearch },
-  { label: "Design", desc: "Flows, UI and approval", icon: FiPenTool },
-  { label: "Development", desc: "Features, auth & integrations", icon: FiCode },
-  { label: "Test & secure", desc: "QA, bug fixes & threat testing", icon: FiShield },
-  { label: "Ship", desc: "Store & web release, monitoring", icon: FiUploadCloud },
-];
+import { FiCheck, FiSearch, FiZap } from "react-icons/fi";
+import { PROCESS_DEFAULTS } from "@/lib/defaults";
+import { resolveIcon } from "@/lib/iconMap";
 
 export default function DeliveryPipeline() {
   const [active, setActive] = useState(0);
+  const [foot, setFoot] = useState<{
+    pipelineSteps?: { label: string; desc: string; icon: string }[];
+    pipelineFootTitle?: string;
+    pipelineFootDesc?: string;
+  }>({});
+
+  useEffect(() => {
+    fetch("/api/process")
+      .then((r) => r.json())
+      .then((d) => {
+        if (d && typeof d === "object" && !d.error) setFoot(d);
+      })
+      .catch(() => {});
+  }, []);
+
+  const steps = foot.pipelineSteps?.length ? foot.pipelineSteps : PROCESS_DEFAULTS.pipelineSteps;
 
   useEffect(() => {
     const timer = setInterval(() => setActive((prev) => (prev + 1) % steps.length), 2600);
@@ -39,7 +49,7 @@ export default function DeliveryPipeline() {
         {steps.map((step, i) => {
           const isActive = i === active;
           const isDone = i < active;
-          const Icon = step.icon;
+          const Icon = resolveIcon(step.icon, FiSearch);
           return (
             <div
               key={step.label}
@@ -85,10 +95,10 @@ export default function DeliveryPipeline() {
       <div className="flex items-center justify-between border-t border-[#101412]/8 px-4 py-3 dark:border-[#c9f36c]/10">
         <div className="min-w-0">
           <p className="truncate text-[10px] font-semibold text-[#101412] dark:text-[#f4f7f2]">
-            Android · iOS · Web
+            {foot.pipelineFootTitle || PROCESS_DEFAULTS.pipelineFootTitle}
           </p>
           <p className="mt-0.5 text-[9px] text-[#6b7280] dark:text-[#91a096]">
-            Release-ready in every cycle
+            {foot.pipelineFootDesc || PROCESS_DEFAULTS.pipelineFootDesc}
           </p>
         </div>
         <span className="ml-3 font-mono text-[10px] text-[#16a34a] dark:text-[#c9f36c]">

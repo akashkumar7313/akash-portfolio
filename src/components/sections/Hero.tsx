@@ -1,26 +1,26 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
   FiArrowDown,
   FiArrowUpRight,
   FiDownload,
   FiMapPin,
-  FiStar,
 } from "react-icons/fi";
 import { SiFlutter, SiReact } from "react-icons/si";
 import Link from "next/link";
 import Stats from "./Stats";
 import CodeShowcase from "./CodeShowcase";
 import TiltCard from "@/components/ui/TiltCard";
+import { HERO_DEFAULTS } from "@/lib/defaults";
 
-const roles = [
-  "Software Engineer",
-  "Flutter Developer",
-  "React Native Developer",
-  "Mobile & Web Developer",
-  "Mobile App Architect",
+const ROLE_STYLES = [
+  "text-[#16a34a] dark:text-[#c9f36c] font-mono font-bold",
+  "text-[#2563eb] dark:text-[#7dd3fc] font-sans font-extrabold italic",
+  "text-[#c026d3] dark:text-[#f0abfc] font-serif font-black",
+  "text-[#ea580c] dark:text-[#fdba74] font-mono font-black tracking-[0.04em]",
+  "text-[#0d9488] dark:text-[#5eead4] font-sans font-black uppercase tracking-[0.03em]",
 ];
 
 function useTypingAnimation(texts: string[]) {
@@ -30,7 +30,8 @@ function useTypingAnimation(texts: string[]) {
   const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
-    const currentText = texts[textIndex];
+    if (texts.length === 0) return;
+    const currentText = texts[textIndex % texts.length];
     let timeout: NodeJS.Timeout;
 
     if (!deleting && charIndex < currentText.length) {
@@ -53,21 +54,19 @@ function useTypingAnimation(texts: string[]) {
     return () => clearTimeout(timeout);
   }, [charIndex, deleting, textIndex, texts]);
 
-  return displayed;
+  return { displayed, textIndex };
 }
 
 export default function Hero() {
-  const typedRole = useTypingAnimation(roles);
-  const [resumeUrl, setResumeUrl] = useState("");
+  const [hero, setHero] = useState<any>(null);
   const [particles, setParticles] = useState(true);
+  const [photoBroken, setPhotoBroken] = useState(false);
 
   useEffect(() => {
     fetch("/api/hero")
       .then((r) => r.json())
-      .then((d) => {
-        if (d?.resumeUrl) setResumeUrl(d.resumeUrl);
-      })
-      .catch(() => {});
+      .then((d) => setHero(d || {}))
+      .catch(() => setHero({}));
     fetch("/api/settings")
       .then((r) => r.json())
       .then((s) => {
@@ -75,6 +74,22 @@ export default function Hero() {
       })
       .catch(() => {});
   }, []);
+
+  const h = { ...HERO_DEFAULTS, ...(hero || {}) };
+  const roles = useMemo<string[]>(
+    () => (Array.isArray(h.roles) && h.roles.length ? h.roles : HERO_DEFAULTS.roles),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [JSON.stringify(h.roles)]
+  );
+  const badges = useMemo<any[]>(
+    () => (Array.isArray(h.badges) ? h.badges : HERO_DEFAULTS.badges),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [JSON.stringify(h.badges)]
+  );
+
+  const { displayed: typedRole, textIndex: roleIndex } = useTypingAnimation(roles);
+  const roleStyle = ROLE_STYLES[roleIndex % ROLE_STYLES.length];
+  const resumeUrl = h.resumeUrl || "";
 
   return (
     <section id="hero" className="relative overflow-hidden pb-14 pt-28 sm:pt-32 lg:pb-20">
@@ -102,86 +117,85 @@ export default function Hero() {
             initial={{ opacity: 0, y: 26 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            className="lg:col-span-7"
+            className="min-w-0 lg:col-span-7"
           >
-            <div className="bento relative overflow-hidden p-5 sm:p-7 lg:p-8">
+            <div className="bento relative overflow-hidden">
               <div
                 aria-hidden
                 className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(201,243,108,0.16),transparent_52%)] dark:bg-[radial-gradient(circle_at_top_right,rgba(201,243,108,0.1),transparent_48%)]"
               />
-              <div aria-hidden className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-[#c9f36c]/50 to-transparent" />
-              <div className="relative">
-                <div className="flex items-start justify-between gap-4">
-                  <div className="flex items-center gap-3">
-                    <div className="relative grid h-12 w-12 shrink-0 place-items-center rounded-[18px] border border-[#c9f36c]/30 bg-[#101412] font-mono text-[13px] font-bold tracking-tight text-[#c9f36c] shadow-[0_18px_34px_-22px_rgba(201,243,108,0.6)] dark:border-[#c9f36c]/[0.35]">
-                      AK
-                      <span className="absolute -bottom-0.5 -right-0.5 h-3.5 w-3.5 rounded-full border-2 border-[#f7faf4] bg-emerald-400 dark:border-[#0b0f0c]" />
-                    </div>
-                    <div>
-                      <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
-                        <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#101412] dark:text-[#f4f7f2]">
-                          Available for work
-                        </span>
-                        <span className="hidden h-1 w-1 rounded-full bg-[#16a34a]/60 dark:bg-[#c9f36c]/60 sm:block" />
-                        <span className="hidden font-mono text-[8.5px] uppercase tracking-[0.18em] text-[#16a34a] dark:text-[#c9f36c] sm:inline">
-                          Remote / On-site
-                        </span>
-                      </div>
-                      <p className="mt-1 flex items-center gap-1.5 font-mono text-[9.5px] uppercase tracking-[0.16em] text-[#6b7280] dark:text-[#91a096]">
-                        <FiMapPin className="text-[10px]" /> Lucknow, India · IST
-                      </p>
-                    </div>
-                  </div>
-                  <span className="hidden shrink-0 rounded-full border border-[#101412]/8 bg-white/40 px-2.5 py-1 font-mono text-[8px] uppercase tracking-[0.2em] text-[#6b7280] dark:border-[#c9f36c]/10 dark:bg-white/[0.03] dark:text-[#91a096] lg:block">
-                    Portfolio / 26
+              <div
+                aria-hidden
+                className="pointer-events-none absolute inset-0 opacity-[0.5]"
+                style={{
+                  backgroundImage: "radial-gradient(rgba(16,20,18,0.08) 1px, transparent 1px)",
+                  backgroundSize: "22px 22px",
+                  maskImage: "radial-gradient(circle at 20% 0%, black, transparent 65%)",
+                }}
+              />
+              <span aria-hidden className="pointer-events-none absolute left-2.5 top-2.5 h-3.5 w-3.5 border-l border-t border-[#c9f36c]/60" />
+              <span aria-hidden className="pointer-events-none absolute right-2.5 top-2.5 h-3.5 w-3.5 border-r border-t border-[#c9f36c]/60" />
+              <span aria-hidden className="pointer-events-none absolute bottom-2.5 left-2.5 h-3.5 w-3.5 border-b border-l border-[#c9f36c]/60" />
+              <span aria-hidden className="pointer-events-none absolute bottom-2.5 right-2.5 h-3.5 w-3.5 border-b border-r border-[#c9f36c]/60" />
+
+              {/* ── top strip: availability + id ───────────── */}
+              <div className="relative flex flex-wrap items-center justify-between gap-x-4 gap-y-2 border-b border-dashed border-[#101412]/12 px-5 py-3 sm:px-7 dark:border-[#c9f36c]/15">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="relative flex h-2 w-2 shrink-0">
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-70" />
+                    <span className="relative h-2 w-2 rounded-full bg-emerald-500" />
+                  </span>
+                  <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#101412] dark:text-[#f4f7f2]">
+                    {h.availableText}
                   </span>
                 </div>
+                <span className="rounded-full border border-dashed border-[#101412]/18 bg-white/45 px-2.5 py-1 font-mono text-[8px] uppercase tracking-[0.2em] text-[#6b7280] dark:border-[#c9f36c]/25 dark:bg-white/[0.03] dark:text-[#91a096]">
+                  {h.portfolioTag}
+                </span>
+              </div>
 
-                <div className="my-6 flex items-center gap-3">
-                  <span className="h-px flex-1 bg-gradient-to-r from-[#101412]/10 to-transparent dark:from-[#c9f36c]/15" />
-                  <span className="font-mono text-[8px] uppercase tracking-[0.28em] text-[#6b7280] dark:text-[#91a096]">
-                    Product engineer · Mobile + Web
-                  </span>
-                  <span className="h-px flex-1 bg-gradient-to-l from-[#101412]/10 to-transparent dark:from-[#c9f36c]/15" />
-                </div>
-
-                <h1 className="text-[clamp(2.5rem,6.4vw,4.9rem)] font-black leading-[0.94] tracking-[-0.055em] text-[#101412] dark:text-[#f4f7f2]">
-                  Akash Kumar
+              {/* ── name (full width) ────────────────────── */}
+              <div className="relative px-5 pt-[22px] sm:px-7 lg:px-8">
+                <h1
+                  className="animate-name-gradient bg-clip-text text-[clamp(2.3rem,5.6vw,4.3rem)] font-black leading-[0.98] tracking-[-0.05em] text-transparent"
+                  style={{
+                    backgroundImage:
+                      "linear-gradient(115deg, #ef4444, #f97316, #eab308, #22c55e, #06b6d4, #3b82f6, #8b5cf6, #ec4899, #ef4444)",
+                  }}
+                >
+                  {h.prefix ? `${h.prefix} ` : ""}
+                  {h.name}
                   <br />
-                  <span className="bg-gradient-to-r from-[#16a34a] via-[#84cc16] to-[#a8d94a] bg-clip-text text-transparent dark:from-[#c9f36c] dark:via-[#d9ff8a] dark:to-[#a8d94a]">
-                    Prajapati
-                  </span>
+                  {h.surname}
                 </h1>
+              </div>
 
-                <div className="mt-5 flex flex-wrap items-center gap-2.5">
-                  <div className="flex min-h-8 items-center gap-2 rounded-full border border-[#101412]/8 bg-white/45 px-3 py-1.5 font-mono text-[11px] text-[#4b5563] dark:border-[#c9f36c]/10 dark:bg-white/[0.03] dark:text-[#91a096] sm:text-xs">
-                    <span className="text-[#16a34a] dark:text-[#c9f36c]">{"//"}</span>
-                    <span>{typedRole}</span>
-                    <span className="inline-block h-3.5 w-[2px] animate-pulse bg-[#16a34a] dark:bg-[#c9f36c]" />
+              {/* ── body: content + identity rail ─────────── */}
+              <div className="relative grid gap-[18px] p-[18px] sm:p-[26px] lg:grid-cols-[1fr_190px] lg:gap-7 lg:p-7">
+                <div className="order-2 min-w-0 lg:order-1">
+                  {/* typewriter role */}
+                  <div className="mt-[18px] flex min-h-10 w-full items-center gap-2 font-mono text-[16px] text-[#4b5563] dark:text-[#91a096] sm:text-[18px]">
+                    <span className={`truncate transition-colors duration-500 ${roleStyle}`}>
+                      {typedRole}
+                    </span>
+                    <span className="inline-block h-4 w-[2px] shrink-0 animate-pulse bg-[#16a34a] dark:bg-[#c9f36c]" />
                   </div>
-                  <span className="font-mono text-[8.5px] uppercase tracking-[0.18em] text-[#6b7280] dark:text-[#91a096]">
-                    4+ years · Android · iOS · Web
-                  </span>
-                </div>
 
-                <p className="mt-5 max-w-xl text-sm leading-relaxed text-[#6b7280] dark:text-[#91a096] sm:text-[15px]">
-                  I turn complex product ideas into fast, polished mobile apps and web storefronts.{" "}
-                  <span className="font-medium text-[#101412] dark:text-[#f4f7f2]">4+ years</span> shipping
-                  production Android, iOS and web experiences with Flutter, React Native, and modern web tooling.
-                </p>
+                  <p className="mt-3 font-mono text-[12px] uppercase tracking-[0.16em] text-[#6b7280] dark:text-[#91a096]">
+                    {h.experienceLine}
+                  </p>
 
-                <div className="mt-5 flex flex-wrap gap-2">
-                  <span className="bento-chip"><FiStar className="text-amber-400" /> Best Developer of the Year</span>
-                  <span className="bento-chip"><FiStar className="text-[#16a34a] dark:text-[#c9f36c]" /> Employee of the Month</span>
-                </div>
+                  <p className="mt-4 max-w-xl text-sm leading-relaxed text-[#6b7280] dark:text-[#91a096] sm:text-[15px]">
+                    {h.tagline}
+                  </p>
 
-                <div className="mt-7 border-t border-[#101412]/8 pt-5 dark:border-[#c9f36c]/10">
-                  <div className="flex flex-wrap items-center gap-2.5">
+                  {/* CTA row */}
+                  <div className="mt-[22px] flex flex-wrap items-center gap-2.5">
                     <Link
                       href="/projects"
                       className="group inline-flex items-center gap-2 rounded-full bg-[#c9f36c] px-5 py-3 text-sm font-semibold text-[#101412] shadow-lg shadow-[#c9f36c]/20 transition-all hover:bg-[#d9ff8a] hover:shadow-[#c9f36c]/35"
                     >
-                      View projects
+                      {h.ctaProjects}
                       <FiArrowUpRight className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                     </Link>
                     <a
@@ -190,66 +204,116 @@ export default function Hero() {
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 rounded-full border border-[#101412]/10 bg-white/50 px-5 py-3 text-sm font-semibold text-[#374151] backdrop-blur transition-all hover:border-[#c9f36c]/50 hover:bg-[#c9f36c]/10 dark:border-[#c9f36c]/15 dark:bg-white/[0.03] dark:text-[#f4f7f2]"
                     >
-                      <FiDownload /> Resume
+                      <FiDownload /> {h.ctaResume}
                     </a>
-                    <Link
-                      href="/contact"
-                      className="inline-flex items-center gap-2 rounded-full border border-transparent px-3 py-3 text-sm font-semibold text-[#16a34a] transition-colors hover:text-[#101412] dark:text-[#c9f36c] dark:hover:text-white sm:ml-auto"
-                    >
-                      Contact <FiArrowUpRight />
-                    </Link>
-                  </div>
-                  <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1.5 font-mono text-[8px] uppercase tracking-[0.18em] text-[#6b7280] dark:text-[#91a096]">
-                    <span className="flex items-center gap-1.5">
-                      <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" /> Open to select projects
-                    </span>
-                    <span className="hidden h-1 w-1 rounded-full bg-[#101412]/15 dark:bg-[#c9f36c]/20 sm:block" />
-                    <span>Android · iOS · Web</span>
                   </div>
                 </div>
+
+                {/* identity rail */}
+                <aside className="order-1 min-w-0 lg:order-2 lg:border-l lg:border-dashed lg:border-[#101412]/12 lg:pl-6 lg:dark:border-[#c9f36c]/15">
+                  <div className="flex flex-row flex-wrap items-center gap-4 lg:flex-col lg:items-stretch lg:gap-0">
+                    <div className="relative w-fit shrink-0 self-start">
+                      <div className="grid h-16 w-16 place-items-center overflow-hidden rounded-2xl border border-[#c9f36c]/30 bg-[#101412] font-mono text-lg font-bold tracking-tight text-[#c9f36c] shadow-[0_18px_34px_-22px_rgba(201,243,108,0.6)] sm:h-20 sm:w-20 sm:text-xl dark:border-[#c9f36c]/[0.35]">
+                        {h.photoUrl && !photoBroken ? (
+                          <img
+                            src={h.photoUrl}
+                            alt={`${h.prefix ? `${h.prefix} ` : ""}${h.name} ${h.surname}`}
+                            className="h-full w-full object-cover"
+                            onError={() => setPhotoBroken(true)}
+                          />
+                        ) : (
+                          "AK"
+                        )}
+                      </div>
+                      <span className="absolute -bottom-[3.5px] -right-[3.5px] z-10 h-4 w-4 rounded-full border-2 border-[#f7faf4] bg-emerald-400 shadow-[0_2px_6px_rgba(16,185,129,0.45)] dark:border-[#0b0f0c]" />
+                    </div>
+
+                    <dl className="flex min-w-0 flex-1 flex-wrap gap-2 lg:mt-5 lg:flex-col lg:gap-0">
+                      <div className="min-w-[128px] flex-1 rounded-xl border border-[#101412]/8 bg-white/45 px-3 py-2 lg:min-w-0 lg:rounded-none lg:border-0 lg:border-t lg:border-dashed lg:bg-transparent lg:px-0 lg:pt-2.5 lg:pb-0 dark:border-[#c9f36c]/10 dark:bg-white/[0.03] lg:dark:border-[#c9f36c]/12 lg:dark:bg-transparent">
+                        <dt className="font-mono text-[8px] uppercase tracking-[0.24em] text-[#9ca3af] dark:text-[#6b7280]">Role</dt>
+                        <dd className="mt-0.5 break-words text-[11px] font-semibold leading-snug text-[#374151] dark:text-[#f4f7f2]">{h.kicker}</dd>
+                      </div>
+                      <div className="min-w-[128px] flex-1 rounded-xl border border-[#101412]/8 bg-white/45 px-3 py-2 lg:min-w-0 lg:rounded-none lg:border-0 lg:border-t lg:border-dashed lg:bg-transparent lg:px-0 lg:pt-2.5 lg:pb-0 dark:border-[#c9f36c]/10 dark:bg-white/[0.03] lg:dark:border-[#c9f36c]/12 lg:dark:bg-transparent">
+                        <dt className="font-mono text-[8px] uppercase tracking-[0.24em] text-[#9ca3af] dark:text-[#6b7280]">Location</dt>
+                        <dd className="mt-0.5 flex items-center gap-1 break-words text-[11px] font-semibold leading-snug text-[#374151] dark:text-[#f4f7f2]">
+                          <FiMapPin className="shrink-0 text-[#16a34a] dark:text-[#c9f36c]" /> {h.location}
+                        </dd>
+                      </div>
+                      <div className="min-w-[128px] flex-1 rounded-xl border border-[#101412]/8 bg-white/45 px-3 py-2 lg:min-w-0 lg:rounded-none lg:border-0 lg:border-t lg:border-dashed lg:bg-transparent lg:px-0 lg:pt-2.5 lg:pb-0 dark:border-[#c9f36c]/10 dark:bg-white/[0.03] lg:dark:border-[#c9f36c]/12 lg:dark:bg-transparent">
+                        <dt className="font-mono text-[8px] uppercase tracking-[0.24em] text-[#9ca3af] dark:text-[#6b7280]">Mode</dt>
+                        <dd className="mt-0.5 break-words text-[11px] font-semibold leading-snug text-[#16a34a] dark:text-[#c9f36c]">{h.workMode}</dd>
+                      </div>
+                    </dl>
+
+                    {badges.length > 0 && (
+                      <div className="flex w-full flex-col gap-2 lg:mt-5">
+                        {badges.map((b: any, i: number) => (
+                          <span key={`${b.text}-${i}`} className="bento-chip w-full">
+                            <span>{b.icon || "🏆"}</span> {b.text}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </aside>
+              </div>
+
+              {/* ── bottom status strip ───────────────────── */}
+              <div className="relative flex flex-wrap items-center justify-between gap-x-4 gap-y-2 border-t border-dashed border-[#101412]/12 px-5 py-3 sm:px-7 dark:border-[#c9f36c]/15">
+                <span className="flex items-center gap-2 font-mono text-[8.5px] uppercase tracking-[0.2em] text-[#6b7280] dark:text-[#91a096]">
+                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" /> {h.statusLine}
+                </span>
+                <span className="font-mono text-[8.5px] uppercase tracking-[0.2em] text-[#6b7280] dark:text-[#91a096]">
+                  {h.platforms}
+                </span>
               </div>
             </div>
           </motion.div>
 
-          <div className="grid gap-4 lg:col-span-5">
+          <div className="grid min-w-0 gap-4 lg:col-span-5">
             <motion.div
               initial={{ opacity: 0, y: 26 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.12 }}
+              className="min-w-0"
             >
-              <TiltCard intensity={5} glow="201 243 108" className="rounded-[26px]">
-                <CodeShowcase />
+              <TiltCard intensity={4} glow="201 243 108" className="rounded-[26px]">
+                <CodeShowcase
+                  flutterFile={h.flutterFile}
+                  flutterCode={h.flutterCode}
+                  rnFile={h.rnFile}
+                  rnCode={h.rnCode}
+                />
               </TiltCard>
             </motion.div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid min-w-0 grid-cols-2 gap-4">
               <motion.div
                 initial={{ opacity: 0, y: 22 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.22 }}
-                className="bento bento-hover p-4"
+                className="bento bento-hover min-w-0 p-4"
               >
                 <div className="flex items-center gap-2">
                   <span className="bento-icon"><SiFlutter /></span>
                   <span className="bento-icon"><SiReact /></span>
                 </div>
-                <p className="mt-3 text-xs font-semibold text-[#101412] dark:text-[#f4f7f2]">Mobile + web, one partner</p>
-                <p className="mt-0.5 text-[10px] leading-relaxed text-[#6b7280] dark:text-[#91a096]">Flutter, React Native & web</p>
+                <p className="mt-3 break-words text-xs font-semibold text-[#101412] dark:text-[#f4f7f2]">{h.card1Title}</p>
+                <p className="mt-0.5 break-words text-[10px] leading-relaxed text-[#6b7280] dark:text-[#91a096]">{h.card1Desc}</p>
               </motion.div>
 
               <motion.div
                 initial={{ opacity: 0, y: 22 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.28 }}
-                className="bento bento-hover p-4"
+                className="bento bento-hover min-w-0 p-4"
               >
-                <div className="flex items-center gap-1.5">
-                  <FiStar className="text-[#16a34a] dark:text-[#c9f36c]" />
-                  <span className="text-2xl font-black tracking-tight text-[#101412] dark:text-[#f4f7f2]">4.9</span>
-                  <span className="text-[10px] text-[#6b7280] dark:text-[#91a096]">/ 5</span>
+                <div className="flex flex-wrap items-center gap-1.5">
+                  <span className="text-2xl font-black tracking-tight text-[#101412] dark:text-[#f4f7f2]">{h.card2Value}</span>
+                  <span className="text-[10px] text-[#6b7280] dark:text-[#91a096]">{h.card2Suffix}</span>
                 </div>
-                <p className="mt-2 text-xs font-semibold text-[#101412] dark:text-[#f4f7f2]">Client rating</p>
-                <p className="mt-0.5 text-[10px] leading-relaxed text-[#6b7280] dark:text-[#91a096]">Across shipped products</p>
+                <p className="mt-2 break-words text-xs font-semibold text-[#101412] dark:text-[#f4f7f2]">{h.card2Title}</p>
+                <p className="mt-0.5 break-words text-[10px] leading-relaxed text-[#6b7280] dark:text-[#91a096]">{h.card2Desc}</p>
               </motion.div>
             </div>
           </div>

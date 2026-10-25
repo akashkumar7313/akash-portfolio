@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import {
   FiGrid, FiUser, FiTool, FiBriefcase, FiBook, FiFolder, FiMessageSquare,
   FiBarChart2, FiMail, FiSettings, FiLink, FiStar, FiAward, FiCode,
+  FiCompass, FiMenu, FiGitBranch, FiLayers, FiAlignLeft,
 } from "react-icons/fi";
 import AdminSidebar from "@/components/admin/AdminSidebar";
 import AdminHeader from "@/components/admin/AdminHeader";
@@ -19,6 +20,12 @@ interface SiteData { [key: string]: unknown; }
 const sectionMeta: Record<string, { label: string; icon: React.ReactNode; color: string; desc: string }> = {
   overview:    { label: "Overview",    icon: <FiGrid />,         color: "#c9f36c", desc: "Dashboard analytics" },
   hero:        { label: "Hero",        icon: <FiStar />,         color: "#c9f36c", desc: "Hero section content" },
+  featured:    { label: "Featured",    icon: <FiAward />,        color: "#a8d94a", desc: "Home featured work" },
+  marquee:     { label: "Tech Ticker", icon: <FiAlignLeft />,    color: "#c9f36c", desc: "Tech marquee strip" },
+  explore:     { label: "Explore",     icon: <FiCompass />,      color: "#a8d94a", desc: "Keep exploring cards" },
+  process:     { label: "Process",     icon: <FiGitBranch />,    color: "#c9f36c", desc: "Process page content" },
+  navbar:      { label: "Navbar",      icon: <FiMenu />,         color: "#a8d94a", desc: "Navigation menu" },
+  footer:      { label: "Footer",      icon: <FiLayers />,       color: "#c9f36c", desc: "Footer content" },
   about:       { label: "About",       icon: <FiUser />,         color: "#a8d94a", desc: "About section content" },
   skills:      { label: "Skills",      icon: <FiTool />,         color: "#c9f36c", desc: "Skills & categories" },
   experience:  { label: "Experience",  icon: <FiBriefcase />,    color: "#a8d94a", desc: "Work experience" },
@@ -122,6 +129,12 @@ export default function AdminDashboard() {
     const s = data[section] as Record<string, unknown> | undefined;
     if (!s) return 0;
     if (section === "hero") return 1;
+    if (section === "marquee") return (s.tools as unknown[])?.length || 0;
+    if (section === "explore") return (s.pages as unknown[])?.length || 0;
+    if (section === "navbar") return (s.links as unknown[])?.length || 0;
+    if (section === "footer") return (s.quickLinks as unknown[])?.length || 0;
+    if (section === "featured") return 6;
+    if (section === "process") return (s.steps as unknown[])?.length || 0;
     if (section === "about") return (s.paragraphs as unknown[])?.length || 0;
     if (section === "skills") return (s.categories as unknown[])?.length || 0;
     if (section === "experience") return (s.experiences as unknown[])?.length || 0;

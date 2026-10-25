@@ -15,7 +15,10 @@ export async function connectToDatabase(): Promise<{ client: MongoClient; db: Db
     throw new Error("MONGODB_URI is not defined");
   }
 
-  const client = await MongoClient.connect(MONGODB_URI);
+  const client = await MongoClient.connect(MONGODB_URI, {
+    serverSelectionTimeoutMS: 4000,
+    connectTimeoutMS: 5000,
+  });
   const db = client.db(DB_NAME);
 
   cachedClient = client;

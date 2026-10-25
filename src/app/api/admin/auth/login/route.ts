@@ -1,11 +1,13 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
+import { getCredentials } from "@/lib/credentials";
 
 export async function POST(req: Request) {
   try {
     const { email, password } = await req.json();
+    const creds = await getCredentials();
 
-    if (email !== "akashkumarprajapati2003@gmail.com" || password !== "Akumar@1234") {
+    if (email !== creds.email || password !== creds.password) {
       return NextResponse.json({ error: "Invalid email or password" }, { status: 401 });
     }
 

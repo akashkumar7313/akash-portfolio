@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { verifyPassword, updatePassword } from "@/lib/db";
+import { getCredentials } from "@/lib/credentials";
 
 export async function PUT(req: NextRequest) {
   const token = req.cookies.get("admin_token")?.value;
@@ -14,10 +14,12 @@ export async function PUT(req: NextRequest) {
     if (newPassword.length < 6) {
       return NextResponse.json({ success: false, error: "Password must be at least 6 characters" }, { status: 400 });
     }
-    const result = updatePassword(oldPassword, newPassword);
-    if (!result) {
+    const creds = await getCredentials();
+    if (oldPassword !== creds.password) {
       return NextResponse.json({ success: false, error: "Current password is incorrect" }, { status: 401 });
     }
+    const { setPassword } = await import("@/lib/credentials");
+    await setPassword(newPassword);
     return NextResponse.json({ success: true });
   } catch {
     return NextResponse.json({ success: false }, { status: 500 });
