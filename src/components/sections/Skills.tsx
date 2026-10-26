@@ -72,7 +72,7 @@ export default function Skills() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.6 }}
-          className="bento relative mb-6 hidden overflow-hidden p-5 lg:block"
+          className="bento relative mb-6 hidden overflow-hidden p-5 md:block"
           onMouseLeave={() => setActive(null)}
         >
           <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(201,243,108,0.10),transparent_58%)]" />
@@ -84,7 +84,7 @@ export default function Skills() {
             </span>
           </div>
 
-          <div className="relative h-[590px] w-full xl:h-[620px]">
+          <div className="relative h-[460px] w-full md:h-[520px] lg:h-[590px] xl:h-[620px]">
             <svg
               aria-hidden
               viewBox="0 0 100 100"
@@ -155,7 +155,7 @@ export default function Skills() {
           </div>
         </motion.div>
 
-        <div className="relative lg:hidden">
+        <div className="relative md:hidden">
           <div aria-hidden className="absolute bottom-3 left-[19px] top-3 w-px bg-gradient-to-b from-[#c9f36c] via-[#c9f36c]/35 to-transparent" />
           {categories.map((cat, idx) => (
             <motion.div
@@ -185,7 +185,7 @@ export default function Skills() {
           ))}
         </div>
 
-        <div className="bento-grid hidden lg:grid">
+        <div className="bento-grid hidden md:grid">
           {categories.map((cat, idx) => (
             <motion.div
               key={cat.title}
