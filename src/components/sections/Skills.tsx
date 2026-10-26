@@ -106,7 +106,7 @@ export default function Skills() {
               })}
             </svg>
 
-            <div className="absolute left-1/2 top-1/2 z-10 w-[224px] -translate-x-1/2 -translate-y-1/2 rounded-[28px] bg-gradient-to-br from-[#d9ff8a] via-[#c9f36c] to-[#a8d94a] px-5 py-5 text-center text-[#101412] shadow-[0_24px_70px_-20px_rgba(201,243,108,0.75)]">
+            <div className="absolute left-1/2 top-1/2 z-10 w-[200px] -translate-x-1/2 -translate-y-1/2 rounded-[28px] bg-gradient-to-br from-[#d9ff8a] via-[#c9f36c] to-[#a8d94a] px-5 py-5 text-center text-[#101412] shadow-[0_24px_70px_-20px_rgba(201,243,108,0.75)] sm:w-[224px]">
               <span className="font-mono text-[9px] uppercase tracking-[0.22em] opacity-60">Core stack</span>
               <p className="mt-1 text-lg font-black leading-tight">Akash&apos;s toolkit</p>
               <p className="mt-1 text-[11px] font-medium opacity-70">{total} skills · {categories.length} branches</p>
@@ -130,7 +130,7 @@ export default function Skills() {
                   onFocus={() => setActive(i)}
                   onClick={() => setActive(i)}
                   style={{ left: `${node.x}%`, top: `${node.y}%` }}
-                  className={`group absolute z-10 w-[150px] -translate-x-1/2 -translate-y-1/2 rounded-2xl border p-3 text-left backdrop-blur transition-all duration-300 xl:w-[168px] ${
+                  className={`group absolute z-10 w-[124px] -translate-x-1/2 -translate-y-1/2 rounded-2xl border p-3 text-left backdrop-blur transition-all duration-300 sm:w-[140px] md:w-[150px] xl:w-[168px] ${
                     isActive
                       ? "border-[#c9f36c] bg-[#c9f36c]/[0.14] shadow-[0_0_46px_-10px_rgba(201,243,108,0.65)]"
                       : "border-[#101412]/10 bg-white/75 hover:border-[#c9f36c]/60 dark:border-[#c9f36c]/[0.14] dark:bg-[#0d1512]/85"
