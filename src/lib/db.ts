@@ -33,6 +33,13 @@ export interface AboutData {
   paragraphs: string[];
   highlights: { icon: string; title: string; desc: string; iconColor: string }[];
   achievements: { icon: string; text: string }[];
+  currentlyLabel?: string;
+  currently?: string;
+  focus?: string;
+  frameworks?: string;
+  backend?: string;
+  experience?: string;
+  devBadge?: string;
 }
 
 export interface SkillCategory {

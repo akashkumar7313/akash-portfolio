@@ -18,6 +18,13 @@ interface AboutData {
   paragraphs: string[];
   highlights: { icon: string; title: string; desc: string; iconColor: string }[];
   achievements: { icon: string; text: string }[];
+  currentlyLabel?: string;
+  currently?: string;
+  focus?: string;
+  frameworks?: string;
+  backend?: string;
+  experience?: string;
+  devBadge?: string;
 }
 
 const iconMap: Record<string, React.ElementType> = {
@@ -103,13 +110,13 @@ export default function About() {
                 <div aria-hidden className="absolute inset-0 bg-[radial-gradient(circle_at_75%_20%,rgba(201,243,108,0.14),transparent_55%)]" />
                 <div className="relative flex items-start justify-between gap-4">
                   <div>
-                    <span className="bento-label">Currently</span>
+                    <span className="bento-label">{data.currentlyLabel || "Currently"}</span>
                     <p className="mt-2 max-w-[14rem] text-lg font-semibold leading-snug text-[#101412] dark:text-[#f4f7f2]">
-                      Building mobile apps and web products end to end.
+                      {data.currently || "Building mobile apps and web products end to end."}
                     </p>
                   </div>
                   <div className="relative h-16 w-16 shrink-0">
-                    <div className="flex h-full w-full items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br from-[#c9f36c] to-[#a8d94a] text-2xl font-black text-[#101412] shadow-xl shadow-[#c9f36c]/20">
+                    <div className="flex h-full w-full items-center justify-center overflow-hidden rounded-full bg-gradient-to-br from-[#c9f36c] to-[#a8d94a] text-2xl font-black text-[#101412] shadow-xl shadow-[#c9f36c]/20">
                       {photoUrl ? (
                         <img src={photoUrl} alt="Developer" className="h-full w-full object-cover" />
                       ) : (
@@ -117,17 +124,17 @@ export default function About() {
                       )}
                     </div>
                     <span className="absolute -bottom-2 -right-2 rounded-full border border-[#101412] bg-[#101412] px-2 py-0.5 font-mono text-[8px] uppercase tracking-wider text-[#c9f36c]">
-                      dev
+                      {data.devBadge || "dev"}
                     </span>
                   </div>
                 </div>
 
                 <div className="relative mt-7 space-y-3">
                   {[
-                    { k: "Focus", v: "Mobile + web" },
-                    { k: "Frameworks", v: "Flutter · React Native · Web" },
-                    { k: "Backend", v: "Firebase · REST" },
-                    { k: "Experience", v: "4+ years shipping" },
+                    { k: "Focus", v: data.focus || "Mobile + web" },
+                    { k: "Frameworks", v: data.frameworks || "Flutter, React Native, Laravel, Next.js" },
+                    { k: "Backend", v: data.backend || "Firebase · REST" },
+                    { k: "Experience", v: data.experience || "4+ years shipping" },
                   ].map((row) => (
                     <div key={row.k} className="flex items-center justify-between gap-3 border-b border-[#101412]/5 pb-2.5 text-xs last:border-0 dark:border-[#c9f36c]/8">
                       <span className="font-mono uppercase tracking-wider text-[#6b7280] dark:text-[#91a096]">{row.k}</span>

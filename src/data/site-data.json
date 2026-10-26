@@ -1,7 +1,7 @@
 {
   "settings": {
     "title": "Akash Kumar Prajapati | Senior Mobile & Web Developer",
-    "description": "Portfolio of Akash Kumar Prajapati — Software Engineer specializing in Flutter, React Native and web. Builds scalable mobile apps and web storefronts.",
+    "description": "Portfolio of Akash Kumar Prajapati \u2014 Software Engineer specializing in Flutter, React Native and web. Builds scalable mobile apps and web storefronts.",
     "keywords": [
       "Flutter Developer",
       "React Native Developer",
@@ -31,12 +31,12 @@
     "resumeUrl": "",
     "badges": [
       {
-        "icon": "🏆",
+        "icon": "\ud83c\udfc6",
         "text": "Best Developer of the Year",
         "color": "yellow"
       },
       {
-        "icon": "⭐",
+        "icon": "\u2b50",
         "text": "Employee of the Month (Multiple Times)",
         "color": "blue"
       }
@@ -52,7 +52,7 @@
       {
         "name": "Priya Patel",
         "date": "1 month ago",
-        "text": "Built our healthcare booking app with WebRTC — works flawlessly.",
+        "text": "Built our healthcare booking app with WebRTC \u2014 works flawlessly.",
         "rating": 5,
         "likes": 18
       },
@@ -77,7 +77,7 @@
         "top": 21,
         "side": "l",
         "offset": 5,
-        "icon": "💙",
+        "icon": "\ud83d\udc99",
         "bg": "bg-blue-500/30",
         "border": "border-blue-500/30",
         "textColor": "text-blue-300"
@@ -87,7 +87,7 @@
         "top": 30,
         "side": "r",
         "offset": 11,
-        "icon": "⚛️",
+        "icon": "\u269b\ufe0f",
         "bg": "bg-sky-500/30",
         "border": "border-sky-500/30",
         "textColor": "text-sky-300"
@@ -97,7 +97,7 @@
         "top": 75,
         "side": "l",
         "offset": 1,
-        "icon": "🔥",
+        "icon": "\ud83d\udd25",
         "bg": "bg-yellow-500/30",
         "border": "border-yellow-500/30",
         "textColor": "text-yellow-300"
@@ -107,7 +107,7 @@
         "top": 57,
         "side": "l",
         "offset": 8,
-        "icon": "💰",
+        "icon": "\ud83d\udcb0",
         "bg": "bg-emerald-500/30",
         "border": "border-emerald-500/30",
         "textColor": "text-emerald-300"
@@ -117,7 +117,7 @@
         "top": 85,
         "side": "l",
         "offset": 1,
-        "icon": "🧩",
+        "icon": "\ud83e\udde9",
         "bg": "bg-pink-500/30",
         "border": "border-pink-500/30",
         "textColor": "text-pink-300"
@@ -127,7 +127,7 @@
         "top": 75,
         "side": "r",
         "offset": 8,
-        "icon": "📦",
+        "icon": "\ud83d\udce6",
         "bg": "bg-indigo-500/30",
         "border": "border-indigo-500/30",
         "textColor": "text-indigo-300"
@@ -137,7 +137,7 @@
         "top": 4,
         "side": "tr",
         "offset": 1,
-        "icon": "🔄",
+        "icon": "\ud83d\udd04",
         "bg": "bg-violet-500/30",
         "border": "border-violet-500/30",
         "textColor": "text-violet-300"
@@ -147,7 +147,7 @@
         "top": 19,
         "side": "r",
         "offset": 3,
-        "icon": "◈",
+        "icon": "\u25c8",
         "bg": "bg-rose-500/30",
         "border": "border-rose-500/30",
         "textColor": "text-rose-300"
@@ -157,7 +157,7 @@
         "top": 38,
         "side": "l",
         "offset": 9,
-        "icon": "🔔",
+        "icon": "\ud83d\udd14",
         "bg": "bg-orange-500/30",
         "border": "border-orange-500/30",
         "textColor": "text-orange-300"
@@ -167,7 +167,7 @@
         "top": 47,
         "side": "r",
         "offset": 9,
-        "icon": "💳",
+        "icon": "\ud83d\udcb3",
         "bg": "bg-purple-500/30",
         "border": "border-purple-500/30",
         "textColor": "text-purple-300"
@@ -177,7 +177,7 @@
         "top": 2,
         "side": "tl",
         "offset": 1,
-        "icon": "🎯",
+        "icon": "\ud83c\udfaf",
         "bg": "bg-teal-500/30",
         "border": "border-teal-500/30",
         "textColor": "text-teal-300"
@@ -194,7 +194,7 @@
       {
         "icon": "FiSmartphone",
         "title": "Cross-platform Apps",
-        "desc": "Flutter & React Native expert — one codebase, two platforms.",
+        "desc": "Flutter & React Native expert \u2014 one codebase, two platforms.",
         "iconColor": "text-accent-blue"
       },
       {
@@ -212,24 +212,31 @@
     ],
     "achievements": [
       {
-        "icon": "🏆",
+        "icon": "\ud83c\udfc6",
         "text": "Published 15+ apps on Play Store & App Store"
       },
       {
-        "icon": "⭐",
+        "icon": "\u2b50",
         "text": "4.8+ average app rating from users"
       },
       {
-        "icon": "🎯",
+        "icon": "\ud83c\udfaf",
         "text": "Delivered all projects on time & within budget"
       }
-    ]
+    ],
+    "currentlyLabel": "Currently",
+    "currently": "Building mobile apps and web products end to end.",
+    "focus": "Mobile + web",
+    "frameworks": "Flutter, React Native, Laravel, Next.js",
+    "backend": "Firebase \u00b7 REST",
+    "experience": "4+ years shipping",
+    "devBadge": "dev"
   },
   "skills": {
     "categories": [
       {
         "title": "Languages",
-        "icon": "🧠",
+        "icon": "\ud83e\udde0",
         "skills": [
           "Dart",
           "JavaScript",
@@ -241,7 +248,7 @@
       },
       {
         "title": "Mobile Frameworks",
-        "icon": "📱",
+        "icon": "\ud83d\udcf1",
         "skills": [
           "Flutter",
           "React Native",
@@ -251,7 +258,7 @@
       },
       {
         "title": "State & Architecture",
-        "icon": "⚙️",
+        "icon": "\u2699\ufe0f",
         "skills": [
           "Provider",
           "BLoC / Cubit",
@@ -263,7 +270,7 @@
       },
       {
         "title": "Backend & APIs",
-        "icon": "☁️",
+        "icon": "\u2601\ufe0f",
         "skills": [
           "REST APIs",
           "GraphQL",
@@ -278,7 +285,7 @@
       },
       {
         "title": "Payments & Integrations",
-        "icon": "💳",
+        "icon": "\ud83d\udcb3",
         "skills": [
           "Stripe",
           "Razorpay",
@@ -291,7 +298,7 @@
       },
       {
         "title": "Web Frontend",
-        "icon": "🌐",
+        "icon": "\ud83c\udf10",
         "skills": [
           "JavaScript",
           "HTML5",
@@ -301,7 +308,7 @@
       },
       {
         "title": "Tools & Practices",
-        "icon": "🛠️",
+        "icon": "\ud83d\udee0\ufe0f",
         "skills": [
           "Git",
           "GitHub",
@@ -317,7 +324,7 @@
       },
       {
         "title": "App Store Operations",
-        "icon": "🚀",
+        "icon": "\ud83d\ude80",
         "skills": [
           "Play Store Releases",
           "App Store Releases",
@@ -333,8 +340,8 @@
       {
         "role": "Software Engineer",
         "company": "Singsys Pte Ltd",
-        "period": "Apr 2024 – Present",
-        "type": "Full-time · On-site",
+        "period": "Apr 2024 \u2013 Present",
+        "type": "Full-time \u00b7 On-site",
         "location": "Lucknow, Uttar Pradesh, India",
         "color": "#3b82f6",
         "skills": [
@@ -359,8 +366,8 @@
       {
         "role": "React Native Developer",
         "company": "Vibrant IT Solutions Private Limited",
-        "period": "Aug 2023 – Apr 2024",
-        "type": "Full-time · On-site",
+        "period": "Aug 2023 \u2013 Apr 2024",
+        "type": "Full-time \u00b7 On-site",
         "location": "Lucknow, Uttar Pradesh, India",
         "color": "#8b5cf6",
         "skills": [
@@ -381,8 +388,8 @@
       {
         "role": "Jr. Web Developer",
         "company": "Softpro India Computer Technologies",
-        "period": "Jul 2022 – Aug 2023",
-        "type": "Full-time · On-site",
+        "period": "Jul 2022 \u2013 Aug 2023",
+        "type": "Full-time \u00b7 On-site",
         "location": "Lucknow, Uttar Pradesh, India",
         "color": "#10b981",
         "skills": [
@@ -410,24 +417,24 @@
         "degree": "Bachelor of Technology (CSE)",
         "school": "Computer Science & Engineering",
         "period": "Graduated",
-        "icon": "🎓"
+        "icon": "\ud83c\udf93"
       },
       {
         "degree": "Diploma in Computer Science & Engineering",
         "school": "Polytechnic",
         "period": "Completed",
-        "icon": "📘"
+        "icon": "\ud83d\udcd8"
       }
     ],
     "achievements": [
       {
-        "icon": "🏆",
+        "icon": "\ud83c\udfc6",
         "text": "Best Developer of the Year",
         "gradient": "from-yellow-500/20 to-yellow-500/5",
         "accent": "text-yellow-400"
       },
       {
-        "icon": "⭐",
+        "icon": "\u2b50",
         "text": "Employee of the Month (Multiple Times)",
         "gradient": "from-accent-blue/20 to-accent-blue/5",
         "accent": "text-accent-blue"
@@ -488,7 +495,7 @@
         "screenshots": [],
         "features": [
           "Job assignment dashboard with priority and status indicators",
-          "Real-time job status tracking — Pending, In Progress, Completed",
+          "Real-time job status tracking \u2014 Pending, In Progress, Completed",
           "Start / Stop / Complete time logging with automatic hour calculation",
           "Working hours summary and daily timesheet generation",
           "Manager dashboard with live field team progress overview",
@@ -504,7 +511,7 @@
       {
         "id": 3,
         "title": "Atesplore",
-        "description": "Atesplore is the customer-facing application of a dual-app food ordering ecosystem built for the Singapore market. It provides users with a seamless food discovery and ordering experience — from browsing nearby restaurants and exploring menus to placing orders and tracking deliveries in real time. The app is part of a larger ecosystem that includes a separate merchant app, with both apps sharing the same backend infrastructure but serving completely different user journeys. Atesplore focuses on delivering a smooth, intuitive experience for end consumers with secure payment options and real-time order visibility.",
+        "description": "Atesplore is the customer-facing application of a dual-app food ordering ecosystem built for the Singapore market. It provides users with a seamless food discovery and ordering experience \u2014 from browsing nearby restaurants and exploring menus to placing orders and tracking deliveries in real time. The app is part of a larger ecosystem that includes a separate merchant app, with both apps sharing the same backend infrastructure but serving completely different user journeys. Atesplore focuses on delivering a smooth, intuitive experience for end consumers with secure payment options and real-time order visibility.",
         "techStack": [
           "Flutter",
           "Dart",
@@ -557,11 +564,11 @@
         "features": [
           "Real-time order notifications with instant accept / reject functionality",
           "Order queue management with status tracking",
-          "Complete menu and item management — add, edit, delete items",
+          "Complete menu and item management \u2014 add, edit, delete items",
           "Category and pricing management",
           "Sales dashboard with daily, weekly, and monthly reports",
           "Popular items and peak hours analytics",
-          "Store availability toggle — open / closed status control",
+          "Store availability toggle \u2014 open / closed status control",
           "Order history with detailed transaction records",
           "Push notifications for every new incoming order",
           "Multi-branch support for merchants with multiple outlets"
@@ -591,7 +598,7 @@
         "screenshots": [],
         "features": [
           "Restaurant and cafe menu browsing with rich media",
-          "Customizable order options — size, extras, special instructions",
+          "Customizable order options \u2014 size, extras, special instructions",
           "Cart management with real-time total calculation",
           "Secure payment gateway with UAE local payment support",
           "Real-time order status tracking",
@@ -608,7 +615,7 @@
       {
         "id": 6,
         "title": "DreamShop India",
-        "description": "DreamShop India is a feature-rich e-commerce marketplace application designed for Indian consumers who want a rewarding and engaging online shopping experience. What sets DreamShop apart from typical e-commerce apps is its unique automated rewards system — every time a user completes an order, surprise discount coupons and cashback rewards are automatically added to their account, making every purchase more exciting and encouraging repeat shopping. The app covers a wide range of product categories and is built to handle high traffic with optimized performance and smooth user experience.",
+        "description": "DreamShop India is a feature-rich e-commerce marketplace application designed for Indian consumers who want a rewarding and engaging online shopping experience. What sets DreamShop apart from typical e-commerce apps is its unique automated rewards system \u2014 every time a user completes an order, surprise discount coupons and cashback rewards are automatically added to their account, making every purchase more exciting and encouraging repeat shopping. The app covers a wide range of product categories and is built to handle high traffic with optimized performance and smooth user experience.",
         "techStack": [
           "Flutter",
           "Dart",
@@ -627,7 +634,7 @@
         "screenshots": [],
         "features": [
           "Product browsing across multiple categories with rich media display",
-          "Advanced search with filters — price range, category, ratings",
+          "Advanced search with filters \u2014 price range, category, ratings",
           "Wishlist and save for later functionality",
           "Cart management with real-time price and discount calculation",
           "Secure checkout with Razorpay payment integration",
@@ -645,7 +652,7 @@
       {
         "id": 7,
         "title": "FastFit User",
-        "description": "FastFit User is the customer-facing application of the FastFit e-commerce platform. It provides users with a smooth and efficient online shopping experience — from product discovery to doorstep delivery. The app is built for speed and performance, ensuring users can browse products, place orders, and track their deliveries without any friction. FastFit operates as a dual-app ecosystem with a separate delivery partner app, ensuring end-to-end order fulfillment management from the customer's tap to the delivery agent's doorstep.",
+        "description": "FastFit User is the customer-facing application of the FastFit e-commerce platform. It provides users with a smooth and efficient online shopping experience \u2014 from product discovery to doorstep delivery. The app is built for speed and performance, ensuring users can browse products, place orders, and track their deliveries without any friction. FastFit operates as a dual-app ecosystem with a separate delivery partner app, ensuring end-to-end order fulfillment management from the customer's tap to the delivery agent's doorstep.",
         "techStack": [
           "Flutter",
           "Dart",
@@ -680,7 +687,7 @@
       {
         "id": 8,
         "title": "FastFit Delivery",
-        "description": "FastFit Delivery is the delivery partner application of the FastFit e-commerce ecosystem. Built for delivery agents and logistics personnel, the app streamlines the entire delivery workflow — from receiving new order assignments to navigating to pickup and drop locations, updating delivery status, and managing daily earnings. It provides delivery partners with a reliable and efficient tool to manage their work, with real-time navigation integration and clear order management features, ensuring fast and accurate deliveries for end customers.",
+        "description": "FastFit Delivery is the delivery partner application of the FastFit e-commerce ecosystem. Built for delivery agents and logistics personnel, the app streamlines the entire delivery workflow \u2014 from receiving new order assignments to navigating to pickup and drop locations, updating delivery status, and managing daily earnings. It provides delivery partners with a reliable and efficient tool to manage their work, with real-time navigation integration and clear order management features, ensuring fast and accurate deliveries for end customers.",
         "techStack": [
           "Flutter",
           "Dart",
@@ -699,11 +706,11 @@
           "Real-time new order assignment notifications",
           "Order details with pickup and delivery location information",
           "Google Maps navigation integration for pickup and drop",
-          "Delivery status management — Accept, Picked Up, On the Way, Delivered",
+          "Delivery status management \u2014 Accept, Picked Up, On the Way, Delivered",
           "Real-time earnings tracker with daily and weekly summary",
           "Order history with complete delivery records",
           "Push notifications for new order alerts and updates",
-          "Availability toggle — online / offline status for agents",
+          "Availability toggle \u2014 online / offline status for agents",
           "Customer contact and communication support",
           "Performance dashboard with delivery stats and ratings"
         ],
@@ -714,7 +721,7 @@
       {
         "id": 9,
         "title": "SalesPulse",
-        "description": "SalesPulse is a comprehensive B2B sales operations management application designed to streamline and optimize the end-to-end sales workflow for field sales representatives. From placing new client orders to tracking payment status and monitoring order fulfillment, SalesPulse puts the entire sales process in the palm of a sales rep's hand. The app eliminates manual order-taking processes and gives sales managers real-time visibility into team performance, order pipeline, and revenue tracking — making the sales operation faster, more accurate, and more accountable.",
+        "description": "SalesPulse is a comprehensive B2B sales operations management application designed to streamline and optimize the end-to-end sales workflow for field sales representatives. From placing new client orders to tracking payment status and monitoring order fulfillment, SalesPulse puts the entire sales process in the palm of a sales rep's hand. The app eliminates manual order-taking processes and gives sales managers real-time visibility into team performance, order pipeline, and revenue tracking \u2014 making the sales operation faster, more accurate, and more accountable.",
         "techStack": [
           "React Native",
           "JavaScript",
@@ -729,14 +736,14 @@
         "screenshots": [],
         "features": [
           "New sales order placement with product catalog",
-          "Real-time order status tracking — Placed, Processing, Dispatched, Delivered",
+          "Real-time order status tracking \u2014 Placed, Processing, Dispatched, Delivered",
           "Customer profile and relationship management",
           "Payment status tracking and collection management",
           "Sales performance dashboard with targets and achievements",
           "Order history with complete transaction records",
           "Push notifications for order updates and approvals",
           "Multi-product order management with quantity and pricing",
-          "Sales reports — daily, weekly, and monthly summaries",
+          "Sales reports \u2014 daily, weekly, and monthly summaries",
           "Offline order placement with automatic sync on connectivity"
         ],
         "role": "Developed the complete sales management application including order placement flow, real-time order status tracking, customer management, payment tracking, and sales reporting dashboard. Implemented complex business logic for multi-stage order workflows and approval processes.",
@@ -810,7 +817,7 @@
       {
         "id": 12,
         "title": "Wave MIS",
-        "description": "Wave MIS is an agri-industrial tracking application developed for Wave Industries Mills Limited, a sugar manufacturing company in India. The app provides farmers and field staff with real-time access to cane position data, factory crushing reports, and payment summaries — all from their mobile device. By digitizing the traditionally manual reporting process, Wave MIS significantly reduces information delays and gives all stakeholders transparent, accurate, and timely data about factory operations and individual cane supply status.",
+        "description": "Wave MIS is an agri-industrial tracking application developed for Wave Industries Mills Limited, a sugar manufacturing company in India. The app provides farmers and field staff with real-time access to cane position data, factory crushing reports, and payment summaries \u2014 all from their mobile device. By digitizing the traditionally manual reporting process, Wave MIS significantly reduces information delays and gives all stakeholders transparent, accurate, and timely data about factory operations and individual cane supply status.",
         "techStack": [
           "React Native",
           "JavaScript",
@@ -842,7 +849,7 @@
       {
         "id": 13,
         "title": "UK Cane MIS",
-        "description": "UK Cane MIS is an agri-industrial reporting application developed for UK Cane Society, a cane farming cooperative organization in India. The app provides farmers, field agents, and cooperative managers with real-time access to cane crushing data, factory operation reports, and individual farmer account summaries. It serves as a transparent digital platform that keeps all cooperative members informed about their cane supply status, crushing progress, and payment records — replacing slow, manual paper-based reporting with instant mobile access to critical operational data.",
+        "description": "UK Cane MIS is an agri-industrial reporting application developed for UK Cane Society, a cane farming cooperative organization in India. The app provides farmers, field agents, and cooperative managers with real-time access to cane crushing data, factory operation reports, and individual farmer account summaries. It serves as a transparent digital platform that keeps all cooperative members informed about their cane supply status, crushing progress, and payment records \u2014 replacing slow, manual paper-based reporting with instant mobile access to critical operational data.",
         "techStack": [
           "React Native",
           "JavaScript",
@@ -876,22 +883,22 @@
       {
         "label": "All",
         "value": "all",
-        "icon": "🔍"
+        "icon": "\ud83d\udd0d"
       },
       {
         "label": "Mobile",
         "value": "mobile",
-        "icon": "📱"
+        "icon": "\ud83d\udcf1"
       },
       {
         "label": "Web",
         "value": "web",
-        "icon": "🌐"
+        "icon": "\ud83c\udf10"
       },
       {
         "label": "Backend",
         "value": "backend",
-        "icon": "⚙️"
+        "icon": "\u2699\ufe0f"
       }
     ]
   },

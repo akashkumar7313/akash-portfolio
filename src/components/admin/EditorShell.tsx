@@ -555,6 +555,17 @@ export default function EditorShell({
     return (<>
       <div className="space-y-6">
         <FieldArrayInline label="Paragraphs" items={a.paragraphs || []} onChange={v => updateField(sk, ["paragraphs"], v)} />
+        <Panel title="Currently card" icon={<FiUser />} desc="The 'Currently' card in the About section">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <InputB label="Label" value={a.currentlyLabel || ""} onChange={v => updateField(sk, ["currentlyLabel"], v)} hint="e.g. Currently" />
+            <InputB label="Title" value={a.currently || ""} onChange={v => updateField(sk, ["currently"], v)} hint="e.g. Building mobile apps..." />
+            <InputB label="Focus" value={a.focus || ""} onChange={v => updateField(sk, ["focus"], v)} />
+            <InputB label="Frameworks" value={a.frameworks || ""} onChange={v => updateField(sk, ["frameworks"], v)} />
+            <InputB label="Backend" value={a.backend || ""} onChange={v => updateField(sk, ["backend"], v)} />
+            <InputB label="Experience" value={a.experience || ""} onChange={v => updateField(sk, ["experience"], v)} />
+            <InputB label="Dev badge" value={a.devBadge || ""} onChange={v => updateField(sk, ["devBadge"], v)} hint="e.g. dev" />
+          </div>
+        </Panel>
         <SectionGroup title="Highlights" icon={<FiStar />} desc="Key highlights" onAdd={() => openAddModal(["highlights"], { icon: "FiCode", title: "New Highlight", desc: "Description", iconColor: "text-accent-blue" })}>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
             {(a.highlights || []).map((item: any, i: number) => (
