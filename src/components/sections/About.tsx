@@ -71,10 +71,10 @@ export default function About() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="md:col-span-7 md:mr-[30px]"
+            className="md:col-span-7"
           >
             <TiltCard intensity={4} glow="201 243 108" className="h-full rounded-[26px]">
-              <div className="bento bento-pad relative h-full min-h-[calc(100%+30px)] overflow-hidden">
+              <div className="bento bento-pad relative h-full overflow-hidden">
                 <span className="bento-label">The short version</span>
                 <div className="relative mt-4 space-y-4">
                   {data.paragraphs.map((p, i) => (
@@ -105,7 +105,7 @@ export default function About() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.08 }}
-            className="md:col-span-5 md:w-[calc(100%+30px)]"
+            className="md:col-span-5"
           >
             <TiltCard intensity={6} glow="168 217 74" className="h-full rounded-[26px]">
               <div className="bento relative h-full overflow-hidden p-6 sm:p-7">
