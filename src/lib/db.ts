@@ -38,6 +38,8 @@ export interface AboutData {
   focus?: string;
   frameworks?: string;
   backend?: string;
+  database?: string;
+  cloud?: string;
   experience?: string;
   devBadge?: string;
 }

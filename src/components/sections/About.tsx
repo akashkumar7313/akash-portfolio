@@ -23,6 +23,8 @@ interface AboutData {
   focus?: string;
   frameworks?: string;
   backend?: string;
+  database?: string;
+  cloud?: string;
   experience?: string;
   devBadge?: string;
 }
@@ -131,10 +133,12 @@ export default function About() {
 
                 <div className="relative mt-7 space-y-3">
                   {[
-                    { k: "Focus", v: data.focus || "Mobile + web" },
-                    { k: "Frameworks", v: data.frameworks || "Flutter, React Native, Laravel, Next.js" },
-                    { k: "Backend", v: data.backend || "Firebase · REST" },
-                    { k: "Experience", v: data.experience || "4+ years shipping" },
+                    { k: "Focus", v: data.focus || "Mobile + Web" },
+                    { k: "Frameworks & Libraries", v: data.frameworks || "Flutter · React Native · React.js · Next.js" },
+                    { k: "Backend & APIs", v: data.backend || "Laravel · Node.js · REST APIs · WebSockets" },
+                    { k: "Database", v: data.database || "Firestore · MySQL · SQLite · PostgreSQL · MongoDB" },
+                    { k: "Cloud & Services", v: data.cloud || "Firebase Authentication · FCM · Cloud Functions · Analytics · Crashlytics" },
+                    { k: "Experience", v: data.experience || "4+ Years Building & Shipping" },
                   ].map((row) => (
                     <div key={row.k} className="flex items-center justify-between gap-3 border-b border-[#101412]/5 pb-2.5 text-xs last:border-0 dark:border-[#c9f36c]/8">
                       <span className="font-mono uppercase tracking-wider text-[#6b7280] dark:text-[#91a096]">{row.k}</span>

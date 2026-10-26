@@ -226,11 +226,13 @@
     ],
     "currentlyLabel": "Currently",
     "currently": "Building mobile apps and web products end to end.",
-    "focus": "Mobile + web",
-    "frameworks": "Flutter, React Native, Laravel, Next.js",
-    "backend": "Firebase \u00b7 REST",
-    "experience": "4+ years shipping",
-    "devBadge": "dev"
+    "focus": "Mobile + Web",
+    "frameworks": "Flutter \u00b7 React Native \u00b7 React.js \u00b7 Next.js",
+    "backend": "Laravel \u00b7 Node.js \u00b7 REST APIs \u00b7 WebSockets",
+    "experience": "4+ Years Building & Shipping",
+    "devBadge": "dev",
+    "database": "Firestore \u00b7 MySQL \u00b7 SQLite \u00b7 PostgreSQL \u00b7 MongoDB",
+    "cloud": "Firebase Authentication \u00b7 FCM \u00b7 Cloud Functions \u00b7 Analytics \u00b7 Crashlytics"
   },
   "skills": {
     "categories": [
