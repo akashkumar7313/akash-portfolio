@@ -121,7 +121,7 @@ export const NAVBAR_DEFAULTS = {
     { label: "About", href: "/about" },
     { label: "Skills", href: "/skills" },
     { label: "Experience", href: "/experience" },
-    { label: "Process", href: "/process" },
+    { label: "Workflow Process", href: "/process" },
     { label: "Education", href: "/education" },
     { label: "Projects", href: "/projects" },
     { label: "Testimonials", href: "/testimonials" },
@@ -154,7 +154,7 @@ export const FOOTER_DEFAULTS = {
     { label: "About", href: "/about" },
     { label: "Skills", href: "/skills" },
     { label: "Experience", href: "/experience" },
-    { label: "Process", href: "/process" },
+    { label: "Workflow Process", href: "/process" },
     { label: "Projects", href: "/projects" },
     { label: "Contact", href: "/contact" },
   ],
@@ -174,7 +174,7 @@ export const FEATURED_DEFAULTS = {
 
 export const PROCESS_DEFAULTS = {
   titleHome: "From idea to launch, without surprises.",
-  titleFull: "The process behind every shipped product.",
+  titleFull: "The workflow process behind every shipped product.",
   subtitleHome:
     "A clear, milestone-based flow for mobile and web products — from the first requirement to production release.",
   subtitleFull:
