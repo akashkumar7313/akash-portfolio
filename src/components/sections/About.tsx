@@ -30,11 +30,16 @@ const iconMap: Record<string, React.ElementType> = {
 
 export default function About() {
   const [data, setData] = useState<AboutData | null>(null);
+  const [photoUrl, setPhotoUrl] = useState("");
 
   useEffect(() => {
     fetch("/api/about")
       .then((r) => r.json())
       .then(setData)
+      .catch(() => {});
+    fetch("/api/hero")
+      .then((r) => r.json())
+      .then((d) => setPhotoUrl(d?.photoUrl || ""))
       .catch(() => {});
   }, []);
 
@@ -103,8 +108,14 @@ export default function About() {
                       Building mobile apps and web products end to end.
                     </p>
                   </div>
-                  <div className="relative flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-[#c9f36c] to-[#a8d94a] text-2xl font-black text-[#101412] shadow-xl shadow-[#c9f36c]/20">
-                    A
+                  <div className="relative h-16 w-16 shrink-0">
+                    <div className="flex h-full w-full items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br from-[#c9f36c] to-[#a8d94a] text-2xl font-black text-[#101412] shadow-xl shadow-[#c9f36c]/20">
+                      {photoUrl ? (
+                        <img src={photoUrl} alt="Developer" className="h-full w-full object-cover" />
+                      ) : (
+                        "A"
+                      )}
+                    </div>
                     <span className="absolute -bottom-2 -right-2 rounded-full border border-[#101412] bg-[#101412] px-2 py-0.5 font-mono text-[8px] uppercase tracking-wider text-[#c9f36c]">
                       dev
                     </span>

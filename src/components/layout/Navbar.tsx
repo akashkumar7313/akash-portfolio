@@ -97,12 +97,6 @@ export default function Navbar() {
         </div>
 
         <div className="flex items-center gap-2">
-          <Link
-            href={nav.ctaHref || "/contact"}
-            className="hidden shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full border border-[#101412]/10 bg-[#101412] px-4 py-2 text-xs font-semibold text-white transition-all duration-300 hover:bg-[#16a34a] dark:border-[#c9f36c]/20 dark:bg-[#c9f36c] dark:text-[#101412] dark:hover:bg-[#d9ff8a] sm:flex"
-          >
-            {nav.ctaLabel || "Let's talk"} <FiArrowUpRight />
-          </Link>
           <ThemeToggle />
           <button
             onClick={() => setMobileOpen((v) => !v)}

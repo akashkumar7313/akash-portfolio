@@ -92,7 +92,7 @@ export default function Hero() {
   const resumeUrl = h.resumeUrl || "";
 
   return (
-    <section id="hero" className="relative overflow-hidden pb-14 pt-28 sm:pt-32 lg:pb-20">
+    <section id="hero" className="relative overflow-hidden pb-10 pt-20 sm:pt-24 lg:pb-16">
       <div aria-hidden className="pointer-events-none absolute inset-0 page-glow" />
       {particles && (
         <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
@@ -119,7 +119,7 @@ export default function Hero() {
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             className="min-w-0 lg:col-span-7"
           >
-            <div className="bento relative overflow-hidden">
+            <div className="bento relative flex min-h-[580px] flex-col overflow-hidden lg:min-h-[630px]">
               <div
                 aria-hidden
                 className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(201,243,108,0.16),transparent_52%)] dark:bg-[radial-gradient(circle_at_top_right,rgba(201,243,108,0.1),transparent_48%)]"
@@ -139,7 +139,7 @@ export default function Hero() {
               <span aria-hidden className="pointer-events-none absolute bottom-2.5 right-2.5 h-3.5 w-3.5 border-b border-r border-[#c9f36c]/60" />
 
               {/* ── top strip: availability + id ───────────── */}
-              <div className="relative flex flex-wrap items-center justify-between gap-x-4 gap-y-2 border-b border-dashed border-[#101412]/12 px-5 py-3 sm:px-7 dark:border-[#c9f36c]/15">
+              <div className="relative flex flex-wrap items-center justify-between gap-x-4 gap-y-2 border-b border-dashed border-[#101412]/12 px-5 py-2 sm:px-7 dark:border-[#c9f36c]/15">
                 <div className="flex flex-wrap items-center gap-2">
                   <span className="relative flex h-2 w-2 shrink-0">
                     <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-70" />
@@ -155,7 +155,7 @@ export default function Hero() {
               </div>
 
               {/* ── name (full width) ────────────────────── */}
-              <div className="relative px-5 pt-[22px] sm:px-7 lg:px-8">
+              <div className="relative px-5 pt-4 sm:px-7 lg:px-8">
                 <h1
                   className="animate-name-gradient bg-clip-text text-[clamp(2.3rem,5.6vw,4.3rem)] font-black leading-[0.98] tracking-[-0.05em] text-transparent"
                   style={{
@@ -171,38 +171,46 @@ export default function Hero() {
               </div>
 
               {/* ── body: content + identity rail ─────────── */}
-              <div className="relative grid gap-[18px] p-[18px] sm:p-[26px] lg:grid-cols-[1fr_190px] lg:gap-7 lg:p-7">
+              <div className="relative grid flex-1 gap-3 p-4 sm:p-4 lg:grid-cols-[1fr_230px] lg:gap-5 lg:p-5">
                 <div className="order-2 min-w-0 lg:order-1">
                   {/* typewriter role */}
-                  <div className="mt-[18px] flex min-h-10 w-full items-center gap-2 font-mono text-[16px] text-[#4b5563] dark:text-[#91a096] sm:text-[18px]">
+                  <div className="mt-3 flex min-h-10 w-full items-center gap-2 font-mono text-[16px] text-[#4b5563] dark:text-[#91a096] sm:text-[18px]">
                     <span className={`truncate transition-colors duration-500 ${roleStyle}`}>
                       {typedRole}
                     </span>
                     <span className="inline-block h-4 w-[2px] shrink-0 animate-pulse bg-[#16a34a] dark:bg-[#c9f36c]" />
                   </div>
 
-                  <p className="mt-3 font-mono text-[12px] uppercase tracking-[0.16em] text-[#6b7280] dark:text-[#91a096]">
+                  <p className="mt-2 font-mono text-[12px] uppercase tracking-[0.16em] text-[#6b7280] dark:text-[#91a096]">
                     {h.experienceLine}
                   </p>
 
-                  <p className="mt-4 max-w-xl text-sm leading-relaxed text-[#6b7280] dark:text-[#91a096] sm:text-[15px]">
+                  <p className="mt-3 max-w-xl text-sm leading-relaxed text-[#6b7280] dark:text-[#91a096] sm:text-[15px]">
                     {h.tagline}
                   </p>
 
                   {/* CTA row */}
-                  <div className="mt-[22px] flex flex-wrap items-center gap-2.5">
-                    <Link
-                      href="/projects"
-                      className="group inline-flex items-center gap-2 rounded-full bg-[#c9f36c] px-5 py-3 text-sm font-semibold text-[#101412] shadow-lg shadow-[#c9f36c]/20 transition-all hover:bg-[#d9ff8a] hover:shadow-[#c9f36c]/35"
-                    >
-                      {h.ctaProjects}
-                      <FiArrowUpRight className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                    </Link>
+                  <div className="mt-6 flex flex-col items-center gap-3">
+                    <div className="flex flex-wrap items-center justify-center gap-2.5">
+                      <Link
+                        href="/projects"
+                        className="group inline-flex items-center justify-center gap-2 rounded-full bg-[#c9f36c] px-5 py-3 text-sm font-semibold text-[#101412] shadow-lg shadow-[#c9f36c]/20 transition-all hover:bg-[#d9ff8a] hover:shadow-[#c9f36c]/35"
+                      >
+                        {h.ctaProjects}
+                        <FiArrowUpRight className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                      </Link>
+                      <Link
+                        href="/contact"
+                        className="inline-flex items-center justify-center gap-2 rounded-full border border-[#101412]/10 bg-[#101412] px-5 py-3 text-sm font-semibold text-white transition-all hover:bg-[#16a34a] dark:border-[#c9f36c]/20 dark:bg-[#c9f36c] dark:text-[#101412] dark:hover:bg-[#d9ff8a]"
+                      >
+                        Let's talk <FiArrowUpRight />
+                      </Link>
+                    </div>
                     <a
                       href={resumeUrl && !resumeUrl.startsWith("data:") ? resumeUrl : "/api/resume"}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 rounded-full border border-[#101412]/10 bg-white/50 px-5 py-3 text-sm font-semibold text-[#374151] backdrop-blur transition-all hover:border-[#c9f36c]/50 hover:bg-[#c9f36c]/10 dark:border-[#c9f36c]/15 dark:bg-white/[0.03] dark:text-[#f4f7f2]"
+                      className="inline-flex items-center justify-center gap-2 rounded-full border border-[#101412]/10 bg-white/50 px-5 py-3 text-sm font-semibold text-[#374151] backdrop-blur transition-all hover:border-[#c9f36c]/50 hover:bg-[#c9f36c]/10 dark:border-[#c9f36c]/15 dark:bg-white/[0.03] dark:text-[#f4f7f2]"
                     >
                       <FiDownload /> {h.ctaResume}
                     </a>
@@ -259,11 +267,11 @@ export default function Hero() {
               </div>
 
               {/* ── bottom status strip ───────────────────── */}
-              <div className="relative flex flex-wrap items-center justify-between gap-x-4 gap-y-2 border-t border-dashed border-[#101412]/12 px-5 py-3 sm:px-7 dark:border-[#c9f36c]/15">
-                <span className="flex items-center gap-2 font-mono text-[8.5px] uppercase tracking-[0.2em] text-[#6b7280] dark:text-[#91a096]">
-                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" /> {h.statusLine}
+              <div className="relative mt-auto flex flex-wrap items-center justify-between gap-x-4 gap-y-2 border-t border-dashed border-[#101412]/12 px-5 py-2 sm:px-7 dark:border-[#c9f36c]/15">
+                <span className="flex items-center gap-2 font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-[#101412] dark:text-[#f4f7f2]">
+                  <span className="h-2 w-2 rounded-full bg-emerald-400" /> {h.statusLine}
                 </span>
-                <span className="font-mono text-[8.5px] uppercase tracking-[0.2em] text-[#6b7280] dark:text-[#91a096]">
+                <span className="rounded-full border border-dashed border-[#101412]/18 bg-white/45 px-2.5 py-1 font-mono text-[8px] uppercase tracking-[0.2em] text-[#6b7280] dark:border-[#c9f36c]/25 dark:bg-white/[0.03] dark:text-[#91a096]">
                   {h.platforms}
                 </span>
               </div>
