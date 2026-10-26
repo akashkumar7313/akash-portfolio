@@ -23,7 +23,7 @@ const sectionMeta: Record<string, { label: string; icon: React.ReactNode; color:
   featured:    { label: "Featured",    icon: <FiAward />,        color: "#a8d94a", desc: "Home featured work" },
   marquee:     { label: "Tech Ticker", icon: <FiAlignLeft />,    color: "#c9f36c", desc: "Tech marquee strip" },
   explore:     { label: "Explore",     icon: <FiCompass />,      color: "#a8d94a", desc: "Keep exploring cards" },
-  process:     { label: "Process",     icon: <FiGitBranch />,    color: "#c9f36c", desc: "Process page content" },
+   process:     { label: "Workflow Process", icon: <FiGitBranch />, color: "#c9f36c", desc: "Process page content" },
   navbar:      { label: "Navbar",      icon: <FiMenu />,         color: "#a8d94a", desc: "Navigation menu" },
   footer:      { label: "Footer",      icon: <FiLayers />,       color: "#c9f36c", desc: "Footer content" },
   about:       { label: "About",       icon: <FiUser />,         color: "#a8d94a", desc: "About section content" },

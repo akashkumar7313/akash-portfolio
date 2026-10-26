@@ -52,7 +52,7 @@ export default function Process({ fullPage = false }: ProcessProps) {
       <div className="relative z-10 mx-auto max-w-6xl px-1 sm:px-0">
         <SectionHeading
           title={fullPage ? p.titleFull : p.titleHome}
-          kicker="Process"
+          kicker="Workflow Process"
           subtitle={fullPage ? p.subtitleFull : p.subtitleHome}
           icon={<FiLayers />}
         />
