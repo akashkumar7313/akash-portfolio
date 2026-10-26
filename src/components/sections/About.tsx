@@ -108,7 +108,7 @@ export default function About() {
             className="md:col-span-5"
           >
             <TiltCard intensity={6} glow="168 217 74" className="h-full rounded-[26px]">
-              <div className="bento relative h-full overflow-hidden p-6 sm:p-7">
+              <div className="bento relative h-full max-w-[calc(100%+30px)] overflow-hidden p-6 sm:p-7">
                 <div aria-hidden className="absolute inset-0 bg-[radial-gradient(circle_at_75%_20%,rgba(201,243,108,0.14),transparent_55%)]" />
                 <div className="relative flex items-start justify-between gap-4">
                   <div>
