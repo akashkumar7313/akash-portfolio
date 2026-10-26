@@ -74,7 +74,7 @@ export default function About() {
             className="md:col-span-7"
           >
             <TiltCard intensity={4} glow="201 243 108" className="h-full rounded-[26px]">
-              <div className="bento bento-pad relative h-full overflow-hidden">
+              <div className="bento bento-pad relative h-full min-h-[calc(100%+30px)] max-w-[calc(100%-30px)] overflow-hidden">
                 <span className="bento-label">The short version</span>
                 <div className="relative mt-4 space-y-4">
                   {data.paragraphs.map((p, i) => (
